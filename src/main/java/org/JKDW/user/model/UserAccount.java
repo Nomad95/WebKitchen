@@ -32,6 +32,11 @@ public class UserAccount {
 	
 	private Boolean isFilled;
 	private Boolean isVerified;
+	
+	public UserAccount(){
+		
+	}
+	
 	public Long getId() {
 		return Id;
 	}
