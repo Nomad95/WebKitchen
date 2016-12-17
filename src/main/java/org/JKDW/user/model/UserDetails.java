@@ -58,6 +58,9 @@ public class UserDetails {
     @JoinColumn(name = "user_account_Id")
     private UserAccount userAccount;
 
+	public UserDetails(){
+		
+	}
 
 	public Long getId() {
 		return Id;
