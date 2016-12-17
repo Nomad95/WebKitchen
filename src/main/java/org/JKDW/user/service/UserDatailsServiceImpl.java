@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 /**
  * 
  * @author Igor
- * Te serwisy trzeba ulepszyæ narazie niech bedzie ten podstawowy crud 
+ * Te serwisy trzeba ulepszyc narazie niech bedzie ten podstawowy crud 
  */
 @Service
 public class UserDatailsServiceImpl implements UserDetailsService {

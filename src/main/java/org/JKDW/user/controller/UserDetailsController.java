@@ -47,7 +47,7 @@ public class UserDetailsController {
 	}
 	
 	/**
-	 * //TODO Moze lepiej jak podamy id account a nie id detailsów?
+	 * //TODO Moze lepiej jak podamy id account a nie id detailsow?
 	 * //TODO zmien request mapping
 	 * @param userDetails to update
 	 * @return updated user details
