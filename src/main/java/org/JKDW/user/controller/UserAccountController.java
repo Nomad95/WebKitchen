@@ -6,7 +6,6 @@ import java.util.List;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,15 +33,15 @@ public class UserAccountController {
 	}
 	
 	/**
-	 * 
+	 *  //TODO to trzeba bylo wywalic aby dzia³a³o
 	 * @param id - id of user account
 	 * @return	user specified by id
 	 */
-	@RequestMapping(name="/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+/*	@RequestMapping(name="/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserAccount> getUserAccountById(@PathVariable("id") Long id ){
 		UserAccount userAccount = userAccountService.getUserAccountById(id);
-		return new ResponseEntity(userAccount,HttpStatus.OK);
-	}
+		return new ResponseEntity<>(userAccount,HttpStatus.OK);
+	}*/
 	
 	/**
 	 * 
@@ -52,7 +51,7 @@ public class UserAccountController {
 	@RequestMapping(name="/create",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserAccount> createUserAccount(@RequestBody UserAccount userAccount){
 		UserAccount createdUserAccount = userAccountService.createUserAccount(userAccount);
-		return new ResponseEntity(createdUserAccount,HttpStatus.CREATED);
+		return new ResponseEntity<>(createdUserAccount,HttpStatus.CREATED);
 	}
 	
 	/**
@@ -63,7 +62,7 @@ public class UserAccountController {
 	@RequestMapping(name="/{id}",method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserAccount> updateUserAccount(@RequestBody UserAccount userAccount){
 		UserAccount updatedUserAccount = userAccountService.updateUserAccount(userAccount);
-		return new ResponseEntity(updatedUserAccount,HttpStatus.OK);
+		return new ResponseEntity<>(updatedUserAccount,HttpStatus.OK);
 	}
 	
 	/**

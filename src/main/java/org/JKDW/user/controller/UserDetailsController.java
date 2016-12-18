@@ -28,11 +28,11 @@ public class UserDetailsController {
 		return new ResponseEntity<>(userDetails,HttpStatus.OK);
 	}
 	
-	@RequestMapping(name="/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+/*	@RequestMapping(name="/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserDetails> getUserDetailsByUser(@RequestBody UserAccount userAccount){
 		UserDetails userDetails = userDetailsService.getUserDetailsByUser(userAccount);
 		return new ResponseEntity(userDetails,HttpStatus.OK);
-	}
+	}*/
 	
 	/**
 	 * 
