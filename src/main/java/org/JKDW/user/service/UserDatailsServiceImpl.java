@@ -13,20 +13,20 @@ import org.springframework.stereotype.Service;
 
 
 /**
- * 
+ *
  * @author Igor
- * Te serwisy trzeba ulepszyc narazie niech bedzie ten podstawowy crud 
+ * Te serwisy trzeba ulepszyc narazie niech bedzie ten podstawowy crud
  */
 @Service
 public class UserDatailsServiceImpl implements UserDetailsService {
 
 	@Autowired
 	private UserDetailsRepository userDetailsRepository;
-	
+
 	@Autowired
 	private UserAccountRepository userAccountRepository;
-	
-	
+
+
 	/**
 	 * @return returns all users details
 	 */
@@ -35,10 +35,10 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 		return userDetailsRepository.findAll();
 	}
 
-	
+
 	/**
-	 * 
-	 * @param userAccount 
+	 *
+	 * @param userAccount
 	 * @return returns details about account specified in parameter
 	 * @throws NoResultException when an Account couldn't be found
 	 */
@@ -52,7 +52,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 		return foundUserDetails;
 	}
 
-	
+
 	/**
 	 * Creates users details
 	 * @param userDetails
@@ -62,7 +62,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 */
 	@Override
 	public UserDetails createUserDetails(UserDetails userDetails, Long accountId) throws NoResultException {
-		
+
 		UserAccount foundUserAccount = userAccountRepository.findOne(accountId);
 		if(foundUserAccount == null){
 			throw new NoResultException("Account cannot be found");
@@ -72,10 +72,10 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 		return userDetails;
 	}
 
-	
+
 	/**
 	 * Updates user Details
-	 * @param userDetails - 
+	 * @param userDetails -
 	 * @return updated userDetails
 	 * @throws NoResultException when details couldn't be found
 	 */
@@ -100,7 +100,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 		if(foundUserDetails == null){
 			throw new NoResultException("Cannot delete details. Details not found");
 		}
-		
+
 		userDetailsRepository.delete(id);
 
 	}

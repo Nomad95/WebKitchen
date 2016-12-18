@@ -15,8 +15,8 @@ public class UserAccountServiceImpl implements UserAccountService {
 
 	@Autowired
 	private UserAccountRepository userAccountRepository;
-	
-	
+
+
 	/**
 	 * @return Returns all user accounts
 	 */
@@ -26,7 +26,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 		return accounts;
 	}
 
-	
+
 	/**
 	 * @param An id of user account we want to find
 	 * @return returns one account specified by an id
@@ -37,12 +37,12 @@ public class UserAccountServiceImpl implements UserAccountService {
 		return account;
 	}
 
-	
-	/** 
+
+	/**
 	 * //TODO change UserAccount to UserAccountDTO
 	 * @param userAccount - new account information
 	 * @return returns new account
-	 * @throws Exception when an account with specified id exists 
+	 * @throws Exception when an account with specified id exists
 	 */
 	@Override
 	public UserAccount createUserAccount(UserAccount userAccount) {
@@ -50,7 +50,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 		return userAccount;
 	}
 
-	
+
 	/**
 	 * @param userAccount - an account data we want to update
 	 * @return updated account information
@@ -61,12 +61,12 @@ public class UserAccountServiceImpl implements UserAccountService {
 		if(foundUserAccount == null){
 			throw new NoResultException("Cannot update account. Account doesn't exist");
 		}
-		
+
 		userAccountRepository.save(userAccount);
 		return userAccount;
 	}
 
-	
+
 	/**
 	 * @param id of deleted user account
 	 */
@@ -76,7 +76,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 		if(foundUserAccount == null){
 			throw new NoResultException("Cannot delete account. Account not found");
 		}
-		
+
 		userAccountRepository.delete(id);
 
 	}
