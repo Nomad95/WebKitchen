@@ -37,7 +37,7 @@ public class UserAccountController {
 	 * @param id - id of user account
 	 * @return	user specified by id
 	 */
-/*	@RequestMapping(name="/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+/*	@RequestMapping(value="/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserAccount> getUserAccountById(@PathVariable("id") Long id ){
 		UserAccount userAccount = userAccountService.getUserAccountById(id);
 		return new ResponseEntity<>(userAccount,HttpStatus.OK);
