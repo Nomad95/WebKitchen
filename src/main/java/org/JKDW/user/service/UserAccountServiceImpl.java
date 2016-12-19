@@ -39,7 +39,6 @@ public class UserAccountServiceImpl implements UserAccountService {
 
 
 	/**
-	 * //TODO change UserAccount to UserAccountDTO
 	 * @param userAccount - new account information
 	 * @return returns new account
 	 * @throws Exception when an account with specified id exists

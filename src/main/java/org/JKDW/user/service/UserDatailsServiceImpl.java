@@ -23,9 +23,6 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	@Autowired
 	private UserDetailsRepository userDetailsRepository;
 
-	@Autowired
-	private UserAccountRepository userAccountRepository;
-
 
 	/**
 	 * @return returns all users details
@@ -37,45 +34,38 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 
 
 	/**
-	 *
-	 * @param userAccount
+	 * 
+	 * @param id - id of user account
 	 * @return returns details about account specified in parameter
 	 * @throws NoResultException when an Account couldn't be found
 	 */
 	@Override
-	public UserDetails getUserDetailsByUser(UserAccount userAccount) throws NoResultException{
-		UserAccount foundUserAccount = userAccountRepository.findOne(userAccount.getId());
-		if(foundUserAccount == null){
+	public UserDetails getUserDetailsByUserAccount(Long id) throws NoResultException{
+		UserDetails foundUserDetails = userDetailsRepository.findOne(id);
+		if(foundUserDetails == null){
 			throw new NoResultException("Cannot find account. Account doesn't exist");
 		}
-		UserDetails foundUserDetails = userDetailsRepository.findOne(foundUserAccount.getId());
+		
 		return foundUserDetails;
 	}
 
 
 	/**
-	 * Creates users details
+	 * 
 	 * @param userDetails
-	 * @param accountId - we must specify to which account details are injected to
-	 * @return created user details
+	 * @return created new user details
 	 * @throws Exception, NoResultException
 	 */
 	@Override
-	public UserDetails createUserDetails(UserDetails userDetails, Long accountId) throws NoResultException {
-
-		UserAccount foundUserAccount = userAccountRepository.findOne(accountId);
-		if(foundUserAccount == null){
-			throw new NoResultException("Account cannot be found");
-		}
-		userDetails.setUserAccount(foundUserAccount);
+	public UserDetails createUserDetails(UserDetails userDetails) throws NoResultException {
 		userDetailsRepository.save(userDetails);
 		return userDetails;
 	}
 
 
 	/**
-	 * Updates user Details
-	 * @param userDetails -
+	 *
+	 * @param userDetails 
 	 * @return updated userDetails
 	 * @throws NoResultException when details couldn't be found
 	 */
@@ -90,7 +80,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	}
 
 	/**
-	 * Deletes user details with dpecified id
+	 * 
 	 * @param id - an details id which we want to delete
 	 * @throws NoResultException when details couldn't be found
 	 */

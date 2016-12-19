@@ -6,6 +6,12 @@ import javax.persistence.*;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+/**
+ * We have to use Integer class instead of int
+ * because simple types cannot be null
+ *
+ */
 @Entity
 public class UserDetails {
 
@@ -21,14 +27,17 @@ public class UserDetails {
 	@Size(min = 3, max = 25)
 	private String surname;
 	
-
 	@Size(min = 3, max = 45)
 	private String street;
 	
-	private int streetNumber;
-	private int flatNumber;
+	@Column(nullable=true)
+	private Integer streetNumber;
+	
+	@Column(nullable=true)
+	private Integer flatNumber;
 	
 	@Size(min = 4, max = 10)
+	@Column(nullable=true)
 	private String postCode;
 	
 	@Size(min = 3, max = 45)
@@ -37,10 +46,11 @@ public class UserDetails {
 	private Date birthDate;
 	
 	@Size(min = 6, max = 15)
+	@Column(nullable=true)
 	private String phoneNumber;
 	
-	@Size(max = 1)
-	private char sex;
+	@Column(nullable=true)
+	private Character sex;
 	
 	@Size(max = 255)
 	private String interests;
@@ -51,7 +61,7 @@ public class UserDetails {
 	@Lob @Column( name = "photo" )
 	private byte[] photo;
 	
-	private int profileCompletion;
+	private Integer profileCompletion;
 	
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
@@ -102,22 +112,22 @@ public class UserDetails {
 	}
 
 
-	public int getStreetNumber() {
+	public Integer getStreetNumber() {
 		return streetNumber;
 	}
 
 
-	public void setStreetNumber(int streetNumber) {
+	public void setStreetNumber(Integer streetNumber) {
 		this.streetNumber = streetNumber;
 	}
 
 
-	public int getFlatNumber() {
+	public Integer getFlatNumber() {
 		return flatNumber;
 	}
 
 
-	public void setFlatNumber(int flatNumber) {
+	public void setFlatNumber(Integer flatNumber) {
 		this.flatNumber = flatNumber;
 	}
 
@@ -162,12 +172,12 @@ public class UserDetails {
 	}
 
 
-	public char getSex() {
+	public Character getSex() {
 		return sex;
 	}
 
 
-	public void setSex(char sex) {
+	public void setSex(Character sex) {
 		this.sex = sex;
 	}
 
@@ -202,12 +212,12 @@ public class UserDetails {
 	}
 
 
-	public int getProfileCompletion() {
+	public Integer getProfileCompletion() {
 		return profileCompletion;
 	}
 
 
-	public void setProfileCompletion(int profileCompletion) {
+	public void setProfileCompletion(Integer profileCompletion) {
 		this.profileCompletion = profileCompletion;
 	}
 
