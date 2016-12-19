@@ -11,9 +11,9 @@ public interface UserDetailsService {
 
 	List<UserDetails> getAllUserDetails();
 	
-	UserDetails getUserDetailsByUser(UserAccount userAccount) throws NoResultException;
+	UserDetails getUserDetailsByUserAccount(Long id) throws NoResultException;
 	
-	UserDetails createUserDetails(UserDetails userDetails, Long AccountId) throws NoResultException;
+	UserDetails createUserDetails(UserDetails userDetails) throws NoResultException;
 	
 	UserDetails updateUserDetails(UserDetails userDetails) throws NoResultException;
 	

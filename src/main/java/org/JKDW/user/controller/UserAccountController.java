@@ -33,15 +33,15 @@ public class UserAccountController {
 	}
 	
 	/**
-	 *  //TODO to trzeba bylo wywalic aby dzia³a³o
+	 * 
 	 * @param id - id of user account
 	 * @return	user specified by id
 	 */
-/*	@RequestMapping(value="/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/account/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserAccount> getUserAccountById(@PathVariable("id") Long id ){
 		UserAccount userAccount = userAccountService.getUserAccountById(id);
 		return new ResponseEntity<>(userAccount,HttpStatus.OK);
-	}*/
+	}
 	
 	/**
 	 * 
@@ -56,7 +56,7 @@ public class UserAccountController {
 	
 	/**
 	 * 
-	 * @param userAccount 
+	 * @param userAccount - data to update
 	 * @return updated account information
 	 */
 	@RequestMapping(value="/{id}",method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

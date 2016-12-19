@@ -22,33 +22,40 @@ public class UserDetailsController {
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
+	/**
+	 * 
+	 * @return returns all users details
+	 */
 	@RequestMapping( value="/all",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<UserDetails>> getUserDetails(){
 		List<UserDetails> userDetails = userDetailsService.getAllUserDetails();
 		return new ResponseEntity<>(userDetails,HttpStatus.OK);
 	}
 	
-/*	@RequestMapping(value="/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserDetails> getUserDetailsByUser(@RequestBody UserAccount userAccount){
-		UserDetails userDetails = userDetailsService.getUserDetailsByUser(userAccount);
+	/**
+	 * 
+	 * @param id - id of details we want to find (not id of account)
+	 * @return one user details
+	 */
+	@RequestMapping(value="/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserDetails> getUserDetailsByUserAccount(@PathVariable("id") Long id){
+		UserDetails userDetails = userDetailsService.getUserDetailsByUserAccount(id);
 		return new ResponseEntity(userDetails,HttpStatus.OK);
-	}*/
+	}
 	
 	/**
 	 * 
 	 * @param userDetails - new details
-	 * @param userAccount - to know to which user account we make new datails
 	 * @return created details
 	 */
 	@RequestMapping(value="/create",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserDetails> createUserDetails(@RequestBody UserDetails userDetails,@RequestBody UserAccount userAccount){
-		UserDetails createdUserDetails = userDetailsService.createUserDetails(userDetails, userAccount.getId());
+	public ResponseEntity<UserDetails> createUserDetails(@RequestBody UserDetails userDetails){
+		UserDetails createdUserDetails = userDetailsService.createUserDetails(userDetails);
 		return new ResponseEntity(createdUserDetails,HttpStatus.CREATED);
 	}
 	
 	/**
-	 * //TODO Moze lepiej jak podamy id account a nie id detailsow?
-	 * //TODO zmien request mapping
+	 * 
 	 * @param userDetails to update
 	 * @return updated user details
 	 */
