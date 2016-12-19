@@ -26,7 +26,7 @@ public class UserAccountController {
 	 * 
 	 * @return all user accounts
 	 */
-	@RequestMapping( name="/all",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping( value="/all",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<UserAccount>> getUserAccounts(){
 		List<UserAccount> userAccounts = userAccountService.getAllUserAccounts();
 		return new ResponseEntity<>(userAccounts,HttpStatus.OK);
@@ -48,7 +48,7 @@ public class UserAccountController {
 	 * @param userAccount new user account info
 	 * @return new user
 	 */
-	@RequestMapping(name="/create",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/create",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserAccount> createUserAccount(@RequestBody UserAccount userAccount){
 		UserAccount createdUserAccount = userAccountService.createUserAccount(userAccount);
 		return new ResponseEntity<>(createdUserAccount,HttpStatus.CREATED);
@@ -59,7 +59,7 @@ public class UserAccountController {
 	 * @param userAccount 
 	 * @return updated account information
 	 */
-	@RequestMapping(name="/{id}",method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/{id}",method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserAccount> updateUserAccount(@RequestBody UserAccount userAccount){
 		UserAccount updatedUserAccount = userAccountService.updateUserAccount(userAccount);
 		return new ResponseEntity<>(updatedUserAccount,HttpStatus.OK);
@@ -69,7 +69,7 @@ public class UserAccountController {
 	 * 
 	 * @param id - id of deleting account
 	 */
-	@RequestMapping(name="/{id}",method = RequestMethod.DELETE)
+	@RequestMapping(value="/{id}",method = RequestMethod.DELETE)
 	public ResponseEntity deleteUserAccount(@PathVariable("id") Long id){
 		userAccountService.deleteUserAccount(id);
 		return new ResponseEntity(HttpStatus.OK);
