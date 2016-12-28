@@ -9,7 +9,7 @@ import { UserComponent } from './user/user.component';
 const appRoutes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'calendar', component: CalendarComponent},
-    {path: 'hello', component: HelloComponent}
+    {path: 'hello', component: HelloComponent},
     {path: 'user', component: UserComponent}
 ];
 
