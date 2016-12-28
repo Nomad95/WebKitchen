@@ -1,12 +1,4 @@
-# spring-boot-angular2 starter kit
 
-Spring Boot with Angular2, Bootstrap4, TypeScript, Sass, Gradle, and Gulp.
-
-## about
-
-a starter project for prototyping restful applications with spring boot, angular2, and bootstrap4.
-
-anuglar2 with es6 support. unit tests with jasmine.
 
 ## pre-install
 
@@ -27,24 +19,7 @@ anuglar2 with es6 support. unit tests with jasmine.
 * `$ gradle clean build bootRun`
 * using browser, navigate to`localhost:8080`
 
-## further reading
 
-[wiki](https://github.com/borysn/spring-boot-angular2/wiki)
-
-## example
-
-check out my **rvep** project. it's built and updated according to this starter kit!
-
-[rvep | dev_backend](https://github.com/rvep/dev_backend)
-
-[rvep | dev_frontend](https://github.com/rvep/dev_frontend)
-
-## contribute
-
-if you have any input, or contributions, please share!
-
-## donations
-[donate](https://www.paypal.me/BorysNiewiadomski) a cup of coffee
 
 ## license
 [MIT](/LICENSE)
