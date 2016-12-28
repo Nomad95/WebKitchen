@@ -1,5 +1,4 @@
 
-
 ## pre-install
 
 1. install OpenJDK8
@@ -10,9 +9,6 @@
     - set `PYTHON` environment variable
     - `$ gradle npminstall` may complain otherwise
 
-## install
-
-`$ git clone git@github.com:borysn/spring-boot-angular2 -b single-server`
 
 ## build & run
 
