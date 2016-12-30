@@ -11,15 +11,13 @@ import { HelloComponent } from './hello/hello.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
-import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
     declarations: [AppComponent,
                    HelloComponent,
                    CalendarComponent,
                    HomeComponent,
-                 UserComponent,
-                 RegistrationComponent],
+                 UserComponent],
     imports: [BrowserModule,
               FormsModule,
               ReactiveFormsModule,
