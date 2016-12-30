@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'spring-boot-angular2',
-    templateUrl: 'app/app.component.html',
+    template: '<router-outlet></router-outlet>',
     styleUrls: ['css/app.css'],
     encapsulation: ViewEncapsulation.None
 })
