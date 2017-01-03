@@ -1,0 +1,35 @@
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <form >
+                    <div class="form-group">
+                        <label>Login</label>
+                        <input type="text" class="form-control" name="userAccountToAdd.login" 
+                        [(ngModel)]="userAccountToAdd.login">
+                    </div>
+                    <div class="form-group">
+                        <label>Hasło</label>
+                        <input type="text" class="form-control" name="userAccountToAdd.password" 
+                        [(ngModel)]="userAccountToAdd.password">
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" class="form-control" name="userAccountToAdd.e_mail"
+                         [(ngModel)]="userAccountToAdd.e_mail">
+                    </div>
+                    <div class="form-group">
+                        <label>Państwo</label>
+                        <input type="text" class="form-control" name="userAccountToAdd.country" 
+                        [(ngModel)]="userAccountToAdd.country">
+                    </div>
+                    <div class="form-group">
+                        <label>Nick</label>
+                        <input type="text" class="form-control" name="userAccountToAdd.nick" 
+                        [(ngModel)]="userAccountToAdd.nick">
+                    </div>
+                    <button type="submit" class="btn btn-default" (click)="createUserAccount(userAccountToAdd)">OK</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
