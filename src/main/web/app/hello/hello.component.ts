@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HelloService } from './hello.service';
+import { Model} from 'model/model';
 
 interface MessageJson {
     title: string;
