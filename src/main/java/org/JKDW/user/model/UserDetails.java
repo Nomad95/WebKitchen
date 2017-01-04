@@ -61,6 +61,10 @@ public class UserDetails {
 	@Lob @Column( name = "photo" )
 	private byte[] photo;
 	
+	@OneToOne
+	@JoinColumn(name = "preferred_cuisine_id")
+	private Cuisines preferredCuisine;
+	
 	private Integer profileCompletion;
 	
 	
