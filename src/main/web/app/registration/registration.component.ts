@@ -10,7 +10,7 @@ import { RegistrationService } from './registration.service';
 })
 export class RegistrationComponent implements OnInit, OnDestroy {
     userAccountToAdd = {
-      login: '',
+      username: '',
       password: '',
       e_mail: '',
       country: '',
@@ -31,7 +31,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
         .createUserAccount(data)
         .subscribe(newAccount => {
             this.userAccountToAdd = {
-                  login: '',
+                  username: '',
                   password: '',
                   e_mail: '',
                   country: '',

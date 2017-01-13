@@ -1,6 +1,6 @@
 
 
-INSERT INTO  user_account(id, country, e_mail, is_filled, is_verified, login, nick, password)
+INSERT INTO  user_account(id, country, e_mail, is_filled, is_verified, username, nick, password)
 VALUES (1,'Polska' ,'Truskawki@gmail.com',true,true,'walecznyrycerz99',	'Pogromca smaku','123456'),
 (2,	'Polska','borkowski95@onet.pl',	true,true,'noth168','Braines','borkowski95'),
 ( 3,'Polska','jechaneztymkoksem@wp.pl',true,true,'Terqa5','Terka99'	,'terkavlog');
