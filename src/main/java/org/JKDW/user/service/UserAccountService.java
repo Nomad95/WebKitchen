@@ -22,5 +22,7 @@ public interface UserAccountService {
 	UserAccount updateUserAccount(UserAccount userAccount) throws NoResultException;
 	
 	void deleteUserAccount(Long id) throws NoResultException;
+
+	UserAccount loadUserByUsername(String username);
 	
 }

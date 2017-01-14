@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
  * because simple types cannot be null
  *
  */
-@Entity
+@Entity (name = "user_details")
 public class UserDetails {
 
 	@Id
