@@ -13,6 +13,11 @@ import java.io.IOException;
 @Component(value = "authenticationEntryPoint")
 public class EntryPointUnauthorizedHandler implements AuthenticationEntryPoint {
 
+
+    /**
+     * Metoda ustalająca co ma zwracać serwer podczas niezgodnych danych
+     */
+
     @Override
     public void commence(HttpServletRequest httpServletRequest,
                          HttpServletResponse httpServletResponse,
