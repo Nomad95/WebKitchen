@@ -1,9 +1,11 @@
 package org.JKDW.user.model;
 
+import jdk.nashorn.internal.ir.annotations.Ignore;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-@Entity
+@Entity(name = "user_account")
 public class UserAccount {
 
 	@Id
@@ -15,7 +17,7 @@ public class UserAccount {
 	private String username;
 	
 	@NotNull
-	@Size(min = 6, max = 45)
+	@Size(min = 6, max = 100)
 	private String password;
 	
 	@NotNull
@@ -29,8 +31,12 @@ public class UserAccount {
 	@NotNull
 	@Size(min = 4, max =25)
 	private String nick;
-	
+
+	private String authorities;
+
+	@Column(name = "is_filled")
 	private Boolean isFilled;
+	@Column(name = "is_Verified")
 	private Boolean isVerified;
 	
 	public UserAccount(){
@@ -85,5 +91,11 @@ public class UserAccount {
 	public void setIsVerified(Boolean isVerified) {
 		this.isVerified = isVerified;
 	}
+	public String getAuthorities() {
+		return authorities;
+	}
 
+	public void setAuthorities(String authorities) {
+		this.authorities = authorities;
+	}
 }

@@ -6,15 +6,21 @@ import javax.persistence.NoResultException;
 
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.repository.UserAccountRepository;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
 
 	@Autowired
 	private UserAccountRepository userAccountRepository;
+
+	@Autowired
+	private SessionFactory sessionFactory;
 
 
 	/**
@@ -28,7 +34,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 
 
 	/**
-	 * @param An id of user account we want to find
+	 * @param id of user account we want to find
 	 * @return returns one account specified by an id
 	 */
 	@Override
@@ -78,6 +84,15 @@ public class UserAccountServiceImpl implements UserAccountService {
 
 		userAccountRepository.delete(id);
 
+	}
+
+	@Override
+	@Transactional
+	public UserAccount loadUserByUsername(String username) {
+		return (UserAccount) sessionFactory.getCurrentSession()
+				.createCriteria(UserAccount.class)
+				.add(Restrictions.eq("username", username))
+				.uniqueResult();
 	}
 
 }
