@@ -64,10 +64,26 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers( "/login.html").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/registration").permitAll()
+                .antMatchers("/home").permitAll()
                 .antMatchers("/auth/**").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers("/api/user/create").permitAll()
+                .antMatchers(HttpMethod.POST, "/auth").permitAll()
+                //lets say we dont allow users to get to /callendar and /user (i tak nie dziala jak powinno ;p)
+                .antMatchers("/calendar").authenticated()
+                .antMatchers("/user").authenticated()
+                //for frontend loading
+                .antMatchers("/**/*.html").permitAll()
+                .antMatchers("/css/**").permitAll()
+                .antMatchers("/js/**").permitAll()
+                .antMatchers("/systemjs.config.js").permitAll()
+                .antMatchers(HttpMethod.GET,"/app/**/*.js").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().permitAll();
 
         // Custom JWT based authentication
         httpSecurity
