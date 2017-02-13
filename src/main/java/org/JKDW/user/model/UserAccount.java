@@ -1,6 +1,6 @@
 package org.JKDW.user.model;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
+//import jdk.nashorn.internal.ir.annotations.Ignore;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;

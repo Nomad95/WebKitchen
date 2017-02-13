@@ -1,5 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { LocationStrategy, HashLocationStrategy, APP_BASE_HREF } from '@angular/common';
+import { LocationStrategy, PathLocationStrategy, APP_BASE_HREF } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -12,6 +12,8 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { LoginComponent } from './login/login.component';
+
 
 @NgModule({
     declarations: [AppComponent,
@@ -19,7 +21,8 @@ import { RegistrationComponent } from './registration/registration.component';
                    CalendarComponent,
                    HomeComponent,
                  UserComponent,
-                 RegistrationComponent],
+                 RegistrationComponent,
+                 LoginComponent],
     imports: [BrowserModule,
               FormsModule,
               ReactiveFormsModule,
@@ -31,7 +34,7 @@ import { RegistrationComponent } from './registration/registration.component';
     providers: [
         appRouterProviders,
         [{provide: APP_BASE_HREF, useValue: '/'}],
-        [{provide: LocationStrategy, useClass: HashLocationStrategy}]
+        [{provide: LocationStrategy, useClass: PathLocationStrategy}]
     ],
     bootstrap: [AppComponent]
 })
