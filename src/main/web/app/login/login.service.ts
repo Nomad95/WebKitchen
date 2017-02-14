@@ -7,15 +7,35 @@ import 'rxjs/Rx';
 
 @Injectable()
 export class LoginService{
-	  
+	  public token: string;
+
 	private headers = new Headers({
           'content-type' : 'application/json'});
 	
-	constructor(private http: Http) { }
+	constructor(private http: Http) {
+		var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+      	this.token = currentToKey && currentToKey.token;
+         }
 
-	getToken(credentials): Observable<String>{
+	getToken(credentials): Observable<boolean>{
 		return this.http.post('/auth',JSON.stringify(credentials),{headers :this.headers})
-				.map(res => res.json())
+				.map(res => {
+                // login successful if there's a jwt token in the response
+                let token = res.json() && res.json().token;
+                if (token) {
+                    // set token property
+                    this.token = token;
+ 
+                    // store username and jwt token in local storage to keep user logged in between page refreshes
+                    localStorage.setItem('toKey', JSON.stringify({ username: credentials.username, token: token }));
+ 
+                    // return true to indicate successful login
+                    return true;
+                } else {
+                    // return false to indicate failed login
+                    return false;
+                }
+            })
 				.catch(this.handleError);
 	}
 	

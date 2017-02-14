@@ -1,20 +1,22 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { LoginService } from './login.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'login',
     templateUrl: 'app/login/login.component.html',
-     providers: [LoginService, Location, {provide: LocationStrategy, useClass: PathLocationStrategy}]
+     providers: [LoginService]
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-    constructor(private loginService: LoginService, location: Location) {}
+    constructor(private loginService: LoginService, private router: Router) {}
 
     credentials = {
       username: '',
       password: ''
     }
+
+    //model: any = {}; -przyda sie 
 
     // on-init
     ngOnInit() {
@@ -27,14 +29,18 @@ export class LoginComponent implements OnInit, OnDestroy {
     login(credentials): void{
       this.loginService
         .getToken(credentials)
-        .subscribe( newToken =>{
-          localStorage.setItem('toKey', JSON.stringify(newToken.token));
-          this.credentials = {
+        .subscribe( result =>{
+          if(result===true){
+            this.credentials = {
             username: '',
             password: ''
-          };
+            };
+            
+            this.router.navigate(['/']);
+          }
+          
 
-        }
+        });
 
     }
 
