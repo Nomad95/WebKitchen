@@ -16,7 +16,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: ''
     }
 
-    //model: any = {}; -przyda sie 
 
     // on-init
     ngOnInit() {
@@ -36,10 +35,11 @@ export class LoginComponent implements OnInit, OnDestroy {
             password: ''
             };
             
+            //forwards to main page
             this.router.navigate(['/']);
           }
           
-
+          this.loginService.isLogged();
         });
 
     }
