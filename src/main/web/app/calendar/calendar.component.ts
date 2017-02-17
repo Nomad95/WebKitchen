@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 
 @Component({
     selector: 'calendar',
@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class CalendarComponent {
 
+    private token: any;
     // date picker
     public date:Date = new Date();
     private _minDate:Date = null;
@@ -25,4 +26,6 @@ export class CalendarComponent {
     public getDate():number {
       return this.date && this.date.getTime() || new Date().getTime();
     }
+
+    
 }

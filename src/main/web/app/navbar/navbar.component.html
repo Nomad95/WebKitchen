@@ -1,0 +1,11 @@
+<div class="container">
+        <p class="h1 title">Kuchnia po sąsiedzku</p>
+    </div>
+    <div class="container nav">
+        <a [routerLink]="['hello']" class="btn btn-primary" (click)="checkToken()">Hello Page</a>
+        <a [routerLink]="['calendar']" class="btn btn-primary" (click)="checkToken()">Calendar Page</a>
+        <a [routerLink]="['user']" class="btn btn-primary" (click)="checkToken()">User Page</a>
+        <a [routerLink]="['login']" class="btn btn-primary pull-right" *ngIf="!this.loginService.token" (click)="checkToken()">Login</a>
+        <a [routerLink]="['login']" class="btn btn-primary pull-right" *ngIf="this.loginService.token" (click)="logout()">Logout</a>
+        <a [routerLink]="['registration']" class="btn btn-primary pull-right" (click)="checkToken()">Rejestracja</a>
+    </div>

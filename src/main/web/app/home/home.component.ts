@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 
 @Component({
     selector: 'home',
     templateUrl: 'app/home/home.component.html',
-    styleUrls: ['css/home.css']
+    styleUrls: ['css/home.css'],
 })
-export class HomeComponent {}
+export class HomeComponent  {
+
+}
