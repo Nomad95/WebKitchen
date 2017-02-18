@@ -29,8 +29,8 @@ import { NavbarComponent } from './navbar/navbar.component';
               FormsModule,
               ReactiveFormsModule,
               HttpModule,
-              AlertModule,
-              DatepickerModule,
+              AlertModule.forRoot(),
+              DatepickerModule.forRoot(),
               routing],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
