@@ -9,6 +9,7 @@ import org.JKDW.user.repository.UserAccountRepository;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,6 +52,11 @@ public class UserAccountServiceImpl implements UserAccountService {
 	 */
 	@Override
 	public UserAccount createUserAccount(UserAccount userAccount) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
+		userAccount.setIsFilled(false);
+		userAccount.setIsVerified(false);
+		userAccount.setAuthorities("ROLE_USER");
 		userAccountRepository.save(userAccount);
 		return userAccount;
 	}
