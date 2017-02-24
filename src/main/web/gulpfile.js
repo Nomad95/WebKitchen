@@ -9,7 +9,7 @@ var tsProject = ts.createProject('tsconfig.json', {typescript: require('typescri
 
 // vars
 var staticDir = '../../../build/generated-web-resources/static/';
-
+var cssDir = './assets/';
 // assets copy
 gulp.task('assetscopy', function() {
 
@@ -118,10 +118,30 @@ gulp.task('sass', function() {
         .pipe(gulp.dest(staticDir + 'css'));
 });
 
+
 // sass watch compile
 gulp.task('sassw', function() {
     gulp.watch('./sass/**/*.scss', ['sass']);
 });
+
+
+//css watch compile
+gulp.task('css', function() {
+  // clean dest
+  del([staticDir + 'css/*.css'], {force: true});
+  
+  // copy css templates
+  gulp.src('./assets/css/*.css')
+      .pipe(gulp.dest(staticDir + 'css'));
+
+});
+
+//css watch compile 
+gulp.task('cssw', function() {
+  gulp.watch(['./assets/css/*.css'], ['css', 'sass']);
+});
+
+
 
 // typescript compile
 gulp.task('tsc', function() {
@@ -146,16 +166,12 @@ gulp.task('tscw', function() {
                 ['htmlcopy', 'tsc']);
 });
 
-gulp.task('cssw', function() {
-    gulp.watch(['./assets/**/*.css'],
-                ['htmlcopy']);
-});
 
 // build sass and ts, copy libs, copy html
 gulp.task('build', ['htmlcopy', 'sass', 'tsc', 'assetscopy', 'libcopy']);
 
 // watch sass, ts, and html
-gulp.task('watch', ['build', 'sassw', 'htmlw', 'tscw', 'cssw']);
+gulp.task('watch', ['build', 'cssw', 'sassw', 'htmlw', 'tscw']);
 
 // default
 gulp.task('default', ['build']);
