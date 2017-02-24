@@ -1,5 +1,7 @@
-$bg-color: #5e35b1;
-$font-color: #ffffff;
+$bg-color: #1F6BAD;
+$font-color: #D2ECF7;
+$navbar-bg: #212324;
+$navbar-font: #797F82;
 
 html {
 	margin: 0 auto;
@@ -9,8 +11,23 @@ html {
 body {
   background-color: $bg-color;
   color: $font-color;
+  padding-top: 45px;
 }
 
 .nav {
   width: auto;
 }
+
+
+#sidebar-wrapper { 
+  background-color: $navbar-bg;
+  color: $navbar-font;
+  padding-top: 25px;
+  font-size: large;
+}
+
+.navbar-inverse {
+  background-color: $navbar-bg !important;
+  color: $navbar-font !important;
+}
+

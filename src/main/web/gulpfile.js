@@ -22,6 +22,8 @@ gulp.task('assetscopy', function() {
       .pipe(gulp.dest(staticDir + 'css'));
       gulp.src(['./assets/img/**'])
           .pipe(gulp.dest(staticDir + 'img'));
+	gulp.src(['./assets/js/**'])
+          .pipe(gulp.dest(staticDir + 'js'));
 });
 
 // lib copy
@@ -144,11 +146,16 @@ gulp.task('tscw', function() {
                 ['htmlcopy', 'tsc']);
 });
 
+gulp.task('cssw', function() {
+    gulp.watch(['./assets/**/*.css'],
+                ['htmlcopy']);
+});
+
 // build sass and ts, copy libs, copy html
 gulp.task('build', ['htmlcopy', 'sass', 'tsc', 'assetscopy', 'libcopy']);
 
 // watch sass, ts, and html
-gulp.task('watch', ['build', 'sassw', 'htmlw', 'tscw']);
+gulp.task('watch', ['build', 'sassw', 'htmlw', 'tscw', 'cssw']);
 
 // default
 gulp.task('default', ['build']);
