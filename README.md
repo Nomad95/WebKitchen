@@ -20,7 +20,7 @@
 
 * `$ gradle gulp_watch`
 
-# Refresh FrontEnd, witchout Spring rerun
+### Refresh FrontEnd, witchout Spring rerun
 
 * `$ gradle gulp_build`
 
