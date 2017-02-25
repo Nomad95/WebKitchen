@@ -12,9 +12,17 @@
 
 ## build & run
 
-* `$ gradle clean build bootRun`
+* `$ gradle build`
+* `Run as SpringBoot App`
 * using browser, navigate to`localhost:8080`
 
+## FrontEnd watcher
+
+* `$ gradle gulp_watch`
+
+## Gdy zepsuje się FrontEnd, można go odświeżyć bez ponownego startu SpringBoot-a
+
+* `$ gradle gulp_build`
 
 
 ## license
