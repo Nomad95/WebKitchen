@@ -9,7 +9,6 @@
     - set `PYTHON` environment variable
     - `$ gradle npminstall` may complain otherwise
 
-
 ## build & run
 
 * `$ gradle build`
@@ -20,7 +19,7 @@
 
 * `$ gradle gulp_watch`
 
-### Refresh FrontEnd, witchout Spring rerun
+### Refresh FrontEnd, witchout SpringBoot restart
 
 * `$ gradle gulp_build`
 
