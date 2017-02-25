@@ -20,7 +20,7 @@
 
 * `$ gradle gulp_watch`
 
-## Gdy zepsuje się FrontEnd, można go odświeżyć bez ponownego startu SpringBoot-a
+# Refresh FrontEnd, witchout Spring rerun
 
 * `$ gradle gulp_build`
 
