@@ -1,6 +1,8 @@
 package org.JKDW.user.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 import javax.persistence.Id;
@@ -18,63 +20,83 @@ public class UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
-	
+
 	@NotNull
 	@Size(min = 3, max = 25)
 	private String name;
-	
+
 	@NotNull
 	@Size(min = 3, max = 25)
 	private String surname;
-	
+
 	@Size(min = 3, max = 45)
 	private String street;
-	
+
 	@Column(nullable=true)
 	private Integer streetNumber;
-	
+
 	@Column(nullable=true)
 	private Integer flatNumber;
-	
+
 	@Size(min = 4, max = 10)
 	@Column(nullable=true)
 	private String postCode;
-	
+
 	@Size(min = 3, max = 45)
 	private String city;
-	
+
 	private Date birthDate;
-	
+
 	@Size(min = 6, max = 15)
 	@Column(nullable=true)
 	private String phoneNumber;
-	
+
 	@Column(nullable=true)
 	private Character sex;
-	
+
 	@Size(max = 255)
 	private String interests;
-	
+
 	@Lob @Column( name = "description" )
-	private byte[] description;
-	
+	private String description;
+
 	@Lob @Column( name = "photo" )
 	private byte[] photo;
-	
+
 	@OneToOne
 	@JoinColumn(name = "preferred_cuisine_id")
 	private Cuisines preferredCuisine;
-	
+
 	private Integer profileCompletion;
-	
-	
+
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "user_account_Id")
     private UserAccount userAccount;
 
+	@ManyToMany
+	private List<Event> events;
+
 	public UserDetails(){
-		
+
 	}
+
+	public List<Event> getEvents() {
+		return events;
+	}
+
+	public void setEvents(List<Event> events) {
+		this.events = events;
+	}
+
+	public Cuisines getPreferredCuisine() {
+		return preferredCuisine;
+	}
+
+
+	public void setPreferredCuisine(Cuisines preferredCuisine) {
+		this.preferredCuisine = preferredCuisine;
+	}
+
 
 	public Long getId() {
 		return Id;
@@ -196,12 +218,12 @@ public class UserDetails {
 	}
 
 
-	public byte[] getDescription() {
+	public String getDescription() {
 		return description;
 	}
 
 
-	public void setDescription(byte[] description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
@@ -234,5 +256,5 @@ public class UserDetails {
 	public void setUserAccount(UserAccount userAccount) {
 		this.userAccount = userAccount;
 	}
-	
+
 }
