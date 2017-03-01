@@ -4,6 +4,8 @@ package org.JKDW.user.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "user_account")
 public class UserAccount {
@@ -11,23 +13,23 @@ public class UserAccount {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long Id;
-	
+
 	@NotNull
 	@Size(min = 4, max = 45)
 	private String username;
-	
+
 	@NotNull
 	@Size(min = 6, max = 100)
 	private String password;
-	
+
 	@NotNull
 	@Size(min = 5, max = 45)
 	private String e_mail;
-	
+
 	@NotNull
 	@Size(min = 4, max = 45)
 	private String country;
-	
+
 	@NotNull
 	@Size(min = 4, max =25)
 	private String nick;
@@ -36,13 +38,29 @@ public class UserAccount {
 
 	@Column(name = "is_filled")
 	private Boolean isFilled;
+
 	@Column(name = "is_Verified")
 	private Boolean isVerified;
-	
+
 	public UserAccount(){
-		
+
 	}
-	
+
+	public Boolean getFilled() {
+		return isFilled;
+	}
+
+	public void setFilled(Boolean filled) {
+		isFilled = filled;
+	}
+
+	public Boolean getVerified() {
+		return isVerified;
+	}
+
+	public void setVerified(Boolean verified) {
+		isVerified = verified;
+	}
 	public Long getId() {
 		return Id;
 	}
@@ -94,7 +112,6 @@ public class UserAccount {
 	public String getAuthorities() {
 		return authorities;
 	}
-
 	public void setAuthorities(String authorities) {
 		this.authorities = authorities;
 	}
