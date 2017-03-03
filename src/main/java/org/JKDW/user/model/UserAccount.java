@@ -43,7 +43,6 @@ public class UserAccount {
 	private Boolean isVerified;
 
 	public UserAccount(){
-
 	}
 
 	public Boolean getFilled() {
