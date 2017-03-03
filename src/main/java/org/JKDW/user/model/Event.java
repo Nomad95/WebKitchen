@@ -1,5 +1,7 @@
 package org.JKDW.user.model;
 
+import org.hibernate.annotations.Type;
+
 import java.sql.Time;
 import java.util.Date;
 import java.util.List;
@@ -71,6 +73,7 @@ public class Event {
      */
     @Lob
     @Column(name = "description")
+    @Type(type = "org.hibernate.type.TextType")
     private String description;
 
     /**
@@ -88,6 +91,8 @@ public class Event {
      */
     @Lob
     @Column(name = "shopping_list", nullable = true)
+    //throws an exception without @Type annotation
+    @Type(type = "org.hibernate.type.TextType")
     private String shopping_list;
 
     /**
@@ -95,6 +100,7 @@ public class Event {
      */
     @Lob
     @Column(name = "products_list", nullable = true)
+    @Type(type = "org.hibernate.type.TextType")
     private String products_list;
 
     /**
