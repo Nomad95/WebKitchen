@@ -21,11 +21,9 @@ public class UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
 
-	@NotNull
 	@Size(min = 3, max = 25)
 	private String name;
 
-	@NotNull
 	@Size(min = 3, max = 25)
 	private String surname;
 

@@ -4,8 +4,7 @@ package org.JKDW.user.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 @Entity(name = "user_account")
 public class UserAccount {
@@ -42,21 +41,46 @@ public class UserAccount {
 	@Column(name = "is_Verified")
 	private Boolean isVerified;
 
+	@Column(name = "created_at")
+	private Date createdAt;
+
+	@Column(name = "last_logged")
+	private Date lastLogged;
+
+	//metoda wywolywana przy INSERTcie
+	@PrePersist
+	protected void onCreate() {
+		createdAt = new Date();
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getLastLogged() {
+		return lastLogged;
+	}
+
+	public void setLastLogged(Date lastLogged) {
+		this.lastLogged = lastLogged;
+	}
+
 	public UserAccount(){
 	}
 
 	public Boolean getFilled() {
 		return isFilled;
 	}
-
 	public void setFilled(Boolean filled) {
 		isFilled = filled;
 	}
-
 	public Boolean getVerified() {
 		return isVerified;
 	}
-
 	public void setVerified(Boolean verified) {
 		isVerified = verified;
 	}
