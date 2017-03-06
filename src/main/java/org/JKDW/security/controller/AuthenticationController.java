@@ -5,6 +5,8 @@ import org.JKDW.security.TokenUtils;
 import org.JKDW.security.model.AuthenticationRequest;
 import org.JKDW.security.model.AuthenticationResponse;
 import org.JKDW.security.model.SpringSecurityUser;
+import org.JKDW.user.model.UserAccount;
+import org.JKDW.user.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 @RestController
 @RequestMapping("auth")
@@ -32,6 +35,9 @@ public class AuthenticationController  {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private UserAccountService userAccountService;
 
 
     /** Metoda po wykonaniu żądania POST z username i hasłem zwraca token zawierający zaszyfrowane hasło, username,
@@ -55,6 +61,10 @@ public class AuthenticationController  {
         // Reload password post-authentication so we can generate token
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         String token = this.tokenUtils.generateToken(userDetails);
+        //to update lastLogged date
+        UserAccount userAccount = this.userAccountService.loadUserByUsername(authenticationRequest.getUsername());
+        userAccount.setLastLogged(new Date());
+        this.userAccountService.updateUserAccount(userAccount);
 
         // Return the token
         return ResponseEntity.ok(new AuthenticationResponse(token));

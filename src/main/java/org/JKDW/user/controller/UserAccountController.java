@@ -23,10 +23,13 @@ public class UserAccountController {
 
 	@Autowired
 	private UserAccountService userAccountService;
-	
-	
+
+	@Autowired
+	private UserDetailsService userDetailsService;
+
+
 	/**
-	 * 
+	 *
 	 * @return all user accounts
 	 */
 	@RequestMapping( value="/all",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -34,9 +37,9 @@ public class UserAccountController {
 		List<UserAccount> userAccounts = userAccountService.getAllUserAccounts();
 		return new ResponseEntity<>(userAccounts,HttpStatus.OK);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param id - id of user account
 	 * @return	user specified by id
 	 */
@@ -45,20 +48,24 @@ public class UserAccountController {
 		UserAccount userAccount = userAccountService.getUserAccountById(id);
 		return new ResponseEntity<>(userAccount,HttpStatus.OK);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param userAccount new user account info
 	 * @return new user
 	 */
 	@RequestMapping(value="/create",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserAccount> createUserAccount(@RequestBody UserAccount userAccount){
 		UserAccount createdUserAccount = userAccountService.createUserAccount(userAccount);
+		//create details and link it with userAccount
+		UserDetails userDetails = new UserDetails();
+		userDetails.setUserAccount(createdUserAccount);
+		userDetailsService.createUserDetails(userDetails);
 		return new ResponseEntity<>(createdUserAccount,HttpStatus.CREATED);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param userAccount - data to update
 	 * @return updated account information
 	 */
@@ -67,9 +74,9 @@ public class UserAccountController {
 		UserAccount updatedUserAccount = userAccountService.updateUserAccount(userAccount);
 		return new ResponseEntity<>(updatedUserAccount,HttpStatus.OK);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param id - id of deleting account
 	 */
 	@RequestMapping(value="/{id}",method = RequestMethod.DELETE)
