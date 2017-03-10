@@ -24,6 +24,5 @@ public interface UserAccountService {
 	void deleteUserAccount(Long id) throws NoResultException;
 
 	UserAccount loadUserByUsername(String username);
-
 	
 }

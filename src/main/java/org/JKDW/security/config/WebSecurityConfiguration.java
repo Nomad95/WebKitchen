@@ -79,7 +79,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/globals").permitAll()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
-                .antMatchers("/img/**").permitAll()
                 .antMatchers("/systemjs.config.js").permitAll()
                 .antMatchers(HttpMethod.GET,"/app/**/*.js").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()

@@ -7,7 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
-import { ProfileComponent } from './profile/profile.component';
+
 
 const appRoutes: Routes = [
     {path: '', component: HomeComponent},
@@ -15,8 +15,7 @@ const appRoutes: Routes = [
     {path: 'hello', component: HelloComponent},
     {path: 'user', component: UserComponent},
     {path: 'registration', component: RegistrationComponent},
-    {path: 'login', component: LoginComponent},
-    {path: 'profile', component: ProfileComponent}
+    {path: 'login', component: LoginComponent}
 ];
 
 export const appRouterProviders: any[] = [];
