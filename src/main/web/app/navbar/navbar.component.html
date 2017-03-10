@@ -1,3 +1,4 @@
+<div class="col-md-11">
 <nav class="navbar-inverse navbar-default navbar-fixed-top">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -19,7 +20,7 @@
           <i class="fa fa-user"></i> User <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li>
-                <a  href="javascript:;"><i class="fa fa-fw fa-user"></i> Profil</a>
+                <a  [routerLink]="['/profile']"><i class="fa fa-fw fa-user"></i> Profil</a>
             </li>
             <li>
                 <a href="javascript:;"><i class="fa fa-fw fa-envelope"></i> Wiadomości</a>
@@ -37,3 +38,4 @@
       </ul>
     </div><!--/.nav-collapse -->
     </nav>
+    </div>
