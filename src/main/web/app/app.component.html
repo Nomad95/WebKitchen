@@ -1,19 +1,9 @@
-
-	<div class="row">
-		<navbar></navbar>
+<navbar></navbar>
+<div id="wrapper">
+	<div id="sidebar-wrapper">
+		<side-navbar></side-navbar>
 	</div>
-	<div class="row">
-		<div id="wrapper">
-			<!-- <div class="col-md-1"> -->
-				<div id="sidebar-wrapper">
-					<side-navbar></side-navbar>
-				</div>
-			<!-- </div> -->
-			<!-- <div class="col-md-11"> -->
-			<div id="page-content-wrapper">
-			    <router-outlet ></router-outlet>
-			</div>
-			<!-- </div> -->
-			
-		</div>
+	<div id="page-content-wrapper">
+	    <router-outlet ></router-outlet>
 	</div>
+</div>

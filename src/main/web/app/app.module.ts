@@ -13,7 +13,6 @@ import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
-import { ProfileComponent } from './profile/profile.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SideNavbarComponent } from './side_navbar/side-navbar.component';
 
@@ -26,7 +25,6 @@ import { SideNavbarComponent } from './side_navbar/side-navbar.component';
                  UserComponent,
                  RegistrationComponent,
                  LoginComponent,
-                 ProfileComponent,
                  NavbarComponent,
                  SideNavbarComponent],
     imports: [BrowserModule,
