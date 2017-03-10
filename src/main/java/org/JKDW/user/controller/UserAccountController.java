@@ -40,12 +40,12 @@ public class UserAccountController {
 
 	/**
 	 *
-	 * @param id - id of user account
-	 * @return	user specified by id
+	 * @param name - username of user account
+	 * @return	user specified by name
 	 */
-	@RequestMapping(value="/account/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserAccount> getUserAccountById(@PathVariable("id") Long id ){
-		UserAccount userAccount = userAccountService.getUserAccountById(id);
+	@RequestMapping(value="/account/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserAccount> getUserAccountByName(@PathVariable("name") String name ){
+		UserAccount userAccount = userAccountService.loadUserByUsername(name);
 		return new ResponseEntity<>(userAccount,HttpStatus.OK);
 	}
 
