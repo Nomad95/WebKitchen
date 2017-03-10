@@ -4,13 +4,18 @@
                 <form >
                     <div class="form-group">
                         <label>Login</label>
-                        <input type="text" class="form-control" name="userAccountToAdd.username" 
+                        <input type="text" class="form-control" name="userAccountToAdd.username"
                         [(ngModel)]="userAccountToAdd.username">
                     </div>
                     <div class="form-group">
                         <label>Hasło</label>
-                        <input type="text" class="form-control" name="userAccountToAdd.password" 
+                        <input type="text" class="form-control" name="userAccountToAdd.password"
                         [(ngModel)]="userAccountToAdd.password">
+                    </div>
+                    <div class="form-group">
+                        <label>Potwierdź hasło</label>
+                        <input type="text" class="form-control" name="userAccountToAdd.password"
+                               [(ngModel)]="userAccountToAdd.password">
                     </div>
                     <div class="form-group">
                         <label>E-mail</label>
@@ -19,13 +24,28 @@
                     </div>
                     <div class="form-group">
                         <label>Państwo</label>
-                        <input type="text" class="form-control" name="userAccountToAdd.country" 
+                        <input type="text" class="form-control" name="userAccountToAdd.country"
                         [(ngModel)]="userAccountToAdd.country">
                     </div>
                     <div class="form-group">
                         <label>Nick</label>
-                        <input type="text" class="form-control" name="userAccountToAdd.nick" 
+                        <input type="text" class="form-control" name="userAccountToAdd.nick"
                         [(ngModel)]="userAccountToAdd.nick">
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox">
+                            <p class="lead">Akceptuje Regulamin.</p>
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox">
+                            <p class="lead">
+                                <small>Zgadzam się na przetwarzanie moich danych osobowych do celów marketingowych.
+                                </small>
+                            </p>
+                        </label>
                     </div>
                     <button type="submit" class="btn btn-default" (click)="createUserAccount(userAccountToAdd)">OK</button>
                 </form>

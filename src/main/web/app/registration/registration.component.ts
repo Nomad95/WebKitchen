@@ -16,6 +16,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       country: '',
       nick: ''
   }
+    confirmPassword = '';
 
 
     // constructor
@@ -36,7 +37,9 @@ export class RegistrationComponent implements OnInit, OnDestroy {
                   e_mail: '',
                   country: '',
                   nick: ''
-              }});
+            }
+            this.confirmPassword = ''
+        });
   }
 
     // on-destroy
