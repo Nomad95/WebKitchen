@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
+import {NgForm} from '@angular/forms';
 
 @Component({
     selector: 'login',
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     credentials = {
       username: '',
       password: ''
-    }
+    };
+    errorEncountered = false;
 
 
     // on-init
@@ -25,27 +27,32 @@ export class LoginComponent implements OnInit, OnDestroy {
      * we do post on /auth and get a token
      * token is preserved in browser local storage
      */
-    login(credentials): void{
+    logins(credentials):void {
       this.loginService
         .getToken(credentials)
         .subscribe( result =>{
           if(result===true){
             this.credentials = {
-            username: '',
+                username: 's',
             password: ''
             };
-            
+              this.errorEncountered = false;
+
             //forwards to main page
             this.router.navigate(['/']);
+          } else {
+              this.errorEncountered = true;
           }
-          
+
           this.loginService.isLogged();
+        }, error => {
+            this.errorEncountered = true;
         });
 
     }
 
     // on-destroy
     ngOnDestroy() {
-       
+
     }
 }

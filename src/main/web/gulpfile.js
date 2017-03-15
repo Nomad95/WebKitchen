@@ -59,12 +59,14 @@ gulp.task('libcopy', function() {
     // copy bootstrap dependencies
     gulp.src(['./node_modules/jquery/dist/jquery.js',
               './node_modules/tether/dist/js/tether.js',
-              './node_modules/bootstrap/dist/js/bootstrap.js',
+            //'./node_modules/bootstrap/dist/js/bootstrap.js',
               './node_modules/moment/moment.js',
-              './node_modules/ng2-bootstrap/bundles/ng2-bootstrap.umd.js'])
+            './node_modules/ng2-bootstrap/bundles/ng2-bootstrap.umd.js'
+        ])
         .pipe(gulp.dest(staticDir + 'js/lib'));
     gulp.src(['./node_modules/tether/dist/css/tether.css',
-              './node_modules/bootstrap/dist/css/bootstrap.css'])
+            // './node_modules/bootstrap/dist/css/bootstrap.css'
+        ])
         .pipe(gulp.dest(staticDir + 'css/lib'));
 
     // copy font-awesome
@@ -129,14 +131,14 @@ gulp.task('sassw', function() {
 gulp.task('css', function() {
   // clean dest
   del([staticDir + 'css/*.css'], {force: true});
-  
+
   // copy css templates
   gulp.src('./assets/css/*.css')
       .pipe(gulp.dest(staticDir + 'css'));
 
 });
 
-//css watch compile 
+//css watch compile
 gulp.task('cssw', function() {
   gulp.watch(['./assets/css/*.css'], ['css', 'sass']);
 });

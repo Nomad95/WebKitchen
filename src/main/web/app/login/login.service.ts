@@ -1,6 +1,5 @@
 import { Injectable, Inject}	from '@angular/core';
 import { Headers, Http,Response }	from '@angular/http';
-import { Subject } from 'rxjs/Rx';
 import 'rxjs/add/operator/toPromise';
 import { Observable }	from 'rxjs/Observable';
 import 'app/rxjs-operators';
@@ -12,7 +11,7 @@ export class LoginService{
 
 	private headers = new Headers({
           'content-type' : 'application/json'});
-	
+
 	constructor(private http: Http) {
 		var currentToKey = JSON.parse(localStorage.getItem('toKey'));
       	this.token = currentToKey && currentToKey.token;
@@ -27,10 +26,10 @@ export class LoginService{
                 if (token) {
                     // set token property
                     this.token = token;
- 
+
                     // store username and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('toKey', JSON.stringify({ username: credentials.username, token: token }));
- 
+
                     // return true to indicate successful login
                     return true;
                 } else {
@@ -45,7 +44,7 @@ export class LoginService{
 	removeToken(): void{
 		this.token = null;
 		localStorage.removeItem('toKey');
-	} 
+	}
 
 
 	/* checks if token exists */
@@ -58,12 +57,14 @@ export class LoginService{
 		else return null;
 	}
 
-	
-	
-	
 
-	private handleError(error: any): Promise<any> {
-		console.error('An error occurred', error); 
+	//TODO: return observable
+	/*private handleError(error: any): Promise<any> {
+	 console.error('An error occurred!!!!!!!!!', error);
 		return Promise.reject(error.message || error);
-	 }
+	 }*/
+	private handleError(error:any):Observable<any> {
+		console.error('An error occurred!', error);
+		return Observable.throw(error.statusText);
+	}
 }
