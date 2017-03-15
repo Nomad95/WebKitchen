@@ -17,6 +17,12 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       nick: ''
   }
     confirmPassword = '';
+    acceptedRegulaions = false;
+    acceptedMarketingRules = false;
+    //means false = accepted we do not show the error on start troche namieszane xDD
+    isMarketAccepted = false;
+    isRegAccepted = false;
+    isPassNotEqual = false;
 
 
     // constructor
@@ -24,10 +30,17 @@ export class RegistrationComponent implements OnInit, OnDestroy {
 
     // on-init
     ngOnInit() {
-      
+
     }
 
     createUserAccount(data): void{
+        let result = this.finalDataValidation(data);
+
+        if (!result) {
+            console.log("BłOOONDD!");
+            return;
+        }
+
       this.registrationService
         .createUserAccount(data)
         .subscribe(newAccount => {
@@ -37,13 +50,45 @@ export class RegistrationComponent implements OnInit, OnDestroy {
                   e_mail: '',
                   country: '',
                   nick: ''
-            }
-            this.confirmPassword = ''
+            };
+            this.confirmPassword = '';
+            this.isMarketAccepted = false;
+            this.isRegAccepted = false;
+            this.isPassNotEqual = false;
+
         });
   }
 
+    //TODO: przekieruj do innej stronki czy coś
+    finalDataValidation(data):boolean {
+        let result = true;
+
+        if (!this.acceptedRegulaions) {
+            this.isRegAccepted = true;
+            result = false;
+        }
+        else {
+            this.isRegAccepted = false;
+        }
+        if (!this.acceptedMarketingRules) {
+            this.isMarketAccepted = true;
+            result = false;
+        }
+        else {
+            this.isMarketAccepted = false;
+        }
+        if (this.confirmPassword === data.password) {
+            this.isPassNotEqual = false;
+        }
+        else {
+            this.isPassNotEqual = true;
+            return false;
+        }
+        return result;
+    }
+
     // on-destroy
     ngOnDestroy() {
-       
+
     }
 }
