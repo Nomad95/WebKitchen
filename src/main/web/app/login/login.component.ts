@@ -33,8 +33,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         .subscribe( result =>{
           if(result===true){
             this.credentials = {
-                username: 's',
-            password: ''
+                username: '',
+                password: ''
             };
               this.errorEncountered = false;
 
