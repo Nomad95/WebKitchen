@@ -13,7 +13,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
 constructor(private profileService: ProfileService) {}
 
-   
+
   private userProfile = {
       username: '',
       country: '',
@@ -21,15 +21,14 @@ constructor(private profileService: ProfileService) {}
       nick: '',
       isFilled: '',
       isVerified: ''
-    }
-    
+  };
+
    // private userProfile2: string;
     // on-init, get profile information
     ngOnInit() {
         this.getProfile();
     }
 
-    
     
     /**
      * we do post on /auth and get a token
@@ -42,15 +41,15 @@ constructor(private profileService: ProfileService) {}
         // this.userProfile = JSON.stringify(result);
          this.userProfile.username = result.username;
          this.userProfile.country = result.country;
-         this.userProfile.e_mail = result.e_mail; 
-         this.userProfile.nick = result.nick; 
-         this.userProfile.isFilled = result.isFilled; 
-         this.userProfile.isVerified = result.isVerified; 
+         this.userProfile.e_mail = result.e_mail;
+         this.userProfile.nick = result.nick;
+         this.userProfile.isFilled = result.isFilled;
+         this.userProfile.isVerified = result.isVerified;
         });
        // this.userProfile2 = new String (this.userProfile);
      }
     // on-destroy
     ngOnDestroy() {
-       
+
     }
 }

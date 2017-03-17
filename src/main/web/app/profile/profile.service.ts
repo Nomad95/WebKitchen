@@ -4,6 +4,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
+import {Observable}    from 'rxjs/Observable';
 
 @Injectable()
 export class ProfileService {
@@ -11,12 +12,12 @@ export class ProfileService {
 
     constructor(private _http: Http) {}
 
-    getProfile() {
+    getProfile():Observable<any> {
         //We get token from local storage
         var currentToKey = JSON.parse(localStorage.getItem('toKey'));
         let token = currentToKey && currentToKey.token;
         let username = currentToKey && currentToKey.username;
-        
+
         console.log(username);
 
         //create appropriate
@@ -27,8 +28,8 @@ export class ProfileService {
 
         //and passing them in the request
         return this._http.get('/api/user/account/'+username,{headers :this.headers})
-            .map((res:Response) => res.json());
+            .map(res => res.json());
     }
-    
+
+
 }
- 
