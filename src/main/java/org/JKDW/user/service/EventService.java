@@ -16,4 +16,6 @@ public interface EventService {
     Event updateEvent(Event event) throws NoResultException;
 
     void deleteEvent(Long id) throws NoResultException;
+
+    List<Event> getAllEventsOfType(byte type) throws NoResultException;
 }

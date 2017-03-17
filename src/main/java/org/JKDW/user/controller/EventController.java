@@ -19,11 +19,20 @@ public class EventController {
 
     /**
      * @return all events
-     * TODO: Zrobić oddzielne pobieranie eventow ale danego typu a nie wszystkich wlacznie
      */
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Event>> getEvents() {
         List<Event> events = eventService.getAllEvents();
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+
+    /**
+     * @param id type of event
+     * @return all events of provided type
+     */
+    @RequestMapping(value = "/all/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Event>> getEventsByType(@PathVariable("id") byte id) {
+        List<Event> events = eventService.getAllEventsOfType(id);
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
