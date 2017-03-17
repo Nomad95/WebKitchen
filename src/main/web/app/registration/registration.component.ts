@@ -19,6 +19,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     confirmPassword = '';
     acceptedRegulaions = false;
     acceptedMarketingRules = false;
+    //if true, we do not show alert, on start its true
+    validationResult = true;
     //means false = accepted we do not show the error on start troche namieszane xDD
     isMarketAccepted = false;
     isRegAccepted = false;
@@ -34,10 +36,9 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     }
 
     createUserAccount(data): void{
-        let result = this.finalDataValidation(data);
+        this.validationResult = this.finalDataValidation(data);
 
-        if (!result) {
-            console.log("BłOOONDD!");
+        if (!this.validationResult) {
             return;
         }
 
@@ -55,6 +56,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
             this.isMarketAccepted = false;
             this.isRegAccepted = false;
             this.isPassNotEqual = false;
+            this.validationResult = true;
 
         });
   }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.NoResultException;
+import java.util.IllegalFormatException;
 import java.util.List;
 
 @Service
@@ -70,5 +71,15 @@ public class EventServiceImpl implements EventService {
         }
 
         eventRepository.delete(id);
+    }
+
+    @Override
+    public List<Event> getAllEventsOfType(byte type) throws NoResultException {
+        List<Event> foundEvents = eventRepository.findByType(type);
+        if (foundEvents == null) {
+            throw new NoResultException("Events type: " + type + " couldnt be found.");
+        }
+
+        return foundEvents;
     }
 }
