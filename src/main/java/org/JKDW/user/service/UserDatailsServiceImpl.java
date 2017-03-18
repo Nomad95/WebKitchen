@@ -22,6 +22,9 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 
 	@Autowired
 	private UserDetailsRepository userDetailsRepository;
+	
+	@Autowired
+	private UserAccountRepository userAccountRepository;
 
 
 	/**
@@ -41,7 +44,8 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 */
 	@Override
 	public UserDetails getUserDetailsByUserAccount(Long id) throws NoResultException{
-		UserDetails foundUserDetails = userDetailsRepository.findOne(id);
+		UserAccount foundUserAccount = userAccountRepository.findOne(id);
+		UserDetails foundUserDetails = userDetailsRepository.findByUserAccount(foundUserAccount);
 		if(foundUserDetails == null){
 			throw new NoResultException("Cannot find account. Account doesn't exist");
 		}
