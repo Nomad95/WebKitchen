@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
+import org.JKDW.user.model.DTO.UserAccountCreateDTO;
+import org.JKDW.user.model.DTO.UserAccountDTO;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.repository.UserAccountRepository;
 import org.hibernate.SessionFactory;
@@ -44,6 +46,21 @@ public class UserAccountServiceImpl implements UserAccountService {
 		return account;
 	}
 
+	@Override
+	public UserAccountDTO getUserAccountDTOById(Long id) {
+		UserAccount userAccount = userAccountRepository.findOne(id);
+		System.out.println(userAccount);
+		UserAccountDTO userAccountDTO = new UserAccountDTO(
+				userAccount.getId(),
+				userAccount.getUsername(),
+				userAccount.getE_mail(),
+				userAccount.getCountry(),
+				userAccount.getNick(),
+				userAccount.getLastLogged()
+		);
+		return userAccountDTO;
+	}
+
 
 	/**
 	 * @param userAccount - new account information
@@ -51,14 +68,15 @@ public class UserAccountServiceImpl implements UserAccountService {
 	 * @throws Exception when an account with specified id exists
 	 */
 	@Override
-	public UserAccount createUserAccount(UserAccount userAccount) {
+	public UserAccount createUserAccount(UserAccountCreateDTO userAccount) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
-		userAccount.setIsFilled(false);
-		userAccount.setIsVerified(false);
-		userAccount.setAuthorities("ROLE_USER");
-		userAccountRepository.save(userAccount);
-		return userAccount;
+		UserAccount newUserAccount = new UserAccount(userAccount);
+		newUserAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
+		newUserAccount.setIsFilled(false);
+		newUserAccount.setIsVerified(false);
+		newUserAccount.setAuthorities("ROLE_USER");
+		userAccountRepository.save(newUserAccount);
+		return newUserAccount;
 	}
 
 

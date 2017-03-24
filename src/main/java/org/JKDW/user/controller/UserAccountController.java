@@ -3,6 +3,8 @@ package org.JKDW.user.controller;
 
 import java.util.List;
 
+import org.JKDW.user.model.DTO.UserAccountCreateDTO;
+import org.JKDW.user.model.DTO.UserAccountDTO;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.model.UserDetails;
 import org.JKDW.user.service.UserAccountService;
@@ -55,7 +57,7 @@ public class UserAccountController {
 	 * @return new user
 	 */
 	@RequestMapping(value="/create",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserAccount> createUserAccount(@RequestBody UserAccount userAccount){
+	public ResponseEntity<UserAccount> createUserAccount(@RequestBody UserAccountCreateDTO userAccount) {
 		UserAccount createdUserAccount = userAccountService.createUserAccount(userAccount);
 		//create details and link it with userAccount
 		UserDetails userDetails = new UserDetails();
@@ -84,4 +86,11 @@ public class UserAccountController {
 		userAccountService.deleteUserAccount(id);
 		return new ResponseEntity(HttpStatus.OK);
 	}
+
+	@RequestMapping(value = "/account/test/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserAccountDTO> getUserAccountByName(@PathVariable("id") Long id) {
+		UserAccountDTO userAccountDTO = userAccountService.getUserAccountDTOById(id);
+		return new ResponseEntity<>(userAccountDTO, HttpStatus.OK);
+	}
+
 }

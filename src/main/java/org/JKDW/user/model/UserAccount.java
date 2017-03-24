@@ -2,6 +2,8 @@ package org.JKDW.user.model;
 
 //import jdk.nashorn.internal.ir.annotations.Ignore;
 
+import org.JKDW.user.model.DTO.UserAccountCreateDTO;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;
@@ -70,6 +72,14 @@ public class UserAccount {
 	}
 
 	public UserAccount(){
+	}
+
+	public UserAccount(UserAccountCreateDTO userAccountCreateDTO) {
+		this.username = userAccountCreateDTO.getUsername();
+		this.password = userAccountCreateDTO.getPassword();
+		this.e_mail = userAccountCreateDTO.getE_mail();
+		this.country = userAccountCreateDTO.getCountry();
+		this.nick = userAccountCreateDTO.getNick();
 	}
 
 	public Boolean getFilled() {
