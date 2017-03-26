@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
-import {NgForm} from '@angular/forms';
 
 @Component({
     selector: 'login',
