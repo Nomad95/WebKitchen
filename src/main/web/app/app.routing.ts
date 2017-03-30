@@ -9,6 +9,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 
+
 const appRoutes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'calendar', component: CalendarComponent},

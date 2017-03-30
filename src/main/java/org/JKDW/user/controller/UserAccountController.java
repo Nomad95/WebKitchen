@@ -79,6 +79,7 @@ public class UserAccountController {
 
 	/**
 	 *
+	 *
 	 * @param id - id of deleting account
 	 */
 	@RequestMapping(value="/{id}",method = RequestMethod.DELETE)

@@ -78,6 +78,7 @@ public class UserDetails {
 
 	}
 
+	//
 	public List<Event> getEvents() {
 		return events;
 	}
