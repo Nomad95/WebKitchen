@@ -1,19 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import { LoginService } from '../login/login.service';
 import { Router } from '@angular/router';
 
 @Component({
     selector: 'navbar',
     templateUrl: 'app/navbar/navbar.component.html',
-     providers: [LoginService]
+  providers: [LoginService]
 })
 export class NavbarComponent implements OnInit {
-  constructor(private loginService: LoginService, private router: Router){
+  constructor(private loginService:LoginService, private router:Router) {
 
   }
 
+  public username = '';
+
   ngOnInit(){
     this.loginService.isLogged();
+    //this.username = this.loginService.getUsername();
+  }
+
+  getUsername():string {
+    return this.loginService.getUsername();
   }
 
   //just checks a token, refreshing variables
@@ -26,5 +33,4 @@ export class NavbarComponent implements OnInit {
     this.loginService.removeToken();
     this.router.navigate(['/']);
   }
-    
 }

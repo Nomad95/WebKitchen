@@ -49,7 +49,7 @@ public class UserAccount {
 	@Column(name = "last_logged")
 	private Date lastLogged;
 
-	//metoda wywolywana przy INSERTcie
+	//metoda wywolywana przy INSERTcie.
 	@PrePersist
 	protected void onCreate() {
 		createdAt = new Date();

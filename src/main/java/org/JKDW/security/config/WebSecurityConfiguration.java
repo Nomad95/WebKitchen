@@ -74,7 +74,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //lets say we dont allow users to get to /callendar and /user (i tak nie dziala jak powinno ;p )
                 .antMatchers("/calendar").authenticated()
                 .antMatchers("/user").authenticated()
-                //for frontend loading
+                //for frontend loading.
                 .antMatchers("/**/*.html").permitAll()
                 .antMatchers("/globals").permitAll()
                 .antMatchers("/css/**").permitAll()

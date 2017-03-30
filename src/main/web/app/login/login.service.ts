@@ -1,5 +1,5 @@
-import { Injectable, Inject}	from '@angular/core';
-import { Headers, Http,Response }	from '@angular/http';
+import {Injectable}    from '@angular/core';
+import {Headers, Http}    from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { Observable }	from 'rxjs/Observable';
 import 'app/rxjs-operators';
@@ -8,6 +8,7 @@ import 'rxjs/Rx';
 @Injectable()
 export class LoginService{
 	public token: string;
+	public username:string;
 
 	private headers = new Headers({
           'content-type' : 'application/json'});
@@ -15,6 +16,7 @@ export class LoginService{
 	constructor(private http: Http) {
 		var currentToKey = JSON.parse(localStorage.getItem('toKey'));
       	this.token = currentToKey && currentToKey.token;
+		this.username = currentToKey && currentToKey.username;
          }
 
     /* getToken aka Login */
@@ -48,13 +50,25 @@ export class LoginService{
 
 
 	/* checks if token exists */
-	isLogged(): string{
+	isLogged():boolean {
 		var currentToKey = JSON.parse(localStorage.getItem('toKey'));
       	this.token = currentToKey && currentToKey.token;
 
-		if(this.token)
-			return this.token;
-		else return null;
+		if (this.token != null)
+			return true;
+		else return false;
+	}
+
+	isUsernameLoaded():boolean {
+		if (this.username != null) {
+			return true;
+		}
+		else return false;
+	}
+
+	getUsername():string {
+		var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+		return currentToKey.username;
 	}
 
 

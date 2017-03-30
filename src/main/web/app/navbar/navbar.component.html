@@ -11,13 +11,18 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li><a [routerLink]="['/registration']" ><i class="fa fa-user-plus" aria-hidden="true"></i> Zarejestruj </a></li>
-        <li><a [routerLink]="['/login']" ><i class="fa fa-sign-in" aria-hidden="true"></i> Zaloguj </a></li>
+          <li *ngIf="!loginService.isLogged()"><a [routerLink]="['/registration']"><i class="fa fa-user-plus"
+                                                                                      aria-hidden="true"></i>
+              Zarejestruj </a></li>
+          <li *ngIf="!loginService.isLogged()"><a [routerLink]="['/login']"><i class="fa fa-sign-in"
+                                                                               aria-hidden="true"></i> Zaloguj </a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right" style="padding-right: 15px">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-user"></i> User <span class="caret"></span></a>
+          <li class="dropdown" *ngIf="loginService.isLogged()">
+              <a href="#" class="dropdown-toggle"
+                 data-toggle="dropdown"
+                 role="button" aria-haspopup="true" aria-expanded="false">
+                  <i class="fa fa-user"></i> {{getUsername()}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li>
                 <a  [routerLink]="['/profile']"><i class="fa fa-fw fa-user"></i> Profil</a>
@@ -29,7 +34,7 @@
                 <a  href="javascript:;"><i class="fa fa-fw fa-gear"></i> Ustawienia</a>
             </li>
             <li>
-                <a class="dropdown-item" href="javascript:;" [routerLink]="['/']">
+                <a class="dropdown-item" (click)="logout()">
                     <i class="fa fa-fw fa-power-off"></i> Wyloguj
                 </a>
             </li>
