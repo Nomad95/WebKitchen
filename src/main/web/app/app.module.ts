@@ -1,5 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { LocationStrategy, PathLocationStrategy, APP_BASE_HREF } from '@angular/common';
+import {LocationStrategy, PathLocationStrategy, HashLocationStrategy, APP_BASE_HREF} from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -16,6 +16,8 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SideNavbarComponent } from './side_navbar/side-navbar.component';
+
+import {AuthGuard} from './app.auth-guard.service';
 
 
 @NgModule({
@@ -38,9 +40,10 @@ import { SideNavbarComponent } from './side_navbar/side-navbar.component';
               routing],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
+        AuthGuard,
         appRouterProviders,
         [{provide: APP_BASE_HREF, useValue: '/'}],
-        [{provide: LocationStrategy, useClass: PathLocationStrategy}]
+        [{provide: LocationStrategy, useClass: HashLocationStrategy}]
     ],
     bootstrap: [AppComponent]
 })
