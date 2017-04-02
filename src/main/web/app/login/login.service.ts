@@ -9,6 +9,8 @@ import 'rxjs/Rx';
 export class LoginService{
 	public token: string;
 	public username:string;
+	//RedirectUrl - url user wanted to go before loggin in the app
+	public redirectUrl:string;
 
 	private headers = new Headers({
           'content-type' : 'application/json'});
@@ -72,7 +74,6 @@ export class LoginService{
 	}
 
 
-	//TODO: return observable
 	/*private handleError(error: any): Promise<any> {
 	 console.error('An error occurred!!!!!!!!!', error);
 		return Promise.reject(error.message || error);
