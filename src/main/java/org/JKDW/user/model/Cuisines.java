@@ -6,13 +6,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+/**
+ * this class is for list of cuisines
+ */
 @Entity(name = "cuisines")
 public class Cuisines {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 
 	private String name;
 
@@ -34,7 +37,6 @@ public class Cuisines {
 
 	public Cuisines() {
 	}
-	
-	
-	
+
+
 }
