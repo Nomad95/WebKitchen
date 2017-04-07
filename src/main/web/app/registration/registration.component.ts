@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserAccount } from './user-account';
+import {Router} from '@angular/router';
 import { RegistrationService } from './registration.service';
 
 @Component({
@@ -26,9 +27,9 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     isRegAccepted = false;
     isPassNotEqual = false;
 
-
     // constructor
-    constructor(private registrationService: RegistrationService) {}
+    constructor(private registrationService:RegistrationService, private router:Router) {
+    }
 
     // on-init
     ngOnInit() {
@@ -38,10 +39,15 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     createUserAccount(data): void{
         this.validationResult = this.finalDataValidation(data);
 
+
         if (!this.validationResult) {
             return;
         }
 
+        /**
+         * if we success we clear the text fields
+         * if we have an error, we show a message
+         */
       this.registrationService
         .createUserAccount(data)
         .subscribe(newAccount => {
@@ -57,11 +63,18 @@ export class RegistrationComponent implements OnInit, OnDestroy {
             this.isRegAccepted = false;
             this.isPassNotEqual = false;
             this.validationResult = true;
-
+            this.router.navigate(['/login']);
+        }, err => {
+            this.validationResult = false;
+            //TODO: username is already taken
         });
   }
 
-    //TODO: przekieruj do innej stronki czy coś
+    /**
+     * we perform a front-end validation pass
+     * @param data registration data
+     * @returns {boolean} true if validation has passed properly
+     */
     finalDataValidation(data):boolean {
         let result = true;
 

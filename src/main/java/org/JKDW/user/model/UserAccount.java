@@ -17,6 +17,7 @@ public class UserAccount {
 
 	@NotNull
 	@Size(min = 4, max = 45)
+	@Column(unique = true)
 	private String username;
 
 	@NotNull
@@ -25,6 +26,7 @@ public class UserAccount {
 
 	@NotNull
 	@Size(min = 5, max = 45)
+	@Column(unique = true)
 	private String e_mail;
 
 	@NotNull
@@ -33,6 +35,7 @@ public class UserAccount {
 
 	@NotNull
 	@Size(min = 4, max =25)
+	@Column(unique = true)
 	private String nick;
 
 	private String authorities;
