@@ -1,5 +1,7 @@
 package org.JKDW.user.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -69,8 +71,13 @@ public class UserDetails {
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "user_account_Id")
-    private UserAccount userAccount;
+	@JsonIgnore //prevents password leaking
+	private UserAccount userAccount;
 
+	/**
+	 * we must write @JsonIgnore here to prevent infinite recursion of lists
+	 */
+	@JsonIgnore
 	@ManyToMany
 	private List<Event> events;
 

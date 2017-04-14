@@ -8,10 +8,12 @@ import { UserComponent } from './user/user.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
+import {EventListComponent} from './events/browser/event-list.component';
+import {EventDetailsComponent} from './events/detailed/event-details.component';
+
 
 import {AuthGuard} from './app.auth-guard.service';
 import {LoginService} from './login/login.service';
-
 
 
 const appRoutes: Routes = [
@@ -21,7 +23,9 @@ const appRoutes: Routes = [
     {path: 'user', component: UserComponent},
     {path: 'registration', component: RegistrationComponent},
     {path: 'login', component: LoginComponent},
-    {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]}
+    {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+    {path: 'events', component: EventListComponent, canActivate: [AuthGuard]},
+    {path: 'events/:id', component: EventDetailsComponent, canActivate: [AuthGuard]}
 ];
 
 export const appRouterProviders = [AuthGuard, LoginService];

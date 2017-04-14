@@ -39,6 +39,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 	/**
 	 * @param id of user account we want to find
 	 * @return returns one account specified by an id
+	 * TODO: this can only use ADMIN or noone!
 	 */
 	@Override
 	public UserAccount getUserAccountById(Long id) {
@@ -46,6 +47,11 @@ public class UserAccountServiceImpl implements UserAccountService {
 		return account;
 	}
 
+	/**
+	 * @param id
+	 * @return we return info about account
+	 * without password etc
+	 */
 	@Override
 	public UserAccountDTO getUserAccountDTOById(Long id) {
 		UserAccount userAccount = userAccountRepository.findOne(id);
