@@ -1,5 +1,6 @@
 package org.JKDW.user.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
 
 import java.sql.Time;
@@ -24,8 +25,8 @@ public class Event {
 
     /**
      * type of event
-     * 0- uczta dla innych
-     * 1- wspolne gotowanie
+     * 1- uczta dla innych
+     * 2- wspolne gotowanie
      */
     private byte type;
 
@@ -111,9 +112,32 @@ public class Event {
 
     /**
      * accounts of participants TODO: change UserDetails to UserAccount
+     * Write JsonIgnore to prevent password leak
      */
     @ManyToMany(mappedBy = "events")
     private List<UserDetails> accounts;
+
+    /**
+     * tells us number of vacancies
+     */
+    @Column(nullable = true)
+    private int people_remaining;
+
+    /**
+     * method initializes people_remaining before INSERT
+     */
+    @PrePersist
+    protected void onCreate() {
+        people_remaining = people_quantity;
+    }
+
+    public int getPeople_remaining() {
+        return people_remaining;
+    }
+
+    public void setPeople_remaining(int people_remaining) {
+        this.people_remaining = people_remaining;
+    }
 
     public List<UserDetails> getAccounts() {
         return accounts;
@@ -193,14 +217,6 @@ public class Event {
 
     public void setDish_kind(DishKindEnum dish_kind) {
         this.dish_kind = dish_kind;
-    }
-
-    public byte getPeople_quanity() {
-        return people_quantity;
-    }
-
-    public void setPeople_quanity(byte people_quanity) {
-        this.people_quantity = people_quanity;
     }
 
     public String getAdditional_info() {

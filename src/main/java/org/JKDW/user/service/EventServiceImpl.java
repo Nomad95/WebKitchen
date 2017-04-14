@@ -1,12 +1,18 @@
 package org.JKDW.user.service;
 
+import org.JKDW.user.model.DTO.EventGeneralDTO;
 import org.JKDW.user.model.Event;
+import org.JKDW.user.model.UserAccount;
+import org.JKDW.user.model.UserDetails;
 import org.JKDW.user.repository.EventRepository;
+import org.JKDW.user.repository.UserAccountRepository;
+import org.JKDW.user.repository.UserDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.naming.SizeLimitExceededException;
 import javax.persistence.NoResultException;
-import java.util.IllegalFormatException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,6 +20,12 @@ public class EventServiceImpl implements EventService {
 
     @Autowired
     private EventRepository eventRepository;
+
+    @Autowired
+    private UserAccountRepository userAccountRepository;
+
+    @Autowired
+    private UserDetailsRepository userDetailsRepository;
 
     /**
      * @return returns all events
@@ -73,6 +85,11 @@ public class EventServiceImpl implements EventService {
         eventRepository.delete(id);
     }
 
+    /**
+     * @param type of event
+     * @return list of events with specified type
+     * @throws NoResultException
+     */
     @Override
     public List<Event> getAllEventsOfType(byte type) throws NoResultException {
         List<Event> foundEvents = eventRepository.findByType(type);
@@ -81,5 +98,128 @@ public class EventServiceImpl implements EventService {
         }
 
         return foundEvents;
+    }
+
+    /**
+     * @param id
+     * @return Basic information about event
+     * is used to display in a event list
+     * @throws NoResultException
+     */
+    @Override
+    public EventGeneralDTO getEventDetails(Long id) throws NoResultException {
+        Event foundEvent = eventRepository.findOne(id);
+        if (foundEvent == null) {
+            throw new NoResultException("Event couldnt be found.");
+        }
+        return new EventGeneralDTO(
+                foundEvent.getId(),
+                foundEvent.getType(),
+                foundEvent.getTitle(),
+                foundEvent.getTime(),
+                foundEvent.getDate(),
+                foundEvent.getDish_kind(),
+                foundEvent.getDish_name(),
+                foundEvent.getPeople_quantity(),
+                foundEvent.getPeople_remaining()
+        );
+    }
+
+    /**
+     * @return returns general details of all events
+     */
+    @Override
+    public List<EventGeneralDTO> getAllEventsGeneral() {
+        List<Event> allEvents = eventRepository.findAll();
+        List<EventGeneralDTO> eventsDetails = new ArrayList<>();
+        for (Event event : allEvents) {
+            eventsDetails.add(new EventGeneralDTO(
+                    event.getId(),
+                    event.getType(),
+                    event.getTitle(),
+                    event.getTime(),
+                    event.getDate(),
+                    event.getDish_kind(),
+                    event.getDish_name(),
+                    event.getPeople_quantity(),
+                    event.getPeople_remaining()
+            ));
+        }
+        return eventsDetails;
+    }
+
+    /**
+     * Binds user with event
+     *
+     * @param username username
+     * @param evntId   event id
+     */
+    @Override
+    public void bindEventWithUser(String username, Long evntId) throws SizeLimitExceededException, NoResultException {
+        //find positions
+        UserAccount foundUserAccount = userAccountRepository.findByUsername(username);
+        if (foundUserAccount == null)
+            throw new NoResultException("This account couldn't be found");
+        UserDetails foundUserDetails = userDetailsRepository.findByUserAccount(foundUserAccount);
+        Event foundEvent = eventRepository.findOne(evntId);
+        if (foundEvent == null)
+            throw new NoResultException("This event couldn't be found");
+
+        //add account in event
+        List<UserDetails> accounts = foundEvent.getAccounts();
+        if (accounts == null)
+            accounts = new ArrayList<>();
+        else {
+            if (accounts.size() == foundEvent.getPeople_quantity())
+                throw new SizeLimitExceededException("This event has reached its people capacity");
+        }
+        accounts.add(foundUserDetails);
+        foundEvent.setAccounts(accounts);
+
+        //add event in account
+        List<Event> events = foundUserDetails.getEvents();
+        if (events == null)
+            events = new ArrayList<>();
+        events.add(foundEvent);
+        //decrease nmber of remaining ppl
+        int people_remaining = foundEvent.getPeople_remaining();
+        if (people_remaining == 0)//double checking vacancy
+            throw new SizeLimitExceededException("This event has reached its people capacity");
+        people_remaining--;
+        foundEvent.setPeople_remaining(people_remaining);
+        foundUserDetails.setEvents(events);
+
+        //save data
+        userDetailsRepository.save(foundUserDetails);
+        eventRepository.save(foundEvent);
+    }
+
+    /**
+     * One user cannot be bound twice to one event,
+     * so we perform a check
+     *
+     * @param username
+     * @param evntId
+     * @return true if is arleady binded/ false if not
+     */
+    @Override
+    public boolean checkIfBinded(String username, Long evntId) {
+        //find positions
+        UserAccount foundUserAccount = userAccountRepository.findByUsername(username);
+        if (foundUserAccount == null)
+            throw new NoResultException("This account couldn't be found");
+        UserDetails foundUserDetails = userDetailsRepository.findByUserAccount(foundUserAccount);
+        Event foundEvent = eventRepository.findOne(evntId);
+        if (foundEvent == null)
+            throw new NoResultException("This event couldn't be found");
+
+        //check if id's exists
+        List<UserDetails> accounts = foundEvent.getAccounts();
+        Long id = foundUserDetails.getId();
+        for (UserDetails account : accounts) {
+            if (id == account.getId())
+                return true;
+        }
+        return false;
     }
 }

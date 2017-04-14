@@ -1,13 +1,16 @@
 package org.JKDW.user.controller;
 
+import org.JKDW.user.model.DTO.EventGeneralDTO;
 import org.JKDW.user.model.Event;
 import org.JKDW.user.service.EventService;
+import org.JKDW.user.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.SizeLimitExceededException;
 import java.util.List;
 
 @RestController
@@ -17,12 +20,23 @@ public class EventController {
     @Autowired
     private EventService eventService;
 
+
     /**
      * @return all events
      */
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Event>> getEvents() {
         List<Event> events = eventService.getAllEvents();
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+
+    /**
+     *
+     * @return all general details of all events
+     */
+    @RequestMapping(value = "/general/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<EventGeneralDTO>> getEventsDetails() {
+        List<EventGeneralDTO> events = eventService.getAllEventsGeneral();
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
@@ -43,6 +57,18 @@ public class EventController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Event> getOneEvent(@PathVariable("id") Long id) {
         Event event = eventService.getEventById(id);
+        return new ResponseEntity<>(event, HttpStatus.OK);
+    }
+
+    /**
+     *
+     * @param id if of event we want to find
+     * @return this method returns a DTO that contains
+     * general information about an event
+     */
+    @RequestMapping(value = "/detailed/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<EventGeneralDTO> getOneEventDetails(@PathVariable("id") Long id) {
+        EventGeneralDTO event = eventService.getEventDetails(id);
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
 
@@ -83,6 +109,44 @@ public class EventController {
     public ResponseEntity deleteEvent(@PathVariable("id") Long id) {
         eventService.deleteEvent(id);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+
+    /**
+     * Binds uder with Event
+     *
+     * @param username
+     * @param evntid
+     * @return status
+     */
+    @RequestMapping(value = "/bind/{username}/{evntid}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity bindEventWithUser(@PathVariable("username") String username,
+                                            @PathVariable("evntid") Long evntid) {
+        try {
+            eventService.bindEventWithUser(username, evntid);
+        } catch (SizeLimitExceededException e) {
+            e.printStackTrace();
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
+    /**
+     * checks if user id bound to event
+     *
+     * @param username
+     * @param evntid
+     * @return
+     */
+    @RequestMapping(value = "/check/{username}/{evntid}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> checkIfUserIsBound(@PathVariable("username") String username,
+                                                      @PathVariable("evntid") Long evntid) {
+        if (eventService.checkIfBinded(username, evntid))
+            return new ResponseEntity<>(new Boolean("true"), HttpStatus.OK);
+        return new ResponseEntity<>(new Boolean("false"), HttpStatus.OK);
     }
 
 }

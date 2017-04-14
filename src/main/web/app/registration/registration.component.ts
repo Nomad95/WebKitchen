@@ -16,7 +16,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       e_mail: '',
       country: '',
       nick: ''
-  }
+    };
     confirmPassword = '';
     acceptedRegulaions = false;
     acceptedMarketingRules = false;
