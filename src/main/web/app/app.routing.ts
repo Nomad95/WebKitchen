@@ -20,6 +20,7 @@ import {LoginService} from './login/login.service';
 /* TODO: Układać to ładnie i po kolei*/
 const appRoutes: Routes = [
     {path: '', component: HomeComponent},
+    {path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard]},
     {path: 'hello', component: HelloComponent},
     {path: 'user', component: UserComponent},
     {path: 'registration', component: RegistrationComponent},
