@@ -63,7 +63,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
             this.isRegAccepted = false;
             this.isPassNotEqual = false;
             this.validationResult = true;
-            this.router.navigate(['/login']);
+            this.router.navigate(['/registration/success']);
         }, err => {
             this.validationResult = false;
             //TODO: username is already taken

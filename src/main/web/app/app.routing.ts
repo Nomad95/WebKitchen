@@ -10,19 +10,22 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import {EventListComponent} from './events/browser/event-list.component';
 import {EventDetailsComponent} from './events/detailed/event-details.component';
-
+import {RegistrationSuccess} from './registration/registration-success.component';
+import {LoginSuccess} from './login/login-success.component';
 
 import {AuthGuard} from './app.auth-guard.service';
 import {LoginService} from './login/login.service';
 
-
+/* TODO: Poukładać to ładnie po kolei*/
 const appRoutes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard]},
     {path: 'hello', component: HelloComponent},
     {path: 'user', component: UserComponent},
     {path: 'registration', component: RegistrationComponent},
+    {path: 'registration/success', component: RegistrationSuccess},
     {path: 'login', component: LoginComponent},
+    {path: 'login/success', component: LoginSuccess},
     {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
     {path: 'events', component: EventListComponent, canActivate: [AuthGuard]},
     {path: 'events/:id', component: EventDetailsComponent, canActivate: [AuthGuard]}

@@ -20,6 +20,8 @@ import { SideNavbarComponent } from './side_navbar/side-navbar.component';
 import {EventListComponent} from './events/browser/event-list.component';
 import {EventGeneralComponent} from './events/browser/event.component';
 import {EventDetailsComponent} from './events/detailed/event-details.component';
+import {RegistrationSuccess} from './registration/registration-success.component';
+import {LoginSuccess} from './login/login-success.component';
 
 import {AuthGuard} from './app.auth-guard.service';
 
@@ -28,18 +30,21 @@ declare let jQuery:Object;
 
 @NgModule({
     declarations: [AppComponent,
-                   HelloComponent,
-                   CalendarComponent,
-                   HomeComponent,
-                 UserComponent,
-                 RegistrationComponent,
-                 LoginComponent,
-                 ProfileComponent,
-                 NavbarComponent,
+        HelloComponent,
+        CalendarComponent,
+        HomeComponent,
+        UserComponent,
+        RegistrationComponent,
+        LoginComponent,
+        ProfileComponent,
+        NavbarComponent,
         EventListComponent,
         EventGeneralComponent,
         SideNavbarComponent,
-        EventDetailsComponent],
+        EventDetailsComponent,
+        RegistrationSuccess,
+        LoginSuccess
+    ],
     imports: [BrowserModule,
               FormsModule,
               ReactiveFormsModule,
