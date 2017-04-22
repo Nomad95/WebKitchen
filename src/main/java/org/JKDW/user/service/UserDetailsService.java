@@ -13,9 +13,11 @@ public interface UserDetailsService {
 	List<UserDetails> getAllUserDetails();
 	
 	//TODO: zamiast tej metody dojeb getUserDetailsbyId a ta dolna przerob  
-	UserDetails getUserDetailsByUserAccount(Long id) throws NoResultException;
+	UserDetails getUserDetailsbyId(Long id) throws NoResultException;
 	
-	UserDetailsUpdateDTO getUserDetailsDTOByUserAccount(Long id) throws NoResultException;
+	UserDetails getUserDetailsByUserAccountId(Long id) throws NoResultException;
+	
+	UserDetailsUpdateDTO getUserDetailsDTOByUserAccountId(Long id) throws NoResultException;
 	
 	UserDetails createUserDetails(UserDetails userDetails) throws NoResultException;
 	

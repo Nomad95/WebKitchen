@@ -45,7 +45,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 * @throws NoResultException when an Account couldn't be found
 	 */
 	@Override
-	public UserDetails getUserDetailsByUserAccount(Long id) throws NoResultException{
+	public UserDetails getUserDetailsByUserAccountId(Long id) throws NoResultException{
 		UserAccount foundUserAccount = userAccountRepository.findOne(id);
 		UserDetails foundUserDetails = userDetailsRepository.findByUserAccount(foundUserAccount);
 		if(foundUserDetails == null){
@@ -108,7 +108,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 */
 	@Override
 	public UserDetails updateUserDetailsDTO(UserDetailsUpdateDTO userDetailsDTO) throws NoResultException {
-			UserDetails foundUserDetails = getUserDetailsByUserAccount(userDetailsDTO.getUserAccountDTO().getId());
+			UserDetails foundUserDetails = getUserDetailsByUserAccountId(userDetailsDTO.getUserAccountDTO().getId());
 			
 			if(foundUserDetails == null){
 				throw new NoResultException("Cannot update details. Details not found");
@@ -151,7 +151,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
  * @throws NoResultException when details couldn't be found 
  */
 	@Override
-	public UserDetailsUpdateDTO getUserDetailsDTOByUserAccount(Long id) throws NoResultException {
+	public UserDetailsUpdateDTO getUserDetailsDTOByUserAccountId(Long id) throws NoResultException {
 		UserAccount foundUserAccount = userAccountRepository.findOne(id);
 		UserDetails foundUserDetails = userDetailsRepository.findByUserAccount(foundUserAccount);
 		UserAccountDTO foundUserAccountDTO = new UserAccountDTO(
@@ -187,6 +187,16 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 		return foundUserDetailsDTO;
 	}
 
-
+	/**
+	 * 
+	 * @param id - id of user details
+	 * @return returns user details 
+	 * @throws NoResultException when an Account couldn't be found
+	 */
+	@Override
+	public UserDetails getUserDetailsbyId(Long id) throws NoResultException {
+		UserDetails foundUserDetails = userDetailsRepository.findOne(id);
+		return foundUserDetails;
+	}
 
 }

@@ -2,7 +2,6 @@ package org.JKDW.user.controller;
 
 import java.util.List;
 
-import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.model.UserDetails;
 import org.JKDW.user.model.DTO.UserDetailsUpdateDTO;
 import org.JKDW.user.service.UserDetailsService;
@@ -39,8 +38,8 @@ public class UserDetailsController {
 	 * @return one user details
 	 */
 	@RequestMapping(value="/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserDetails> getUserDetailsByUserAccount(@PathVariable("id") Long id){
-		UserDetails userDetails = userDetailsService.getUserDetailsByUserAccount(id);
+	public ResponseEntity<UserDetails> getUserDetailsByUserAccountId(@PathVariable("id") Long id){
+		UserDetails userDetails = userDetailsService.getUserDetailsbyId(id);
 		return new ResponseEntity(userDetails,HttpStatus.OK);
 	}
 	
@@ -82,7 +81,7 @@ public class UserDetailsController {
 	 */
 	@RequestMapping(value = "/account/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	 	public ResponseEntity<UserDetailsUpdateDTO> getUserDetailsUpdateDTO(@PathVariable("id") Long id) {
-	 		UserDetailsUpdateDTO userDetailsDTO = userDetailsService.getUserDetailsDTOByUserAccount(id);
+	 		UserDetailsUpdateDTO userDetailsDTO = userDetailsService.getUserDetailsDTOByUserAccountId(id);
 	 		return new ResponseEntity<>(userDetailsDTO, HttpStatus.OK);
 	 	}
 	
