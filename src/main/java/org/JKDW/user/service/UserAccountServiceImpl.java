@@ -62,7 +62,10 @@ public class UserAccountServiceImpl implements UserAccountService {
 				userAccount.getE_mail(),
 				userAccount.getCountry(),
 				userAccount.getNick(),
-				userAccount.getLastLogged()
+				userAccount.getLastLogged(),
+				userAccount.getIsFilled(),
+				userAccount.getIsVerified(),
+				userAccount.getCreatedAt()
 		);
 		return userAccountDTO;
 	}

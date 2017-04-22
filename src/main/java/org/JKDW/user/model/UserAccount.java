@@ -52,6 +52,18 @@ public class UserAccount {
 	@Column(name = "last_logged")
 	private Date lastLogged;
 
+	
+	public UserAccount(){
+	}
+
+	public UserAccount(UserAccountCreateDTO userAccountCreateDTO) {
+		this.username = userAccountCreateDTO.getUsername();
+		this.password = userAccountCreateDTO.getPassword();
+		this.e_mail = userAccountCreateDTO.getE_mail();
+		this.country = userAccountCreateDTO.getCountry();
+		this.nick = userAccountCreateDTO.getNick();
+	}
+	
 	//metoda wywolywana przy INSERTcie.
 	@PrePersist
 	protected void onCreate() {
@@ -72,17 +84,6 @@ public class UserAccount {
 
 	public void setLastLogged(Date lastLogged) {
 		this.lastLogged = lastLogged;
-	}
-
-	public UserAccount(){
-	}
-
-	public UserAccount(UserAccountCreateDTO userAccountCreateDTO) {
-		this.username = userAccountCreateDTO.getUsername();
-		this.password = userAccountCreateDTO.getPassword();
-		this.e_mail = userAccountCreateDTO.getE_mail();
-		this.country = userAccountCreateDTO.getCountry();
-		this.nick = userAccountCreateDTO.getNick();
 	}
 
 	public Boolean getFilled() {

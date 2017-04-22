@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.model.UserDetails;
+import org.JKDW.user.model.DTO.UserDetailsUpdateDTO;
 import org.JKDW.user.service.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,7 +60,7 @@ public class UserDetailsController {
 	 * @param userDetails to update
 	 * @return updated user details
 	 */
-	@RequestMapping(value="/{id}",method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/acc/{id}",method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserDetails> updateUserDetails(@RequestBody UserDetails userDetails){
 		UserDetails updatedUserDetails = userDetailsService.updateUserDetails(userDetails);
 		return new ResponseEntity(updatedUserDetails,HttpStatus.OK);
@@ -74,5 +75,26 @@ public class UserDetailsController {
 		userDetailsService.deleteUserDetails(id);
 		return new ResponseEntity(HttpStatus.OK);
 	}
-
+	/**
+	 * get UserDetailsDTO witch UserAccountDTO by UserAccount id 
+	 * @param id - id of account we want to find (not id of details)
+	 * @return one user details 
+	 */
+	@RequestMapping(value = "/account/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	 	public ResponseEntity<UserDetailsUpdateDTO> getUserDetailsUpdateDTO(@PathVariable("id") Long id) {
+	 		UserDetailsUpdateDTO userDetailsDTO = userDetailsService.getUserDetailsDTOByUserAccount(id);
+	 		return new ResponseEntity<>(userDetailsDTO, HttpStatus.OK);
+	 	}
+	
+	/**
+	 * update UserDetails witch UserAccount by UserDetailsDTO and UserAccountDTO 
+	 * @param userDetailsDTO to update
+	 * @return updated userDetails
+	 */
+	@RequestMapping(value="/{id}",method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserDetailsUpdateDTO> updateUserDetailsUpdateDTO(@RequestBody UserDetailsUpdateDTO userDetails){
+		UserDetails updatedUserDetailsDTO = userDetailsService.updateUserDetailsDTO(userDetails);
+		return new ResponseEntity(updatedUserDetailsDTO,HttpStatus.OK);
+	}
+	
 }
