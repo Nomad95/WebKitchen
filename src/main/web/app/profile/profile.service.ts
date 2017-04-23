@@ -56,25 +56,20 @@ export class ProfileService {
     }
     
         /* Set */
-    updateProfile(data):Observable<any> {
- //We get token from local storage
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'))
+   updateProfile(data):Observable<any> {
+         var currentToKey = JSON.parse(localStorage.getItem('toKey'));
         let token = currentToKey && currentToKey.token;
-
-        //create appropriate
-        this.headers = new Headers({
-            'Content-type' : 'application/json',
-            'x-Auth-token' : token});       
-
-        console.log(JSON.stringify(data));
-        console.log(this.id);
         
-        this.url = 'http://localhost:8080/api/user/details/'+this.id;
-        console.log(this.url);
-        console.log(token);
-        //update UserDetailsDTO witch UserAccountDTO request
-        return this.http.put(this.url,JSON.stringify(data),{headers :this.headers})
-                .map(res => res.json()).catch(this.handleError);
+        //create appropriate
+    this.headers = new Headers({
+          'accept': 'application/json',
+          'content-type' : 'application/json',
+          'X-Auth-token' : token});
+        console.log(JSON.stringify(data));
+   // this.url = '/api/user/details/'+this.id;
+    return this.http.put('/api/user/details/'+this.id,JSON.stringify(data),{headers :this.headers})
+                .map(res => res.json())
+                .catch(this.handleError);
 
 }
     
