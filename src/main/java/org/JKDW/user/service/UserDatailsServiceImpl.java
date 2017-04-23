@@ -133,7 +133,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 			
 			foundUserDetails.getUserAccount().setId(userDetailsDTO.getUserAccountDTO().getId());
 			foundUserDetails.getUserAccount().setUsername(userDetailsDTO.getUserAccountDTO().getUsername());
-			foundUserDetails.getUserAccount().setE_mail(userDetailsDTO.getUserAccountDTO().getEmail());
+			foundUserDetails.getUserAccount().setEmail(userDetailsDTO.getUserAccountDTO().getEmail());
 			foundUserDetails.getUserAccount().setCountry(userDetailsDTO.getUserAccountDTO().getCountry());
 			foundUserDetails.getUserAccount().setLastLogged(userDetailsDTO.getUserAccountDTO().getLastLogged());
 			foundUserDetails.getUserAccount().setIsFilled(userDetailsDTO.getUserAccountDTO().getIsFilled());
@@ -157,7 +157,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 		UserAccountDTO foundUserAccountDTO = new UserAccountDTO(
 				foundUserAccount.getId(), 
 				foundUserAccount.getUsername(),
-				foundUserAccount.getE_mail(),
+				foundUserAccount.getEmail(),
 				foundUserAccount.getCountry(),
 				foundUserAccount.getNick(),
 				foundUserAccount.getLastLogged(),

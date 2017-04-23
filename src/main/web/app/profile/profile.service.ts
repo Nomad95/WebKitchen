@@ -4,13 +4,15 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
+import 'app/rxjs-operators';
+import 'rxjs/Rx';
 import {Observable}    from 'rxjs/Observable';
 
 @Injectable()
 export class ProfileService {
     private headers = null;
-    private id: any;
-    
+    public id: number;
+    private url;
     constructor(private http: Http) {}
 
     setId(id){
@@ -55,24 +57,29 @@ export class ProfileService {
     
         /* Set */
     updateProfile(data):Observable<any> {
-        //We get token from local storage
+ //We get token from local storage
         var currentToKey = JSON.parse(localStorage.getItem('toKey'))
         let token = currentToKey && currentToKey.token;
 
         //create appropriate
         this.headers = new Headers({
-            'content-type' : 'application/json',
-            'X-Auth-token' : token});
+            'Content-type' : 'application/json',
+            'x-Auth-token' : token});       
+
+        console.log(JSON.stringify(data));
+        console.log(this.id);
         
+        this.url = 'http://localhost:8080/api/user/details/'+this.id;
+        console.log(this.url);
+        console.log(token);
         //update UserDetailsDTO witch UserAccountDTO request
-        return this.http.put('/api/user/details/'+this.id,JSON.stringify(data),{headers :this.headers})
-                .map(res => res.json())
-                .catch(this.handleError);
+        return this.http.put(this.url,JSON.stringify(data),{headers :this.headers})
+                .map(res => res.json()).catch(this.handleError);
 
 }
     
     private handleError(error: any): Promise<any> {
-        console.error('An error occurred', error); 
+        console.error('An error occurred in Registration', error);
         return Promise.reject(error.message || error);
      }
 }

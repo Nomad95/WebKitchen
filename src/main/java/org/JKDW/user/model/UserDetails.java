@@ -1,5 +1,6 @@
 package org.JKDW.user.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -77,7 +78,7 @@ public class UserDetails {
 			@JoinColumn(name = "userDetails_ID", nullable = false, updatable = false) },
 			inverseJoinColumns = { @JoinColumn(name = "cuisine_ID",
 					nullable = false, updatable = false) })
-	private List<Cuisines> preferredCuisine;
+	private List<Cuisines> preferredCuisine = new ArrayList<Cuisines>();
 
 	private Integer profileCompletion;
 

@@ -193,7 +193,6 @@
                                		required
                                		pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                                		class="form-control"
-                               		name="userAccountToAdd.e_mail"
                               		[(ngModel)]="userProfile.userAccountDTO.email">
 											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
 											<div *ngIf="email.invalid && email.touched"

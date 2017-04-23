@@ -91,9 +91,9 @@ public class UserDetailsController {
 	 * @return updated userDetails
 	 */
 	@RequestMapping(value="/{id}",method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserDetailsUpdateDTO> updateUserDetailsUpdateDTO(@RequestBody UserDetailsUpdateDTO userDetails){
-		UserDetails updatedUserDetailsDTO = userDetailsService.updateUserDetailsDTO(userDetails);
-		return new ResponseEntity(updatedUserDetailsDTO,HttpStatus.OK);
+	public ResponseEntity<UserDetailsUpdateDTO> updateUserDetailsUpdateDTO(@RequestBody UserDetailsUpdateDTO userDetailsDTO){
+		UserDetails updatedUserDetails = userDetailsService.updateUserDetailsDTO(userDetailsDTO);
+		return new ResponseEntity(updatedUserDetails,HttpStatus.OK);
 	}
 	
 }

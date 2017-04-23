@@ -1,5 +1,6 @@
 package org.JKDW.user.model.DTO;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class UserDetailsUpdateDTO {
 
 	private String description;
 
-	private List<Cuisines> preferredCuisine;
+	private List<Cuisines> preferredCuisine = new ArrayList<Cuisines>();
 
 	private Integer profileCompletion;
 

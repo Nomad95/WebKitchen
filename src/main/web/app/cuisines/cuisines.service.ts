@@ -1,13 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+import { Http, Response, Headers } from '@angular/http';
+import 'rxjs/add/operator/map';
+import {Observable}    from 'rxjs/Observable';
 
 import {Cuisine} from '../model/cuisine.model';
 
-@Inectable()
+@Injectable()
 export class CuisinesService {
-    private cuisines: Array<Cuisine> = [];
     private headers = null;
     
-    loadAllCuisines(){
+    constructor(private http: Http) {}
+    
+    getAllCuisines(){
         //We get token from local storage
         var currentToKey = JSON.parse(localStorage.getItem('toKey'));
         let token = currentToKey && currentToKey.token;
@@ -19,16 +23,12 @@ export class CuisinesService {
             'X-Auth-token' : token});
         
         //and passing them in the request
-        this.cuisines=this.http.get('/api/user/account/'+username,{headers :this.headers})
-            .map(res => res.json());    
+        return this.http.get('/api/cuisines/all',{headers :this.headers})
+            .map((res:Response) => res.json());   
     }
     
-    //show preferedCuisines array - all prefered cuisines
-    getCuisine(name: string) {
-        let index: number = this.cuisines[name].indexOf(name);
-        if (index !== -1) {
-            return this.cuisines[index];
-        }
-        return -1;
-    }
+     private handleError(error: any): Promise<any> {
+        console.error('An error occurred', error); 
+        return Promise.reject(error.message || error);
+     }
 }
