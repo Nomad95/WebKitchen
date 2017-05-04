@@ -61,7 +61,7 @@ gulp.task('libcopy', function() {
               './node_modules/tether/dist/js/tether.js',
             //'./node_modules/bootstrap/dist/js/bootstrap.js',
               './node_modules/moment/moment.js',
-            './node_modules/ng2-bootstrap/bundles/ng2-bootstrap.umd.js'
+            './node_modules/ng2-bootstrap/bundles/ngx-bootstrap.umd.js'
         ])
         .pipe(gulp.dest(staticDir + 'js/lib'));
     gulp.src(['./node_modules/tether/dist/css/tether.css',

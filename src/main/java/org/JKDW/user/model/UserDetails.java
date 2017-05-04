@@ -1,15 +1,25 @@
 package org.JKDW.user.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Size;
+
+import org.JKDW.user.model.DTO.UserAccountDTO;
+import org.JKDW.user.model.DTO.UserDetailsUpdateDTO;
 
 /**
  * We have to use Integer class instead of int
@@ -63,28 +73,45 @@ public class UserDetails {
 	@Lob @Column( name = "photo" )
 	private byte[] photo;
 
-	@OneToOne
-	@JoinColumn(name = "preferred_cuisine_id")
-	private Cuisines preferredCuisine;
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "userDetails_cuisine", joinColumns = {
+			@JoinColumn(name = "userDetails_ID", nullable = false, updatable = false) },
+			inverseJoinColumns = { @JoinColumn(name = "cuisine_ID",
+					nullable = false, updatable = false) })
+	private List<Cuisines> preferredCuisine;
 
 	private Integer profileCompletion;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "user_account_Id")
-	@JsonIgnore //prevents password leaking
-	private UserAccount userAccount;
+    private UserAccount userAccount;
 
-	/**
-	 * we must write @JsonIgnore here to prevent infinite recursion of lists
-	 */
-	@JsonIgnore
 	@ManyToMany
 	private List<Event> events;
+
+//	private UserAccountDTO userAccountDTO;
 
 	public UserDetails(){
 
 	}
 
+	public UserDetails(UserDetailsUpdateDTO userDetailsUpdateDTO){
+		this.name = userDetailsUpdateDTO.getName();
+		this.surname = userDetailsUpdateDTO.getSurname();
+		this.street = userDetailsUpdateDTO.getStreet();
+		this.streetNumber = userDetailsUpdateDTO.getStreetNumber();
+		this.flatNumber = userDetailsUpdateDTO.getFlatNumber();
+		this.postCode = userDetailsUpdateDTO.getPostCode();
+		this.city = userDetailsUpdateDTO.getCity();
+		this.birthDate = userDetailsUpdateDTO.getBirthDate();
+		this.phoneNumber = userDetailsUpdateDTO.getPhoneNumber();
+		this.sex = userDetailsUpdateDTO.getSex();
+		this.interests = userDetailsUpdateDTO.getInterests();
+		this.description = userDetailsUpdateDTO.getDescription();
+		this.preferredCuisine = userDetailsUpdateDTO.getPreferredCuisine();
+		this.profileCompletion = userDetailsUpdateDTO.getProfileCompletion();
+	//	this.userAccountDTO = userDetailsUpdateDTO.getUserAccountDTO();
+	}
 	//
 	public List<Event> getEvents() {
 		return events;
@@ -92,15 +119,6 @@ public class UserDetails {
 
 	public void setEvents(List<Event> events) {
 		this.events = events;
-	}
-
-	public Cuisines getPreferredCuisine() {
-		return preferredCuisine;
-	}
-
-
-	public void setPreferredCuisine(Cuisines preferredCuisine) {
-		this.preferredCuisine = preferredCuisine;
 	}
 
 
@@ -262,5 +280,19 @@ public class UserDetails {
 	public void setUserAccount(UserAccount userAccount) {
 		this.userAccount = userAccount;
 	}
+
+	public void setUserAccountDTO(UserAccountDTO userAccountDTO) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public List<Cuisines> getPreferredCuisine() {
+		return preferredCuisine;
+	}
+
+	public void setPreferredCuisine(List<Cuisines> preferredCuisine) {
+		this.preferredCuisine = preferredCuisine;
+	}
+	
 
 }
