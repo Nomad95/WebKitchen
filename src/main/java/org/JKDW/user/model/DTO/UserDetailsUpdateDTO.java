@@ -35,7 +35,7 @@ public class UserDetailsUpdateDTO {
 
 	private String description;
 
-	private List<Cuisines> preferredCuisine = new ArrayList<Cuisines>();
+	private List<Cuisines> preferredCuisine;
 
 	private Integer profileCompletion;
 

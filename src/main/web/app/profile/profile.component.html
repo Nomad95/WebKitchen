@@ -145,9 +145,7 @@
 
 					</div><!--row close-->
 					
-			<div *ngIf="userProfile.preferredCuisine"> <!-- Here! -->
-				<button class ="cuisine" *ngFor="let data of userProfile.preferredCuisine">{{ data.name }}</button>  </div>
-					<br />
+			
 					<div class="row">
 
 						<form class="form-horizontal main_form text-left" action=" "
@@ -342,9 +340,27 @@
 
 					<!-- Text input-->
 
-
+<div *ngIf="userProfile.preferredCuisine"> <!-- Here! -->
+<select name="prefered" [(ngModel)] = "selectedCuisine"  (change)="addPreferedCuisine()">
+  <option *ngFor="let cuisine of cuisines" [ngValue]="cuisine">{{cuisine.name}}</option>
+</select>
+				 </div>
+					<br />
 					
-
+					<div *ngIf="userProfile.preferredCuisine"> <!-- Here! -->
+				<button class ="cuisine" *ngFor="let prefered of preferedCuisineService.preferedCuisines">{{ prefered.name }}</button>  </div>
+					<br />
+				
+				
+				<div *ngIf="userProfile.preferredCuisine"> <!-- Here! -->
+				<li *ngFor="let prefered of preferedCuisineService.preferedCuisines">
+				<button class ="cuisine" >{{ prefered.name }}</button><span (click)="deletePreferedCuisine(prefered)">X</span> </li> </div>
+					<br />	
+					
+<!-- 				
+<select [(ngModel)]="selectedCuisine" (change)="addCuisine()">
+  <option *ngFor="let c of cuisines" [value]="c">{{c.name}}</option>
+</select> -->
 
 					<!-- Select Basic -->
 
@@ -462,7 +478,7 @@
 						<div class="col-md-6">
 							<button type="submit" class="btn btn-warning submit-button"
 								(click)="updateProfile()">Save</button>
-							<button type="submit" class="btn btn-warning submit-button">Cancel</button>
+							<button type="submit" class="btn btn-warning submit-button" (click)="restoreProfile()">Cancel</button>
 
 						</div>
 					</div>

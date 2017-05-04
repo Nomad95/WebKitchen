@@ -78,7 +78,7 @@ public class UserDetails {
 			@JoinColumn(name = "userDetails_ID", nullable = false, updatable = false) },
 			inverseJoinColumns = { @JoinColumn(name = "cuisine_ID",
 					nullable = false, updatable = false) })
-	private List<Cuisines> preferredCuisine = new ArrayList<Cuisines>();
+	private List<Cuisines> preferredCuisine;
 
 	private Integer profileCompletion;
 

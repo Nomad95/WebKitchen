@@ -3,7 +3,7 @@ import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import {Observable}    from 'rxjs/Observable';
 
-import {Cuisine} from '../model/cuisine.model';
+import {Cuisine} from '../profile/model/cuisine.model';
 
 @Injectable()
 export class CuisinesService {
