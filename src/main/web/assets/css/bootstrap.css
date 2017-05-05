@@ -1836,13 +1836,15 @@ pre code {
 
 @media ( min-width : 768px) {
 	.container {
-		width: 750px;
+	/* psuje */
+		/* width: 750px; */
 	}
 }
 
 @media ( min-width : 992px) {
 	.container {
-		width: 970px;
+	/* psuje */
+		/* width: 970px; */
 	}
 }
 
