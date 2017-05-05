@@ -26,6 +26,23 @@ gulp.task('assetscopy', function() {
           .pipe(gulp.dest(staticDir + 'js'));
 });
 
+
+//js copy
+gulp.task('js', function() {
+
+/*// clean dest using sync
+del.sync([staticDir + 'js'], {force: true});*/
+
+// copy js
+	gulp.src(['./assets/js/**'])
+       .pipe(gulp.dest(staticDir + 'js'));
+});
+
+gulp.task('jsw', function() {
+	gulp.watch(['./assets/js/**'], ['js']);
+});
+
+
 // lib copy
 gulp.task('libcopy', function() {
    // clean dest using sync
@@ -174,7 +191,7 @@ gulp.task('tscw', function() {
 gulp.task('build', ['htmlcopy', 'sass', 'tsc', 'assetscopy', 'libcopy']);
 
 // watch sass, ts, and html
-gulp.task('watch', ['build', 'cssw', 'sassw', 'htmlw', 'tscw']);
+gulp.task('watch', ['build', 'cssw', 'sassw', 'htmlw', 'tscw', 'jsw']);
 
 // default
 gulp.task('default', ['build']);
