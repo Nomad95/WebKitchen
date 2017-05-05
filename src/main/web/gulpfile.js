@@ -141,7 +141,7 @@ gulp.task('sass', function() {
 
 // sass watch compile
 gulp.task('sassw', function() {
-    gulp.watch('./sass/**/*.scss', ['sass']);
+    gulp.watch('./sass/*.scss', ['sass']);
 });
 
 

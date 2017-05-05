@@ -11,7 +11,7 @@ html {
 body {
   background-color: $bg-color;
   color: $font-color;
-  padding-top: 45px;
+  padding-top: 75px;
 }
 
 .nav {
@@ -29,4 +29,10 @@ body {
   background-color: $navbar-bg !important;
   color: $navbar-font !important;
 }
+
+@media(max-width:768px){
+	body {
+  padding-top: 35px;
+}
+	}
 
