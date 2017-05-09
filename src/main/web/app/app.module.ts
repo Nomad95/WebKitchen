@@ -5,8 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AlertModule, DatepickerModule } from 'ng2-bootstrap/ng2-bootstrap';
 import {JQ_TOKEN} from './events/j-query.service';
-
 import { routing, appRouterProviders } from './app.routing';
+
 import { AppComponent } from './app.component';
 import { HelloComponent } from './hello/hello.component';
 import { CalendarComponent } from './calendar/calendar.component';
@@ -22,6 +22,8 @@ import {EventGeneralComponent} from './events/browser/event.component';
 import {EventDetailsComponent} from './events/detailed/event-details.component';
 import {RegistrationSuccess} from './registration/registration-success.component';
 import {LoginSuccess} from './login/login-success.component';
+import {EventCreateComponent} from './events/create/event-create.component';
+import {SimpleListComponent} from './util/list/simple-list.component';
 
 import {AuthGuard} from './app.auth-guard.service';
 
@@ -43,7 +45,9 @@ declare let jQuery:Object;
         SideNavbarComponent,
         EventDetailsComponent,
         RegistrationSuccess,
-        LoginSuccess
+        LoginSuccess,
+        EventCreateComponent,
+        SimpleListComponent
     ],
     imports: [BrowserModule,
               FormsModule,

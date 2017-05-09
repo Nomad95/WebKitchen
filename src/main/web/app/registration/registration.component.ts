@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UserAccount } from './user-account';
 import {Router} from '@angular/router';
 import { RegistrationService } from './registration.service';
 

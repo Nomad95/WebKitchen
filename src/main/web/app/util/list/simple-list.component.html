@@ -1,0 +1,19 @@
+<div class="form-group ">
+    <label>{{label}}</label>
+    <div class="row">
+        <div class="col-md-10">
+            <input type="text" class="form-control" id="inputKey"
+                   [(ngModel)]="currentItem"
+                   name="currentItem">
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-default" (click)="addItem()">Dodaj</button>
+        </div>
+    </div>
+</div>
+<div>
+        <span *ngFor="let item of listItems; let i = index;"
+              class="label label-default">{{item}} <i class="fa fa-times" aria-hidden="true"
+                                                      (click)="deleteItem(i)"></i> </span>
+</div>
+<br/>
