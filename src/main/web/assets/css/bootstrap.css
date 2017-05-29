@@ -3973,8 +3973,7 @@ tbody.collapse.in {
 	margin-left: 5px;
 }
 
-.btn-group>.btn:not (:first-child ):not (:last-child ):not (.dropdown-toggle
-	) {
+.btn-group>.btn:not (:first-child ):not (:last-child ):not (.dropdown-toggle) {
 	border-radius: 0;
 }
 

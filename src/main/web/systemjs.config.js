@@ -26,7 +26,8 @@
       'moment': 'js/lib/moment.js',
       'jquery': 'js/lib/jquery.js',
       'symbol-observable': 'js/lib/symbol-observable',
-      'ng2-bootstrap/ng2-bootstrap': 'js/lib/ngx-bootstrap.umd.js'
+      'ng2-bootstrap/ng2-bootstrap': 'js/lib/ngx-bootstrap.umd.js',
+      'ng2-select': 'js/lib'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -44,7 +45,11 @@
       'angular2-in-memory-web-api': {
         main: './index.js',
         defaultExtension: 'js'
-      }
+      },
+      'ng2-select': {
+        defaultExtension: 'js',
+        main: 'ng2-select.umd.js'
+    }
     }
   });
 })(this);

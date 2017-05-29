@@ -15,11 +15,14 @@ import { UserComponent } from './user/user.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
+import { Tabset } from './tabs/Tabset';
+import { Tab } from './tabs/Tab';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SideNavbarComponent } from './side_navbar/side-navbar.component';
 import {EventListComponent} from './events/browser/event-list.component';
 import {EventGeneralComponent} from './events/browser/event.component';
 import {EventDetailsComponent} from './events/detailed/event-details.component';
+import { SelectModule } from "ng2-select";
 
 import {AuthGuard} from './app.auth-guard.service';
 
@@ -36,7 +39,9 @@ declare let jQuery:Object;
                  LoginComponent,
                  ProfileComponent,
                  NavbarComponent,
-        EventListComponent,
+                 EventListComponent,
+                 Tabset,
+                 Tab,
         EventGeneralComponent,
         SideNavbarComponent,
         EventDetailsComponent],
@@ -44,6 +49,7 @@ declare let jQuery:Object;
               FormsModule,
               ReactiveFormsModule,
               HttpModule,
+              SelectModule,
               AlertModule.forRoot(),
               DatepickerModule.forRoot(),
               routing],

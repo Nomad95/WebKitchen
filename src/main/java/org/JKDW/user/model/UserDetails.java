@@ -67,7 +67,7 @@ public class UserDetails {
 	@Size(max = 255)
 	private String interests;
 
-	@Lob @Column( name = "description" )
+	@Column( name = "description" )
 	private String description;
 
 	@Lob @Column( name = "photo" )
