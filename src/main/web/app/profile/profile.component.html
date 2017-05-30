@@ -68,25 +68,25 @@
 									<tbody>
 										<tr>
 											<td>Imię</td>
-											<td>{{ userProfile.name }}</td>
+											<td *ngIf="(userProfile.name) !== ''">{{ userProfile.name }}</td>
+											<td *ngIf="(userProfile.name) === ''"> - </td>
 										</tr>
 										<tr>
 											<td>Nazwisko</td>
-											<td>{{ userProfile.surname }}</td>
+											<td *ngIf="(userProfile.surname) !== ''">{{ userProfile.surname }}</td>
+											<td *ngIf="(userProfile.surname) === ''"> - </td>
 										</tr>
 										<tr>
 											<td>Data urodzenia</td>
-											<td>{{userProfile.birthDate | date: 'dd-MM-yyyy'}}</td>
+											<td  *ngIf="(userProfile.birthDate) !== ''">{{userProfile.birthDate | date: 'dd-MM-yyyy'}}</td>
+											<td *ngIf="(userProfile.birthDate) === ''"> - </td>
 										</tr>
 										<tr>
 											<td>Kraj</td>
-											<td>{{ userProfile.userAccountDTO.country }}</td>
+											<td  *ngIf="(userProfile.userAccountDTO.country) !== ''">{{ userProfile.userAccountDTO.country }}</td>
+											<td *ngIf="(userProfile.userAccountDTO.country) === ''"> - </td>
 										</tr>
-										<tr>
-											<td>Zawód</td>
-											<td>-</td>
-										</tr>
-
+									
 									</tbody>
 								</table>
 							</div>
@@ -101,11 +101,13 @@
 									<tbody>
 										<tr>
 											<td>Email</td>
-											<td>{{ userProfile.userAccountDTO.email }}</td>
+											<td *ngIf="(userProfile.userAccountDTO.email) !== ''">{{ userProfile.userAccountDTO.email }}</td>
+											<td *ngIf="(userProfile.userAccountDTO.email) === ''"> - </td>
 										</tr>
 										<tr>
 											<td>Tel</td>
-											<td>(+021) 956 789123</td>
+											<td *ngIf="(userProfile.phoneNumber) !== ''">{{ userProfile.phoneNumber }}</td>
+											<td *ngIf="(userProfile.phoneNumber) === ''"> - </td>
 										</tr>
 										<!--   <tr>    
         <td>Wypełniony</td>
@@ -164,7 +166,7 @@
 									<div class="col-md-12 inputGroupContainer">
 										<div class="input-group">
 											<input name="userProfile.userAccountDTO.username" 
-												placeholder="First Name"
+												placeholder="Login"
 												class="form-control" 
 												type="text"
 												[(ngModel)]="userProfile.userAccountDTO.username" 
@@ -189,6 +191,7 @@
 						<div class="col-md-12 inputGroupContainer">
 							<div class="input-group">
 								<input name="userProfile.userAccountDTO.email" placeholder="Email"
+									placeholder="email@gmail.com"
 									class="form-control" 
 									#email="ngModel"
                                		type="email"
@@ -212,7 +215,7 @@
 									<div class="col-md-12 inputGroupContainer">
 										<div class="input-group">
 											<input name="userProfile.name" 
-												placeholder="First Name"
+												placeholder="Imię"
 												class="form-control" 
 												type="text"
 												[(ngModel)]="userProfile.name" 
@@ -239,7 +242,7 @@
 									<div class="col-md-12 inputGroupContainer">
 										<div class="input-group">
 											<input name="userProfile.surname" 
-												placeholder="Last Name"
+												placeholder="Nazwisko"
 												class="form-control" 
 												type="text"
 												[(ngModel)]="userProfile.surname" 
@@ -265,7 +268,7 @@
 									<div class="col-md-12 inputGroupContainer">
 										<div class="input-group">
 											<input name="userProfile.street" 
-												placeholder="Street"
+												placeholder="Ulica"
 												class="form-control" 
 												type="text"
 												[(ngModel)]="userProfile.street" 
@@ -388,7 +391,8 @@
 						<label class="col-md-10 control-label">Kraj</label>
 						<div class="col-md-12 inputGroupContainer">
 							<div class="input-group">
-								<input name="userProfile.userAccountDTO.country" placeholder="Country"
+								<input name="userProfile.userAccountDTO.country" 
+									placeholder="np. Polska"
 									#country="ngModel"
 	                               	type="text"
 	                               	pattern="....+"
@@ -480,9 +484,10 @@
        
 				<!--	<div style="width: 300px; margin-bottom: 20px;"> -->
 					<!-- Preferred Cuisines -->
-					<div class="col-md-12">
+					<div class="form-group col-md-12">
 						<!-- <h3>Wybierz preferowane kuchnie</h3>-->
-						<label>Wybierz preferowane kuchnie</label>
+						<label class="col-md-10 control-label">Wybierz preferowane kuchnie</label>
+						<div class="col-md-12 inputGroupContainer">
 						<ng-select #SelectId2 (selected)="value"  
 									#SelectId (data)="value"
 									[multiple]="true"
@@ -494,6 +499,7 @@
 									(removed)="removed($event)"
 									placeholder="Nie wybrano preferowanych kuchni"></ng-select>
 						<!--  <pre>{{itemsToString(value)}}</pre>-->
+					</div>
 					</div>
 
 					<!-- Text input-->

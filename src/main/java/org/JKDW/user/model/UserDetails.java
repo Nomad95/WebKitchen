@@ -57,7 +57,7 @@ public class UserDetails {
 
 	private Date birthDate;
 
-	@Size(min = 6, max = 15)
+	@Size(max = 15)
 	@Column(nullable=true)
 	private String phoneNumber;
 
