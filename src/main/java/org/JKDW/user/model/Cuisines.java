@@ -16,10 +16,8 @@ public class Cuisines {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+
 	private String name;
-	
-	public Cuisines() {
-	}
 
 	public Long getId() {
 		return id;
@@ -36,5 +34,9 @@ public class Cuisines {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public Cuisines() {
+	}
+
 
 }

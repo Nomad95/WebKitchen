@@ -13,7 +13,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     userAccountToAdd = {
       username: '',
       password: '',
-      email: '',
+      e_mail: '',
       country: '',
       nick: ''
     };
@@ -54,7 +54,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
             this.userAccountToAdd = {
                   username: '',
                   password: '',
-                  email: '',
+                  e_mail: '',
                   country: '',
                   nick: ''
             };

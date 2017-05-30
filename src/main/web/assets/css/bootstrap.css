@@ -1836,14 +1836,15 @@ pre code {
 
 @media ( min-width : 768px) {
 	.container {
-		width: 100%;
+	/* psuje */
+		/* width: 750px; */
 	}
 }
 
 @media ( min-width : 992px) {
 	.container {
+	/* psuje */
 		/* width: 970px; */
-		width: 100%;
 	}
 }
 
@@ -3973,7 +3974,8 @@ tbody.collapse.in {
 	margin-left: 5px;
 }
 
-.btn-group>.btn:not (:first-child ):not (:last-child ):not (.dropdown-toggle) {
+.btn-group>.btn:not (:first-child ):not (:last-child ):not (.dropdown-toggle
+	) {
 	border-radius: 0;
 }
 
@@ -4741,8 +4743,8 @@ textarea.input-group-sm>.form-control, textarea.input-group-sm>.input-group-addo
 		float: left;
 	}
 	.navbar-nav>li>a {
-	/*	padding-top: 15px;
-		padding-bottom: 15px;*//*------psuje--------szeroki navbar jest*/
+		padding-top: 15px;
+		padding-bottom: 15px;
 	}
 }
 
@@ -6389,11 +6391,12 @@ a.list-group-item-danger.active, button.list-group-item-danger.active, a.list-gr
 	min-height: 20px;
 	padding: 19px;
 	margin-bottom: 20px;
-	background-color: #f5f5f5;
-	border: 1px solid #e3e3e3;
+	background-color: #ffebe5;
+	border: 2px solid #212324;
 	border-radius: 4px;
 	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+	color: #080808;
 }
 
 .well blockquote {
@@ -7692,14 +7695,14 @@ h4.pro-title {
 }
 
 .bio-table td {
+	text-transform: capitalize;
 	text-align: left;
 	font-size: 15px;
-	width: 150px;
-	vertical-align:middle !important;
 }
 
 .bio-table>tbody>tr>td {
 	border: 0px solid;
+	text-transform: capitalize;
 	color: rgb(0, 4, 51);
 	font-size: 15px;
 }
@@ -7750,19 +7753,6 @@ h4.pro-title {
 		display: block;
 		visibility: visible;
 		width: 110px;
-		height: 900px;
-		padding: 0px 20px;
-		position: absolute;
-		right: -100px;
-		transition: all ease 0.5s;
-		border-top: 0px solid;
-		cursor: pointer;
-	}}
-	@media all and (max-width:1048px) {
-	.navbar-inverse .drop_menu {
-		display: block;
-		visibility: visible;
-		width: 110px;
 		height: 1000px;
 		padding: 0px 20px;
 		position: absolute;
@@ -7803,7 +7793,8 @@ h4.pro-title {
 		border-top: 0px solid;
 		cursor: pointer;
 	}
-	}
+}
+
 @media all and (max-width:430px) {
 	.profile-head ul li {
 		font-size: 12px !important;
@@ -7815,24 +7806,3 @@ h4.pro-title {
 		font-size: 13px;
 	}
 }
-
-.cuisine{
-	color: #000000 !important;
-}
-
-/*.login-icon{
-    display:inline-block;
-    font-size: 40px;
-    line-height: 50px;
-    background-color:black;
-    color:white;
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    vertical-align: bottom;
-}*/
-
-
-/*.prefferedCuisine{
-	padding-top: 5px;
-}*/

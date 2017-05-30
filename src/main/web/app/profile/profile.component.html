@@ -1,584 +1,383 @@
-
 <section>
 
-	<div class="container" style="margin-top: 30px;">
-		<div class="profile-head">
-			<div class="col-md- col-sm-4 col-xs-12">
-				<img src="/img/profile.jpg" class="img-responsive" />
-			</div>
-			<!--col-md-4 col-sm-4 col-xs-12 close-->
+    <div class="container" style="margin-top: 30px;">
+        <div class="profile-head">
+            <div class="col-md- col-sm-4 col-xs-12">
+
+                <!--<img src="/img/profile.jpg" class="img-responsive" /> TODO: na chwilkę -->
+            </div><!--col-md-4 col-sm-4 col-xs-12 close-->
 
 
-			<div class="col-md-5 col-sm-5 col-xs-12">
-				<h5>{{ userProfile.name }} {{ userProfile.surname }}</h5>
-				<p>{{ userProfile.userAccountDTO.country }}</p>
-				<ul>
-					<li><span class="fa fa-briefcase"></span> -</li>
-					<li><span class="fa fa-home"></span> {{ userProfile.street }},
-						{{ userProfile.postCode }} {{ userProfile.city }}</li>
-					<li><span class="fa fa-phone"></span> <a href="#" title="call">-</a></li>
-					<li><span class="fa fa-envelope"></span>{{
-						userProfile.userAccountDTO.email }}</li>
-				</ul>
+            <div class="col-md-5 col-sm-5 col-xs-12">
+                <h5>{{ userProfile.username }}</h5>
+                <p>{{ userProfile.country }} </p>
+                <ul>
+                    <li><span class="fa fa-briefcase"></span> -</li>
+                    <li><span class="fa fa-map-marker"></span> -</li>
+                    <li><span class="fa fa-home"></span> 555 street Address,toedo 43606 U.S.A.</li>
+                    <li><span class="fa fa-phone"></span> <a href="#" title="call">-</a></li>
+                    <li><span class="fa fa-envelope"></span><a href="#" title="mail">{{ userProfile.e_mail }}</a></li>
+
+                </ul>
 
 
-			</div>
-			<!--col-md-8 col-sm-8 col-xs-12 close-->
+            </div><!--col-md-8 col-sm-8 col-xs-12 close-->
 
 
+        </div><!--profile-head close-->
+    </div><!--container close-->
 
 
-		</div>
-		<!--profile-head close-->
-	</div>
-	<!--container close-->
+    <div id="sticky" class="container">
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs nav-menu" role="tablist">
+            <li class="active">
+                <a href="#profile" role="tab" data-toggle="tab">
+                    <i class="fa fa-male"></i> Profile
+                </a>
+            </li>
+            <li><a href="#change" role="tab" data-toggle="tab">
+                <i class="fa fa-key"></i> Edit Profile
+            </a>
+            </li>
+        </ul><!--nav-tabs close-->
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane fade active in" id="profile">
+                <div class="container">
+                    <div class="col-sm-11">
+                        <div class="hve-pro">
+                            <p>Hello I’m {{ userProfile.username }}, a leading expert in interactive and creative design
+                                specializing in the mobile medium.
+                                My graduation from Massey University with a Bachelor of Design majoring in visual
+                                communication.</p>
+                        </div><!--hve-pro close-->
+                    </div><!--col-sm-12 close-->
+                    <br clear="all"/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 class="pro-title">Twój profil:</h4>
+                        </div><!--col-md-12 close-->
 
 
-	<div id="sticky" class="container">
+                        <div class="col-md-6">
 
-		<!-- Nav tabs -->
-		<!--<ul class="nav nav-tabs nav-menu" role="tablist">
-			<li class="active"><a href="#profile" role="tab"
-				data-toggle="tab"> <i class="fa fa-male"></i> Profil
-			</a></li>
-			<li><a href="#change" role="tab" data-toggle="tab"> <i
-					class="fa fa-key"></i> Edytuj profil
-			</a></li>
-		</ul>-->
-		<tabset class="mainTabs">
-        <tab title="Profil">
+                            <div class="table-responsive responsiv-table">
+                                <table class="table bio-table">
+                                    <tbody>
+                                    <tr>
+                                        <td>Imię</td>
+                                        <td>: {{ userProfile.username }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nazwisko</td>
+                                        <td>: {{ userProfile.username }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Data urodzenia</td>
+                                        <td>: -</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kraj</td>
+                                        <td>: {{ userProfile.country }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Zawód</td>
+                                        <td>: -</td>
+                                    </tr>
 
-			<!--<div class="tab-pane fade active in" id="profile">-->
-				<div class="container">
-				
-					<!--col-sm-12 close-->
-					<br clear="all" />
-					<div class="row">
-						<div class="col-md-12">
-							<h4 class="pro-title">Twój profil:</h4>
-							<hr>
-						</div>
-						<!--col-md-12 close-->
+                                    </tbody>
+                                </table>
+                            </div><!--table-responsive close-->
+                        </div><!--col-md-6 close-->
 
+                        <div class="col-md-6">
 
-						<div class="col-md-6">
+                            <div class="table-responsive responsiv-table">
+                                <table class="table bio-table">
+                                    <tbody>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td>: {{ userProfile.e_mail }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tel</td>
+                                        <td>: (+021) 956 789123</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Wypełniony</td>
+                                        <td>: {{ userProfile.isFilled }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Zweryfikowany</td>
+                                        <td>{{ userProfile.isVerified }}</td>
+                                    </tr>
 
-							<div class="table-responsive responsiv-table">
-								<table class="table bio-table">
-									<tbody>
-										<tr>
-											<td>Imię</td>
-											<td *ngIf="(userProfile.name) !== ''">{{ userProfile.name }}</td>
-											<td *ngIf="(userProfile.name) === ''"> - </td>
-										</tr>
-										<tr>
-											<td>Nazwisko</td>
-											<td *ngIf="(userProfile.surname) !== ''">{{ userProfile.surname }}</td>
-											<td *ngIf="(userProfile.surname) === ''"> - </td>
-										</tr>
-										<tr>
-											<td>Data urodzenia</td>
-											<td  *ngIf="(userProfile.birthDate) !== ''">{{userProfile.birthDate | date: 'dd-MM-yyyy'}}</td>
-											<td *ngIf="(userProfile.birthDate) === ''"> - </td>
-										</tr>
-										<tr>
-											<td>Kraj</td>
-											<td  *ngIf="(userProfile.userAccountDTO.country) !== ''">{{ userProfile.userAccountDTO.country }}</td>
-											<td *ngIf="(userProfile.userAccountDTO.country) === ''"> - </td>
-										</tr>
-									
-									</tbody>
-								</table>
-							</div>
-							<!--table-responsive close-->
-						</div>
-						<!--col-md-6 close-->
+                                    </tbody>
+                                </table>
+                            </div><!--table-responsive close-->
+                        </div><!--col-md-6 close-->
 
-						<div class="col-md-6">
-
-							<div class="table-responsive responsiv-table">
-								<table class="table bio-table">
-									<tbody>
-										<tr>
-											<td>Email</td>
-											<td *ngIf="(userProfile.userAccountDTO.email) !== ''">{{ userProfile.userAccountDTO.email }}</td>
-											<td *ngIf="(userProfile.userAccountDTO.email) === ''"> - </td>
-										</tr>
-										<tr>
-											<td>Tel</td>
-											<td *ngIf="(userProfile.phoneNumber) !== ''">{{ userProfile.phoneNumber }}</td>
-											<td *ngIf="(userProfile.phoneNumber) === ''"> - </td>
-										</tr>
-										<!--   <tr>    
-        <td>Wypełniony</td>
-        <td>: {{ userProfile.isFilled }}</td>       
-    </tr> -->
-										<tr>
-											<td>Preferowane kuchnie</td>
-											<td *ngIf="userProfile.preferredCuisine?.length > 0">
-												<button class ="cuisine" *ngFor="let prefered of preferedCuisineService.preferedCuisines">{{ prefered.name }}</button>
-											</td>
-											<td *ngIf="(userProfile.preferredCuisine | json) === '[]'"> - </td>
-										</tr>
-										<tr>
-											<td>Zweryfikowany</td>
-											<td *ngIf="userProfile.userAccountDTO.isVerified"><img src="/img/ok.png" width="40" heigth="40" class="img-responsive" /></td>
-											<td *ngIf="!userProfile.userAccountDTO.isVerified"><img src="/img/not.png" width="40" heigth="40" class="img-responsive" /></td>
-										</tr>
-
-									</tbody>
-								</table>
-							</div>
-							<!--table-responsive close-->
-						</div>
-						<!--col-md-6 close-->
-
-					</div>
-					<!--row close-->
-				</div>
-				<!--container close-->
- </tab> 
-		
-			<tab title="Edytuj profil"> 
-		
-		
-
-			<!--<div class="tab-pane fade" id="change">-->
-				<div class="container fom-main">
-					<!--<div class="row">
-						<div class="col-sm-12">
-							<h2 class="register">Edycja profilu</h2>-->
-						<!--</div>-->
-						<!--col-sm-12 close-->
-
-					<!--</div>-->
-					<!--row close-->
-
-				
-					<div class="row">
-						<form class="form-horizontal main_form text-left" action=" "
-							method="post" id="contact_form" #form="ngForm" validate>
-							<tabset>
-							<tab title="Opcje logowania">
-								<div class="form-group col-md-12"
-									[class.has-error]="userName.invalid && userName.touched">
-									<label class="col-md-10 control-label" for="idUsername">Login</label>
-									<div class="col-md-12 inputGroupContainer">
-										<div class="input-group">
-											<input name="userProfile.userAccountDTO.username" 
-												placeholder="Login"
-												class="form-control" 
-												type="text"
-												[(ngModel)]="userProfile.userAccountDTO.username" 
-												#userName="ngModel"
-												pattern="....+" 
-												maxlength="25" 
-												required 
-												id="idUsername">
-											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
-											<div *ngIf="userName.invalid && userName.touched"
-												class="alert alert-danger" role="alert">Login musi się
-												składać z przynajmniej 4 liter.</div>
-										</div>
-									</div>
-								
-					</div>
-
-					<!-- Text input-->
-
-					<div class="form-group col-md-12">
-						<label class="col-md-10 control-label">E-mail</label>
-						<div class="col-md-12 inputGroupContainer">
-							<div class="input-group">
-								<input name="userProfile.userAccountDTO.email" placeholder="Email"
-									placeholder="email@gmail.com"
-									class="form-control" 
-									#email="ngModel"
-                               		type="email"
-                               		maxlength="45"
-                               		required
-                               		pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-                              		[(ngModel)]="userProfile.userAccountDTO.email">
-											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
-											<div *ngIf="email.invalid && email.touched"
-												class="alert alert-danger" role="alert">Ten E-mail jest niepoprawny.
-						</div>
-					</div>
-					</div>
-					</div>
-        </tab>
-        <tab title="Dane osobowe">
-					<!-- Text input-->
-					<div class="form-group col-md-12"
-									[class.has-error]="name.invalid && name.touched">
-									<label class="col-md-10 control-label" >Imię</label>
-									<div class="col-md-12 inputGroupContainer">
-										<div class="input-group">
-											<input name="userProfile.name" 
-												placeholder="Imię"
-												class="form-control" 
-												type="text"
-												[(ngModel)]="userProfile.name" 
-												#name="ngModel"
-												pattern="...+" 
-												maxlength="25" 
-												required 
-												>
-											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
-											<div *ngIf="name.invalid && name.touched"
-												class="alert alert-danger" role="alert">
-												Imię musi składać się z 3-25 liter.
-											</div>
-										</div>
-									</div>			
-					</div>
+                    </div><!--row close-->
 
 
-					<!-- Text input-->
-
-					<div class="form-group col-md-12"
-									[class.has-error]="surname.invalid && surname.touched">
-									<label class="col-md-10 control-label" >Nazwisko</label>
-									<div class="col-md-12 inputGroupContainer">
-										<div class="input-group">
-											<input name="userProfile.surname" 
-												placeholder="Nazwisko"
-												class="form-control" 
-												type="text"
-												[(ngModel)]="userProfile.surname" 
-												#surname="ngModel"
-												pattern="...+" 
-												maxlength="25"  
-												>
-											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
-											<div *ngIf="surname.invalid && surname.touched"
-												class="alert alert-danger" role="alert">
-												Nazwisko musi składać się z 3-25 liter.
-											</div>
-										</div>
-									</div>			
-					</div>
+                </div><!--container close-->
+            </div><!--tab-pane close-->
 
 
-					<!-- Text input-->
+            <div class="tab-pane fade" id="change">
+                <div class="container fom-main">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h2 class="register">Edit Your Profile</h2>
+                        </div><!--col-sm-12 close-->
 
-					<div class="form-group col-md-12"
-									[class.has-error]="street.invalid && street.touched">
-									<label class="col-md-10 control-label" >Ulica</label>
-									<div class="col-md-12 inputGroupContainer">
-										<div class="input-group">
-											<input name="userProfile.street" 
-												placeholder="Ulica"
-												class="form-control" 
-												type="text"
-												[(ngModel)]="userProfile.street" 
-												#street="ngModel"
-												pattern="...+" 
-												maxlength="45" 
-												>
-											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
-											<div *ngIf="street.invalid && street.touched"
-												class="alert alert-danger" role="alert">
-												Nazwa ulicy musi składać się z 3-45 liter.
-											</div>
-										</div>
-									</div>			
-					</div>
+                    </div><!--row close-->
+                    <br/>
+                    <div class="row">
+
+                        <form class="form-horizontal main_form text-left" action=" " method="post" id="contact_form">
+                            <fieldset>
 
 
-					<!-- Text input-->
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-10 control-label">First Name</label>
+                                    <div class="col-md-12 inputGroupContainer">
+                                        <div class="input-group">
+                                            <input name="first_name" placeholder="First Name" class="form-control"
+                                                   type="text">
+                                        </div>
+                                    </div>
+                                </div>
 
-					<div class="form-group col-md-12"
-									[class.has-error]="streetNumber.invalid && streetNumber.touched">
-									<label class="col-md-10 control-label" >Numer ulicy</label>
-									<div class="col-md-12 inputGroupContainer">
-										<div class="input-group">
-											<input name="userProfile.streetNumber" 
-												placeholder="Numer ulicy"
-												class="form-control" 
-												type="text"
-												[(ngModel)]="userProfile.streetNumber" 
-												#streetNumber="ngModel"
-												pattern="[1-9][0-9]{0,3}" 
-												maxlength="3"
-												>
-											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
-											<div *ngIf="streetNumber.invalid && streetNumber.touched"
-												class="alert alert-danger" role="alert">
-												Numer ulicy musi składać się wyłącznie z cyfr.
-											</div>
-										</div>
-									</div>			
-					</div>
+                                <!-- Text input-->
 
-					<!-- Text input-->
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-10 control-label">Last Name</label>
+                                    <div class="col-md-12 inputGroupContainer">
+                                        <div class="input-group">
+                                            <input name="last_name" placeholder="Last Name" class="form-control"
+                                                   type="text">
+                                        </div>
+                                    </div>
+                                </div>
 
-					<div class="form-group col-md-12"
-									[class.has-error]="flatNumber.invalid && flatNumber.touched">
-									<label class="col-md-10 control-label" >Numer domu/mieszkania</label>
-									<div class="col-md-12 inputGroupContainer">
-										<div class="input-group">
-											<input name="userProfile.flatNumber" 
-												placeholder="Numer domu/mieszkania"
-												class="form-control" 
-												type="text"
-												[(ngModel)]="userProfile.flatNumber" 
-												#flatNumber="ngModel"
-												pattern="[1-9][0-9]{0,3}" 
-												maxlength="3"
-												>
-											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
-											<div *ngIf="flatNumber.invalid && flatNumber.touched"
-												class="alert alert-danger" role="alert">
-												Numer domu/mieszkania musi składać się wyłącznie z cyfr.
-											</div>
-										</div>
-									</div>			
-					</div>
+                                <!-- Text input-->
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-10 control-label">E-Mail</label>
+                                    <div class="col-md-12 inputGroupContainer">
+                                        <div class="input-group">
+                                            <input name="email" placeholder="E-Mail Address" class="form-control"
+                                                   type="text">
+                                        </div>
+                                    </div>
+                                </div>
 
-					<!-- Text input-->
 
-					<div class="form-group col-md-12"
-									[class.has-error]="postCode.invalid && postCode.touched">
-									<label class="col-md-10 control-label" >Kod pocztowy</label>
-									<div class="col-md-12 inputGroupContainer">
-										<div class="input-group">
-											<input name="userProfile.postCode" 
-												placeholder="99999"
-												class="form-control" 
-												type="text"
-												[(ngModel)]="userProfile.postCode" 
-												#postCode="ngModel"
-												pattern="[0-9]{2}[0-9]{3}" 
-												maxlength="5" 
-												>
-											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
-											<div *ngIf="postCode.invalid && postCode.touched"
-												class="alert alert-danger" role="alert">
-												Kod pocztowy musi składać się z 5 cyfr.
-											</div>
-										</div>
-									</div>			
-					</div>
+                                <!-- Text input-->
 
-					<!-- Text input-->
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-10 control-label">Phone #</label>
+                                    <div class="col-md-12 inputGroupContainer">
+                                        <div class="input-group">
+                                            <input name="phone" placeholder="(845)555-1212" class="form-control"
+                                                   type="text">
+                                        </div>
+                                    </div>
+                                </div>
 
-					<div class="form-group col-md-12"
-									[class.has-error]="city.invalid && city.touched">
-									<label class="col-md-10 control-label" >Miasto</label>
-									<div class="col-md-12 inputGroupContainer">
-										<div class="input-group">
-											<input name="userProfile.city" 
-												placeholder="np. Lublin"
-												class="form-control" 
-												type="text"
-												[(ngModel)]="userProfile.city" 
-												#city="ngModel"
-												pattern="...+" 
-												maxlength="45" 
-												>
-											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
-											<div *ngIf="city.invalid && city.touched"
-												class="alert alert-danger" role="alert">
-												Nazwa miasta musi składać się z 3-45 liter.
-											</div>
-										</div>
-									</div>			
-					</div>
+                                <!-- Text input-->
 
-					<!-- Text input-->
-					<div class="form-group col-md-12">
-						<label class="col-md-10 control-label">Kraj</label>
-						<div class="col-md-12 inputGroupContainer">
-							<div class="input-group">
-								<input name="userProfile.userAccountDTO.country" 
-									placeholder="np. Polska"
-									#country="ngModel"
-	                               	type="text"
-	                               	pattern="....+"
-	                               	maxlength="45"
-	                               	required
-	                               	class="form-control"
-	                               	name="userProfile.userAccountDTO.country"
-	                               [(ngModel)]="userProfile.userAccountDTO.country">
-                        		<div *ngIf="country.invalid && country.touched" class="alert alert-danger" role="alert">
-                           			 Nazwa kraju musi składać się z przynajmniej 4 liter.
-                        		</div>
-							</div>
-						</div>
-					</div>
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-10 control-label">Address</label>
+                                    <div class="col-md-12 inputGroupContainer">
+                                        <div class="input-group">
+                                            <textarea class="form-control" name="comment"
+                                                      placeholder="Project Description"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
 
-					<!-- Text input-->
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-10 control-label">Project Description</label>
+                                    <div class="col-md-12 inputGroupContainer">
+                                        <div class="input-group">
+                                            <textarea class="form-control" name="comment"
+                                                      placeholder="Project Description"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
 
-					<div class="form-group col-md-12"
-									[class.has-error]="phoneNumber.invalid && phoneNumber.touched">
-									<label class="col-md-10 control-label" >Numer telefonu</label>
-									<div class="col-md-12 inputGroupContainer">
-										<div class="input-group">
-											<input name="userProfile.phoneNumber" 
-												placeholder="123456789"
-												class="form-control" 
-												type="text"
-												[(ngModel)]="userProfile.phoneNumber" 
-												#phoneNumber="ngModel"
-												pattern="\d{9}" 
-												maxlength="9"  
-												>
-											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
-											<div *ngIf="phoneNumber.invalid && phoneNumber.touched"
-												class="alert alert-danger" role="alert">
-												Numer telefonu musi składać się z 9 cyfr.
-											</div>
-										</div>
-									</div>			
-					</div>
 
-				<!-- Date input-->
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-10 control-label">Industry</label>
+                                    <div class="col-md-12 selectContainer">
+                                        <div class="input-group">
+                                            <select name="state" class="form-control selectpicker">
+                                                <option value=" ">Industry</option>
+                                                <option>Industry</option>
+                                                <option>Industry</option>
+                                                <option>Industry</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
 
-					<div class="form-group col-md-12">
-									<label class="col-md-10 control-label">Data urodzenia</label>
-									<div class="col-md-12 inputGroupContainer">
-										<div class="input-group">
-											<input name="birthDate" 
-												id="datefield"
-												class="form-control" 
-												type="date"
-												max="{{ birthDateMax | date: 'yyyy-MM-dd'}}"
-												min="{{ birthDateMin | date: 'yyyy-MM-dd'}}"
-												[ngModel]="birthDate | date: 'yyyy-MM-dd'"
-												(ngModelChange)="birthDate = $event"
-												[value]="birthDatee | date: 'yyyy-MM-dd'"
-												>
-										</div>
-									</div>			
-					</div>
-<!--					<script>
-    $(function(){           
-        if (!Modernizr.inputtypes.date) {
-            $('input[type=date]').datepicker({
-                  dateFormat : 'yy-mm-dd'
-                }
-             );
-        }
-    });
-</script>-->
 
-				<!-- radio checks -->
-					<div class="form-group col-md-12">
-						<label class="col-md-10 control-label">Płeć</label>
-						<div class="col-md-12">
-							<div class="radio col-md-2">
-								<label> <input type="radio" name="options" ng-control="options" [value]='1' [(ngModel)]="gender"/>
-									Mężczyzna
-								</label>
-							</div>
-							<div class="radio col-md-2">
-								<label> <input type="radio" name="options" ng-control="options" [value]='2' [(ngModel)]="gender"/>
-									Kobieta
-								</label>
-							</div>
-						</div>
-					</div>
-        </tab>
-        <tab title="Informacje dodatkowe">
-       
-				<!--	<div style="width: 300px; margin-bottom: 20px;"> -->
-					<!-- Preferred Cuisines -->
-					<div class="form-group col-md-12">
-						<!-- <h3>Wybierz preferowane kuchnie</h3>-->
-						<label class="col-md-10 control-label">Wybierz preferowane kuchnie</label>
-						<div class="col-md-12 inputGroupContainer">
-						<ng-select #SelectId2 (selected)="value"  
-									#SelectId (data)="value"
-									[multiple]="true"
-									[items]="cuisinesItems"
-									[active]="preferredCuisinesItems"
-									[disabled]="disabled"
-									(data)="refreshValue($event)"
-									(selected)="selected($event)"
-									(removed)="removed($event)"
-									placeholder="Nie wybrano preferowanych kuchni"></ng-select>
-						<!--  <pre>{{itemsToString(value)}}</pre>-->
-					</div>
-					</div>
+                                <!-- Select Basic -->
 
-					<!-- Text input-->
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-10 control-label">Qualification</label>
+                                    <div class="col-md-12 selectContainer">
+                                        <div class="input-group">
+                                            <select name="state" class="form-control selectpicker">
+                                                <option value=" ">your Qualification</option>
+                                                <option>M.A.</option>
+                                                <option>B.A.</option>
+                                                <option>B.Ed</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
 
-					<div class="form-group col-md-12"
-									[class.has-error]="interests.invalid && interests.touched">
-									<label class="col-md-10 control-label" >Zainteresowania</label>
-									<div class="col-md-12 inputGroupContainer">
-										<div class="input-group">
-											<input name="userProfile.interests" 
-												placeholder="Wędkarstwo, ..."
-												class="form-control" 
-												type="text"
-												[(ngModel)]="userProfile.interests" 
-												#interests="ngModel"
-												pattern="...+" 
-												maxlength="200"  
-												>
-											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
-											<div *ngIf="interests.invalid && interests.touched"
-												class="alert alert-danger" role="alert">
-												Zainteresowania muszą składać się przynajmniej z 3 liter.
-											</div>
-										</div>
-									</div>			
-					</div>
 
-					<div class="form-group col-md-12"
-									[class.has-error]="description.invalid && description.touched">
-									<label class="col-md-10 control-label" >Opis</label>
-									<div class="col-md-12 inputGroupContainer">
-										<div class="input-group">
-											<input name="userProfile.description" 
-												placeholder="Coś o mnie..."
-												class="form-control" 
-												type="text"
-												[(ngModel)]="userProfile.description" 
-												#description="ngModel"
-												pattern="...+" 
-												maxlength="200"  
-												>
-											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
-											<div *ngIf="description.invalid && description.touched"
-												class="alert alert-danger" role="alert">
-												Opis musi składać się przynajmniej z 5 liter.
-											</div>
-										</div>
-									</div>			
-					</div>
-        </tab>
-     
-</tabset>
-					<!--col-md-12 close-->
-					<!-- Button -->
-					<div class="form-group col-md-10">
-						<div class="col-md-12">
-							<button type="submit" class="btn btn-warning submit-button" (click)="updateProfile()">Zapisz</button>
-							<button type="submit" class="btn btn-warning submit-button" (click)="restoreProfile()">Anuluj</button>
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-10 control-label">Expertise areas</label>
+                                    <div class="col-md-12 selectContainer">
+                                        <div class="input-group">
+                                            <select name="state" class="form-control selectpicker">
+                                                <option value=" ">Expertise areas</option>
+                                                <option>Expertise areas1</option>
+                                                <option>Expertise areas1</option>
+                                                <option>Expertise areas1</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
 
-						</div>
-					</div>
-					
-					</form>
-				</div>
-				<!--row close-->
-			</div>
-			</tab>
-		</tabset>
-			<!--container close -->
-		</div>
-		<!--tab-pane close-->
-		
-	<!--</div>-->
-	<!--tab-content close-->
-	<!--</div>-->
-	<!--container close-->
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-10 control-label">Experience</label>
+                                    <div class="col-md-12 selectContainer">
+                                        <div class="input-group">
+                                            <select name="state" class="form-control selectpicker">
+                                                <option value=" ">your Experience</option>
+                                                <option>1 year</option>
+                                                <option>2 years</option>
+                                                <option>3 years</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
 
-</section>
-<!--section close-->
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-10 control-label">Salary expected</label>
+                                    <div class="col-md-12 selectContainer">
+                                        <div class="input-group">
+                                            <select name="state" class="form-control selectpicker">
+                                                <option value=" ">your Salary expectation</option>
+                                                <option>50 thousand</option>
+                                                <option>30thousand</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-10 control-label">Preferred Location</label>
+                                    <div class="col-md-12 selectContainer">
+                                        <div class="input-group">
+                                            <select name="state" class="form-control selectpicker">
+                                                <option value=" ">your Preferred Location</option>
+                                                <option>Chandigarh</option>
+                                                <option>Chandigarh</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--<div class="form-group col-md-12">
+                                  <label class="col-md-10 control-label">Project Description</label>
+                                    <div class="col-md-10 inputGroupContainer">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil hint_icon"></i></span>
+                                            <textarea class="form-control" name="comment" placeholder="Project Description"></textarea>
+                                  </div>
+                                  </div>
+                                </div>-->
+
+
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-10 control-label">Choose Password</label>
+                                    <div class="col-md-12 inputGroupContainer">
+                                        <div class="input-group">
+                                            <input name="first_name" placeholder="Choose Password" class="form-control"
+                                                   type="password">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-10 control-label">Confiram Password</label>
+                                    <div class="col-md-12 inputGroupContainer">
+                                        <div class="input-group">
+                                            <input name="first_name" placeholder="Confiram Password"
+                                                   class="form-control" type="password">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- radio checks -->
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-10 control-label">Gender</label>
+                                    <div class="col-md-6">
+                                        <div class="radio col-md-2">
+                                            <label>
+                                                <input type="radio" name="hosting" value="yes"/> Male
+                                            </label>
+                                        </div>
+                                        <div class="radio col-md-2">
+                                            <label>
+                                                <input type="radio" name="hosting" value="no"/> Female
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- upload profile picture -->
+                                <div class="col-md-12 text-left">
+                                    <div class="uplod-picture">
+<span class="btn btn-default uplod-file">
+    Upload Photo <input type="file"/>
+</span>
+<span class="btn btn-default uplod-file">
+    Upload Resume <input type="file"/>
+</span>
+<span class="btn btn-default uplod-file">
+    Upload Video <input type="file"/>
+</span>
+                                    </div><!--uplod-picture close-->
+                                </div><!--col-md-12 close-->
+                                <!-- Button -->
+                                <div class="form-group col-md-10">
+                                    <div class="col-md-6">
+                                        <button type="submit" class="btn btn-warning submit-button">Save</button>
+                                        <button type="submit" class="btn btn-warning submit-button">Cancel</button>
+
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div><!--row close-->
+                </div><!--container close -->
+            </div><!--tab-pane close-->
+        </div><!--tab-content close-->
+    </div><!--container close-->
+
+</section><!--section close-->
 
 
 

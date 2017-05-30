@@ -80,7 +80,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/img/**").permitAll()
-                //.antMatchers("/api/user/details/*").permitAll()
                 .antMatchers("/systemjs.config.js").permitAll()
                 .antMatchers(HttpMethod.GET,"/app/**/*.js").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
