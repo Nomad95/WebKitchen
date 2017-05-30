@@ -7,7 +7,7 @@
 }
 .fa {
   position: relative;
-  display: table-cell !important;
+  display: table-cell;
   width: 60px;
   height: 36px;
   text-align: center;
@@ -29,7 +29,7 @@ nav.main-menu.expanded {
   height: 100%;
   left: 0;
   width: 60px;
-  padding-top: 70px;
+  padding-top: 45px;
   overflow: hidden;
   -webkit-transition: width .05s linear;
   transition: width .3s linear;
@@ -180,4 +180,10 @@ nav.main-menu li.active>a,
 	}
 }
 
+.fa-center {
+  display: table-cell !important;
+}
+i.fa {
+  line-height: 100%;
+}
 
