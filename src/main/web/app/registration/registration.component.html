@@ -63,8 +63,8 @@
                                required
                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                                class="form-control"
-                               name="userAccountToAdd.e_mail"
-                               [(ngModel)]="userAccountToAdd.e_mail">
+                               name="userAccountToAdd.email"
+                               [(ngModel)]="userAccountToAdd.email">
                         <div *ngIf="email.invalid && email.touched" class="alert alert-danger" role="alert">
                             Ten E-mail jest niepoprawny.
                         </div>
