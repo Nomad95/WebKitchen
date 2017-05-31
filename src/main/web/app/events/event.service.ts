@@ -90,11 +90,15 @@ export class EventService {
 
     /**
      * Creates new Event
+     *
      * @param data - new event from create form
      */
     createEvent(data):Observable<any> {
         var currentToKey = JSON.parse(localStorage.getItem('toKey'));
         let token = currentToKey && currentToKey.token;
+
+        let username = currentToKey && currentToKey.username;
+
 
         var headers = new Headers({
             'content-type': 'application/json',
@@ -132,7 +136,6 @@ export class EventService {
             xhr.send(formData);
         });
     }
-
     private handleError(error:any):Promise<any> {
         console.error('An error occurred in EventService', error);
         return Promise.reject(error.message || error);
