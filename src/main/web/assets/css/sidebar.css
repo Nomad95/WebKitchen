@@ -5,7 +5,7 @@
 .fa-2x {
   font-size: 2em;
 }
-.fa {
+.fa-sidebar {
   position: relative;
   display: table-cell !important;
   width: 60px;
@@ -29,7 +29,7 @@ nav.main-menu.expanded {
   height: 100%;
   left: 0;
   width: 60px;
-  padding-top: 70px;
+  padding-top: 25px;
   overflow: hidden;
   -webkit-transition: width .05s linear;
   transition: width .3s linear;
@@ -53,7 +53,7 @@ nav.main-menu.expanded {
   font-family: arial;
   font-size: 14px;
   text-decoration: none;
-  
+
   -webkit-transform: translateZ(0) scale(1, 1);
   -webkit-transition: all .1s linear;
 }
@@ -95,7 +95,7 @@ nav {
   -ms-user-select: none;
   -o-user-select: none;
   user-select: none;
-  
+
 }
 nav ul,
 nav li {
@@ -114,7 +114,7 @@ nav.main-menu li.active>a,
 .dashboard-page nav.dashboard-menu ul li.active a {
   color: #fff;
   background-color: #FFA500;
- 
+
 }
 .area {
   float: left;
@@ -178,6 +178,10 @@ nav.main-menu li.active>a,
 	.main-menu>ul {
 		margin: -10px 0 !important;
 	}
+    .main-menu{
+        padding-top: 65px;
+    }
+
 }
 
 

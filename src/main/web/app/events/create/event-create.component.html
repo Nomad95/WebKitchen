@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="well">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-9 col-md-offset-1">
                         <form #eventCreateForm="ngForm" novalidate><!-- we disable browser walidation -->
                             <!--choose an event type, then show proper inputs -->
                             <div class="form-group">
@@ -15,7 +15,7 @@
                                 </select>
                             </div>
 
-                            <!--t1 - event type 1-->
+                            <!--t1 -> event type 1-->
                             <div *ngIf="typeOfEvent==1">
                                 <div class="form-group" [class.has-error]="titlet1.invalid && titlet1.touched">
                                     <label class="control-label">Tytuł wydarzenia</label>
@@ -33,32 +33,32 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group" [class.has-error]="timet1.invalid && timet1.touched">
-                                    <label class="control-label">Godzina</label>
-                                    <input #timet1="ngModel"
-                                           type="time"
-                                           class="form-control"
-                                           required
-                                           [(ngModel)]="newEventType1.time"
-                                           name="newEventType1.time">
-                                    <div *ngIf="timet1.invalid && timet1.touched" class="alert alert-danger"
-                                         role="alert">
-                                        Dodaj godzinę rozpoczęcia wydarzenia.
+                                <div class="row">
+                                    <div class="form-group col-md-6"
+                                         [class.has-error]="timet1.invalid && timet1.touched">
+                                        <label class="control-label">Godzina</label>
+                                        <input #timet1="ngModel"
+                                               type="time"
+                                               class="form-control"
+                                               required
+                                               [(ngModel)]="newEventType1.time"
+                                               name="newEventType1.time">
+                                    </div>
+                                    <div class="form-group col-md-6"
+                                         [class.has-error]="datet1.invalid && datet1.touched">
+                                        <label class="control-label">Data</label>
+                                        <input #datet1="ngModel"
+                                               type="date"
+                                               required
+                                               class="form-control"
+                                               [(ngModel)]="newEventType1.date"
+                                               name="newEventType1.date">
                                     </div>
                                 </div>
-
-                                <div class="form-group" [class.has-error]="datet1.invalid && datet1.touched">
-                                    <label class="control-label">Data</label>
-                                    <input #datet1="ngModel"
-                                           type="date"
-                                           required
-                                           class="form-control"
-                                           [(ngModel)]="newEventType1.date"
-                                           name="newEventType1.date">
-                                    <div *ngIf="datet1.invalid && datet1.touched" class="alert alert-danger"
-                                         role="alert">
-                                        Dodaj datę rozpoczęcia wydarzenia.
-                                    </div>
+                                <div *ngIf="(timet1.invalid && timet1.touched) || (datet1.invalid && datet1.touched)"
+                                     class="alert alert-danger"
+                                     role="alert">
+                                    Podaj datę i godzinę rozpoczęcia wydarzenia.
                                 </div>
 
                                 <div class="form-group" [class.has-error]="addresst1.invalid && addresst1.touched">
@@ -73,7 +73,7 @@
                                            name="newEventType1.address">
                                     <div *ngIf="addresst1.invalid && addresst1.touched" class="alert alert-danger"
                                          role="alert">
-                                        Adres powinien zawierać od 1-255 znaków.
+                                        Adres nie może być pusty.
                                     </div>
                                 </div>
 
@@ -89,7 +89,7 @@
                                            name="newEventType1.dish_name">
                                     <div *ngIf="dishnamet1.invalid && dishnamet1.touched" class="alert alert-danger"
                                          role="alert">
-                                        Nazwa posiłku powinna zawierać od 1-100 znaków.
+                                        Nazwa posiłku nie może być pusta.
                                     </div>
                                 </div>
 
@@ -141,7 +141,7 @@
                                            name="newEventType1.additional_info">
                                     <div *ngIf="additionalt1.invalid && additionalt1.touched" class="alert alert-danger"
                                          role="alert">
-                                        Dodatkowe informacje powinny zawierać od 1 do 255 znaków.
+                                        Dodatkowe informacje nie mogą być puste.
                                     </div>
                                 </div>
 
@@ -160,16 +160,26 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" [class.has-error]="!isProperPhoto && photot1.touched">
                                     <label class="control-label">Zdjęcie</label>
-                                    <input type="text" class="form-control" placeholder="placeholderPhoto"
-                                           [(ngModel)]="newEventType1.photo" name="newEventType1.photo">
+                                    <input type="file"
+                                           class="form-control"
+                                           #photot1="ngModel"
+                                           placeholder="placeholderPhoto"
+                                           [(ngModel)]="newEventType1.photo"
+                                           name="newEventType1.photo" (change)="fileChangeType1($event)"
+                                           accept=".jpg,.JPG,.jpeg,.JPEG,.png,.PNG,.bmp,.BMP" >
+                                    <div *ngIf="!isProperPhoto && photot1.touched" class="alert alert-danger"
+                                         role="alert">
+                                        Zdjęcie jest niepoprawne.
+                                    </div>
                                 </div>
 
                                 <div class="col-md-2">
                                     <button type="button" class="btn btn-default"
-                                            data-toggle="modal" data-target="#myModalType1">Stwórz wydarzenie
-                                    </button>
+                                            data-toggle="modal" data-target="#myModalType1"
+                                            [disabled]="!eventCreateForm.valid || !isProperPhoto">Stwórz wydarzenie
+                                    </button> <!--[disabled] -> makes button not accessable before validated-->
                                 </div>
 
                             </div>
@@ -235,35 +245,37 @@
                                            name="newEventType2.title">
                                     <div *ngIf="titlet2.invalid && titlet2.touched" class="alert alert-danger"
                                          role="alert">
-                                        Tytuł powinien zawierać od 1-255 znaków.
+                                        Tytuł nie może być pusty.
                                     </div>
                                 </div>
-                                <div class="form-group" [class.has-error]="timet2.invalid && timet2.touched">
-                                    <label class="control-label">Godzina</label>
-                                    <input #timet2="ngModel"
-                                           type="time"
-                                           class="form-control"
-                                           required
-                                           [(ngModel)]="newEventType2.time"
-                                           name="newEventType2.time">
-                                    <div *ngIf="timet2.invalid && timet2.touched" class="alert alert-danger"
-                                         role="alert">
-                                        Dodaj godzinę rozpoczęcia wydarzenia.
+                                <div class="row">
+                                    <div class="form-group col-md-6"
+                                         [class.has-error]="timet2.invalid && timet2.touched">
+                                        <label class="control-label">Godzina</label>
+                                        <input #timet2="ngModel"
+                                               type="time"
+                                               class="form-control"
+                                               required
+                                               [(ngModel)]="newEventType2.time"
+                                               name="newEventType2.time">
+                                    </div>
+                                    <div class="form-group col-md-6"
+                                         [class.has-error]="datet2.invalid && datet2.touched">
+                                        <label class="control-label">Data</label>
+                                        <input #datet2="ngModel"
+                                               type="date"
+                                               required
+                                               class="form-control"
+                                               [(ngModel)]="newEventType2.date"
+                                               name="newEventType2.date">
                                     </div>
                                 </div>
-                                <div class="form-group" [class.has-error]="datet2.invalid && datet2.touched">
-                                    <label class="control-label">Data</label>
-                                    <input #datet2="ngModel"
-                                           type="date"
-                                           required
-                                           class="form-control"
-                                           [(ngModel)]="newEventType2.date"
-                                           name="newEventType2.date">
-                                    <div *ngIf="datet2.invalid && datet2.touched" class="alert alert-danger"
-                                         role="alert">
-                                        Dodaj datę rozpoczęcia wydarzenia.
-                                    </div>
+                                <div *ngIf="(timet2.invalid && timet2.touched) || (datet2.invalid && datet2.touched)"
+                                     class="alert alert-danger"
+                                     role="alert">
+                                    Podaj datę i godzinę rozpoczęcia wydarzenia.
                                 </div>
+
                                 <div class="form-group" [class.has-error]="addresst2.invalid && addresst2.touched">
                                     <label class="control-label">Adres</label> <!-- moze zablokowac dostep? -->
                                     <input #addresst2="ngModel"
@@ -276,7 +288,7 @@
                                            name="newEventType2.address">
                                     <div *ngIf="addresst2.invalid && addresst2.touched" class="alert alert-danger"
                                          role="alert">
-                                        Adres wdydarzenia powinien zawierać od 1 do 255 znaków.
+                                        Adres wdydarzenia nie może być pusty.
                                     </div>
                                 </div>
                                 <div class="form-group" [class.has-error]="dishnamet2.invalid && dishnamet2.touched">
@@ -291,9 +303,10 @@
                                            name="newEventType2.dish_name">
                                     <div *ngIf="dishnamet2.invalid && dishnamet2.touched" class="alert alert-danger"
                                          role="alert">
-                                        Nazwa posiłku powinna zawierać od 1 do 100 znaków.
+                                        Nazwa posiłku nie może być pusta.
                                     </div>
                                 </div>
+
                                 <div class="form-group" [class.has-error]="dishkindt2.invalid && dishkindt2.touched">
                                     <label class="control-label" for="dishkind">Rodzaj posiłku</label>
                                     <select #dishkindt2="ngModel"
@@ -325,6 +338,7 @@
                                         Liczba osób powinna zawierać się w przedziale 1-25.
                                     </div>
                                 </div>
+
                                 <simple-list [label]="stringShoppingList"
                                              (eventClick)="handleRecievedShoppingList($event)"></simple-list>
                                 <simple-list [label]="stringProductsList"
@@ -342,7 +356,7 @@
                                     <div *ngIf="minitemst2.invalid && minitemst2.touched" class="alert alert-danger"
                                          role="alert">
                                         Liczba produktów nie może być pusta.
-                                    </div>
+                                    </div><!-- co jak moze ktos nie chce aby ktos cos kupowal? -->
                                 </div>
                                 <div class="form-group"
                                      [class.has-error]="additionalt2.invalid && additionalt2.touched">
@@ -357,7 +371,7 @@
                                            name="newEventType2.additional_info">
                                     <div *ngIf="additionalt2.invalid && additionalt2.touched" class="alert alert-danger"
                                          role="alert">
-                                        Dodatkowe informacje powinny zawierać od 1 do 255 znaków.
+                                        Dodatkowe informacje nie mogą być puste.
                                     </div>
                                 </div>
                                 <div class="form-group" [class.has-error]="desct2.invalid && desct2.touched">
@@ -373,15 +387,25 @@
                                         Opis nie może być pusty.
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" [class.has-error]="!isProperPhoto && photot2.touched">
                                     <label class="control-label">Zdjęcie</label>
-                                    <input type="text" class="form-control" placeholder="placeholderPhoto"
-                                           [(ngModel)]="newEventType2.photo" name="newEventType2.photo">
+                                    <input type="file"
+                                           class="form-control"
+                                           placeholder="placeholderPhoto"
+                                           #photot1="ngModel"
+                                           [(ngModel)]="newEventType2.photo"
+                                           (change)="fileChangeType2($event)" name="newEventType2.photo"
+                                           accept=".jpg,.JPG,.jpeg,.JPEG,.png,.PNG,.bmp,.BMP">
+                                    <div *ngIf="!isProperPhoto && photot2.touched" class="alert alert-danger"
+                                         role="alert">
+                                        Zdjęcie jest niepoprawne.
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-2">
                                         <button type="submit" class="btn btn-default"
-                                                data-toggle="modal" data-target="#myModalType2">Stwórz wydarzenie
+                                                data-toggle="modal" data-target="#myModalType2"
+                                                [disabled]="!eventCreateForm.valid">Stwórz wydarzenie
                                         </button>
                                     </div>
                                 </div>
@@ -439,7 +463,6 @@
                                 </div>
                             </div>
                             <!-- modal end -->
-
 
                         </form>
                     </div>

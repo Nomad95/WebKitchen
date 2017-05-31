@@ -1,12 +1,12 @@
 <div class="form-group ">
     <label>{{label}}</label>
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-10 col-sm-10 col-xs-10">
             <input type="text" class="form-control" id="inputKey"
                    [(ngModel)]="currentItem"
                    name="currentItem">
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 col-sm-1 col-xs-1">
             <button type="button" class="btn btn-default" (click)="addItem()">Dodaj</button>
         </div>
     </div>
@@ -15,5 +15,11 @@
         <span *ngFor="let item of listItems; let i = index;"
               class="label label-default">{{item}} <i class="fa fa-times" aria-hidden="true"
                                                       (click)="deleteItem(i)"></i> </span>
+</div>
+<div>
+    <div *ngIf="containsComma" class="alert alert-danger"
+         role="alert">
+        Nazwa produktu nie może zawierać przecinków.
+    </div>
 </div>
 <br/>

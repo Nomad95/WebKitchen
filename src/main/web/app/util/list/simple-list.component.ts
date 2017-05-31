@@ -34,6 +34,12 @@ export class SimpleListComponent implements OnInit {
      */
     private currentItem = '';
 
+    /**
+     * checks wether item contains comma -> it can make problems
+     * in he future with decoding string with commas
+     */
+    private containsComma = false;
+
     ngOnInit() {
     }
 
@@ -43,13 +49,24 @@ export class SimpleListComponent implements OnInit {
     addItem() {
         //if not specified do not show and also trim whitespaces
         this.currentItem = this.currentItem.replace(/\s\s+/g, ' ');
+        //check if item contains comma
+        if (this.currentItem.indexOf(',') > -1){
+            this.containsComma = true;
+            return;
+        }
+        //if item isnt empty, add it
         if (this.currentItem !== '') {
             this.listItems.push(this.currentItem);
             this.currentItem = '';
             this.eventClick.emit(this.listItems);
+            this.containsComma = false;
         }
     }
 
+    /**
+     *
+     * deletes item
+     */
     deleteItem(index:number) {
         if (index > -1) {
             this.listItems.splice(index, 1);

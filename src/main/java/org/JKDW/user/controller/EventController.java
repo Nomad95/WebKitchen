@@ -31,7 +31,6 @@ public class EventController {
     }
 
     /**
-     *
      * @return all general details of all events
      */
     @RequestMapping(value = "/general/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -61,7 +60,6 @@ public class EventController {
     }
 
     /**
-     *
      * @param id if of event we want to find
      * @return this method returns a DTO that contains
      * general information about an event
@@ -144,7 +142,7 @@ public class EventController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> checkIfUserIsBound(@PathVariable("username") String username,
                                                       @PathVariable("evntid") Long evntid) {
-        if (eventService.checkIfBinded(username, evntid))
+        if (eventService.checkIfBinded(username, evntid))//TODO: typo
             return new ResponseEntity<>(new Boolean("true"), HttpStatus.OK);
         return new ResponseEntity<>(new Boolean("false"), HttpStatus.OK);
     }
