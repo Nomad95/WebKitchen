@@ -59,7 +59,7 @@ public class UserAccount {
 	public UserAccount(UserAccountCreateDTO userAccountCreateDTO) {
 		this.username = userAccountCreateDTO.getUsername();
 		this.password = userAccountCreateDTO.getPassword();
-		this.email = userAccountCreateDTO.getE_mail();
+		this.email = userAccountCreateDTO.getEmail();
 		this.country = userAccountCreateDTO.getCountry();
 		this.nick = userAccountCreateDTO.getNick();
 	}

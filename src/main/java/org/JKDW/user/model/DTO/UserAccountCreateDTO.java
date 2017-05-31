@@ -6,7 +6,7 @@ public class UserAccountCreateDTO {
 
     private String password;
 
-    private String e_mail;
+    private String email;
 
     private String country;
 
@@ -31,12 +31,12 @@ public class UserAccountCreateDTO {
         this.password = password;
     }
 
-    public String getE_mail() {
-        return e_mail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setE_mail(String e_mail) {
-        this.e_mail = e_mail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getCountry() {
