@@ -88,7 +88,7 @@ group:after, .btn-group-vertical>.btn-group:before, .btn-toolbar:after, .btn-too
 }
 .nav-tabs > li > a:hover {
   border: none;
-  color: #fc5d44;
+  color: #FF6600; /*#fc5d44;*/
   background: transparent;
   opacity: 1;
 }
@@ -99,9 +99,9 @@ group:after, .btn-group-vertical>.btn-group:before, .btn-toolbar:after, .btn-too
   width: 100%;
   left: 0px;
   bottom: -1px;
-  transition: all 250ms ease 0s;
+  transition: all 500ms ease 0s;
   transform: scale(0);
-  background: #fc5d44 none repeat scroll 0% 0%;
+  background: #FF6600 none repeat scroll 0% 0%; /*#fc5d44*/
   color: #fff;
 }
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
