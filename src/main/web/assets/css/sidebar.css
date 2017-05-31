@@ -131,10 +131,12 @@ nav.main-menu li.active>a,
   margin-left: 60px !important;
   transition: margin-left 0.5s !important;
   padding: 16px !important;
+  transition: opacity 0.5s !important;
 }
 
 #box:hover + #main{
-  margin-left: 260px !important;
+  /*margin-left: 260px !important;*/
+  opacity: 0.5;
 }
 
 
