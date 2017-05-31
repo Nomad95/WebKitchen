@@ -556,7 +556,7 @@
 					<!-- Button -->
 					<div class="form-group col-md-10">
 						<div class="col-md-12">
-							<button type="submit" class="btn btn-warning submit-button" (click)="updateProfile()">Zapisz</button>
+							<button type="submit" class="btn btn-warning submit-button"  [disabled]="!form.valid" (click)="updateProfile()">Zapisz</button>
 							<button type="submit" class="btn btn-warning submit-button" (click)="restoreProfile()">Anuluj</button>
 
 						</div>
