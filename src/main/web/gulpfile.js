@@ -13,41 +13,24 @@ var cssDir = './assets/';
 // assets copy
 gulp.task('assetscopy', function() {
 
-  // clean dest using sync
-  del.sync([staticDir + 'img',
-            staticDir + 'css'], {force: true});
+    // clean dest using sync
+    del.sync([staticDir + 'img',
+        staticDir + 'css'], {force: true});
 
-  // copy assets
-  gulp.src(['./assets/css/**'])
-      .pipe(gulp.dest(staticDir + 'css'));
-      gulp.src(['./assets/img/**'])
-          .pipe(gulp.dest(staticDir + 'img'));
-	gulp.src(['./assets/js/**'])
-          .pipe(gulp.dest(staticDir + 'js'));
+    // copy assets
+    gulp.src(['./assets/css/**'])
+        .pipe(gulp.dest(staticDir + 'css'));
+    gulp.src(['./assets/img/**'])
+        .pipe(gulp.dest(staticDir + 'img'));
+    gulp.src(['./assets/js/**'])
+        .pipe(gulp.dest(staticDir + 'js'));
 });
-
-
-//js copy
-gulp.task('js', function() {
-
-/*// clean dest using sync
-del.sync([staticDir + 'js'], {force: true});*/
-
-// copy js
-	gulp.src(['./assets/js/**'])
-       .pipe(gulp.dest(staticDir + 'js'));
-});
-
-gulp.task('jsw', function() {
-	gulp.watch(['./assets/js/**'], ['js']);
-});
-
 
 // lib copy
 gulp.task('libcopy', function() {
-   // clean dest using sync
-   del.sync([staticDir + 'js/lib/**',
-             staticDir + 'css/lib/**'], {force: true});
+    // clean dest using sync
+    del.sync([staticDir + 'js/lib/**',
+        staticDir + 'css/lib/**'], {force: true});
 
     // copy libs
     gulp.src(['./node_modules/@angular/**/*'])
@@ -61,30 +44,30 @@ gulp.task('libcopy', function() {
 
     // copy @angular dependencies
     gulp.src(['./node_modules/zone.js/dist/zone.js',
-              './node_modules/reflect-metadata/Reflect.js',
-              './node_modules/systemjs/dist/system.src.js'])
+        './node_modules/reflect-metadata/Reflect.js',
+        './node_modules/systemjs/dist/system.src.js'])
         .pipe(gulp.dest(staticDir + 'js/lib'));
 
     // copy jasmine-core dependencies
     gulp.src(['./node_modules/jasmine-core/lib/jasmine-core/jasmine.js',
-              './node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js',
-              './node_modules/jasmine-core/lib/jasmine-core/boot.js'])
+        './node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js',
+        './node_modules/jasmine-core/lib/jasmine-core/boot.js'])
         .pipe(gulp.dest(staticDir + 'js/lib'));
     gulp.src(['./node_modules/jasmine-core/lib/jasmine-core/jasmine.css'])
         .pipe(gulp.dest(staticDir + 'css/lib'));
 
     // copy bootstrap dependencies
     gulp.src(['./node_modules/jquery/dist/jquery.js',
-              './node_modules/tether/dist/js/tether.js',
-            //'./node_modules/bootstrap/dist/js/bootstrap.js',
-              './node_modules/moment/moment.js',
-            './node_modules/ng2-bootstrap/bundles/ngx-bootstrap.umd.js',
-            './node_modules/ng2-select/bundles/ng2-select.umd.js'
-        ])
+        './node_modules/tether/dist/js/tether.js',
+        //'./node_modules/bootstrap/dist/js/bootstrap.js',
+        './node_modules/moment/moment.js',
+        './node_modules/ng2-bootstrap/bundles/ngx-bootstrap.umd.js',
+        './node_modules/ng2-select/bundles/ng2-select.umd.js'
+    ])
         .pipe(gulp.dest(staticDir + 'js/lib'));
     gulp.src(['./node_modules/tether/dist/css/tether.css',
-            // './node_modules/bootstrap/dist/css/bootstrap.css'
-        ])
+        // './node_modules/bootstrap/dist/css/bootstrap.css'
+    ])
         .pipe(gulp.dest(staticDir + 'css/lib'));
 
     // copy font-awesome
@@ -98,9 +81,9 @@ gulp.task('libcopy', function() {
 gulp.task('htmlcopy', function() {
     // clean dest
     del([staticDir + 'index.html',
-         staticDir + 'systemjs.config.js',
-         staticDir + 'jasmine/**/*.html',
-         staticDir + 'app/**/*.html'], {force:true});
+        staticDir + 'systemjs.config.js',
+        staticDir + 'jasmine/**/*.html',
+        staticDir + 'app/**/*.html'], {force:true});
 
     // copy index && systemjs cofnig
     gulp.src(['./index.html', './systemjs.config.js'])
@@ -141,24 +124,24 @@ gulp.task('sass', function() {
 
 // sass watch compile
 gulp.task('sassw', function() {
-    gulp.watch('./sass/*.scss', ['sass']);
+    gulp.watch('./sass/**/*.scss', ['sass']);
 });
 
 
 //css watch compile
 gulp.task('css', function() {
-  // clean dest
-  del([staticDir + 'css/*.css'], {force: true});
+    // clean dest
+    del([staticDir + 'css/*.css'], {force: true});
 
-  // copy css templates
-  gulp.src('./assets/css/*.css')
-      .pipe(gulp.dest(staticDir + 'css'));
+    // copy css templates
+    gulp.src('./assets/css/*.css')
+        .pipe(gulp.dest(staticDir + 'css'));
 
 });
 
 //css watch compile
 gulp.task('cssw', function() {
-  gulp.watch(['./assets/css/*.css'], ['css', 'sass']);
+    gulp.watch(['./assets/css/*.css'], ['css', 'sass']);
 });
 
 
@@ -181,9 +164,9 @@ gulp.task('tsc', function() {
 // typescript watch compile
 gulp.task('tscw', function() {
     gulp.watch(['./app/**/*.ts',
-                './app/**/*.html',
-                './jasmine/**/*.ts'],
-                ['htmlcopy', 'tsc']);
+            './app/**/*.html',
+            './jasmine/**/*.ts'],
+        ['htmlcopy', 'tsc']);
 });
 
 
@@ -191,7 +174,7 @@ gulp.task('tscw', function() {
 gulp.task('build', ['htmlcopy', 'sass', 'tsc', 'assetscopy', 'libcopy']);
 
 // watch sass, ts, and html
-gulp.task('watch', ['build', 'cssw', 'sassw', 'htmlw', 'tscw', 'jsw']);
+gulp.task('watch', ['build', 'cssw', 'sassw', 'htmlw', 'tscw']);
 
 // default
 gulp.task('default', ['build']);
