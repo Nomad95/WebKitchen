@@ -11,5 +11,6 @@ export class Tab {
   @Input() title = '';
   @Input() active = false;
   @Input() disabled = false;
+  @Input() classTab = '';
 
 }
