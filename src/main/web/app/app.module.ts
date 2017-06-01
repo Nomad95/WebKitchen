@@ -32,6 +32,8 @@ import {SimpleListComponent} from './util/list/simple-list.component';
 import {ProfileEventsComponent} from './events/profile/profile-events.component';
 import {UserParticipateEventsComponent} from "./events/profile/user-participate-events.component";
 import {UserCreatedEventsComponent} from "./events/profile/user-created-events.component";
+import { AdminComponent } from './admin/admin.component'
+import { AdminPanelUEComponent } from './adminPanelUE/adminPanelUE.component'
 
 import {AuthGuard} from './app.auth-guard.service';
 
@@ -70,9 +72,12 @@ declare let jQuery:Object;
         EventGeneralComponent,
         SideNavbarComponent,
         EventDetailsComponent,
+        EventDetailsComponent,
         RegistrationSuccess,
         LoginSuccess
     ],
+        AdminComponent,
+        AdminPanelUEComponent],
     imports: [BrowserModule,
               FormsModule,
               ReactiveFormsModule,

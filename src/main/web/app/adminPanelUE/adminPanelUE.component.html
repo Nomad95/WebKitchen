@@ -1,0 +1,83 @@
+
+<section>
+
+    <div class="container">
+
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#menu1"> Użytkownicy </a></li>
+            <li><a data-toggle="tab" href="#menu2"> Wydarzenia </a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="menu1" class="tab-pane fade in active">
+                <div class="container" style="margin-top: 30px;">
+
+                    <div class="input-group">
+                        <input id="msg" type="text" class="form-control" name="msg" placeholder="Wpisz nick szukanego użytkownika" [(ngModel)]="userAccountToSearch.username">
+                        <a (click)="getSearchUser(); doesUserExist();"  class="btn btn-default" >Wyszukaj</a>
+                    </div>
+                    <br>
+
+                    <div [hidden] = "!hideTable" class="table-bordered">
+                        <table class="table" >
+                            <tr>
+                                <td> Username </td>
+                                <td> Imie </td>
+                                <td> Nazwisko </td>
+                                <td> E-mail </td>
+                                <td> </td>
+                                <td> </td>
+                                <td> </td>
+                            </tr>
+                            <tr>
+                                <td>{{userAccount.username}}</td>
+                                <td>{{userAccount.name }}</td>
+                                <td>{{userAccount.surname }}</td>
+                                <td>{{userAccount.e_mail}}</td>
+                                <td> <a [routerLink]="['/admin/panelUE']" class="btn btn-default" >Pokaż</a> </td>
+                                <td> <a (click)="deleteUser();doesUserExist(); " [routerLink]="['/admin/panelUE']"  class="btn btn-default">Usuń</a> </td>
+                                <td> <a class="btn btn-default">Ban</a> </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div><!--container close-->
+            </div>
+            <div id="menu2" class="tab-pane fade">
+                <div class="container" style="margin-top: 30px;">
+
+                    <div class="input-group">
+                        <input id="msg2" type="text" class="form-control" name="userAccountSearch.username" placeholder="Wpisz nazwe wydarzenia"
+                               [(ngModel)]="userAccountToSearch.username">
+                        <a class="btn btn-default" (click)="btn-default.getYourName()">Wyszukaj</a>
+                    </div>
+                    <br>
+
+                    <div class="table-bordered">
+                        <table class="table">
+                            <tr>
+                                <td>ID</td>
+                                <td>Nazwa</td>
+                                <td> Opis </td>
+                                <td>  </td>
+                                <td>  </td>
+                            </tr>
+                            <tr>
+                                <td>24021</td>
+                                <td>Uczta gospodarza</td>
+                                <td> Wegetariańska ucza króla Juliana</td>
+                                <td> <a [routerLink]="['/admin/panelUE']" class="btn btn-default">Pokaż</a> </td>
+                                <td> <a [routerLink]="['/admin/panelUE']" class="btn btn-default">Usuń</a> </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div><!--container close-->
+            </div>
+        </div>
+    </div>
+
+</section><!--section close-->
+
+
+

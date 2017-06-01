@@ -1,0 +1,63 @@
+.card{
+   /* background-color: rgb(255, 102, 0); */
+    background-color: #d9edf7;
+    height: 300px;
+    width: 300px;
+}
+.kolumna{
+    background-color: #d9edf7;
+    float: left;
+    margin: 10px;
+    width: 250px;
+    height: 350px;
+    border: 3px solid black;
+    color: #1b2949;
+    position: relative;
+}
+.kolumna h3{
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 20px;
+    text-align: center;
+}
+.container2{
+    margin-left: 180px;
+}
+.container h3{
+   text-align: center;
+}
+.container2 .btn-default{
+    background-color: #333333;
+    color: white;
+}
+.kolumna .btn-default{
+ margin : 29%;
+}
+.kolumna .tresc_karty{
+    height: 50%;
+}
+.container .table-bordered{
+    background-color: #9d9d9d;
+}
+#msg, #msg2{
+    width: 30%;
+}
+.input-group .btn-default {
+    background-color: #333333;
+    color: white;
+    margin-right: 600px;
+}
+#menu1, #menu2{
+    background-color: #9d9d9d;
+}
+.nav-tabs>li>a{
+    background-color: #333333;
+    color: white;
+}
+.nav-tabs li.active a {
+    background-color: rgb(255, 102, 0) !important;
+}
+.container .table{
+    color: black;
+    font-weight: bold;
+}

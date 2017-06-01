@@ -18,6 +18,8 @@ import {ProfileEventsComponent} from "./events/profile/profile-events.component"
 
 import {AuthGuard} from './app.auth-guard.service';
 import {LoginService} from './login/login.service';
+import {AdminComponent} from "./admin/admin.component";
+import {AdminPanelUEComponent} from "./adminPanelUE/adminPanelUE.component";
 
 /* TODO: Układać to ładnie i po kolei*/
 const appRoutes: Routes = [
@@ -35,6 +37,9 @@ const appRoutes: Routes = [
     {path: 'events', component: EventListComponent, canActivate: [AuthGuard]},
     {path: 'events/:id', component: EventDetailsComponent, canActivate: [AuthGuard]},
     {path: 'events/create/new', component: EventCreateComponent, canActivate: [AuthGuard]}
+    {path: 'events/:id', component: EventDetailsComponent, canActivate: [AuthGuard]},
+    {path: 'admin', component: AdminComponent},
+    {path: "admin/panelUE", component: AdminPanelUEComponent}
 ];
 
 export const appRouterProviders = [AuthGuard, LoginService];
