@@ -5,8 +5,12 @@
 			<li><a [routerLink]="['/']"> <i class="fa fa-home fa-2x fa-sidebar"></i>
 					<span class="nav-text"> Strona główna </span>
 			</a></li>
+			<li class="has-subnav"><a [routerLink]="['/profile']"> <i
+					class="fa fa-user fa-2x fa-sidebar"></i> <span class="nav-text">
+						Twój profil </span>
+			</a></li>
 			<li class="has-subnav"><a [routerLink]="['/calendar']"> <i
-					class="fa fa-laptop fa-2x fa-sidebar"></i> <span class="nav-text">
+					class="fa fa-calendar fa-2x fa-sidebar"></i> <span class="nav-text">
 						Kalendarz </span>
 			</a></li>
 			<li class="has-subnav"><a [routerLink]="['/user']"> <i
@@ -14,10 +18,20 @@
 						Test </span>
 			</a></li>
 			<li class="has-subnav"><a [routerLink]="['/events']"> <i
-					class="fa fa-folder-open fa-2x fa-sidebar"></i> <span class="nav-text">
+					class="fa fa-cutlery fa-2x fa-sidebar"></i> <span class="nav-text">
 						Wydarzenia </span>
 			</a></li>
 		</ul>
+		<ul class="logout">
+        <li>
+          <a href="#">
+            <i class="fa fa-power-off fa-2x fa-sidebar"></i>
+            <span class="nav-text">
+                            Wyloguj
+                        </span>
+          </a>
+        </li>
+      </ul>
 	</nav>
 </div>
 
