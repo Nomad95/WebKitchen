@@ -18,6 +18,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.JKDW.user.model.DTO.UserAccountDTO;
 import org.JKDW.user.model.DTO.UserDetailsUpdateDTO;
 
@@ -87,6 +88,7 @@ public class UserDetails {
 	private UserAccount userAccount;
 
 	@ManyToMany
+	@JsonIgnore//prevents infinite loops i.e. when we get details about user
 	private List<Event> events;
 
 //	private UserAccountDTO userAccountDTO;
