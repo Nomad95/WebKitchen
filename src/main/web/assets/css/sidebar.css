@@ -2,16 +2,18 @@
 
 @import url(http://fonts.googleapis.com/css?family=Titillium+Web:300);
 .fa-2x {
-  font-size: 2em;
+  font-size: 2em !important;
 }
 .fa {
   position: relative;
   display: table-cell;/* !important*/
   width: 60px;
-  height: 36px;
+  /* height: 100%; */
   text-align: center;
   vertical-align: middle;
   font-size: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 .main-menu:hover,
 nav.main-menu.expanded {
