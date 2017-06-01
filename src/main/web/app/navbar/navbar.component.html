@@ -11,10 +11,10 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-          <li *ngIf="!loginService.isLogged()"><a [routerLink]="['/registration']"><i class="fa fa-user-plus"
+          <li *ngIf="!loginService.isLogged()"><a [routerLink]="['/registration']"><i class="fa fa-user-plus fa-navbar"
                                                                                       aria-hidden="true"></i>
               Zarejestruj </a></li>
-          <li *ngIf="!loginService.isLogged()"><a [routerLink]="['/login']"><i class="fa fa-sign-in"
+          <li *ngIf="!loginService.isLogged()"><a [routerLink]="['/login']"><i class="fa fa-sign-in fa-navbar"
                                                                                aria-hidden="true"></i> Zaloguj </a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right" style="padding-right: 15px">
@@ -22,20 +22,20 @@
               <a href="#" class="dropdown-toggle"
                  data-toggle="dropdown"
                  role="button" aria-haspopup="true" aria-expanded="false">
-                  <i class="fa fa-user"></i> {{getUsername()}} <span class="caret"></span></a>
+                  <i class="fa fa-user fa-navbar"></i> {{getUsername()}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li>
-                <a  [routerLink]="['/profile']"><i class="fa fa-fw fa-user"></i> Profil</a>
+                <a  [routerLink]="['/profile']"><i class="fa fa-fw fa-user fa-navbar-menu"></i> Profil</a>
             </li>
             <li>
-                <a href="javascript:;"><i class="fa fa-fw fa-envelope"></i> Wiadomości</a>
+                <a href="javascript:;"><i class="fa fa-fw fa-envelope fa-navbar-menu"></i> Wiadomości</a>
             </li>
             <li>
-                <a  href="javascript:;"><i class="fa fa-fw fa-gear"></i> Ustawienia</a>
+                <a  href="javascript:;"><i class="fa fa-fw fa-gear fa-navbar-menu"></i> Ustawienia</a>
             </li>
             <li>
                 <a class="dropdown-item" (click)="logout()">
-                    <i class="fa fa-fw fa-power-off"></i> Wyloguj
+                    <i class="fa fa-fw fa-power-off fa-navbar-menu"></i> Wyloguj
                 </a>
             </li>
           </ul>
