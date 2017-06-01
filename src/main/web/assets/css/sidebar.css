@@ -15,11 +15,6 @@
   padding-top: 5px;
   padding-bottom: 5px;
 }
-.main-menu:hover,
-nav.main-menu.expanded {
-  width: 260px;
-  overflow: visible;
-}
 .main-menu {
   background: #fbfbfb;
   border-right: 1px solid #e5e5e5;
@@ -177,8 +172,26 @@ body {
   }
 }
 
-@media(max-width:768px) {
-  .main-menu>ul {
-    margin: -10px 0 !important;
+@media(max-width:265px) {
+  .main-menu>ul, #main {
+    padding-top: 45px;
+  }
+
+   #main {
+    padding-top: 65px !important;
+   }
+}
+@media(min-width:768px) {
+  .main-menu:hover,
+  nav.main-menu.expanded {
+    width: 260px;
+    overflow: visible;
+  }
+}
+@media(max-height:360px){
+  .main-menu>ul.logout {
+    position: relative;
+    left: 0;
+    bottom: 0;
   }
 }
