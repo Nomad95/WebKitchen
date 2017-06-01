@@ -4,7 +4,7 @@
 .fa-2x {
   font-size: 2em !important;
 }
-.fa {
+.fa-sidebar, .fa-navbar, .fa-navbar-menu {
   position: relative;
   display: table-cell;/* !important*/
   width: 60px;
