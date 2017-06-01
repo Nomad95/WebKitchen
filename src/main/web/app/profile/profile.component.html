@@ -278,7 +278,7 @@
 												type="text"
 												[(ngModel)]="userProfile.street" 
 												#street="ngModel"
-												pattern="[A-Za-ząćęłńóśźżĄŚĆĘŁŹŻÓ]{3,45}" 
+												pattern="[A-Za-ząćęłńóśźżĄŚĆĘŁŹŻÓ][a-zA-ZząćęłńóśźżĄŚĆĘŁŹŻÓ. ]{3,45}" 
 												>
 											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
 											<div *ngIf="street.invalid && street.touched"
