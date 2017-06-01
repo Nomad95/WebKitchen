@@ -88,7 +88,54 @@ export class EventService {
             .catch(this.handleError);
     }
 
+    /**
+     * Creates new Event
+     *
+     * @param data - new event from create form
+     */
+    createEvent(data):Observable<any> {
+        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        let token = currentToKey && currentToKey.token;
 
+        let username = currentToKey && currentToKey.username;
+
+
+        var headers = new Headers({
+            'content-type': 'application/json',
+            'X-Auth-token': token
+        });
+
+        return this.http.post('/api/event/create', JSON.stringify(data), {headers: headers})
+            .map((res) => res.json())
+            .catch(this.handleError);
+    }
+
+    /**
+     * Uploads a dish photo -> store in assets
+     * URI is stored in database
+     * @param file - photo binaries
+     */
+    uploadPhoto(file:File):Observable<any> {
+        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        let token = currentToKey && currentToKey.token;
+
+        //create new observable; we use xhr instead of http
+        return Observable.create(observer => {
+            let formData:FormData = new FormData();
+            let xhr:XMLHttpRequest = new XMLHttpRequest();
+
+            //add file nad filename to FormData objct
+            //first parameter should match request parameter name in rest controller!
+            formData.append("uploadfile", file, file.name);
+
+            //we open xhr, set headers (important. we must set headers after
+            //.open), and send FormData
+            xhr.open('POST', '/api/upload/photo/dish', true);
+            xhr.setRequestHeader('X-Auth-token', token);
+            xhr.setRequestHeader('enctype', 'multipart/form-data');
+            xhr.send(formData);
+        });
+    }
     private handleError(error:any):Promise<any> {
         console.error('An error occurred in EventService', error);
         return Promise.reject(error.message || error);

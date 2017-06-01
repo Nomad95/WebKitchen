@@ -23,6 +23,10 @@ import {EventListComponent} from './events/browser/event-list.component';
 import {EventGeneralComponent} from './events/browser/event.component';
 import {EventDetailsComponent} from './events/detailed/event-details.component';
 import { SelectModule } from "ng2-select";
+import {RegistrationSuccess} from './registration/registration-success.component';
+import {LoginSuccess} from './login/login-success.component';
+import {EventCreateComponent} from './events/create/event-create.component';
+import {SimpleListComponent} from './util/list/simple-list.component';
 
 import {AuthGuard} from './app.auth-guard.service';
 
@@ -42,9 +46,23 @@ declare let jQuery:Object;
                  EventListComponent,
                  Tabset,
                  Tab,
+        HelloComponent,
+        CalendarComponent,
+        SimpleListComponent,
+        HomeComponent,
+        EventCreateComponent,
+        UserComponent,
+        RegistrationComponent,
+        LoginComponent,
+        ProfileComponent,
+        NavbarComponent,
+        EventListComponent,
         EventGeneralComponent,
         SideNavbarComponent,
-        EventDetailsComponent],
+        EventDetailsComponent,
+        RegistrationSuccess,
+        LoginSuccess
+    ],
     imports: [BrowserModule,
               FormsModule,
               ReactiveFormsModule,

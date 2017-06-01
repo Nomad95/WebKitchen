@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit, OnDestroy {
               this.errorEncountered = false;
 
             //forwards to main page
-            this.router.navigate(['/']);
+              this.router.navigate(['/login/success']);
           } else {
               this.errorEncountered = true;
           }

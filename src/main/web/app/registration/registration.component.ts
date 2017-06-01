@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UserAccount } from './user-account';
 import {Router} from '@angular/router';
 import { RegistrationService } from './registration.service';
 
@@ -63,7 +62,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
             this.isRegAccepted = false;
             this.isPassNotEqual = false;
             this.validationResult = true;
-            this.router.navigate(['/login']);
+            this.router.navigate(['/registration/success']);
         }, err => {
             this.validationResult = false;
             //TODO: username is already taken
