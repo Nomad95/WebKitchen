@@ -19,7 +19,8 @@ import { Tab } from './Tab';
         [class.nav-tabs]="!vertical">
         <li
           *ngFor="let tab of tabs"
-          [class.active]="tab.active">
+          [class.active]="tab.active"
+          [class.invalidTab]="tab.classTab">
           <a
             (click)="tabClicked(tab)"
             class="btn"

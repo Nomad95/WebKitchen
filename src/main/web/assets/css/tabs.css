@@ -62,13 +62,13 @@ group:after, .btn-group-vertical>.btn-group:before, .btn-toolbar:after, .btn-too
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
 }
 .tab-content {
- /*padding:15px 15px 25px 15px; */ <--------tu psuje!
+ /*padding:15px 15px 25px 15px; */ /*<--tu psuje!-->*/
  /* text-align:center;*/
 }
 
 .nav-tabs {
   border-bottom:solid 2px #eee;
-  /*margin-bottom: 10px;*/
+  margin-bottom: 5px;
 }
 .nav-tabs > li.disabled:hover {
   background: transparent;
@@ -78,7 +78,7 @@ group:after, .btn-group-vertical>.btn-group:before, .btn-toolbar:after, .btn-too
 }
 .nav-tabs > li > a {
   border: none;
-  color: #000 !important;
+  color: #000;
   background: transparent;
   font-weight: 600;
   opacity: .5;
@@ -110,4 +110,21 @@ group:after, .btn-group-vertical>.btn-group:before, .btn-toolbar:after, .btn-too
 }
 .nav-tabs > li.active > a::after, .nav-tabs > li:hover > a::after {
   transform: scale(1);
+}
+
+li.invalidTab > a{
+  background: red !important;
+  color: white !important;
+}
+
+li.invalidTab.active > a{
+  color: red !important;
+  background: white !important;
+}
+
+.nav-tabs > li.invalidTab.active > a::after, .nav-tabs > li.invalidTab > a:hover::after, .nav-tabs > li.invalidTab.active > a:hover::after{
+  background: #FF6600 none repeat scroll 0% 0% !important;
+}
+.nav-tabs > li.invalidTab > a::after{
+  background: white none repeat scroll 0% 0% !important;
 }

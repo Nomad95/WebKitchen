@@ -14,11 +14,17 @@
 				<p>{{ userProfile.userAccountDTO.country }}</p>
 				<ul>
 					<li><span class="fa fa-briefcase"></span> -</li>
-					<li><span class="fa fa-home"></span> {{ userProfile.street }},
-						{{ userProfile.postCode }} {{ userProfile.city }}</li>
-					<li><span class="fa fa-phone"></span> <a href="#" title="call">-</a></li>
-					<li><span class="fa fa-envelope"></span>{{
-						userProfile.userAccountDTO.email }}</li>
+
+					<li *ngIf="(userProfile.street || userProfile.postCode || userProfile.city) !== ''">
+						<span class="fa fa-home"></span> {{ userProfile.street }},{{ userProfile.postCode }} {{ userProfile.city }}</li>
+					<li *ngIf="(userProfile.street && userProfile.postCode && userProfile.city) === ''">
+						<span class="fa fa-home"></span> - </li>
+
+					<li *ngIf="(userProfile.phoneNumber) !== ''"><span class="fa fa-phone"></span> <a href="#" title="call">{{ userProfile.phoneNumber }}</a></li>
+					<li *ngIf="(userProfile.phoneNumber) === ''"><span class="fa fa-phone"></span> - </li>
+
+					<li *ngIf="(userProfile.userAccountDTO.email) !== ''"><span class="fa fa-envelope"></span>{{ userProfile.userAccountDTO.email }}</li>
+					<li *ngIf="(userProfile.userAccountDTO.email) === ''"><span class="fa fa-envelope"></span> - </li>
 				</ul>
 
 
@@ -159,7 +165,7 @@
 						<form class="form-horizontal main_form text-left" action=" "
 							method="post" id="contact_form" #form="ngForm" validate>
 							<tabset>
-							<tab title="Opcje logowania">
+							<tab title="Opcje logowania" [classTab]="userName.invalid || email.invalid ? 'invalidTab' : ''"> <!--[title]="userName.invalid || email.invalid ? 'Opcje logowania X' : 'Opcje logowania'"-->
 								<div class="form-group col-md-12"
 									[class.has-error]="userName.invalid && userName.touched">
 									<label class="col-md-10 control-label" for="idUsername">Login</label>
@@ -178,7 +184,7 @@
 											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
 											<div *ngIf="userName.invalid && userName.touched"
 												class="alert alert-danger" role="alert">Login musi się
-												składać z przynajmniej 4 liter.</div>
+												składać z przynajmniej 4-25 znaków.</div>
 										</div>
 									</div>
 								
@@ -207,7 +213,8 @@
 					</div>
 					</div>
         </tab>
-        <tab title="Dane osobowe">
+        <tab title="Dane osobowe" [classTab]="name.invalid || surname.invalid || street.invalid || streetNumber.invalid || 
+											flatNumber.invalid || postCode.invalid || city.invalid || country.invalid || phoneNumber.invalid ? 'invalidTab' : ''">
 					<!-- Text input-->
 					<div class="form-group col-md-12"
 									[class.has-error]="name.invalid && name.touched">
@@ -220,8 +227,7 @@
 												type="text"
 												[(ngModel)]="userProfile.name" 
 												#name="ngModel"
-												pattern="...+" 
-												maxlength="25" 
+												pattern="[A-Za-ząćęłńóśźżĄŚĆĘŁŹŻÓ]{3,25}" 
 												required 
 												>
 											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
@@ -247,8 +253,7 @@
 												type="text"
 												[(ngModel)]="userProfile.surname" 
 												#surname="ngModel"
-												pattern="...+" 
-												maxlength="25"  
+												pattern="[A-Za-ząćęłńóśźżĄŚĆĘŁŹŻÓ]{3,25}" 
 												>
 											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
 											<div *ngIf="surname.invalid && surname.touched"
@@ -273,8 +278,7 @@
 												type="text"
 												[(ngModel)]="userProfile.street" 
 												#street="ngModel"
-												pattern="...+" 
-												maxlength="45" 
+												pattern="[A-Za-ząćęłńóśźżĄŚĆĘŁŹŻÓ]{3,45}" 
 												>
 											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
 											<div *ngIf="street.invalid && street.touched"
@@ -305,7 +309,7 @@
 											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
 											<div *ngIf="streetNumber.invalid && streetNumber.touched"
 												class="alert alert-danger" role="alert">
-												Numer ulicy musi składać się wyłącznie z cyfr.
+												Numer ulicy musi składać się wyłącznie z cyfr (>0).
 											</div>
 										</div>
 									</div>			
@@ -330,7 +334,7 @@
 											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
 											<div *ngIf="flatNumber.invalid && flatNumber.touched"
 												class="alert alert-danger" role="alert">
-												Numer domu/mieszkania musi składać się wyłącznie z cyfr.
+												Numer domu/mieszkania musi składać się wyłącznie z cyfr (>0).
 											</div>
 										</div>
 									</div>			
@@ -344,18 +348,18 @@
 									<div class="col-md-12 inputGroupContainer">
 										<div class="input-group">
 											<input name="userProfile.postCode" 
-												placeholder="99999"
+												placeholder="99-999"
 												class="form-control" 
 												type="text"
 												[(ngModel)]="userProfile.postCode" 
 												#postCode="ngModel"
-												pattern="[0-9]{2}[0-9]{3}" 
-												maxlength="5" 
+												pattern="[0-9]{2}\-[0-9]{3}" 
+												maxlength="6" 
 												>
 											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
 											<div *ngIf="postCode.invalid && postCode.touched"
 												class="alert alert-danger" role="alert">
-												Kod pocztowy musi składać się z 5 cyfr.
+												Kod pocztowy musi składać się z 5 cyfr w formacie 99-999.
 											</div>
 										</div>
 									</div>			
@@ -374,8 +378,7 @@
 												type="text"
 												[(ngModel)]="userProfile.city" 
 												#city="ngModel"
-												pattern="...+" 
-												maxlength="45" 
+												pattern="[A-Za-ząćęłńóśźżĄŚĆĘŁŹŻÓ]{3,45}"
 												>
 											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
 											<div *ngIf="city.invalid && city.touched"
@@ -387,7 +390,8 @@
 					</div>
 
 					<!-- Text input-->
-					<div class="form-group col-md-12">
+					<div class="form-group col-md-12"
+						[class.has-error]="country.invalid && country.touched">
 						<label class="col-md-10 control-label">Kraj</label>
 						<div class="col-md-12 inputGroupContainer">
 							<div class="input-group">
@@ -395,8 +399,7 @@
 									placeholder="np. Polska"
 									#country="ngModel"
 	                               	type="text"
-	                               	pattern="....+"
-	                               	maxlength="45"
+	                               	pattern="[A-Za-ząćęłńóśźżĄŚĆĘŁŹŻÓ]{3,45}"
 	                               	required
 	                               	class="form-control"
 	                               	name="userProfile.userAccountDTO.country"
@@ -556,7 +559,7 @@
 					<!-- Button -->
 					<div class="form-group col-md-10">
 						<div class="col-md-12">
-							<button type="submit" class="btn btn-warning submit-button"  [disabled]="!form.valid" (click)="updateProfile()">Zapisz</button>
+							<button type="submit" class="btn btn-warning submit-button"  [disabled]="!form.valid" [title]="!form.valid ? 'Niepoprawne dane' : 'Zapisz'" (click)="updateProfile()">Zapisz</button>
 							<button type="submit" class="btn btn-warning submit-button" (click)="restoreProfile()">Anuluj</button>
 
 						</div>
