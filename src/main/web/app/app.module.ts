@@ -5,8 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AlertModule, DatepickerModule } from 'ng2-bootstrap/ng2-bootstrap';
 import {JQ_TOKEN} from './events/j-query.service';
-import { routing, appRouterProviders } from './app.routing';
 
+import { routing, appRouterProviders } from './app.routing';
 import { AppComponent } from './app.component';
 import { HelloComponent } from './hello/hello.component';
 import { CalendarComponent } from './calendar/calendar.component';
@@ -22,12 +22,9 @@ import { SideNavbarComponent } from './side_navbar/side-navbar.component';
 import {EventListComponent} from './events/browser/event-list.component';
 import {EventGeneralComponent} from './events/browser/event.component';
 import {EventDetailsComponent} from './events/detailed/event-details.component';
+import { SelectModule } from "ng2-select";
 import {RegistrationSuccess} from './registration/registration-success.component';
 import {LoginSuccess} from './login/login-success.component';
-
-import { SelectModule } from "ng2-select";
-import {LoginSuccess} from './login/login-success.component';
-
 import {EventCreateComponent} from './events/create/event-create.component';
 import {SimpleListComponent} from './util/list/simple-list.component';
 
@@ -49,13 +46,22 @@ declare let jQuery:Object;
                  EventListComponent,
                  Tabset,
                  Tab,
+        HelloComponent,
+        CalendarComponent,
+        SimpleListComponent,
+        HomeComponent,
+        EventCreateComponent,
+        UserComponent,
+        RegistrationComponent,
+        LoginComponent,
+        ProfileComponent,
+        NavbarComponent,
+        EventListComponent,
         EventGeneralComponent,
         SideNavbarComponent,
         EventDetailsComponent,
         RegistrationSuccess,
-        LoginSuccess,
-        EventCreateComponent,
-        SimpleListComponent
+        LoginSuccess
     ],
     imports: [BrowserModule,
               FormsModule,

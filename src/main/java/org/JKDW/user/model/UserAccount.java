@@ -27,7 +27,7 @@ public class UserAccount {
 	@NotNull
 	@Size(min = 5, max = 45)
 	@Column(unique = true)
-	private String e_mail;
+	private String email;
 
 	@NotNull
 	@Size(min = 4, max = 45)
@@ -52,6 +52,18 @@ public class UserAccount {
 	@Column(name = "last_logged")
 	private Date lastLogged;
 
+
+	public UserAccount(){
+	}
+
+	public UserAccount(UserAccountCreateDTO userAccountCreateDTO) {
+		this.username = userAccountCreateDTO.getUsername();
+		this.password = userAccountCreateDTO.getPassword();
+		this.email = userAccountCreateDTO.getEmail();
+		this.country = userAccountCreateDTO.getCountry();
+		this.nick = userAccountCreateDTO.getNick();
+	}
+
 	//metoda wywolywana przy INSERTcie.
 	@PrePersist
 	protected void onCreate() {
@@ -72,17 +84,6 @@ public class UserAccount {
 
 	public void setLastLogged(Date lastLogged) {
 		this.lastLogged = lastLogged;
-	}
-
-	public UserAccount(){
-	}
-
-	public UserAccount(UserAccountCreateDTO userAccountCreateDTO) {
-		this.username = userAccountCreateDTO.getUsername();
-		this.password = userAccountCreateDTO.getPassword();
-		this.e_mail = userAccountCreateDTO.getE_mail();
-		this.country = userAccountCreateDTO.getCountry();
-		this.nick = userAccountCreateDTO.getNick();
 	}
 
 	public Boolean getFilled() {
@@ -115,11 +116,11 @@ public class UserAccount {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getE_mail() {
-		return e_mail;
+	public String getEmail() {
+		return email;
 	}
-	public void setE_mail(String e_mail) {
-		this.e_mail = e_mail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getCountry() {
 		return country;
