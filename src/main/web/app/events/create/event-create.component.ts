@@ -232,13 +232,16 @@ export class EventCreateComponent implements OnInit {
         else return false;
     }
 
+    /**
+     * This method checks if user had filled required fields in his profile.
+     * If not, he is forwarded to events page
+     */
     checkIfUserCanCreateEvent(){
         this.eventService.checkIfUserCanCreateEvent()
             .subscribe((data) => {
                 console.log("can create? : " + data);
                 if(!data)
                     this.router.navigate(['/events']);
-
             })
     }
 }

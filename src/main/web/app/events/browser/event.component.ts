@@ -1,17 +1,18 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {Router} from '@angular/router';
 
 @Component({
     selector: 'event-detail',
     templateUrl: 'app/events/browser/event.component.html'
 })
 export class EventGeneralComponent implements OnInit {
-    constructor(private router:Router) {
+    constructor() {
     }
 
-    @Input() private event:any;
-    private eventType:string;
-    // on-init
+    //event from all event list component
+    @Input() private event: any;
+
+    private eventType: string;
+
     ngOnInit() {
         this.switchTypeToNames();
     }

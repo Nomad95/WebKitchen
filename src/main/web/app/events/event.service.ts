@@ -133,6 +133,10 @@ export class EventService {
         });
     }
 
+    /**
+     * Checks if user has filled required fields in profile to create new event
+     * @returns true if is verified else false
+     */
     checkIfUserCanCreateEvent(): Observable<boolean>{
         var currentToKey = JSON.parse(localStorage.getItem('toKey'));
         let token = currentToKey && currentToKey.token;
