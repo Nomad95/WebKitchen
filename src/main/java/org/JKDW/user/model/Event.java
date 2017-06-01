@@ -78,7 +78,7 @@ public class Event {
     private String description;
 
     /**
-     * link to photo (NULLABLE)
+     * link to photo
      */
     @Column(nullable = true)
     private String photo;

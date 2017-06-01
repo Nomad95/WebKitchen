@@ -96,4 +96,12 @@ public class UserDetailsController {
 		return new ResponseEntity(updatedUserDetails,HttpStatus.OK);
 	}
 
+	/**
+	 * This method checks whether user had fulfilled fields in his profile
+	 * required to create new event. See Service for more
+     */
+	@RequestMapping(value="/eventcheck/{username}",method = RequestMethod.GET)
+	public boolean canUserCreateEvent(@PathVariable("username") String username){
+		return userDetailsService.canCreateEvent(username);
+	}
 }

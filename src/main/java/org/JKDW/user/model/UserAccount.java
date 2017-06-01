@@ -52,7 +52,6 @@ public class UserAccount {
 	@Column(name = "last_logged")
 	private Date lastLogged;
 
-
 	public UserAccount(){
 	}
 

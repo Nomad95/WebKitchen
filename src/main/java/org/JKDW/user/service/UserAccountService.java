@@ -10,7 +10,7 @@ import org.JKDW.user.model.UserAccount;
 
 /*
  *
- * We need to change UserAccount to UserAccountDTO later iks de
+ * We need to change UserAccount to UserAccountDTO later
  *
  */
 public interface UserAccountService {

@@ -102,6 +102,35 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	}
 
 	/**
+	 *
+	 * This method checks whether user had fulfilled fields in his profile
+	 * required to create new event
+	 * @param accountUsername provided from users token
+	 * @return true if user has filled required fields else false
+	 * @throws NoResultException when acc or details couldn't be found
+     */
+	@Override
+	public boolean canCreateEvent(String accountUsername) throws NoResultException {
+		UserAccount foundUserAccount = userAccountRepository.findByUsername(accountUsername);
+		if(foundUserAccount == null)
+			throw new NoResultException("User with username: " + accountUsername + " couldn't be found");
+
+		UserDetails foundUserDetails = userDetailsRepository.findByUserAccount(foundUserAccount);
+		if(foundUserDetails == null)
+			throw new NoResultException("Error in account->detail reference");
+
+		//if user has not filled fields we cannot allow him to create event
+		return !(foundUserDetails.getName() == null
+				|| foundUserDetails.getSurname() == null
+				|| foundUserDetails.getCity() == null
+				|| foundUserDetails.getStreet() == null
+				|| foundUserDetails.getStreetNumber() == null
+				|| foundUserDetails.getBirthDate() == null
+				|| foundUserDetails.getPhoneNumber() == null
+				|| foundUserDetails.getSex() == null);
+	}
+
+	/**
 	 * Set UserDetailsDTO witch UserAccountDTO by UserAccount id
 	 * @param userDetailsDTO - details which we want to update
 	 * @throws NoResultException when details couldn't be found
@@ -145,8 +174,8 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 		return foundUserDetails;
 	}
 
-	/*
-     * Get UserDetailsDTO witch UserAccountDTO by UserAccount id
+	/**
+     * Get UserDetailsDTO witch (wiedźma! xD) UserAccountDTO by UserAccount id
      * @param id - id UserAccount
      * @throws NoResultException when details couldn't be found
      */

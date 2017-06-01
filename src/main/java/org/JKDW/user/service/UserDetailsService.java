@@ -12,8 +12,6 @@ public interface UserDetailsService {
 
 	List<UserDetails> getAllUserDetails();
 
-	UserDetails getUserDetailsByUserAccount(Long id) throws NoResultException;
-
 	UserDetails getUserDetailsbyId(Long id) throws NoResultException;
 
 	UserDetails getUserDetailsByUserAccountId(Long id) throws NoResultException;
@@ -27,4 +25,7 @@ public interface UserDetailsService {
 	UserDetails updateUserDetailsDTO(UserDetailsUpdateDTO userDetails) throws NoResultException;
 
 	void deleteUserDetails(Long id) throws NoResultException;
+
+	boolean canCreateEvent(String accountUsername) throws NoResultException;
+
 }

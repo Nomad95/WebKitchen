@@ -96,13 +96,6 @@ export class EventCreateComponent implements OnInit {
      */
     private isProperPhoto = true;
 
-    //logger
-    private tempShoppingListList:string[] = [];
-    private tempProductsListList:string[] = [];
-
-    private isEventCreated:boolean = false;
-
-
     klik() {
         console.log(this.typeOfEvent);
         console.log(this.newEventType2);
