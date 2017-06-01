@@ -90,15 +90,11 @@ export class EventService {
 
     /**
      * Creates new Event
-     *
      * @param data - new event from create form
      */
     createEvent(data):Observable<any> {
         var currentToKey = JSON.parse(localStorage.getItem('toKey'));
         let token = currentToKey && currentToKey.token;
-
-        let username = currentToKey && currentToKey.username;
-
 
         var headers = new Headers({
             'content-type': 'application/json',
@@ -125,7 +121,7 @@ export class EventService {
             let xhr:XMLHttpRequest = new XMLHttpRequest();
 
             //add file nad filename to FormData objct
-            //first parameter should match request parameter name in rest controller!
+            //first parameter should match request parameter name in rest controller!!!
             formData.append("uploadfile", file, file.name);
 
             //we open xhr, set headers (important. we must set headers after
@@ -136,6 +132,23 @@ export class EventService {
             xhr.send(formData);
         });
     }
+
+    checkIfUserCanCreateEvent(): Observable<boolean>{
+        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        let token = currentToKey && currentToKey.token;
+        let username = currentToKey && currentToKey.username;
+
+        var headers = new Headers({
+            'content-type': 'application/json',
+            'X-Auth-token': token
+        });
+
+        return this.http.get('/api/user/details/eventcheck/'+username, {headers: headers})
+            .map((res) => res.json())
+            .catch(this.handleError);
+
+    }
+
     private handleError(error:any):Promise<any> {
         console.error('An error occurred in EventService', error);
         return Promise.reject(error.message || error);

@@ -19,6 +19,7 @@ export class EventDetailsComponent implements OnInit {
     private eventType:string;
     private hasJoined = false;
     private isFull = false;
+    
 
     // on-init
     ngOnInit() {
@@ -61,7 +62,6 @@ export class EventDetailsComponent implements OnInit {
             .subscribe((data) => {
                 this.hasJoined = data;
                 console.log('data passed: ' + data);
-
             });
     }
 
@@ -71,7 +71,7 @@ export class EventDetailsComponent implements OnInit {
     }
 
     /**
-     * extracts event name from event type int
+     * extracts event name from event type integer value
      */
     switchTypeToNames() {
         switch (+this.event.type) {
@@ -83,5 +83,4 @@ export class EventDetailsComponent implements OnInit {
                 break;
         }
     }
-
 }

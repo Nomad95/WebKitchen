@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {SimpleListComponent} from '../../util/list/simple-list.component';
 import {EventService} from '../event.service';
 
 /* eventy pod profilem */
@@ -15,6 +14,7 @@ export class EventCreateComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.checkIfUserCanCreateEvent();
     }
 
     /**
@@ -96,6 +96,7 @@ export class EventCreateComponent implements OnInit {
      */
     private isProperPhoto = true;
 
+    //logger
     klik() {
         console.log(this.typeOfEvent);
         console.log(this.newEventType2);
@@ -134,17 +135,16 @@ export class EventCreateComponent implements OnInit {
         if (data.time.length < 7)
             data.time += ':00';
 
-        data.time += ':00';
-        //TODO: validation!
-
         //button loading toggle
         var $btn1 = $('#saveEventButton').button('loading');
         var $btn2 = $('#saveEventButtonType2').button('loading');
 
         console.log(data);
         console.log('stringified: ' + JSON.stringify(data));
+
         //perform file upload TODO: a co jak zdjecie bedzie dobre a event zly? albo odwrotnie??
         this.uploadPhoto(this.selectedFile);
+
         //make post to create an event
         this.eventService.createEvent(data)
             .subscribe(
@@ -153,7 +153,6 @@ export class EventCreateComponent implements OnInit {
                     $btn1.button('reset');
                     $btn2.button('reset');
                     this.isEventCreated = true;
-                    this.isEventCreated = true
                 },
                 err => {
                     console.log('error adding event!');
@@ -231,5 +230,15 @@ export class EventCreateComponent implements OnInit {
         )
             return true;
         else return false;
+    }
+
+    checkIfUserCanCreateEvent(){
+        this.eventService.checkIfUserCanCreateEvent()
+            .subscribe((data) => {
+                console.log("can create? : " + data);
+                if(!data)
+                    this.router.navigate(['/events']);
+
+            })
     }
 }

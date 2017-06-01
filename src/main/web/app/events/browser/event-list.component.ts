@@ -11,11 +11,13 @@ export class EventListComponent implements OnInit {
     constructor(private router:Router, private eventService:EventService) {
     }
 
-    private events:any[];
+    private events: any[];
+    private canCreateEvent = false;
 
     // on-init
     ngOnInit() {
         this.getEvents();
+        this.checkIfUserCanCreateEvent();
     }
 
     /**
@@ -29,4 +31,11 @@ export class EventListComponent implements OnInit {
             })
     }
 
+    checkIfUserCanCreateEvent(){
+        this.eventService.checkIfUserCanCreateEvent()
+            .subscribe((data) => {
+                this.canCreateEvent = data;
+                console.log("can create? : " + this.canCreateEvent);
+            })
+    }
 }
