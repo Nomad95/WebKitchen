@@ -45,7 +45,7 @@
   display: table;
   border-collapse: collapse;
   border-spacing: 20px;
-  color: #999;
+  color: #6f6f6f;
   font-family: arial;
   font-size: 14px;
   text-decoration: none;
@@ -162,6 +162,10 @@ body {
 #wrapper.toggled #page-content-wrapper {
   position: absolute;
   margin-right: -250px;
+}
+
+.dropdown-menu>li>a {
+  cursor: pointer;
 }
 
 
