@@ -21,5 +21,11 @@ export class SideNavbarComponent implements OnInit {
   checkToken(){
     this.loginService.isLogged();
   }
+
+   //logs out and redirects to '/'
+  logout(){
+    this.loginService.removeToken();
+    this.router.navigate(['/']);
+  }
     
 }
