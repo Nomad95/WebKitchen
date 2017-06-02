@@ -29,4 +29,6 @@ public interface UserAccountService {
 
 	UserAccount loadUserByUsername(String username);
 
+	Long findIdOfUsersUsername(String username);
+
 }

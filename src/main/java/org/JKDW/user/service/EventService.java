@@ -1,5 +1,6 @@
 package org.JKDW.user.service;
 
+import org.JKDW.user.model.DTO.EventForOwnerDTO;
 import org.JKDW.user.model.DTO.EventGeneralDTO;
 import org.JKDW.user.model.Event;
 
@@ -28,4 +29,6 @@ public interface EventService {
     void bindEventWithUser(String username, Long evntId) throws SizeLimitExceededException;
 
     boolean checkIfBinded(String username, Long evntId);
+
+    List<EventForOwnerDTO> getEventsCreatedByUserId(Long id);
 }

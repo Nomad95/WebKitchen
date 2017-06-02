@@ -1,5 +1,6 @@
 package org.JKDW.user.controller;
 
+import org.JKDW.user.model.DTO.EventForOwnerDTO;
 import org.JKDW.user.model.DTO.EventGeneralDTO;
 import org.JKDW.user.model.Event;
 import org.JKDW.user.service.EventService;
@@ -147,6 +148,18 @@ public class EventController {
         if (eventService.checkIfBinded(username, evntid))
             return new ResponseEntity<>(new Boolean("true"), HttpStatus.OK);
         return new ResponseEntity<>(new Boolean("false"), HttpStatus.OK);
+    }
+
+    /**
+     * Finds info about events created by user with provided id and info about participants
+     * @param id of user/ event owner
+     * @return list of event+participants. see DTO for more
+     */
+    @RequestMapping(value = "/userevents/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<EventForOwnerDTO>> getAllUserEventsAndParticipants(@PathVariable("id") Long id){
+        return new ResponseEntity<>(eventService.getEventsCreatedByUserId(id),HttpStatus.OK);
     }
 
 }

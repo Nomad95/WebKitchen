@@ -83,6 +83,13 @@ public class Event {
     @Column(nullable = true)
     private String photo;
 
+    /**
+     * owners UserAccount id
+     * renamed to ownerid. Spring data JPA method cant use '_' in method name
+     */
+    @Column(name = "ownerid")
+    private Long ownerId;
+
 
 	/* below nullable fields for different types of events */
 
@@ -157,6 +164,14 @@ public class Event {
 
     public Long getId() {
         return id;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
     public void setId(Long id) {

@@ -1,20 +1,23 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {EventService} from '../event.service';
+import {LoginService} from '../../login/login.service';
 
 /* eventy pod profilem */
 @Component({
     selector: 'event-create',
     templateUrl: 'app/events/create/event-create.component.html',
-    providers: [EventService]
+    providers: [EventService, LoginService]
 })
 export class EventCreateComponent implements OnInit {
-    constructor(private router:Router,
-                private eventService:EventService) {
+    constructor(private router: Router,
+                private eventService: EventService,
+                private loginService: LoginService) {
     }
 
     ngOnInit() {
         this.checkIfUserCanCreateEvent();
+        this.findUserId();
     }
 
     /**
@@ -45,7 +48,7 @@ export class EventCreateComponent implements OnInit {
         date: '',
         address: '',
         additional_info: '',
-
+        ownerId: -1
     };
 
     /**
@@ -65,7 +68,8 @@ export class EventCreateComponent implements OnInit {
         additional_info: '',
         products_list: '',
         shopping_list: '',
-        quantity_of_products: ''
+        quantity_of_products: '',
+        ownerId: -1
     };
 
     /**
@@ -178,7 +182,7 @@ export class EventCreateComponent implements OnInit {
                 console.log("Wrong file extension!");
                 return;
             }
-            this.newEventType1.photo = "/img/dish" + this.selectedFile.name;
+            this.newEventType1.photo = "/img/dish/" + this.selectedFile.name;
         }
     }
 
@@ -197,7 +201,7 @@ export class EventCreateComponent implements OnInit {
                 console.log("Wrong file extension!");
                 return;
             }
-            this.newEventType2.photo = "/img/dish" + this.selectedFile.name;
+            this.newEventType2.photo = "/img/dish/" + this.selectedFile.name;
         }
     }
 
@@ -242,6 +246,18 @@ export class EventCreateComponent implements OnInit {
                 console.log("can create? : " + data);
                 if(!data)
                     this.router.navigate(['/events']);
+            })
+    }
+
+    /**
+     * finds user id by username
+     */
+    findUserId(){
+        this.loginService.getIdByUsername()
+            .subscribe( data => {
+                this.newEventType1.ownerId = data;
+                this.newEventType2.ownerId = data;
+                console.log("fetched user id: "+data);
             })
     }
 }

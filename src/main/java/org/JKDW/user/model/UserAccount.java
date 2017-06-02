@@ -1,7 +1,5 @@
 package org.JKDW.user.model;
 
-//import jdk.nashorn.internal.ir.annotations.Ignore;
-
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 
 import javax.persistence.*;

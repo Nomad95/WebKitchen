@@ -1,6 +1,8 @@
 package org.JKDW.user.service;
 
+import org.JKDW.user.model.DTO.EventForOwnerDTO;
 import org.JKDW.user.model.DTO.EventGeneralDTO;
+import org.JKDW.user.model.DTO.UserAccountForEventOwnerDTO;
 import org.JKDW.user.model.Event;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.model.UserDetails;
@@ -221,5 +223,48 @@ public class EventServiceImpl implements EventService {
                 return true;
         }
         return false;
+    }
+
+    /**
+     * Finds info about events created by user with provided id and info about participants
+     * @param id of user (event owner)
+     * @return list of events and participants
+     */
+    @Override
+    public List<EventForOwnerDTO> getEventsCreatedByUserId(Long id) {
+        List<EventForOwnerDTO> ownerEventsWithAccounts = new ArrayList<>();
+        List<Event> foundOwnerEvents = eventRepository.findByOwnerId(id);
+        foundOwnerEvents.forEach( event -> ownerEventsWithAccounts.add(
+                new EventForOwnerDTO(
+                        event.getId(),
+                        event.getType(),
+                        event.getTitle(),
+                        event.getDate(),
+                        event.getDish_name(),
+                        event.getDish_kind(),
+                        event.getPeople_quantity(),
+                        event.getPeople_remaining(),
+                        processAccountsParticipatingInEvent(event.getAccounts()))
+        ));
+        return ownerEventsWithAccounts;
+    }
+
+    /**
+     * Helper method extracts participants useraccounts from event
+     * @param userDetails list of user details from event
+     * @return list of necessary info about users
+     */
+    private List<UserAccountForEventOwnerDTO> processAccountsParticipatingInEvent(List<UserDetails> userDetails){
+        ArrayList<UserAccountForEventOwnerDTO> accountsDTO = new ArrayList<>();
+        userDetails.forEach( details ->{
+            UserAccount ua = details.getUserAccount();
+            accountsDTO.add(new UserAccountForEventOwnerDTO(
+                    ua.getId(),
+                    ua.getUsername(),
+                    ua.getNick(),
+                    ua.getIsFilled(),
+                    ua.getIsVerified()));
+        });
+        return accountsDTO;
     }
 }

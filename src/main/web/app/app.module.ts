@@ -29,8 +29,12 @@ import {RegistrationSuccess} from './registration/registration-success.component
 import {LoginSuccess} from './login/login-success.component';
 import {EventCreateComponent} from './events/create/event-create.component';
 import {SimpleListComponent} from './util/list/simple-list.component';
+import {ProfileEventsComponent} from './events/profile/profile-events.component';
+import {UserParticipateEventsComponent} from "./events/profile/user-participate-events.component";
+import {UserCreatedEventsComponent} from "./events/profile/user-created-events.component";
 
 import {AuthGuard} from './app.auth-guard.service';
+
 
 declare let jQuery:Object;
 
@@ -54,6 +58,9 @@ declare let jQuery:Object;
         SimpleListComponent,
         HomeComponent,
         EventCreateComponent,
+        UserCreatedEventsComponent,
+        UserParticipateEventsComponent,
+        ProfileEventsComponent,
         UserComponent,
         RegistrationComponent,
         LoginComponent,
