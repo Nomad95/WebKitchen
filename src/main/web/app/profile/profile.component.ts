@@ -15,6 +15,7 @@ import { TAB_COMPONENTS  } from '../tabs/Tabset';
 })
 export class ProfileComponent implements OnInit, OnDestroy {
     private precentageFilled: any = 0;
+    private profileCompletion: number;
     private cuisines:Array<Cuisine>;
     public selectedCuisine;
     public cuisinesItems:Array<any>=[];
@@ -147,6 +148,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
                 this.userProfile.description = result.description;
                 this.userProfile.preferredCuisine = result.preferredCuisine;
                 this.userProfile.profileCompletion = result.profileCompletion;
+               
+                this.profileCompletion = +this.userProfile.profileCompletion;
+                this.precentageFilled = Math.floor(this.profileCompletion * 7.2) / 1;
 
                 this.preferredCuisinesItems=[];
                 this.userProfile.preferredCuisine.forEach(prefcuisine =>{
@@ -202,6 +206,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     updateProfile(): void {
         this.setBirthDate();
         this.setGender();
+        this.setPercentageFilled();
+        this.userProfile.profileCompletion = this.profileCompletion.toString();
         this.profileService.updateProfile(this.userProfile).subscribe(result =>{this.getProfile();});
         
     }
@@ -295,10 +301,30 @@ this.userProfile.preferredCuisine=this.preferedCuisineService.getPreferedCuisine
     
     
     
-    //    getPercentageFilled{
-    //        
-    //        
-    //    }
+       setPercentageFilled(): void{
+           this.profileCompletion = 0;
+           if(this.userProfile.birthDate !== "") this.profileCompletion+=1;
+           if(this.userProfile.city !== "") this.profileCompletion+=1;
+           if(this.userProfile.description !== "") this.profileCompletion+=1;
+           if(this.userProfile.flatNumber !== "") this.profileCompletion+=1;
+           if(this.userProfile.interests !== "") this.profileCompletion+=1;
+           if(this.userProfile.name !== "") this.profileCompletion+=1;
+           if(this.userProfile.surname !== "") this.profileCompletion+=1;
+           if(this.userProfile.phoneNumber !== "") this.profileCompletion+=1;
+           if(this.userProfile.postCode !== "") this.profileCompletion+=1;
+           if(this.userProfile.preferredCuisine !== []) this.profileCompletion+=1;
+           if(this.userProfile.sex !== "") this.profileCompletion+=1;
+           if(this.userProfile.street !== "") this.profileCompletion+=1;
+           if(this.userProfile.streetNumber !== "") this.profileCompletion+=1;
+           if(this.userProfile.userAccountDTO.email !== "") this.profileCompletion+=1;
+           this.precentageFilled = Math.floor(this.profileCompletion*7.2) / 1;
+           console.log(this.precentageFilled.toString());
+       }
+
+       getPrectangeFilled(): String{
+           console.log(this.precentageFilled.toString());
+           return this.precentageFilled.toString();
+       }
 
     // on-destroy
     ngOnDestroy() {
