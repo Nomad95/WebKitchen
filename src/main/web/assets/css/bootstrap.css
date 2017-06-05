@@ -7695,14 +7695,14 @@ h4.pro-title {
 }
 
 .bio-table td {
-	text-transform: capitalize;
+	/*text-transform: capitalize;*/
 	text-align: left;
 	font-size: 15px;
 }
 
 .bio-table>tbody>tr>td {
 	border: 0px solid;
-	text-transform: capitalize;
+	/*text-transform: capitalize;*/
 	color: rgb(0, 4, 51);
 	font-size: 15px;
 }
