@@ -4,6 +4,7 @@ import org.JKDW.user.model.DishKindEnum;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Data Transfer Object providing general information od events and participants.
@@ -27,6 +28,8 @@ public class EventForOwnerDTO {
 
     private int people_remaining;
 
+    private long[] acceptedIds;
+
     private List<UserAccountForEventOwnerDTO> participantsDetails;
 
     public EventForOwnerDTO(){
@@ -40,6 +43,7 @@ public class EventForOwnerDTO {
                             DishKindEnum dish_kind,
                             byte people_quantity,
                             int people_remaining,
+                            long[] acceptedIds,
                             List<UserAccountForEventOwnerDTO> participantsDetails) {
         this.id = id;
         this.type = type;
@@ -50,6 +54,15 @@ public class EventForOwnerDTO {
         this.people_quantity = people_quantity;
         this.people_remaining = people_remaining;
         this.participantsDetails = participantsDetails;
+        this.acceptedIds = acceptedIds;
+    }
+
+    public long[] getAcceptedIds() {
+        return acceptedIds;
+    }
+
+    public void setAcceptedIds(long[] acceptedIds) {
+        this.acceptedIds = acceptedIds;
     }
 
     public long getId() {

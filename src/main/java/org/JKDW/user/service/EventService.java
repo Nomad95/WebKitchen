@@ -1,5 +1,6 @@
 package org.JKDW.user.service;
 
+import javassist.NotFoundException;
 import org.JKDW.user.model.DTO.EventForOwnerDTO;
 import org.JKDW.user.model.DTO.EventGeneralDTO;
 import org.JKDW.user.model.Event;
@@ -7,6 +8,7 @@ import org.JKDW.user.model.Event;
 import javax.naming.SizeLimitExceededException;
 import javax.persistence.NoResultException;
 import java.util.List;
+import java.util.Set;
 
 public interface EventService {
 
@@ -31,4 +33,8 @@ public interface EventService {
     boolean checkIfBinded(String username, Long evntId);
 
     List<EventForOwnerDTO> getEventsCreatedByUserId(Long id);
+
+    boolean acceptId(Long eventId,Long userAccountId) throws NotFoundException;
+
+    long[] getAcceptedIdsList(Long eventId) throws NotFoundException;
 }

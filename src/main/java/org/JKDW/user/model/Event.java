@@ -6,6 +6,7 @@ import org.hibernate.annotations.Type;
 import java.sql.Time;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -68,6 +69,13 @@ public class Event {
      */
     @Size(max = 255)
     private String additional_info;
+
+    /**
+     * List of accepted userAccounts id
+     */
+    @Column(nullable = true)
+    @ElementCollection(targetClass = Long.class)
+    private Set<Long> acceptedIds;
 
     /**
      * description of dish/event
@@ -136,6 +144,14 @@ public class Event {
     @PrePersist
     protected void onCreate() {
         people_remaining = people_quantity;
+    }
+
+    public Set<Long> getAcceptedIds() {
+        return acceptedIds;
+    }
+
+    public void setAcceptedIds(Set<Long> acceptedIds) {
+        this.acceptedIds = acceptedIds;
     }
 
     public int getPeople_remaining() {
