@@ -9,10 +9,12 @@ import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.model.UserDetails;
 import org.JKDW.user.service.UserAccountService;
 import org.JKDW.user.service.UserDetailsService;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +32,6 @@ public class UserAccountController {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
-
 
 	/**
 	 *
@@ -107,4 +108,31 @@ public class UserAccountController {
 		return new ResponseEntity<>(idOfUsersUsername,HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/checkIsBanned/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> checkIsUserBanned(@PathVariable("username") String username) {
+        Boolean status = userAccountService.checkIsUserBanned(username);
+        String stringStatus ="{\"status\": \""+ Boolean.toString(status) +"\"}";
+		return new ResponseEntity<>(stringStatus, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/isBanned/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> checkVariableIsBanned(@PathVariable("username") String username) {
+		Boolean status = userAccountService.checkIsUserBanned(username);
+		String stringStatus ="{\"status\": \""+ Boolean.toString(status) +"\"}";
+		return new ResponseEntity<>(stringStatus, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/getMyRole", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> checkIfUserHasRoleAdmin() {
+		if(userAccountService.checkIfUserHasRoleAdmin()){
+			System.out.println("Wysy³am ¿e jestem adminem");
+			return new ResponseEntity<>("{\"role\": \"admin\"}", HttpStatus.OK);
+		}
+
+		else{
+			System.out.println("Wysy³am ¿e jestem userem");
+			return new ResponseEntity<>("{\"role\": \"user\"}", HttpStatus.OK);
+		}
+
+	}
 }

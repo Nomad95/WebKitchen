@@ -36,6 +36,8 @@ import { AdminComponent } from './admin/admin.component'
 import { AdminPanelUEComponent } from './adminPanelUE/adminPanelUE.component'
 
 import {AuthGuard} from './app.auth-guard.service';
+import {LoginBanned} from "./login/login-banned-user.component";
+import {SharedService} from "./shared.service";
 
 
 declare let jQuery:Object;
@@ -43,18 +45,17 @@ declare let jQuery:Object;
 
 @NgModule({
     declarations: [AppComponent,
-                   HelloComponent,
-                   CalendarComponent,
-                   HomeComponent,
-                 UserComponent,
-                 RegistrationComponent,
-                 LoginComponent,
-                 MyProfileComponent,
-                 ProfileComponent,
-                 NavbarComponent,
-                 EventListComponent,
-                 Tabset,
-                 Tab,
+        HelloComponent,
+        CalendarComponent,
+        HomeComponent,
+        UserComponent,
+        RegistrationComponent,
+        LoginComponent,
+        ProfileComponent,
+        NavbarComponent,
+        EventListComponent,
+        Tabset,
+        Tab,
         HelloComponent,
         CalendarComponent,
         SimpleListComponent,
@@ -72,12 +73,12 @@ declare let jQuery:Object;
         EventGeneralComponent,
         SideNavbarComponent,
         EventDetailsComponent,
-        EventDetailsComponent,
         RegistrationSuccess,
-        LoginSuccess
-    ],
+        LoginSuccess,
+        LoginBanned,
         AdminComponent,
-        AdminPanelUEComponent],
+        AdminPanelUEComponent
+    ],
     imports: [BrowserModule,
               FormsModule,
               ReactiveFormsModule,
@@ -90,6 +91,7 @@ declare let jQuery:Object;
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
         AuthGuard,
+        SharedService,
         appRouterProviders,
         [{provide: APP_BASE_HREF, useValue: '/'}],
         [{provide: LocationStrategy, useClass: HashLocationStrategy}],

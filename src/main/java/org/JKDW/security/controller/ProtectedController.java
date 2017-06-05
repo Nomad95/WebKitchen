@@ -5,6 +5,7 @@ import org.JKDW.security.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +39,7 @@ public class ProtectedController {
         String token = request.getHeader(AppConstant.tokenHeader);
         String username = this.tokenUtils.getUsernameFromToken(token);
         Date expire = this.tokenUtils.getExpirationDateFromToken(token);
+      
         return "Witaj " + username + " !!! \n"  + "Data wygaśnięcia:  " + expire;
     }
 }

@@ -14,7 +14,7 @@
     color: #1b2949;
     position: relative;
 }
-.kolumna h3{
+.kolumna h3, h4{
     width: 90%;
     margin: 0 auto;
     margin-top: 20px;
@@ -23,7 +23,7 @@
 .container2{
     margin-left: 180px;
 }
-.container h3{
+.container h3,h4{
    text-align: center;
 }
 .container2 .btn-default{

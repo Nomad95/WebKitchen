@@ -1,5 +1,6 @@
 package org.JKDW.user.service;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -7,6 +8,7 @@ import javax.persistence.NoResultException;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 import org.JKDW.user.model.DTO.UserAccountDTO;
 import org.JKDW.user.model.UserAccount;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /*
  *
@@ -30,5 +32,13 @@ public interface UserAccountService {
 	UserAccount loadUserByUsername(String username);
 
 	Long findIdOfUsersUsername(String username);
+
+	Boolean checkIsUserBanned(String username);
+
+	Boolean checkVariableIsBanned(String username);
+
+	Boolean checkIfUserHasRoleAdmin();
+
+
 
 }

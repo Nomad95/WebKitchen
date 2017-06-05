@@ -1,7 +1,8 @@
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, ViewEncapsulation, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { LoginService } from './login/login.service';
+import {LoginService} from './login/login.service';
+import {SharedService} from "./shared.service";
 
 @Component({
     selector: 'kuchnia-po-sasiedzku',
@@ -10,13 +11,51 @@ import { LoginService } from './login/login.service';
     encapsulation: ViewEncapsulation.None,
     providers: [LoginService]
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
     name = 'kuchnia-po-sasiedzku';
+    private statusBan: String;
+    private role: String;
 
-    constructor(private loginService: LoginService, private router: Router){ }
+    constructor(private loginService: LoginService, private router: Router, private sharedService: SharedService) {
+    }
 
-    ngOnInit(){
+    ngOnInit() {
+        if(this.loginService.isLogged()) {
+            this.checkIsUserAnAdmin();
+            this.ifUserHasBannedLogOut();
+        }
 
     }
+
+    ifUserHasBannedLogOut(): void {
+        this.loginService.checkIsUserBanned().subscribe(result => {
+            this.statusBan = result.status;
+            if (this.statusBan == "true") {
+                this.sharedService.setIsBanned(true);
+                this.router.navigate(['/login/banned']);
+                this.loginService.removeToken();
+            }
+            else if (this.statusBan == "false") {
+                this.sharedService.setIsBanned(false);
+            }
+
+        });
+        if (this.sharedService.getIsBanned())
+            this.loginService.removeToken();
+    }
+
+    checkIsUserAnAdmin(): void {
+        this.loginService.checkIsUserAnAdmin().subscribe(result => {
+            this.role = result.role;
+            if (this.role == "user") {
+                this.sharedService.setIsAdmin(false);
+            }
+            else if (this.role == "admin") {
+                this.sharedService.setIsAdmin(true);
+            }
+
+        });
+    }
+
 
 }

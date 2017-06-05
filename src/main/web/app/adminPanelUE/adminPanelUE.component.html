@@ -12,7 +12,7 @@
             <div id="menu1" class="tab-pane fade in active">
                 <div class="container" style="margin-top: 30px;">
 
-                    <div class="input-group">
+                    <div class="input-group" >
                         <input id="msg" type="text" class="form-control" name="msg" placeholder="Wpisz nick szukanego użytkownika" [(ngModel)]="userAccountToSearch.username">
                         <a (click)="getSearchUser(); doesUserExist();"  class="btn btn-default" >Wyszukaj</a>
                     </div>
@@ -33,13 +33,94 @@
                                 <td>{{userAccount.username}}</td>
                                 <td>{{userAccount.name }}</td>
                                 <td>{{userAccount.surname }}</td>
-                                <td>{{userAccount.e_mail}}</td>
+                                <td>{{userAccount.email}}</td>
                                 <td> <a [routerLink]="['/admin/panelUE']" class="btn btn-default" >Pokaż</a> </td>
-                                <td> <a (click)="deleteUser();doesUserExist(); " [routerLink]="['/admin/panelUE']"  class="btn btn-default">Usuń</a> </td>
-                                <td> <a class="btn btn-default">Ban</a> </td>
+                                <td>
+                                    <button type="button" class="btn btn-default"
+                                            data-toggle="modal" data-target="#myModalDeleteUser">Usuń
+                                    </button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-default"
+                                            data-toggle="modal" data-target="#myModalBan">Ban
+                                    </button>
+                                </td>
                             </tr>
                         </table>
                     </div>
+                    <!-- modal start -->
+                    <div class="modal fade" id="myModalBan" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabelBan">
+                                        <p>Wpisz datę do kiedy ma być zablokowany użytkownik:</p>
+                                        <p>{{userAccount.name}} {{userAccount.surname}}</p>
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <ul>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label">Data</label>
+                                                <input #datet1="ngModel"
+                                                       type="date"
+                                                       class="form-control"
+                                                       name="banToAdd.date"
+                                                       [(ngModel)]="banToAdd.dateEndOfBan"
+                                                >
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label">Godzina</label>
+                                                <input #timet="ngModel"
+                                                       type="time"
+                                                       class="form-control"
+                                                       name="banToAdd.time"
+                                                       [(ngModel)]="banToAdd.timeEndOfBan"
+                                                >
+                                            </div>
+                                        </div>
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <button *ngIf="!isEventCreated" type="button" class="btn btn-default"
+                                            data-dismiss="modal">Powrót
+                                    </button>
+                                    <button (click)="createBanForUser(banToAdd);" type="button" class="btn btn-primary">Zablokuj </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="myModalDeleteUser" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabelDeleteUser">Usuwanie użytkwnika</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <ul>
+                                        Czy aby na pewno chcesz usunąć użytkownika {{userAccount.name}} {{userAccount.surname}}
+                                        o id {{userAccount.id}}
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">Powrót
+                                    </button>
+                                    <button type="button" (click)="deleteUser();doesUserExist(); " [routerLink]="['/admin/panelUE']" class="btn btn-default"
+                                            data-dismiss="modal" >Usuń
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- modal end -->
 
                 </div><!--container close-->
             </div>

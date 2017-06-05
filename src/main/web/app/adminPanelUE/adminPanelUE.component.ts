@@ -4,6 +4,8 @@ import { AdminPanelUEService } from './adminPanelUE.service';
 
 
 import {emptyCompilationResult} from "gulp-typescript/release/reporter";
+import {LoginService} from "../login/login.service";
+import {SharedService} from "../shared.service";
 
 @Component({
     selector: 'adminPanelUE',
@@ -12,8 +14,9 @@ import {emptyCompilationResult} from "gulp-typescript/release/reporter";
     providers: [AdminPanelUEService]
 })
 export class AdminPanelUEComponent implements OnInit, OnDestroy {
-    constructor(private adminPanelUEService: AdminPanelUEService ) {}
+    constructor(private adminPanelUEService: AdminPanelUEService, private loginService: LoginService, private sharedService: SharedService) {}
 
+    private role: string;
     public idAccount;
     private hideTable = false;
     private userAccountToSearch = {
@@ -23,7 +26,7 @@ export class AdminPanelUEComponent implements OnInit, OnDestroy {
         id:'',
         username: '',
         country: '',
-        e_mail: '',
+        email: '',
         nick: '',
         isFilled: '',
         isVerified: '',
@@ -32,14 +35,24 @@ export class AdminPanelUEComponent implements OnInit, OnDestroy {
         surname: ''
     };
 
+    private banToAdd = {
+        dateEndOfBan:'',
+        timeEndOfBan:''
+    };
+
     private name;
     // private userProfile2: string;
     // on-init, get profile information
     ngOnInit() {
 
+        console.log("Czy jestem adminem: "+ this.sharedService.getIsBanned());
+
     }
 
-
+    /**
+     * we check is that use
+     * @returns {boolean}
+     */
     checkBTN(): boolean{
         if(this.userAccountToSearch.username == 'NULL')
             return false;
@@ -48,8 +61,7 @@ export class AdminPanelUEComponent implements OnInit, OnDestroy {
     }
     delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
-}
-
+   }
 
     getSearchUser(): void{
         this.name = this.userAccountToSearch.username;
@@ -57,11 +69,10 @@ export class AdminPanelUEComponent implements OnInit, OnDestroy {
         this.adminPanelUEService
             .getUserAccountByName(this.userAccountToSearch.username)
             .subscribe( result => {
-                // this.userProfile = JSON.stringify(result);
                 this.userAccount.id = result.id;
                 this.userAccount.username = result.username;
                 this.userAccount.country = result.country;
-                this.userAccount.e_mail = result.e_mail;
+                this.userAccount.email = result.email;
                 console.log("ID:",this.userAccount.id);
                 this.idAccount = this.userAccount.id;
                 this.getUserDetails();
@@ -83,8 +94,6 @@ export class AdminPanelUEComponent implements OnInit, OnDestroy {
         }
 
        deleteUser(): void{
-        console.log("ID ACC:", this.idAccount);
-        console.log("ID details:", this.userAccount.id2);
         this.adminPanelUEService
             .deleteUserDetails(this.userAccount.id2)
             .subscribe(
@@ -98,6 +107,15 @@ export class AdminPanelUEComponent implements OnInit, OnDestroy {
            }
            else
                this.hideTable = false;
+       }
+
+       createBanForUser(data): void{
+           if (data.timeEndOfBan.length < 7)
+               data.timeEndOfBan += ':00';
+           data.dateEndOfBan += 'T00:00:00';
+
+        this.adminPanelUEService.createBanForUser(data,this.userAccount.id).subscribe( newBan => this.banToAdd );
+
        }
 
 

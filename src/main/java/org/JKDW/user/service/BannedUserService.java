@@ -1,7 +1,13 @@
 package org.JKDW.user.service;
 
-/**
- * Created by Arek on 02.06.2017.
- */
+
+import org.JKDW.user.model.BannedUser;
+import javax.persistence.NoResultException;
+
 public interface BannedUserService {
+
+    BannedUser createBanForUser(BannedUser bannedUser, Long id);
+
+    void deleteBanForUser(Long id) throws NoResultException;
+
 }

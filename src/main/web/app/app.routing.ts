@@ -20,6 +20,7 @@ import {AuthGuard} from './app.auth-guard.service';
 import {LoginService} from './login/login.service';
 import {AdminComponent} from "./admin/admin.component";
 import {AdminPanelUEComponent} from "./adminPanelUE/adminPanelUE.component";
+import {LoginBanned} from "./login/login-banned-user.component";
 
 /* TODO: Układać to ładnie i po kolei*/
 const appRoutes: Routes = [
@@ -30,16 +31,17 @@ const appRoutes: Routes = [
     {path: 'registration/success', component: RegistrationSuccess},
     {path: 'login', component: LoginComponent},
     {path: 'login/success', component: LoginSuccess},
+    {path: 'login/banned', component: LoginBanned},
     {path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard]},
     {path: 'profile/myprofile', component: MyProfileComponent, canActivate: [AuthGuard]},
     {path: 'profile/myprofile/events', component: ProfileEventsComponent, canActivate: [AuthGuard]},
     {path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuard]},
     {path: 'events', component: EventListComponent, canActivate: [AuthGuard]},
     {path: 'events/:id', component: EventDetailsComponent, canActivate: [AuthGuard]},
-    {path: 'events/create/new', component: EventCreateComponent, canActivate: [AuthGuard]}
+    {path: 'events/create/new', component: EventCreateComponent, canActivate: [AuthGuard]},
     {path: 'events/:id', component: EventDetailsComponent, canActivate: [AuthGuard]},
-    {path: 'admin', component: AdminComponent},
-    {path: "admin/panelUE", component: AdminPanelUEComponent}
+    {path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
+    {path: "admin/panelUE", component: AdminPanelUEComponent, canActivate: [AuthGuard]}
 ];
 
 export const appRouterProviders = [AuthGuard, LoginService];

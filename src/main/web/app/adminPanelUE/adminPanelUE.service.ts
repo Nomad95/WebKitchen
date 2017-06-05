@@ -58,6 +58,13 @@ export class AdminPanelUEService{
             .map( () => null)
             .catch(this.handleError);
     }
+    createBanForUser(data, idUser): Observable<UserAccount>{
+        this.url = '/api/user/banned/create/'+idUser;
+        return this.http.post(this.url,JSON.stringify(data),{headers :this.headers})
+            .map(res => res.json())
+            .catch(this.handleError);
+    }
+
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
