@@ -18,7 +18,8 @@ export class AdminPanelUEComponent implements OnInit, OnDestroy {
 
     private role: string;
     public idAccount;
-    private hideTable = false;
+    private hideTable = true;
+    private searchingUserExist = true;
     private userAccountToSearch = {
         username: ''
     }
@@ -45,20 +46,8 @@ export class AdminPanelUEComponent implements OnInit, OnDestroy {
     // on-init, get profile information
     ngOnInit() {
 
-        console.log("Czy jestem adminem: "+ this.sharedService.getIsBanned());
-
     }
 
-    /**
-     * we check is that use
-     * @returns {boolean}
-     */
-    checkBTN(): boolean{
-        if(this.userAccountToSearch.username == 'NULL')
-            return false;
-        else
-         return true;
-    }
     delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
    }
@@ -76,6 +65,10 @@ export class AdminPanelUEComponent implements OnInit, OnDestroy {
                 console.log("ID:",this.userAccount.id);
                 this.idAccount = this.userAccount.id;
                 this.getUserDetails();
+                this.doesUserExist();
+            }, err => {
+                this.searchingUserExist = false;
+                this.hideTable = true;
             });
         }
 
@@ -102,23 +95,23 @@ export class AdminPanelUEComponent implements OnInit, OnDestroy {
        }
 
        doesUserExist(): void{
-        if(this.userAccount.name != null) {
-               this.hideTable = true;
+           if(this.userAccount.id != '' ){
+               this.hideTable = false;
+               this.searchingUserExist = true;
            }
            else
-               this.hideTable = false;
+               this.hideTable = true;
        }
 
-       createBanForUser(data): void{
+    createBanForUser(data): void{
            if (data.timeEndOfBan.length < 7)
                data.timeEndOfBan += ':00';
            data.dateEndOfBan += 'T00:00:00';
 
-        this.adminPanelUEService.createBanForUser(data,this.userAccount.id).subscribe( newBan => this.banToAdd );
+        this.adminPanelUEService.createBanForUser(data,this.userAccount.id)
+            .subscribe( newBan => this.banToAdd );
 
        }
-
-
     // on-destroy
     ngOnDestroy() {
 

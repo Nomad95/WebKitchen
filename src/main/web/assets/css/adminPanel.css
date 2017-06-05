@@ -61,3 +61,7 @@
     color: black;
     font-weight: bold;
 }
+
+.search-content .alert-danger{
+    width: 30%;
+}
