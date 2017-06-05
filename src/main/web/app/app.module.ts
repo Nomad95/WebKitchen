@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AlertModule, DatepickerModule } from 'ng2-bootstrap/ng2-bootstrap';
 import {JQ_TOKEN} from './events/j-query.service';
+import { MyDatePickerModule } from 'mydatepicker';
+import { SelectModule } from "ng2-select";
 
 import { routing, appRouterProviders } from './app.routing';
 import { AppComponent } from './app.component';
@@ -14,7 +16,8 @@ import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
-import { ProfileComponent } from './profile/profile.component';
+import { MyProfileComponent } from './profile/myProfile/myProfile.component';
+import { ProfileComponent } from './profile/userProfile/profile.component';
 import { Tabset } from './tabs/Tabset';
 import { Tab } from './tabs/Tab';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -22,7 +25,6 @@ import { SideNavbarComponent } from './side_navbar/side-navbar.component';
 import {EventListComponent} from './events/browser/event-list.component';
 import {EventGeneralComponent} from './events/browser/event.component';
 import {EventDetailsComponent} from './events/detailed/event-details.component';
-import { SelectModule } from "ng2-select";
 import {RegistrationSuccess} from './registration/registration-success.component';
 import {LoginSuccess} from './login/login-success.component';
 import {EventCreateComponent} from './events/create/event-create.component';
@@ -41,6 +43,7 @@ declare let jQuery:Object;
                  UserComponent,
                  RegistrationComponent,
                  LoginComponent,
+                 MyProfileComponent,
                  ProfileComponent,
                  NavbarComponent,
                  EventListComponent,
@@ -54,7 +57,7 @@ declare let jQuery:Object;
         UserComponent,
         RegistrationComponent,
         LoginComponent,
-        ProfileComponent,
+        MyProfileComponent,
         NavbarComponent,
         EventListComponent,
         EventGeneralComponent,
@@ -68,6 +71,7 @@ declare let jQuery:Object;
               ReactiveFormsModule,
               HttpModule,
               SelectModule,
+              MyDatePickerModule,
               AlertModule.forRoot(),
               DatepickerModule.forRoot(),
               routing],

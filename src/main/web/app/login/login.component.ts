@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
 
+
 @Component({
     selector: 'login',
     templateUrl: 'app/login/login.component.html',

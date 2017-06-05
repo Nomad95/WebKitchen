@@ -7,7 +7,8 @@ import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
-import { ProfileComponent } from './profile/profile.component';
+import { MyProfileComponent } from './profile/myProfile/myProfile.component';
+import { ProfileComponent } from './profile/userProfile/profile.component';
 import {EventListComponent} from './events/browser/event-list.component';
 import {EventDetailsComponent} from './events/detailed/event-details.component';
 import {RegistrationSuccess} from './registration/registration-success.component';
@@ -27,7 +28,8 @@ const appRoutes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'login/success', component: LoginSuccess},
     {path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard]},
-    {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+    {path: 'myprofile', component: MyProfileComponent, canActivate: [AuthGuard]},
+    {path: ':username', component: ProfileComponent, canActivate: [AuthGuard]},
     {path: 'events', component: EventListComponent, canActivate: [AuthGuard]},
     {path: 'events/:id', component: EventDetailsComponent, canActivate: [AuthGuard]},
     {path: 'events/create/new', component: EventCreateComponent, canActivate: [AuthGuard]}

@@ -4,8 +4,8 @@ export class UserProfile{
         name: string;
         surname: string;
         street: string;
-        streetNumber: number;
-        flatNumber: number;
+        streetNumber: string;
+        flatNumber: string;
         postCode: string;
         city: string;
         birthDate: any;

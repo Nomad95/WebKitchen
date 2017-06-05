@@ -3,6 +3,7 @@
  */
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from './user.service';
+import { UserAccount } from './user-account';
 
 interface MessageJson {
     title: string;
@@ -21,6 +22,7 @@ export class UserComponent implements OnInit, OnDestroy {
     private jsonResponse: string;
     private messages: Array<MessageJson>;
     private _subscription;
+    private users: Array<UserAccount>;
 
     // constructor
     constructor(private _userService: UserService) {}
@@ -33,6 +35,7 @@ export class UserComponent implements OnInit, OnDestroy {
                 (data) => {
                     this.jsonResponse = JSON.stringify(data);
                     this.messages = data;
+                    this.users = data;
                 },
                 (err) => console.log(err),
                 () => console.log('hello service test complete')

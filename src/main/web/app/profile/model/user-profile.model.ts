@@ -1,20 +1,20 @@
 import {Cuisine} from './cuisine.model';
 
 export interface UserProfile{
-        name: '',
+        name: any,
         surname: '',
-        street: '',
+        street: string,
         streetNumber: '',
         flatNumber: '',
         postCode: '',
         city: '',
-        birthDate: '',
+        birthDate: any,
         phoneNumber: '',
-        sex: '',
+        sex: any,
         interests: '',
         description: '',
         preferredCuisine: Cuisine[],
-        profileCompletion: '',
+        profileCompletion: any,
         userAccountDTO: {
           username: '',
           email: '',

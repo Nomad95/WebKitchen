@@ -16,11 +16,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.JKDW.user.model.DTO.UserAccountDTO;
 import org.JKDW.user.model.DTO.UserDetailsUpdateDTO;
+import org.hibernate.validator.constraints.Range;
 
 /**
  * We have to use Integer class instead of int
@@ -34,26 +36,29 @@ public class UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
 
-	@Size(min = 3, max = 25)
+	@Pattern(regexp="^$|[A-Za-ząćęłńóśźżĄŚĆĘŁŹŻÓ]{3,25}")
 	private String name;
 
-	@Size(min = 3, max = 25)
+	@Pattern(regexp="^$|[A-Za-ząćęłńóśźżĄŚĆĘŁŹŻÓ]{3,45}")
 	private String surname;
 
-	@Size(min = 3, max = 45)
+	@Pattern(regexp="^$|[A-Za-ząćęłńóśźżĄŚĆĘŁŹŻÓ][a-zA-ZząćęłńóśźżĄŚĆĘŁŹŻÓ. ]{3,44}")
 	private String street;
 
+	/*@Column(nullable=true)
+	@Pattern(regexp="^$|[1-9]{1,3}")*/
 	@Column(nullable=true)
+	@Range(min=1, max=999)
 	private Integer streetNumber;
 
 	@Column(nullable=true)
+	@Range(min=1, max=999)
 	private Integer flatNumber;
 
-	@Size(min = 4, max = 10)
-	@Column(nullable=true)
+	@Pattern(regexp="^$|[0-9]{2}-[0-9]{3}")
 	private String postCode;
 
-	@Size(min = 3, max = 45)
+	@Pattern(regexp="^$|[A-Za-ząćęłńóśźżĄŚĆĘŁŹŻÓ]{3,45}")
 	private String city;
 
 	private Date birthDate;
