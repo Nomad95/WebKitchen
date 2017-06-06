@@ -112,9 +112,16 @@ export class LoginService{
 			'X-Auth-token' : this.token
 		})
 		return this.http.get('/api/user/getMyRole',{headers :this.headersLoggedUser})
-            .map(res => res.json());
+            .map(res => res.json())
+			.catch(this.handleError);
 	}
 
+	getInfoAboutMyBan(): Observable<any> {
+		return this.http.get('/api/user/banned/account/arek', {headers: this.headers})
+            .map(res => res.json())
+            .catch(this.handleError);
+
+	}
 	/*private handleError(error: any): Promise<any> {
 	 console.error('An error occurred!!!!!!!!!', error);
 		return Promise.reject(error.message || error);

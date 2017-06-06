@@ -1,5 +1,6 @@
 package org.JKDW.user.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class UserAccount {
 
 	@NotNull
 	@Size(min = 6, max = 100)
+	@JsonIgnore
 	private String password;
 
 	@NotNull

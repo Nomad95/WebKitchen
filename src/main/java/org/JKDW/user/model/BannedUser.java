@@ -1,6 +1,8 @@
 package org.JKDW.user.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Time;
 import java.util.Date;
@@ -15,6 +17,7 @@ public class BannedUser {
 
     @OneToOne
     @JoinColumn(name = "userAccount_id")
+    @JsonIgnore
     private UserAccount userAccount;
 
     private Date dateEndOfBan;

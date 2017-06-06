@@ -32,6 +32,7 @@ const appRoutes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'login/success', component: LoginSuccess},
     {path: 'login/banned', component: LoginBanned},
+    {path: 'login/banned/:date/:time', component: LoginBanned},
     {path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard]},
     {path: 'profile/myprofile', component: MyProfileComponent, canActivate: [AuthGuard]},
     {path: 'profile/myprofile/events', component: ProfileEventsComponent, canActivate: [AuthGuard]},

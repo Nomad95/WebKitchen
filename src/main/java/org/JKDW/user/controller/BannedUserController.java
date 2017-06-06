@@ -37,4 +37,15 @@ public class BannedUserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    /**
+     *
+     * @param username
+     * @return end date ban user prohibition
+     */
+    @RequestMapping(value = "/account/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BannedUser> getInfoAboutBan(@PathVariable("username") String username) {
+        BannedUser ban = bannedUserService.getInfoAboutBanByUsernameBannedUser(username);
+        return new ResponseEntity<>(ban, HttpStatus.OK);
+    }
+
 }

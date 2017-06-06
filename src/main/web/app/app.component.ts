@@ -15,6 +15,10 @@ export class AppComponent implements OnInit {
     name = 'kuchnia-po-sasiedzku';
     private statusBan: String;
     private role: String;
+    private myBan = {
+        dateEndOfBan: '',
+        timeEndOfBan: ''
+    };
 
     constructor(private loginService: LoginService, private router: Router, private sharedService: SharedService) {
     }
@@ -32,7 +36,7 @@ export class AppComponent implements OnInit {
             this.statusBan = result.status;
             if (this.statusBan == "true") {
                 this.sharedService.setIsBanned(true);
-                this.router.navigate(['/login/banned']);
+                this.getInfoAboutMyBan();
                 this.loginService.removeToken();
             }
             else if (this.statusBan == "false") {
@@ -57,5 +61,16 @@ export class AppComponent implements OnInit {
         });
     }
 
+    getInfoAboutMyBan():void{
+        this.loginService.getInfoAboutMyBan().subscribe(
+            result =>{
+                this.myBan = result;
+                console.log("Data: " + this.myBan.dateEndOfBan + " godzina: " + this.myBan.timeEndOfBan);
+                this.router.navigate(['/login/banned/',{date: this.myBan.dateEndOfBan, time: this.myBan.timeEndOfBan}]);
+                1            },
+            err => console.log('Wystąpił błąd podczas pobierania informacji o banie')
+        );
+
+    }
 
 }

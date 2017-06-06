@@ -50,4 +50,14 @@ public class BannedUserServiceImpl implements BannedUserService{
         userAccountRepository.save(foundBannedUserAccount);
     }
 
+    @Override
+    public BannedUser getInfoAboutBanByUsernameBannedUser(String username) throws NoResultException {
+        UserAccount foundBannedUserAccount = userAccountRepository.findByUsername(username);
+        if(foundBannedUserAccount == null)
+            throw new NoResultException("This user does not exisit");
+        BannedUser foundedBanByUser = bannedUserRepository.findByUserAccount(foundBannedUserAccount);
+        if(foundedBanByUser == null)
+            throw new NoResultException("Can't delete this ban beacause this user hasn't ban");
+        return foundedBanByUser;
+    }
 }

@@ -10,4 +10,6 @@ public interface BannedUserService {
 
     void deleteBanForUser(Long id) throws NoResultException;
 
+    BannedUser getInfoAboutBanByUsernameBannedUser(String username) throws NoResultException;
+
 }

@@ -73,6 +73,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/checkIsBanned/*").permitAll()
                 .antMatchers("/api/user/getMyRole").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
+                .antMatchers("/api/user/banned/account/*").permitAll()
                 //lets say we dont allow users to get to /callendar and /user (i tak nie dziala jak powinno ;p )
                 .antMatchers("/calendar").authenticated()
                 .antMatchers("/user").authenticated()

@@ -15,6 +15,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     nazwa;
 
+    private myBan = {
+        dateEndOfBan: '',
+        timeEndOfBan: ''
+    };
     credentials = {
       username: '',
       password: ''
@@ -48,7 +52,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                   if(this.statusBan == "true"){
                       this.sharedService.setIsBanned(true);
                       console.log("Sprawdzanie bana" + this.sharedService.getIsBanned());
-                      this.router.navigate(['/login/banned']);
+                      this.getInfoAboutMyBan();
                       this.loginService.removeToken();
                   }
                   else if(this.statusBan == "false"){
@@ -84,6 +88,17 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     });
    }
+    getInfoAboutMyBan():void{
+        this.loginService.getInfoAboutMyBan().subscribe(
+            result =>{
+                this.myBan = result;
+                console.log("Data: " + this.myBan.dateEndOfBan + " godzina: " + this.myBan.timeEndOfBan);
+                this.router.navigate(['/login/banned/',{date: this.myBan.dateEndOfBan, time: this.myBan.timeEndOfBan}]);
+1            },
+            err => console.log('Wystąpił błąd podczas pobierania informacji o banie')
+        );
+
+    }
 
     // on-destroy
     ngOnDestroy() {
