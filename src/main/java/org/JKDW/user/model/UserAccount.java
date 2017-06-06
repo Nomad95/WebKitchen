@@ -1,5 +1,6 @@
 package org.JKDW.user.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ public class UserAccount {
 
 	@NotNull
 	@Size(min = 6, max = 100)
+	@JsonIgnore
 	private String password;
 
 	@NotNull
@@ -49,6 +51,9 @@ public class UserAccount {
 
 	@Column(name = "last_logged")
 	private Date lastLogged;
+
+	@Column(name = "is_banned")
+	private Boolean isBanned;
 
 	public UserAccount(){
 	}
@@ -148,5 +153,13 @@ public class UserAccount {
 	}
 	public void setAuthorities(String authorities) {
 		this.authorities = authorities;
+	}
+
+	public Boolean getIsBanned() {
+		return isBanned;
+	}
+
+	public void setIsBanned(Boolean banned) {
+		isBanned = banned;
 	}
 }

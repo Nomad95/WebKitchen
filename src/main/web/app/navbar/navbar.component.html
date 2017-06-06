@@ -46,6 +46,10 @@
                                 <i class="fa fa-fw fa-power-off fa-navbar-menu"></i> Wyloguj
                             </a>
                         </li>
+                        <li *ngIf="sharedService.getIsAdmin();">
+                            <a class="dropdown-item" href="javascript:" [routerLink]="['/admin']">
+                                <i class="fa fa-fw fa-user-secret fa-navbar-menu"></i> Panel Admina </a>
+                       </li>
                     </ul>
                 </li>
             </ul>

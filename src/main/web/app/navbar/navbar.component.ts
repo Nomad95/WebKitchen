@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { LoginService } from '../login/login.service';
 import { Router } from '@angular/router';
+import {SharedService} from "../shared.service";
 
 @Component({
     selector: 'navbar',
@@ -8,13 +9,14 @@ import { Router } from '@angular/router';
   providers: [LoginService]
 })
 export class NavbarComponent implements OnInit {
-  constructor(private loginService:LoginService, private router:Router) {
+  constructor(private loginService:LoginService, private router:Router, private sharedService: SharedService) {
 
   }
 
-  public username = '';
+  public username = '';w
 
   ngOnInit(){
+    //this.sharedService.getIsAdmin();
     this.loginService.isLogged();
     //this.username = this.loginService.getUsername();
   }

@@ -1,9 +1,10 @@
 import {Injectable}    from '@angular/core';
-import {Headers, Http}    from '@angular/http';
+import {Headers, Http, Response}    from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { Observable }	from 'rxjs/Observable';
 import 'app/rxjs-operators';
 import 'rxjs/Rx';
+import {SharedService} from "../shared.service";
 
 @Injectable()
 export class LoginService{
@@ -11,14 +12,18 @@ export class LoginService{
 	public username:string;
 	//RedirectUrl - url user wanted to go before loggin in the app
 	public redirectUrl:string;
+	private isAdmin: boolean;
+	private isBanned: boolean;
 
 	private headers = new Headers({
           'content-type' : 'application/json'});
+	private headersLoggedUser = null;
 
-	constructor(private http: Http) {
+	constructor(private http: Http, private sharedService: SharedService) {
 		var currentToKey = JSON.parse(localStorage.getItem('toKey'));
       	this.token = currentToKey && currentToKey.token;
 		this.username = currentToKey && currentToKey.username;
+
          }
 
     /* getToken aka Login */
@@ -73,6 +78,10 @@ export class LoginService{
 		return currentToKey.username;
 	}
 
+	checkIsUserBanned(): Observable<any>{
+		return this.http.get('/api/user/checkIsBanned/'+this.getUsername(),{headers :this.headers})
+            .map(res => res.json());
+	}
 	/**
 	 * Finds user id by username
 	 * @returns id of username
@@ -93,6 +102,26 @@ export class LoginService{
 	}
 
 
+	checkVariableIsBanned(): Observable<any>{
+		return this.http.get('/api/user/checkIsBanned/'+this.getUsername(),{headers :this.headers})
+            .map(res => res.json());
+	}
+	checkIsUserAnAdmin(): Observable<any>{
+		this.headersLoggedUser = new Headers({
+			'content-type' : 'application/json',
+			'X-Auth-token' : this.token
+		})
+		return this.http.get('/api/user/getMyRole',{headers :this.headersLoggedUser})
+            .map(res => res.json())
+			.catch(this.handleError);
+	}
+
+	getInfoAboutMyBan(): Observable<any> {
+		return this.http.get('/api/user/banned/account/arek', {headers: this.headers})
+            .map(res => res.json())
+            .catch(this.handleError);
+
+	}
 	/*private handleError(error: any): Promise<any> {
 	 console.error('An error occurred!!!!!!!!!', error);
 		return Promise.reject(error.message || error);
@@ -101,4 +130,5 @@ export class LoginService{
 		console.error('An error in login service occurred!', error);
 		return Observable.throw(error.statusText);
 	}
+
 }

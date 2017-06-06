@@ -311,4 +311,31 @@ public class EventServiceImpl implements EventService {
         });
         return accountsDTO;
     }
+
+    /**
+     *
+     * @param title
+     * @return Basic information about event
+     * is used to admin panel. I don't know
+     * @throws NoResultException
+     */
+
+    @Override
+    public EventGeneralDTO getEventDetailsByTitle(String title) throws NoResultException {
+        Event foundEvent = eventRepository.findDetailsEventByTitle(title);
+        if (foundEvent == null) {
+            throw new NoResultException("Event details couldnt be found.");
+        }
+        return new EventGeneralDTO(
+                foundEvent.getId(),
+                foundEvent.getType(),
+                foundEvent.getTitle(),
+                foundEvent.getTime(),
+                foundEvent.getDate(),
+                foundEvent.getDish_kind(),
+                foundEvent.getDish_name(),
+                foundEvent.getPeople_quantity(),
+                foundEvent.getPeople_remaining()
+        );
+    }
 }
