@@ -1,36 +1,51 @@
-
 <section>
 
     <div class="container" style="margin-top: 30px;">
+        <div class="header-admin">
+            <h2>Panel Admina</h2>
+        </div>
+        <br/>
+        <div class="w3-row-padding">
+            <div class="w3-col s6">
+                <div class="w3-card-4" style="width:60%">
+                    <header class="w3-container w3-light-grey">
+                        <h3>Zarządzanie</h3>
+                    </header>
+                    <div class="w3-container">
+                        <br/>
+                        <p>W tym panelu możesz:</p>
+                        <hr>
+                        <p> - wyszukać użytkownika </p>
+                        <p> - wyszukać wydarzenie </p>
+                        <p> - usunąć użytkownika/wydarzenie</p>
+                        <p> - zbanować użytkownika</p><br>
+                    </div>
+                    <button [routerLink]="['/admin/panelUE']" class="w3-button w3-block w3-dark-grey">Przejdź</button>
+                </div>
+            </div>
+            <div class="w3-col s6">
+                <div class="w3-card-4" style="width:60%">
+                    <header class="w3-container w3-light-grey">
+                        <h3>Logi</h3>
+                    </header>
+                    <div class="w3-container">
+                        <br/>
+                        <p>W BUDOWIE</p>
+                        <hr>
+                        <br/>
+                        <br/>
+                        Panel umożliwi sprawdzenie logów użytkowników
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                    </div>
+                    <button class="w3-button w3-block w3-dark-grey">Przejdź</button>
+                </div>
+            </div>
+        </div>
 
-        <h3>Panel Admina</h3>
-
-      <div class="container2">
-
-          <div class="kolumna">
-              <div class="tresc_karty">
-                  <h4>W tym panelu możesz:
-                      <p> - wyszukać użytkownika </p>
-                      <p> - wyszukać wydarzenie </p>
-                      <p> - usunąć użytkownika/wydarzenie</p>
-                      <p> - zbanować użytkownika</p>
-                  </h4>
-              </div>
-              <div>
-                  <a [routerLink]="['/admin/panelUE']" class="btn btn-default">Przejdź</a>
-              </div>
-          </div>
-          <div class="kolumna">
-              <div class="tresc_karty">
-              <h3>W tym panelu możesz zobaczyć bieżące logi oraz wyszukać logi danego użytkownika</h3>
-              </div>
-              <div>
-                  <a [routerLink]="['']" class="btn btn-default">Przejdź</a>
-              </div>
-          </div>
-
-        <div id="clear"></div>
-      </div>
     </div><!--container close-->
 
 

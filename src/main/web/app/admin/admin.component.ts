@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 //import { LoginService } from './profile.service';
-import { AdminService } from './admin.service';
+import {AdminService} from './admin.service';
 
 @Component({
     selector: 'admin',
@@ -11,7 +11,8 @@ import { AdminService } from './admin.service';
 export class AdminComponent implements OnInit, OnDestroy {
 
 
-    constructor(private profileService: AdminService) {}
+    constructor(private profileService: AdminService) {
+    }
 
 
     private userProfile = {
@@ -30,15 +31,14 @@ export class AdminComponent implements OnInit, OnDestroy {
     }
 
 
-
     /**
      * we do post on /auth and get a token
      * token is preserved in browser local storage
      */
-    getProfile(): void{
+    getProfile(): void {
         this.profileService
             .getProfile()
-            .subscribe( result => {
+            .subscribe(result => {
                 // this.userProfile = JSON.stringify(result);
                 this.userProfile.username = result.username;
                 this.userProfile.country = result.country;
@@ -49,6 +49,7 @@ export class AdminComponent implements OnInit, OnDestroy {
             });
         // this.userProfile2 = new String (this.userProfile);
     }
+
     // on-destroy
     ngOnDestroy() {
 

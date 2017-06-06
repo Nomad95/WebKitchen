@@ -39,7 +39,6 @@ const appRoutes: Routes = [
     {path: 'events', component: EventListComponent, canActivate: [AuthGuard]},
     {path: 'events/:id', component: EventDetailsComponent, canActivate: [AuthGuard]},
     {path: 'events/create/new', component: EventCreateComponent, canActivate: [AuthGuard]},
-    {path: 'events/:id', component: EventDetailsComponent, canActivate: [AuthGuard]},
     {path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
     {path: "admin/panelUE", component: AdminPanelUEComponent, canActivate: [AuthGuard]}
 ];

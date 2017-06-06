@@ -26,6 +26,8 @@ public interface EventService {
 
     EventGeneralDTO getEventDetails(Long id) throws NoResultException;
 
+    EventGeneralDTO getEventDetailsByTitle(String title) throws NoResultException;
+
     List<EventGeneralDTO> getAllEventsGeneral();
 
     void bindEventWithUser(String username, Long evntId) throws SizeLimitExceededException;

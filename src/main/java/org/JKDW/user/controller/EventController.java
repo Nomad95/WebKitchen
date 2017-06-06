@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -200,6 +201,19 @@ public class EventController {
         } catch (NotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    /**
+     *
+     * @param title of event we want to find
+     * @return this method returns a DTO that contains
+     * general information about an event
+     */
+    @RequestMapping(value = "/detailed/title/{title}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<EventGeneralDTO> getOneEventDetailsByTitle(@PathVariable("title") String title) {
+        EventGeneralDTO event = eventService.getEventDetailsByTitle(title);
+        return new ResponseEntity<>(event, HttpStatus.OK);
     }
 
 }
