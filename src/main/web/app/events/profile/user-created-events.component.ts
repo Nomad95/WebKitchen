@@ -14,7 +14,6 @@ export class UserCreatedEventsComponent implements OnInit {
 
     //event from parent
     @Input() private event: any;
-    //private acceptedList = this.event.acceptedIds;
 
     ngOnInit() {
         console.log(this.event.acceptedIds);
@@ -37,7 +36,6 @@ export class UserCreatedEventsComponent implements OnInit {
         this.eventService.addUserIdToAcceptedList(this.event.id,userId)
             .subscribe( data => {
                 console.log('accepted id: '+userId);
-                //this.acceptedList.push(userId);
                 this.event.acceptedIds.push(userId);
             });
     }

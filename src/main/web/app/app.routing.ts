@@ -30,8 +30,8 @@ const appRoutes: Routes = [
     {path: 'login/success', component: LoginSuccess},
     {path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard]},
     {path: 'profile/myprofile', component: MyProfileComponent, canActivate: [AuthGuard]},
+    {path: 'profile/myprofile/events', component: ProfileEventsComponent, canActivate: [AuthGuard]},
     {path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuard]},
-    {path: 'profile/events', component: ProfileEventsComponent, canActivate: [AuthGuard]},
     {path: 'events', component: EventListComponent, canActivate: [AuthGuard]},
     {path: 'events/:id', component: EventDetailsComponent, canActivate: [AuthGuard]},
     {path: 'events/create/new', component: EventCreateComponent, canActivate: [AuthGuard]}
