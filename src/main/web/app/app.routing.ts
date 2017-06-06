@@ -14,6 +14,7 @@ import {EventDetailsComponent} from './events/detailed/event-details.component';
 import {RegistrationSuccess} from './registration/registration-success.component';
 import {LoginSuccess} from './login/login-success.component';
 import {EventCreateComponent} from './events/create/event-create.component';
+import {ProfileEventsComponent} from "./events/profile/profile-events.component";
 
 import {AuthGuard} from './app.auth-guard.service';
 import {LoginService} from './login/login.service';

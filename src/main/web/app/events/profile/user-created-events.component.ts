@@ -1,5 +1,6 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {EventService} from "../event.service";
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -8,7 +9,7 @@ import {EventService} from "../event.service";
     providers: [EventService]
 })
 export class UserCreatedEventsComponent implements OnInit {
-    constructor(private eventService: EventService) {
+    constructor(private eventService: EventService, private router: Router) {
     }
 
     //event from parent
@@ -41,4 +42,11 @@ export class UserCreatedEventsComponent implements OnInit {
             });
     }
 
+    /**
+     * navigates to users profile page
+     * @param username of user 
+     */
+    goToProfile(username: string){
+        this.router.navigate(['/profile/',username]);
+    }
 }
