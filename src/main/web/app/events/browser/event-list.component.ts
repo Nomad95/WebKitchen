@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
 import {EventService} from '../event.service';
 
 @Component({
@@ -8,13 +7,15 @@ import {EventService} from '../event.service';
     providers: [EventService]
 })
 export class EventListComponent implements OnInit {
-    constructor(private router:Router, private eventService:EventService) {
+    constructor(private eventService:EventService) {
     }
 
+    //list of all events
     private events: any[];
+
+    //check if user can create event or he hasn't filled required profile fields
     private canCreateEvent = false;
 
-    // on-init
     ngOnInit() {
         this.getEvents();
         this.checkIfUserCanCreateEvent();
@@ -31,6 +32,9 @@ export class EventListComponent implements OnInit {
             })
     }
 
+    /**
+     * Checks i user has filled all required fields to create event
+     */
     checkIfUserCanCreateEvent(){
         this.eventService.checkIfUserCanCreateEvent()
             .subscribe((data) => {

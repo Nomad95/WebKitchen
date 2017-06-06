@@ -52,7 +52,7 @@ export class LoginService{
 
 
 	/* checks if token exists */
-	isLogged():boolean {
+	isLogged(): boolean {
 		var currentToKey = JSON.parse(localStorage.getItem('toKey'));
       	this.token = currentToKey && currentToKey.token;
 
@@ -61,16 +61,35 @@ export class LoginService{
 		else return false;
 	}
 
-	isUsernameLoaded():boolean {
+	isUsernameLoaded(): boolean {
 		if (this.username != null) {
 			return true;
 		}
 		else return false;
 	}
 
-	getUsername():string {
+	getUsername(): string {
 		var currentToKey = JSON.parse(localStorage.getItem('toKey'));
 		return currentToKey.username;
+	}
+
+	/**
+	 * Finds user id by username
+	 * @returns id of username
+     */
+	getIdByUsername(): Observable<number>{
+		var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+		let username = currentToKey && currentToKey.username;
+		let token = currentToKey && currentToKey.token;
+
+		var headers = new Headers({
+			'content-type': 'application/json',
+			'X-Auth-token': token
+		});
+		
+		return this.http.get("api/user/account/"+username+"/getid", {headers: headers})
+			.map((res) => res.json())
+			.catch(this.handleError);
 	}
 
 
@@ -79,7 +98,7 @@ export class LoginService{
 		return Promise.reject(error.message || error);
 	 }*/
 	private handleError(error:any):Observable<any> {
-		console.error('An error occurred!', error);
+		console.error('An error in login service occurred!', error);
 		return Observable.throw(error.statusText);
 	}
 }

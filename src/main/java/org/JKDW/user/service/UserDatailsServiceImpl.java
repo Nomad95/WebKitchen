@@ -1,9 +1,13 @@
 package org.JKDW.user.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.NoResultException;
 
+import javassist.NotFoundException;
+import org.JKDW.user.model.DTO.UsersParticipationEventDTO;
+import org.JKDW.user.model.Event;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.model.UserDetails;
 import org.JKDW.user.model.DTO.UserAccountDTO;
@@ -131,6 +135,34 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	}
 
 	/**
+	 * Finds user details with userAccount id and finds all events he participate in
+	 * @param userId user account id
+	 * @return list of events
+	 * @throws NotFoundException when user couldn't be found
+     */
+	@Override
+	public List<UsersParticipationEventDTO> getAllUserEventsWhichHeParticipates(Long userId) throws NotFoundException {
+		UserDetails foundUserDetails = getUserDetailsByUserAccountId(userId);
+		if(foundUserDetails == null)
+			throw new NotFoundException("User couldn't be found");
+		List<Event> events = foundUserDetails.getEvents();
+		if(events == null)
+			return new ArrayList<>();
+		List<UsersParticipationEventDTO> eventsDTO = new ArrayList<>();
+		events.forEach( e ->
+			eventsDTO.add(new UsersParticipationEventDTO(
+					e.getId(),
+					e.getTitle(),
+					e.getDish_name(),
+					e.getType(),
+					e.getTime(),
+					e.getDate()
+					))
+		);
+		return eventsDTO;
+	}
+
+	/**
 	 * Set UserDetailsDTO witch UserAccountDTO by UserAccount id
 	 * @param userDetailsDTO - details which we want to update
 	 * @throws NoResultException when details couldn't be found
@@ -141,7 +173,6 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 
 		if(foundUserDetails == null){
 			throw new NoResultException("Cannot update details. Details not found");
-
 		}
 
 		foundUserDetails.setId(userDetailsDTO.getId());

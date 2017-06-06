@@ -1,0 +1,17 @@
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Twoje wydarzenia</h1>
+                <div *ngFor="let event of userEvents">
+                    <user-created-events [event]="event"></user-created-events>
+                    <!--[a child comp property]="parent variable"-->
+                </div>
+                <hr/>
+                <h1>Wydarzenia w których bierzesz udział</h1>
+                    <user-participate-events [events]="userParticipatedEvents"></user-participate-events>
+            </div>
+        </div>
+    </div>
+</div>
+

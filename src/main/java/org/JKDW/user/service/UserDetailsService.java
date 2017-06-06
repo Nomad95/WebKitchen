@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
+import javassist.NotFoundException;
+import org.JKDW.user.model.DTO.UsersParticipationEventDTO;
+import org.JKDW.user.model.Event;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.model.UserDetails;
 import org.JKDW.user.model.DTO.UserDetailsUpdateDTO;
@@ -27,5 +30,7 @@ public interface UserDetailsService {
 	void deleteUserDetails(Long id) throws NoResultException;
 
 	boolean canCreateEvent(String accountUsername) throws NoResultException;
+
+	List<UsersParticipationEventDTO> getAllUserEventsWhichHeParticipates(Long userId) throws NotFoundException;
 
 }

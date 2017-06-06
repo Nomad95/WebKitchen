@@ -1,5 +1,7 @@
 package org.JKDW.user.controller;
 
+import javassist.NotFoundException;
+import org.JKDW.user.model.DTO.EventForOwnerDTO;
 import org.JKDW.user.model.DTO.EventGeneralDTO;
 import org.JKDW.user.model.Event;
 import org.JKDW.user.service.EventService;
@@ -9,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.apache.commons.lang3.ArrayUtils;
 
 import javax.naming.SizeLimitExceededException;
 import java.util.List;
@@ -147,6 +150,56 @@ public class EventController {
         if (eventService.checkIfBinded(username, evntid))
             return new ResponseEntity<>(new Boolean("true"), HttpStatus.OK);
         return new ResponseEntity<>(new Boolean("false"), HttpStatus.OK);
+    }
+
+    /**
+     * //TODO: maybe add more fields??
+     * Finds info about events created by user with provided id and info about participants
+     * @param userId of user/ event owner
+     * @return list of event+participants. see DTO for more
+     */
+    @RequestMapping(value = "/userevents/{userId}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<EventForOwnerDTO>> getAllUserEventsAndParticipants(@PathVariable("userId") Long userId){
+        return new ResponseEntity<>(eventService.getEventsCreatedByUserId(userId),HttpStatus.OK);
+    }
+
+    /**
+     * Adds users id to specified event
+     * @param eventId event id
+     * @param userId users account id
+     * @return true if added
+     */
+    @RequestMapping(value = "/userevents/{eventId}/accept/{userId}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> addUserIdToEventAcceptedList(
+            @PathVariable("eventId") Long eventId,
+            @PathVariable("userId") Long userId){
+        try {
+            boolean b = eventService.acceptId(eventId, userId);
+            return new ResponseEntity<>(b,HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * Finds accepted ids for specified event
+     * @param eventId event id
+     * @return list of ids
+     */
+    @RequestMapping(value = "/userevents/{eventId}/accepted",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long[]> addUserIdToEventAcceptedList(@PathVariable("eventId") Long eventId){
+        try {
+            Long[] acceptedIdsList = ArrayUtils.toObject(eventService.getAcceptedIdsList(eventId));
+            return new ResponseEntity<>(acceptedIdsList,HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 }

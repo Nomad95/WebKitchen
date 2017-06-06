@@ -1,0 +1,30 @@
+<div class="well">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead >
+                <th class="text-center">Tytuł</th>
+                <th class="text-center">Nazwa posiłku</th>
+                <th class="text-center">Rodzaj wydarzenia</th>
+                <th class="text-center">Data</th>
+                <th class="text-center">Godzina</th>
+                <th class="text-center">Zobacz Szczegóły</th>
+                </thead>
+                <tbody>
+                <tr *ngFor="let event of events" class="text-center">
+                    <td>{{event.title}}</td>
+                    <td>{{event.dish_name}}</td>
+                    <td>{{convertToEventKind(event.type)}}</td>
+                    <td>{{event.date | date}}</td>
+                    <td>{{event.time}}</td>
+                    <td>
+                        <button class="btn btn-default"
+                        (click)="goToEventDetails(event.id)">
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

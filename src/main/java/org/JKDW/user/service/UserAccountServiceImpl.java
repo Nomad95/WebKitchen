@@ -116,7 +116,6 @@ public class UserAccountServiceImpl implements UserAccountService {
 		}
 
 		userAccountRepository.delete(id);
-
 	}
 
 	@Override
@@ -126,6 +125,20 @@ public class UserAccountServiceImpl implements UserAccountService {
 				.createCriteria(UserAccount.class)
 				.add(Restrictions.eq("username", username))
 				.uniqueResult();
+	}
+
+	/**
+	 * Finds users Id with provided username
+	 * @param username of userAccount
+	 * @return id of user
+     */
+	@Override
+	@Transactional
+	public Long findIdOfUsersUsername(String username) {
+		UserAccount userAccount = loadUserByUsername(username);
+		if(userAccount == null)
+			return -1L;
+		return userAccount.getId();
 	}
 
 }

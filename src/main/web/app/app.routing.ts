@@ -14,6 +14,7 @@ import {EventDetailsComponent} from './events/detailed/event-details.component';
 import {RegistrationSuccess} from './registration/registration-success.component';
 import {LoginSuccess} from './login/login-success.component';
 import {EventCreateComponent} from './events/create/event-create.component';
+import {ProfileEventsComponent} from "./events/profile/profile-events.component";
 
 import {AuthGuard} from './app.auth-guard.service';
 import {LoginService} from './login/login.service';
@@ -29,6 +30,7 @@ const appRoutes: Routes = [
     {path: 'login/success', component: LoginSuccess},
     {path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard]},
     {path: 'profile/myprofile', component: MyProfileComponent, canActivate: [AuthGuard]},
+    {path: 'profile/myprofile/events', component: ProfileEventsComponent, canActivate: [AuthGuard]},
     {path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuard]},
     {path: 'events', component: EventListComponent, canActivate: [AuthGuard]},
     {path: 'events/:id', component: EventDetailsComponent, canActivate: [AuthGuard]},

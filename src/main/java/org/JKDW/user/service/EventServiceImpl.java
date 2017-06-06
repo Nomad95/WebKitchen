@@ -1,6 +1,9 @@
 package org.JKDW.user.service;
 
+import javassist.NotFoundException;
+import org.JKDW.user.model.DTO.EventForOwnerDTO;
 import org.JKDW.user.model.DTO.EventGeneralDTO;
+import org.JKDW.user.model.DTO.UserAccountForEventOwnerDTO;
 import org.JKDW.user.model.Event;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.model.UserDetails;
@@ -13,7 +16,9 @@ import org.springframework.stereotype.Service;
 import javax.naming.SizeLimitExceededException;
 import javax.persistence.NoResultException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -65,7 +70,7 @@ public class EventServiceImpl implements EventService {
     public Event updateEvent(Event event) throws NoResultException {
         Event foundEvent = eventRepository.findOne(event.getId());
         if (foundEvent == null) {
-            throw new NoResultException("Cannot update event. Event doesn't exists");
+            throw new NoResultException("Cannot update event. Event doesn't exist");
         }
         Event savedEvent = eventRepository.save(event);
         return savedEvent;
@@ -221,5 +226,89 @@ public class EventServiceImpl implements EventService {
                 return true;
         }
         return false;
+    }
+
+    /**
+     * Finds info about events created by user with provided id and info about participants
+     * @param id of user (event owner)
+     * @return list of events and participants
+     */
+    @Override
+    public List<EventForOwnerDTO> getEventsCreatedByUserId(Long id) {
+        List<EventForOwnerDTO> ownerEventsWithAccounts = new ArrayList<>();
+        List<Event> foundOwnerEvents = eventRepository.findByOwnerId(id);
+        foundOwnerEvents.forEach( event -> ownerEventsWithAccounts.add(
+                new EventForOwnerDTO(
+                        event.getId(),
+                        event.getType(),
+                        event.getTitle(),
+                        event.getDate(),
+                        event.getDish_name(),
+                        event.getDish_kind(),
+                        event.getPeople_quantity(),
+                        event.getPeople_remaining(),
+                        event.getAcceptedIds().stream().mapToLong(l -> l).toArray(),
+                        processAccountsParticipatingInEvent(event.getAccounts()))
+        ));
+        return ownerEventsWithAccounts;
+    }
+
+    /**
+     * Methos adds userAccountId to event accepted list
+     * @param eventId event ref
+     * @param userAccountId acc id we want to add to eventId
+     * @throws NotFoundException when event couldnt be found
+     */
+    @Override
+    public boolean acceptId(Long eventId, Long userAccountId) throws NotFoundException {
+        Event foundEvent = eventRepository.findOne(eventId);
+        if(foundEvent == null)
+            throw new NotFoundException("Event with id = "+eventId+" couldn't be found");
+        Set<Long> acceptedIds = foundEvent.getAcceptedIds();
+        //initialize set if null
+        if(acceptedIds == null)
+            acceptedIds = new HashSet<>();
+        //add id to list and update event
+        acceptedIds.add(userAccountId);
+        foundEvent.setAcceptedIds(acceptedIds);
+        eventRepository.save(foundEvent);
+        return true;
+    }
+
+    /**
+     * Returns list of ids accepted in specified event
+     * @param eventId event id
+     * @return List of accepted ids
+     * @throws NotFoundException when event couldnt be found
+     */
+    @Override
+    public long[] getAcceptedIdsList(Long eventId) throws NotFoundException {
+        Event foundEvent = eventRepository.findOne(eventId);
+        if(foundEvent == null)
+            throw new NotFoundException("Event with id = "+eventId+" couldn't be found");
+        Set<Long> acceptedIds = foundEvent.getAcceptedIds();
+        if(acceptedIds == null)
+            return new long[1];
+        return acceptedIds.stream().mapToLong(l -> l).toArray();
+    }
+
+
+    /**
+     * Helper method extracts participants useraccounts from event
+     * @param userDetails list of user details from event
+     * @return list of necessary info about users
+     */
+    private List<UserAccountForEventOwnerDTO> processAccountsParticipatingInEvent(List<UserDetails> userDetails){
+        ArrayList<UserAccountForEventOwnerDTO> accountsDTO = new ArrayList<>();
+        userDetails.forEach( details ->{
+            UserAccount ua = details.getUserAccount();
+            accountsDTO.add(new UserAccountForEventOwnerDTO(
+                    ua.getId(),
+                    ua.getUsername(),
+                    ua.getNick(),
+                    ua.getIsFilled(),
+                    ua.getIsVerified()));
+        });
+        return accountsDTO;
     }
 }

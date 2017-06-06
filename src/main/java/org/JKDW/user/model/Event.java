@@ -6,6 +6,7 @@ import org.hibernate.annotations.Type;
 import java.sql.Time;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -70,6 +71,13 @@ public class Event {
     private String additional_info;
 
     /**
+     * List of accepted userAccounts id
+     */
+    @Column(nullable = true)
+    @ElementCollection(targetClass = Long.class)
+    private Set<Long> acceptedIds;
+
+    /**
      * description of dish/event
      */
     @Lob
@@ -82,6 +90,13 @@ public class Event {
      */
     @Column(nullable = true)
     private String photo;
+
+    /**
+     * owners UserAccount id
+     * renamed to ownerid. Spring data JPA method cant use '_' in method name
+     */
+    @Column(name = "ownerid")
+    private Long ownerId;
 
 
 	/* below nullable fields for different types of events */
@@ -131,6 +146,14 @@ public class Event {
         people_remaining = people_quantity;
     }
 
+    public Set<Long> getAcceptedIds() {
+        return acceptedIds;
+    }
+
+    public void setAcceptedIds(Set<Long> acceptedIds) {
+        this.acceptedIds = acceptedIds;
+    }
+
     public int getPeople_remaining() {
         return people_remaining;
     }
@@ -157,6 +180,14 @@ public class Event {
 
     public Long getId() {
         return id;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
     public void setId(Long id) {

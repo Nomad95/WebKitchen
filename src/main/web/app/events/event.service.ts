@@ -133,6 +133,10 @@ export class EventService {
         });
     }
 
+    /**
+     * Checks if user has filled required fields in profile to create new event
+     * @returns true if is verified else false
+     */
     checkIfUserCanCreateEvent(): Observable<boolean>{
         var currentToKey = JSON.parse(localStorage.getItem('toKey'));
         let token = currentToKey && currentToKey.token;
@@ -147,6 +151,63 @@ export class EventService {
             .map((res) => res.json())
             .catch(this.handleError);
 
+    }
+
+    /**
+     * Finds users events and participants
+     * @param id of current user
+     */
+    getUserEventsAndParticipants(id: number): Observable<any[]>{
+        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        let token = currentToKey && currentToKey.token;
+
+        var headers = new Headers({
+            'content-type': 'application/json',
+            'X-Auth-token': token
+        });
+
+        return this.http.get('/api/event/userevents/'+id, {headers: headers})
+            .map(res => res.json())
+            .catch(this.handleError);
+    }
+
+    /**
+     * Adds id to event accepted list
+     * @param eventId event id
+     * @param userId user account id
+     * @returns True if id was added
+     */
+    addUserIdToAcceptedList(eventId: number, userId: number){//TODO: zmien na POST
+        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        let token = currentToKey && currentToKey.token;
+
+        var headers = new Headers({
+            'content-type': 'application/json',
+            'X-Auth-token': token
+        });
+
+        return this.http.get('/api/event/userevents/'+eventId+'/accept/'+userId,{headers: headers})
+            .map( res => res.json())
+            .catch(this.handleError);
+    }
+
+    /**
+     * gets all events which user participates in
+     * @param userId users id
+     * @returns some events information
+     */
+    getUserEventsWhichHeParticipates(userId: number){
+        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        let token = currentToKey && currentToKey.token;
+
+        var headers = new Headers({
+            'content-type': 'application/json',
+            'X-Auth-token': token
+        });
+
+        return this.http.get('/api/user/details/events/'+userId,{headers: headers})
+            .map( res => res.json())
+            .catch(this.handleError);
     }
 
     private handleError(error:any):Promise<any> {

@@ -9,17 +9,21 @@ import {EventService} from '../event.service';
 })
 export class EventDetailsComponent implements OnInit {
     constructor(private router:ActivatedRoute,
-                private eventService:EventService) {
-    }
+                private eventService:EventService) {}
 
     private event = {
         type: '',
         people_remaining: -1
     };
+
     private eventType:string;
+
+    // if current user has already joined to this event
     private hasJoined = false;
+
+    // if event has reached its people capacity
     private isFull = false;
-    
+
 
     // on-init
     ngOnInit() {
@@ -56,6 +60,10 @@ export class EventDetailsComponent implements OnInit {
             );
     }
 
+    /**
+     * Checks if user has already joined to this event
+     * Sets hasJoined variable
+     */
     checkUser():any {
         console.log('checking user');
         this.eventService.checkUser(+this.router.snapshot.params['id'])
@@ -65,6 +73,9 @@ export class EventDetailsComponent implements OnInit {
             });
     }
 
+    /**
+     * Checks if event has free places if not sets isFull variable to true
+     */
     checkFreeSpace():any {
         if (this.event.people_remaining == 0)
             this.isFull = true;

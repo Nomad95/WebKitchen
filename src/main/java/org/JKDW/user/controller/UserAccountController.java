@@ -81,8 +81,6 @@ public class UserAccountController {
 	}
 
 	/**
-	 *
-	 *
 	 * @param id - id of deleting account
 	 */
 	@RequestMapping(value="/{id}",method = RequestMethod.DELETE)
@@ -91,10 +89,22 @@ public class UserAccountController {
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
+	//TODO: Kondziu to twoja metoda?
 	@RequestMapping(value = "/account/test/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserAccountDTO> getUserAccountByName(@PathVariable("id") Long id) {
 		UserAccountDTO userAccountDTO = userAccountService.getUserAccountDTOById(id);
 		return new ResponseEntity<>(userAccountDTO, HttpStatus.OK);
+	}
+
+	/**
+	 * Finds id of user provided with username
+	 * @param username username of user
+	 * @return id of user
+     */
+	@RequestMapping(value="/account/{username}/getid", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Long> getUserIdWithUsername(@PathVariable("username") String username){
+		Long idOfUsersUsername = userAccountService.findIdOfUsersUsername(username);
+		return new ResponseEntity<>(idOfUsersUsername,HttpStatus.OK);
 	}
 
 }
