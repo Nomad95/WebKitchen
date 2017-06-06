@@ -44,7 +44,7 @@
                                 <td>{{userAccount.name }}</td>
                                 <td>{{userAccount.surname }}</td>
                                 <td>{{userAccount.email}}</td>
-                                <td><a [routerLink]="['/admin/panelUE']" class="btn btn-default">Pokaż</a></td>
+                                <td><a [routerLink]="['profile/', userAccount.id ]" class="btn btn-default">Pokaż</a></td>
                                 <td>
                                     <button type="button" class="btn btn-default"
                                             data-toggle="modal" data-target="#myModalDeleteUser">Usuń

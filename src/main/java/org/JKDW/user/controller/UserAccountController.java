@@ -125,12 +125,10 @@ public class UserAccountController {
 	@RequestMapping(value = "/getMyRole", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> checkIfUserHasRoleAdmin() {
 		if(userAccountService.checkIfUserHasRoleAdmin()){
-			System.out.println("Wysy³am ¿e jestem adminem");
 			return new ResponseEntity<>("{\"role\": \"admin\"}", HttpStatus.OK);
 		}
 
 		else{
-			System.out.println("Wysy³am ¿e jestem userem");
 			return new ResponseEntity<>("{\"role\": \"user\"}", HttpStatus.OK);
 		}
 

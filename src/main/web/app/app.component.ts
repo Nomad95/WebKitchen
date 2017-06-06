@@ -67,7 +67,7 @@ export class AppComponent implements OnInit {
                 this.myBan = result;
                 console.log("Data: " + this.myBan.dateEndOfBan + " godzina: " + this.myBan.timeEndOfBan);
                 this.router.navigate(['/login/banned/',{date: this.myBan.dateEndOfBan, time: this.myBan.timeEndOfBan}]);
-                1            },
+            },
             err => console.log('Wystąpił błąd podczas pobierania informacji o banie')
         );
 
