@@ -45,16 +45,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
    
     constructor(private profileService: ProfileService, private _titleService: Title) { }
 
-    // private userProfile2: string;
     // on-init, get profile information
     ngOnInit() {
         this.getProfile();
     }
 
-    /**
-     * we do post on /auth and get a token
-     * token is preserved in browser local storage
-     */
     //get user account information to variable userProfile
     getProfile(): void {
         this.profileService
@@ -80,9 +75,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
              
         });
     }
-       getPrectangeFilled(): String{
-           return this.precentageFilled.toString();
-       }
+    
+    getPrectangeFilledString(): String{
+        return this.precentageFilled.toString();
+    }
 
     // on-destroy
     ngOnDestroy() {

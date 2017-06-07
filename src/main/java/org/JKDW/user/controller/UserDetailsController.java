@@ -3,6 +3,7 @@ package org.JKDW.user.controller;
 import java.util.List;
 
 import javassist.NotFoundException;
+import org.JKDW.user.model.DTO.UserDetailsAddressDTO;
 import org.JKDW.user.model.DTO.UsersParticipationEventDTO;
 import org.JKDW.user.model.Event;
 import org.JKDW.user.model.UserDetails;
@@ -41,7 +42,7 @@ public class UserDetailsController {
 	 * @return one user details
 	 */
 	@RequestMapping(value="/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserDetails> getUserDetailsByUserAccountId(@PathVariable("id") Long id){
+	public ResponseEntity<UserDetails> getUserDetailsById(@PathVariable("id") Long id){
 		UserDetails userDetails = userDetailsService.getUserDetailsbyId(id);
 		return new ResponseEntity(userDetails,HttpStatus.OK);
 	}
@@ -121,5 +122,22 @@ public class UserDetailsController {
 		} catch (NotFoundException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+	}
+
+	/**
+	 * get UserDetailsAddressDTO by UserAccount id -
+	 * @param id - id of account we want to find (not id of details)
+	 * @return Full user address
+	 */
+	@RequestMapping(value = "/address/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserDetailsAddressDTO> getUserAddress(@PathVariable("id") Long id) {
+		UserDetailsAddressDTO userAddress = null;
+		try {
+			userAddress = userDetailsService.getUserAddressByUserAccountId(id);
+			return new ResponseEntity<>(userAddress, HttpStatus.OK);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
 	}
 }

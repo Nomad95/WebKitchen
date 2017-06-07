@@ -17,7 +17,7 @@ export class MyProfileService {
 
     setId(id){
         this.id = id;
-        }
+    }
     
     getProfile():Observable<any> {
         //We get token from local storage
@@ -57,23 +57,22 @@ export class MyProfileService {
             .catch(this.handleError);
     }
     
-        /* Set */
+/* Update profile data from edit profile Form*/
    updateProfile(data):Observable<any> {
          var currentToKey = JSON.parse(localStorage.getItem('toKey'));
         let token = currentToKey && currentToKey.token;
         
         //create appropriate
-    this.headers = new Headers({
+        this.headers = new Headers({
           'accept': 'application/json',
           'content-type' : 'application/json',
           'X-Auth-token' : token});
         console.log(JSON.stringify(data));
-   // this.url = '/api/user/details/'+this.id;
-    return this.http.put('/api/user/details/'+this.id,JSON.stringify(data),{headers :this.headers})
+
+        return this.http.put('/api/user/details/'+this.id,JSON.stringify(data),{headers :this.headers})
                 .map(res => res.json())
                 .catch(this.handleError);
-
-}
+    }
     
     private handleError(error: any): Promise<any> {
         console.error('An error occurred in Registration', error);
