@@ -44,7 +44,7 @@ export class ProfileService {
         //if its my profile - route to /myprofile
         if(tokenUsername == this.username){
             this.itWasMyProfile = true;
-            this.router.navigate(['/myprofile']);
+            this.router.navigate(['/profile/myprofile']);
         }
             
         //and passing them in the request

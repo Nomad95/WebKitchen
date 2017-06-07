@@ -124,7 +124,7 @@
 										<tr>
 											<td>Preferowane kuchnie</td>
 											<td *ngIf="userProfile.preferredCuisine?.length > 0">
-												<button class ="cuisine" *ngFor="let prefered of preferedCuisineService.preferedCuisines">{{ prefered.name }}</button>
+												<button class ="cuisine" *ngFor="let prefered of userProfile.preferredCuisine">{{ prefered.name }}</button>
 											</td>
 											<td *ngIf="(userProfile.preferredCuisine | json) === '[]'"> - </td>
 										</tr>

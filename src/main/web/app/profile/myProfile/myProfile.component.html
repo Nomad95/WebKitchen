@@ -563,6 +563,24 @@
 				<!--row close-->
 			</div>
 			</tab>
+			<tab title="Moje eventy">
+				<div class="container-fluid">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12 col-sm-12">
+								<h2>Twoje wydarzenia</h2>
+								<div *ngFor="let event of userEvents">
+									<user-created-events [event]="event"></user-created-events>
+									<!--[a child comp property]="parent variable"-->
+								</div>
+								<hr/>
+								<h2>Wydarzenia w których bierzesz udział</h2>
+									<user-participate-events [events]="userParticipatedEvents"></user-participate-events>
+							</div>
+						</div>
+					</div>
+				</div>
+			</tab>
 		</tabset>
 			<!--container close -->
 		</div>
