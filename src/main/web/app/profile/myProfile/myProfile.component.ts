@@ -8,13 +8,15 @@ import { PreferedCuisineService } from './preferedCuisine.service';
 import { CuisinesService } from '../../cuisines/cuisines.service';
 import {Cuisine} from '../model/cuisine.model';
 import { TAB_COMPONENTS  } from '../../tabs/Tabset';
+import {EventService} from '../../events/event.service';
+import {LoginService} from '../../login/login.service';
 
 
 @Component({
     selector: 'profile',
     templateUrl: 'app/profile/myProfile/myProfile.component.html',
     styleUrls: ['css/tabs.css'],
-    providers: [MyProfileService, PreferedCuisineService, CuisinesService]
+    providers: [MyProfileService, PreferedCuisineService, CuisinesService, EventService, LoginService]
 })
 export class MyProfileComponent implements OnInit, OnDestroy {
     private precentageFilled: any = 0;
@@ -101,9 +103,16 @@ export class MyProfileComponent implements OnInit, OnDestroy {
         },
             id: '' 
     };
+
+    private userId = -1;
+    private userEvents: any[];
+    private userParticipatedEvents: any[];
+
     constructor(private profileService: MyProfileService,
                 private preferedCuisineService: PreferedCuisineService,
                 private cuisinesService: CuisinesService,
+                private eventService: EventService,
+                private loginService: LoginService,
                 private _titleService: Title) { }
 
     // private userProfile2: string;
@@ -112,6 +121,8 @@ export class MyProfileComponent implements OnInit, OnDestroy {
         this.getProfile();
         this.getAllCuisines();
         this.initializeDatePickerOptions();
+        this.getUserEvents();
+        this.getUserEventsWhichHeParticipatesIn();
     }
 
     /**
@@ -350,6 +361,35 @@ this.userProfile.preferredCuisine=this.preferedCuisineService.getPreferedCuisine
            console.log(this.precentageFilled.toString());
            return this.precentageFilled.toString();
        }
+
+        /**
+     * gets all events made by user
+     */
+    private getUserEvents(){
+        this.loginService.getIdByUsername()
+            .subscribe( data => {
+                this.userId = data;
+                this.eventService.getUserEventsAndParticipants(data).subscribe( events => {
+                    this.userEvents = events;
+                    console.log("events: "+ this.userEvents);
+                });
+            });
+    }
+
+    /**
+     * gets all events which user participates in
+     */
+    private getUserEventsWhichHeParticipatesIn(){
+        this.loginService.getIdByUsername()
+            .subscribe( data => {
+                this.userId = data;
+                this.eventService.getUserEventsWhichHeParticipates(this.userId).subscribe( events => {
+                    this.userParticipatedEvents = events;
+                    console.log("events: "+ this.userParticipatedEvents);
+                });
+            });
+    }
+    
 
     // on-destroy
     ngOnDestroy() {
