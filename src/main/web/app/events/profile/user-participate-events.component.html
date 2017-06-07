@@ -1,7 +1,7 @@
 <div class="well">
     <div class="row">
         <div class="col-md-12">
-            <table class="table">
+            <table class="table" *ngIf="events.length > 0">
                 <thead >
                 <th class="text-center">Tytuł</th>
                 <th class="text-center">Nazwa posiłku</th>
@@ -25,6 +25,7 @@
                     </td>
                 </tbody>
             </table>
+            <h3 *ngIf="!events.length > 0">Nie uczestniczysz w żadnym wydarzeniu</h3>
         </div>
     </div>
 </div>

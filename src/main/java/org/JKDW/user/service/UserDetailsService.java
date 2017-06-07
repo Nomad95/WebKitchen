@@ -30,7 +30,9 @@ public interface UserDetailsService {
 
 	void deleteUserDetails(Long id) throws NoResultException;
 
-	boolean canCreateEvent(String accountUsername) throws NoResultException;
+	boolean canCreateEvent(Long userId) throws NoResultException;
+
+	boolean canParticipate(Long accountId) throws NoResultException;
 
 	List<UsersParticipationEventDTO> getAllUserEventsWhichHeParticipates(Long userId) throws NotFoundException;
 

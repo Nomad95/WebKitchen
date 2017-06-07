@@ -18,7 +18,7 @@ export class EventCreateComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.checkIfUserCanCreateEvent();
+        //more info in method beneath
         this.findUserId();
     }
 
@@ -73,6 +73,8 @@ export class EventCreateComponent implements OnInit {
         quantity_of_products: '',
         ownerId: -1
     };
+    
+    private userId = -1;
 
     /**
      * used for select html tag
@@ -247,8 +249,8 @@ export class EventCreateComponent implements OnInit {
      * This method checks if user had filled required fields in his profile.
      * If not, he is forwarded to events page
      */
-    checkIfUserCanCreateEvent(){
-        this.eventService.checkIfUserCanCreateEvent()
+    checkIfUserCanCreateEvent(userId: number){
+        this.eventService.checkIfUserCanCreateEvent(userId)
             .subscribe((data) => {
                 console.log("can create? : " + data);
                 if(!data)
@@ -264,6 +266,8 @@ export class EventCreateComponent implements OnInit {
             .subscribe( data => {
                 this.newEventType1.ownerId = data;
                 this.newEventType2.ownerId = data;
+                this.userId = data;
+                this.checkIfUserCanCreateEvent(this.userId);
                 console.log("fetched user id: "+data);
             })
     }

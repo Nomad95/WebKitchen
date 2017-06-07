@@ -104,9 +104,18 @@ public class UserDetailsController {
 	 * This method checks whether user had fulfilled fields in his profile
 	 * required to create new event. See Service for more
      */
-	@RequestMapping(value="/eventcheck/{username}",method = RequestMethod.GET)
-	public boolean canUserCreateEvent(@PathVariable("username") String username){
-		return userDetailsService.canCreateEvent(username);
+	@RequestMapping(value="/eventcheck/cancreate/{userId}",method = RequestMethod.GET)
+	public boolean canUserCreateEvent(@PathVariable("userId") Long userId){
+		return userDetailsService.canCreateEvent(userId);
+	}
+
+	/**
+	 * This method checks whether user had fulfilled fields in his profile
+	 * required to join to evens. See Service for more
+	 */
+	@RequestMapping(value="/eventcheck/canjoin/{userId}",method = RequestMethod.GET)
+	public boolean canUserJoinAnEvent(@PathVariable("userId") Long userId){
+		return userDetailsService.canParticipate(userId);
 	}
 
 	/**

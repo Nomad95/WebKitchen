@@ -110,28 +110,49 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 *
 	 * This method checks whether user had fulfilled fields in his profile
 	 * required to create new event
-	 * @param accountUsername provided from users token
+	 * @param userId user account id
 	 * @return true if user has filled required fields else false
 	 * @throws NoResultException when acc or details couldn't be found
      */
 	@Override
-	public boolean canCreateEvent(String accountUsername) throws NoResultException {
-		UserAccount foundUserAccount = userAccountRepository.findByUsername(accountUsername);
+	public boolean canCreateEvent(Long userId) throws NoResultException {
+		UserAccount foundUserAccount = userAccountRepository.findOne(userId);
 		if(foundUserAccount == null)
-			throw new NoResultException("User with username: " + accountUsername + " couldn't be found");
+			throw new NoResultException("User with username: " + userId + " couldn't be found");
 
 		UserDetails foundUserDetails = userDetailsRepository.findByUserAccount(foundUserAccount);
 		if(foundUserDetails == null)
 			throw new NoResultException("Error in account->detail reference");
 
 		//if user has not filled fields we cannot allow him to create event
-		return !(foundUserDetails.getName() == null
+		return !canCreate(foundUserDetails);
+	}
+
+	private boolean canCreate(UserDetails foundUserDetails) {
+		return foundUserDetails.getName() == null
 				|| foundUserDetails.getSurname() == null
 				|| foundUserDetails.getCity() == null
 				|| foundUserDetails.getStreet() == null
 				|| foundUserDetails.getStreetNumber() == null
 				|| foundUserDetails.getBirthDate() == null
 				|| foundUserDetails.getPhoneNumber() == null
+				|| foundUserDetails.getSex() == null;
+	}
+
+	@Override
+	public boolean canParticipate(Long accountId) throws NoResultException {
+		UserAccount foundUserAccount = userAccountRepository.findOne(accountId);
+		if(foundUserAccount == null)
+			throw new NoResultException("User with username: " + accountId + " couldn't be found");
+
+		UserDetails foundUserDetails = userDetailsRepository.findByUserAccount(foundUserAccount);
+		if(foundUserDetails == null)
+			throw new NoResultException("Error in account->detail reference");
+
+		//if user hasnt fulfilled this fields he cannot take part in events
+		return !(foundUserDetails.getName() == null
+				|| foundUserDetails.getSurname() == null
+				|| foundUserDetails.getBirthDate() == null
 				|| foundUserDetails.getSex() == null);
 	}
 

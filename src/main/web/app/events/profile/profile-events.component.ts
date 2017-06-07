@@ -14,8 +14,8 @@ export class ProfileEventsComponent implements OnInit {
     }
 
     private userId = -1;
-    private userEvents: any[];
-    private userParticipatedEvents: any[];
+    private userEvents: any[] = [];
+    private userParticipatedEvents: any[] = [];
 
     ngOnInit() {
         this.getUserEvents();
@@ -49,5 +49,4 @@ export class ProfileEventsComponent implements OnInit {
                 });
             });
     }
-    
 }

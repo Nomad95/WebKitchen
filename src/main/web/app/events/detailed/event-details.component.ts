@@ -1,34 +1,43 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {EventService} from '../event.service';
+import {LoginService} from "../../login/login.service";
 
 @Component({
     selector: 'event-detailed',
     templateUrl: 'app/events/detailed/event-details.component.html',
-    providers: [EventService]
+    providers: [EventService, LoginService]
 })
 export class EventDetailsComponent implements OnInit {
     constructor(private router:ActivatedRoute,
-                private eventService:EventService) {}
+                private eventService:EventService,
+                private loginService: LoginService) {}
 
+    //event stub
     private event = {
         type: '',
         people_remaining: -1
     };
+    
+    //user account id
+    private userId: number = -1;
 
-    private eventType:string;
+    //the type of event (1,2)
+    private eventType: string;
 
     // if current user has already joined to this event
     private hasJoined = false;
 
     // if event has reached its people capacity
     private isFull = false;
-
-
-    // on-init
+    
+    //only if user has fulfilled name surname sex and birth date can join
+    private canJoin = false;
+    
     ngOnInit() {
         this.getDetailedEvent();
         this.checkUser();
+        this.getUserIdByUsername();
     }
 
     /**
@@ -93,5 +102,29 @@ export class EventDetailsComponent implements OnInit {
                 this.eventType = "Ugotujmy coś razem";
                 break;
         }
+    }
+
+    /**
+     * Gets user accoint id by username
+     */
+    getUserIdByUsername(){
+        this.loginService.getIdByUsername()
+            .subscribe( data => {
+                this.userId = data;
+                this.checkIfUserCanJoinEvent(this.userId);
+                console.log("fetched user id: "+data);
+            })
+    }
+
+    /**
+     * returns true if user can join events
+     * @param userId account id
+     */
+    checkIfUserCanJoinEvent(userId: number){
+        this.eventService.checkIfUserCanJoinAnEvent(userId)
+            .subscribe( data => {
+                this.canJoin = data
+                console.log('can join?: '+data);
+            });
     }
 }

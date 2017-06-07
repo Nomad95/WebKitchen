@@ -137,17 +137,35 @@ export class EventService {
      * Checks if user has filled required fields in profile to create new event
      * @returns true if is verified else false
      */
-    checkIfUserCanCreateEvent(): Observable<boolean>{
+    checkIfUserCanJoinAnEvent(userId: number): Observable<boolean>{
         var currentToKey = JSON.parse(localStorage.getItem('toKey'));
         let token = currentToKey && currentToKey.token;
-        let username = currentToKey && currentToKey.username;
 
         var headers = new Headers({
             'content-type': 'application/json',
             'X-Auth-token': token
         });
 
-        return this.http.get('/api/user/details/eventcheck/'+username, {headers: headers})
+        return this.http.get('/api/user/details/eventcheck/canjoin/'+userId, {headers: headers})
+            .map((res) => res.json())
+            .catch(this.handleError);
+
+    }
+
+    /**
+     * Checks if user has filled required fields in profile to create new event
+     * @returns true if is verified else false
+     */
+    checkIfUserCanCreateEvent(userId: number): Observable<boolean>{
+        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        let token = currentToKey && currentToKey.token;
+
+        var headers = new Headers({
+            'content-type': 'application/json',
+            'X-Auth-token': token
+        });
+
+        return this.http.get('/api/user/details/eventcheck/cancreate/'+userId, {headers: headers})
             .map((res) => res.json())
             .catch(this.handleError);
 
