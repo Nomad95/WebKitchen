@@ -13,8 +13,11 @@ export class ProfileEventsComponent implements OnInit {
         private loginService: LoginService) {
     }
 
+    //user account id
     private userId = -1;
+    //user created events
     private userEvents: any[] = [];
+    //user events in which he participates
     private userParticipatedEvents: any[] = [];
 
     ngOnInit() {

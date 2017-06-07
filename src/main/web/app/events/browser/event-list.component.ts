@@ -24,7 +24,7 @@ export class EventListComponent implements OnInit {
 
     ngOnInit() {
         this.getEvents();
-        //more info in method beneath
+        //gets user id and then checks if user can create event
         this.getUserIdFromUsername();
     }
 

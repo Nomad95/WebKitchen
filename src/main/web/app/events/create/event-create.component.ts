@@ -73,7 +73,8 @@ export class EventCreateComponent implements OnInit {
         quantity_of_products: '',
         ownerId: -1
     };
-    
+
+    //users account id
     private userId = -1;
 
     /**
@@ -153,6 +154,16 @@ export class EventCreateComponent implements OnInit {
         this.uploadPhoto(this.selectedFile);
 
         //make post to create an event
+        this.tryCreateEvent(data,$btn1,$btn2);
+    }
+
+    /**
+     * make POST and create event
+     * @param data event
+     * @param $btn1 button1
+     * @param $btn2 button2
+     */
+    tryCreateEvent(data, $btn1, $btn2){
         this.eventService.createEvent(data)
             .subscribe(
                 data => {
@@ -259,7 +270,7 @@ export class EventCreateComponent implements OnInit {
     }
 
     /**
-     * finds user id by username
+     * finds user id by username then checks if user nac create event
      */
     findUserId(){
         this.loginService.getIdByUsername()

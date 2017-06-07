@@ -16,9 +16,10 @@ export class EventDetailsComponent implements OnInit {
     //event stub
     private event = {
         type: '',
-        people_remaining: -1
+        people_remaining: -1,
+        ownerId: -1
     };
-    
+
     //user account id
     private userId: number = -1;
 
@@ -30,14 +31,19 @@ export class EventDetailsComponent implements OnInit {
 
     // if event has reached its people capacity
     private isFull = false;
-    
+
     //only if user has fulfilled name surname sex and birth date can join
     private canJoin = false;
-    
+
+    //is user an event owner?
+    private isOwner = false;
+
     ngOnInit() {
+        //gets event
+        //gets user id by username and then checks if user can join event
         this.getDetailedEvent();
+        //checks user if he has already joined this event
         this.checkUser();
-        this.getUserIdByUsername();
     }
 
     /**
@@ -46,19 +52,20 @@ export class EventDetailsComponent implements OnInit {
      * method to get id
      * then cast in to number adding "+"
      */
-    getDetailedEvent():any {
+    getDetailedEvent(): any {
         this.eventService.getDetailedEvent(+this.router.snapshot.params['id'])
             .subscribe(data => {
                 this.event = data;
                 this.switchTypeToNames();
                 this.checkFreeSpace();
+                this.getUserIdByUsername();
             });
     }
 
     /**
      * tries to assign user to this event
      */
-    assignUserToEvent():any {
+    assignUserToEvent(): any {
         var $btn = $('#myButton').button('loading');
         this.eventService.assignUserToEvent(+this.router.snapshot.params['id'])
             .subscribe((data) => {
@@ -123,8 +130,17 @@ export class EventDetailsComponent implements OnInit {
     checkIfUserCanJoinEvent(userId: number){
         this.eventService.checkIfUserCanJoinAnEvent(userId)
             .subscribe( data => {
-                this.canJoin = data
-                console.log('can join?: '+data);
+                this.canJoin = data;
+                this.isOwner = this.isUserAnOwner(this.event.ownerId,this.userId);
+                console.log('can join?: ' + data);
+                console.log('is owner?: ' + this.isOwner);
             });
+    }
+
+    /**
+     * finds if user is owner of this event
+     */
+    isUserAnOwner(eventOwnerId,userId): boolean{
+        return eventOwnerId == userId;
     }
 }

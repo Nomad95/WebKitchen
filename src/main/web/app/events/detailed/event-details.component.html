@@ -29,16 +29,19 @@
                         <li *ngIf="event.type == 2">Produkty do zakupu: {{event.shopping_list}}</li>
 
                     </ul>
-                    <div *ngIf="isFull" class="alert alert-danger " role="alert">
-                        Brak miejsc.
-                    </div>
                     <div *ngIf="hasJoined" class="alert alert-info " role="alert">
                         Uczestniczysz w tym wydarzeniu.
                     </div>
-                    <div *ngIf="!canJoin" class="alert alert-danger " role="alert">
-                        Aby uczestniczyć w wydarzeniach, uzupełnij w profilu: imię, nazwisko, datę urodzenia oraz płeć
+                    <div *ngIf="isOwner" class="alert alert-info " role="alert">
+                        Jesteś twórcą tego wydarzenia.
                     </div>
-                    <button *ngIf="!hasJoined && !isFull && canJoin" class="btn btn-primary" (click)="assignUserToEvent()"
+                    <div *ngIf="!canJoin" class="alert alert-danger " role="alert">
+                        Aby uczestniczyć w wydarzeniach, uzupełnij w profilu: imię, nazwisko, datę urodzenia oraz płeć.
+                    </div>
+                    <div *ngIf="isFull" class="alert alert-danger " role="alert">
+                        Brak miejsc.
+                    </div>
+                    <button *ngIf="!hasJoined && !isFull && canJoin && !isOwner" class="btn btn-primary" (click)="assignUserToEvent()"
                             type="button" id="join" data-loading-text="Sprawdzanie..."
                             autocomplete="off">Dołącz!
                     </button><!--TODO: bootstrap.css ładnie-->
