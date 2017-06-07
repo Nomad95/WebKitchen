@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.NoResultException;
 
 import javassist.NotFoundException;
+import org.JKDW.user.model.DTO.UserDetailsAddressDTO;
 import org.JKDW.user.model.DTO.UsersParticipationEventDTO;
 import org.JKDW.user.model.Event;
 import org.JKDW.user.model.UserAccount;
@@ -33,4 +34,5 @@ public interface UserDetailsService {
 
 	List<UsersParticipationEventDTO> getAllUserEventsWhichHeParticipates(Long userId) throws NotFoundException;
 
+	UserDetailsAddressDTO getUserAddressByUserAccountId(Long userId) throws NotFoundException;
 }

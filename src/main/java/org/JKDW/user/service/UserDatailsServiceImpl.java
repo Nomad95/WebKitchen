@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.NoResultException;
 
 import javassist.NotFoundException;
+import org.JKDW.user.model.DTO.UserDetailsAddressDTO;
 import org.JKDW.user.model.DTO.UsersParticipationEventDTO;
 import org.JKDW.user.model.Event;
 import org.JKDW.user.model.UserAccount;
@@ -162,6 +163,8 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 		return eventsDTO;
 	}
 
+
+
 	/**
 	 * Set UserDetailsDTO witch UserAccountDTO by UserAccount id
 	 * @param userDetailsDTO - details which we want to update
@@ -206,7 +209,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	}
 
 	/**
-     * Get UserDetailsDTO witch (wiedźma! xD) UserAccountDTO by UserAccount id
+     * Get UserDetailsDTO with UserAccountDTO by UserAccount id
      * @param id - id UserAccount
      * @throws NoResultException when details couldn't be found
      */
@@ -257,6 +260,28 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	public UserDetails getUserDetailsbyId(Long id) throws NoResultException {
 		UserDetails foundUserDetails = userDetailsRepository.findOne(id);
 		return foundUserDetails;
+	}
+
+	/**
+	 *
+	 * @param userId - id of user account
+	 * @return returns user address
+	 * @throws NoResultException when an Account couldn't be found
+	 */
+	@Override
+	public UserDetailsAddressDTO getUserAddressByUserAccountId(Long userId) throws NotFoundException {
+		UserAccount foundUserAccount = userAccountRepository.findOne(userId);
+		UserDetails foundUserDetails = userDetailsRepository.findByUserAccount(foundUserAccount);
+		UserDetailsAddressDTO foundUserAddress = new UserDetailsAddressDTO(
+				foundUserDetails.getId(),
+				foundUserDetails.getStreet(),
+				foundUserDetails.getStreetNumber(),
+				foundUserDetails.getFlatNumber(),
+				foundUserDetails.getCity());
+		if(foundUserAddress == null){
+			throw new NoResultException("Cannot find account. Account doesn't exist");
+		}
+		return foundUserAddress;
 	}
 
 }
