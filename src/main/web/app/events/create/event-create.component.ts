@@ -2,17 +2,19 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {EventService} from '../event.service';
 import {LoginService} from '../../login/login.service';
+import {UtilMethods} from '../../util/util-methods.service';
 
 /* eventy pod profilem */
 @Component({
     selector: 'event-create',
     templateUrl: 'app/events/create/event-create.component.html',
-    providers: [EventService, LoginService]
+    providers: [EventService, LoginService, UtilMethods]
 })
 export class EventCreateComponent implements OnInit {
     constructor(private router: Router,
                 private eventService: EventService,
-                private loginService: LoginService) {
+                private loginService: LoginService,
+                private utilMethods: UtilMethods) {
     }
 
     ngOnInit() {
@@ -143,7 +145,6 @@ export class EventCreateComponent implements OnInit {
         var $btn1 = $('#saveEventButton').button('loading');
         var $btn2 = $('#saveEventButtonType2').button('loading');
 
-        console.log(data);
         console.log('stringified: ' + JSON.stringify(data));
 
         //perform file upload TODO: a co jak zdjecie bedzie dobre a event zly? albo odwrotnie??
@@ -210,6 +211,12 @@ export class EventCreateComponent implements OnInit {
      * @param formData
      */
     uploadPhoto(formData) {
+        //prevents errors when user dont provide a photo
+        if(formData == null || formData == undefined){
+            console.log('No photo data provided');
+            return;
+        }
+
         this.eventService.uploadPhoto(formData)
             .subscribe(data => {
                     console.log("photo Added")
@@ -259,5 +266,14 @@ export class EventCreateComponent implements OnInit {
                 this.newEventType2.ownerId = data;
                 console.log("fetched user id: "+data);
             })
+    }
+
+    /**
+     * converts string value to uppercase
+     * @param value string
+     * @returns  string with first letter uppercase
+     */
+    toUppercase(value: string){
+        return this.utilMethods.stringToUpperCase(value);
     }
 }

@@ -25,6 +25,7 @@
                                            type="text"
                                            required
                                            class="form-control"
+                                           (keypress)="newEventType1.title = toUppercase(newEventType1.title)"
                                            [(ngModel)]="newEventType1.title"
                                            name="newEventType1.title">
                                     <div *ngIf="titlet1.invalid && titlet1.touched" class="alert alert-danger"
@@ -85,6 +86,7 @@
                                            minlength="1"
                                            maxlength="100"
                                            class="form-control"
+                                           (keypress)="newEventType1.dish_name = toUppercase(newEventType1.dish_name)"
                                            [(ngModel)]="newEventType1.dish_name"
                                            name="newEventType1.dish_name">
                                     <div *ngIf="dishnamet1.invalid && dishnamet1.touched" class="alert alert-danger"
@@ -137,6 +139,7 @@
                                            minlength="1"
                                            maxlength="255"
                                            class="form-control"
+                                           (keypress)="newEventType1.additional_info = toUppercase(newEventType1.additional_info)"
                                            [(ngModel)]="newEventType1.additional_info"
                                            name="newEventType1.additional_info">
                                     <div *ngIf="additionalt1.invalid && additionalt1.touched" class="alert alert-danger"
@@ -152,6 +155,7 @@
                                            required
                                            minlength="1"
                                            class="form-control"
+                                           (keypress)="newEventType1.description = toUppercase(newEventType1.description)"
                                            [(ngModel)]="newEventType1.description"
                                            name="newEventType1.description">
                                     <div *ngIf="desct1.invalid && desct1.touched" class="alert alert-danger"
@@ -241,6 +245,7 @@
                                            minlength="1"
                                            maxlength="255"
                                            class="form-control"
+                                           (keypress)="newEventType2.title = toUppercase(newEventType2.title)"
                                            [(ngModel)]="newEventType2.title"
                                            name="newEventType2.title">
                                     <div *ngIf="titlet2.invalid && titlet2.touched" class="alert alert-danger"
@@ -299,6 +304,7 @@
                                            minlength="1"
                                            maxlength="100"
                                            class="form-control"
+                                           (keypress)="newEventType2.dish_name = toUppercase(newEventType2.dish_name)"
                                            [(ngModel)]="newEventType2.dish_name"
                                            name="newEventType2.dish_name">
                                     <div *ngIf="dishnamet2.invalid && dishnamet2.touched" class="alert alert-danger"
@@ -367,6 +373,7 @@
                                            minlength="1"
                                            maxlength="255"
                                            class="form-control"
+                                           (keypress)="newEventType2.additional_info = toUppercase(newEventType2.additional_info)"
                                            [(ngModel)]="newEventType2.additional_info"
                                            name="newEventType2.additional_info">
                                     <div *ngIf="additionalt2.invalid && additionalt2.touched" class="alert alert-danger"
@@ -380,6 +387,7 @@
                                            type="text"
                                            required
                                            class="form-control"
+                                           (keypress)="newEventType2.description = toUppercase(newEventType2.description)"
                                            [(ngModel)]="newEventType2.description"
                                            name="newEventType2.description">
                                     <div *ngIf="desct2.invalid && desct2.touched" class="alert alert-danger"
