@@ -35,6 +35,37 @@ export class EventCreateComponent implements OnInit {
     private stringShoppingList = 'Lista potrzebnych zakupów';
     private stringProductsList = 'Lista posiadanych zakupów';
 
+    //users account id
+    private userId = -1;
+
+    /**
+     * used for select html tag
+     */
+    private dishTypes = ['Śniadanie', 'Obiad', 'Kolacja', 'Deser'];
+
+    /**
+     * This two arrays are needed for nice representation
+     * of items in html with ngFor inside the modal
+     * bootstrap component (this popping window)
+     */
+    private tempShoppingListList: string[] = [];
+    private tempProductsListList: string[] = [];
+
+    /**
+     * This boolean prevents double event creation after exitting bootstrap 'modal'
+     */
+    private isEventCreated: boolean = false;
+
+    /**
+     * Selected file from form
+     */
+    private selectedFile: File;
+
+    /**
+     * This boolean indicates that photo extension is proper
+     */
+    private isProperPhoto = true;
+
     /**
      * model for type 1
      */
@@ -73,44 +104,8 @@ export class EventCreateComponent implements OnInit {
         quantity_of_products: '',
         ownerId: -1
     };
-
-    //users account id
-    private userId = -1;
-
-    /**
-     * used for select html tag
-     */
-    private dishTypes = ['Śniadanie', 'Obiad', 'Kolacja', 'Deser'];
-
-    /**
-     * This two arrays are needed for nice representation
-     * of items in html with ngFor inside the modal
-     * bootstrap component (this popping window)
-     */
-    private tempShoppingListList: string[] = [];
-    private tempProductsListList: string[] = [];
-
-    /**
-     * This boolean prevents double event creation after exitting bootstrap 'modal'
-     */
-    private isEventCreated: boolean = false;
-
-    /**
-     * Selected file from form
-     */
-    private selectedFile: File;
-
-    /**
-     * This boolean indicates that photo extension is proper
-     */
-    private isProperPhoto = true;
-
-    //logger
-    klik() {
-        console.log(this.typeOfEvent);
-        console.log(this.newEventType2);
-    }
-
+    
+    
     /**
      * Sets shopping list property on model type 2 from form input
      * @param data array of strings
@@ -147,9 +142,7 @@ export class EventCreateComponent implements OnInit {
         //button loading toggle
         var $btn1 = $('#saveEventButton').button('loading');
         var $btn2 = $('#saveEventButtonType2').button('loading');
-
-        console.log('stringified: ' + JSON.stringify(data));
-
+        
         //perform file upload TODO: a co jak zdjecie bedzie dobre a event zly? albo odwrotnie??
         this.uploadPhoto(this.selectedFile);
 
@@ -185,7 +178,6 @@ export class EventCreateComponent implements OnInit {
      * @param event event object from form
      */
     fileChangeType1(event) {
-
         //get file list from form input (by event)
         let fileList:FileList = event.target.files;
         if (fileList.length > 0) {
@@ -229,7 +221,6 @@ export class EventCreateComponent implements OnInit {
             console.log('No photo data provided');
             return;
         }
-
         this.eventService.uploadPhoto(formData)
             .subscribe(data => {
                     console.log("photo Added")
@@ -246,14 +237,10 @@ export class EventCreateComponent implements OnInit {
      */
     static checkFileExtension(file: File):boolean {
         console.log("checking extention");
-        if (
-            file.name.endsWith(".jpg") || file.name.endsWith(".JPG")
-            || file.name.endsWith(".jpeg") || file.name.endsWith(".JPEG")
-            || file.name.endsWith(".png") || file.name.endsWith(".PNG")
-            || file.name.endsWith(".bmp") || file.name.endsWith(".BMP")
-        )
-            return true;
-        else return false;
+        return !!(file.name.endsWith(".jpg") || file.name.endsWith(".JPG")
+        || file.name.endsWith(".jpeg") || file.name.endsWith(".JPEG")
+        || file.name.endsWith(".png") || file.name.endsWith(".PNG")
+        || file.name.endsWith(".bmp") || file.name.endsWith(".BMP"));
     }
 
     /**
@@ -270,7 +257,7 @@ export class EventCreateComponent implements OnInit {
     }
 
     /**
-     * finds user id by username then checks if user nac create event
+     * finds user id by username then checks if user can create event
      */
     findUserId(){
         this.loginService.getIdByUsername()

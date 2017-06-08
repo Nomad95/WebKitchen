@@ -34,7 +34,7 @@ public interface UserDetailsService {
 
 	boolean canParticipate(Long accountId) throws NoResultException;
 
-	List<UsersParticipationEventDTO> getAllUserEventsWhichHeParticipates(Long userId) throws NotFoundException;
+	List<UsersParticipationEventDTO> getAllUserEventsInWhichHeParticipates(Long userId) throws NotFoundException;
 
 	UserDetailsAddressDTO getUserAddressByUserAccountId(Long userId) throws NotFoundException;
 }

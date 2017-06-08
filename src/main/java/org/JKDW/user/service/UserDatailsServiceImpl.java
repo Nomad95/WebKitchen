@@ -1,6 +1,7 @@
 package org.JKDW.user.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -128,6 +129,9 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 		return !canCreate(foundUserDetails);
 	}
 
+	/**
+	 * For canCreateEvent method
+	 */
 	private boolean canCreate(UserDetails foundUserDetails) {
 		return foundUserDetails.getName() == null
 				|| foundUserDetails.getSurname() == null
@@ -139,6 +143,12 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 				|| foundUserDetails.getSex() == null;
 	}
 
+	/**
+	 * Checks if user had fulfilled needed fields in his profile to be allowed to participate in event
+	 * @param accountId user account id
+	 * @return true if can
+	 * @throws NoResultException if user wasnt found
+     */
 	@Override
 	public boolean canParticipate(Long accountId) throws NoResultException {
 		UserAccount foundUserAccount = userAccountRepository.findOne(accountId);
@@ -150,10 +160,17 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 			throw new NoResultException("Error in account->detail reference");
 
 		//if user hasnt fulfilled this fields he cannot take part in events
-		return !(foundUserDetails.getName() == null
+		return !canParticipate(foundUserDetails);
+	}
+
+	/**
+	 * For canParticipate method
+     */
+	private boolean canParticipate(UserDetails foundUserDetails) {
+		return foundUserDetails.getName() == null
 				|| foundUserDetails.getSurname() == null
 				|| foundUserDetails.getBirthDate() == null
-				|| foundUserDetails.getSex() == null);
+				|| foundUserDetails.getSex() == null;
 	}
 
 	/**
@@ -163,13 +180,16 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 * @throws NotFoundException when user couldn't be found
      */
 	@Override
-	public List<UsersParticipationEventDTO> getAllUserEventsWhichHeParticipates(Long userId) throws NotFoundException {
+	public List<UsersParticipationEventDTO> getAllUserEventsInWhichHeParticipates(Long userId) throws NotFoundException {
+		//find user
 		UserDetails foundUserDetails = getUserDetailsByUserAccountId(userId);
 		if(foundUserDetails == null)
 			throw new NotFoundException("User couldn't be found");
+
+		//get all events ad extract only necassary information
 		List<Event> events = foundUserDetails.getEvents();
-		if(events == null)
-			return new ArrayList<>();
+		if(events == null) //return empty array list if isnt instantiated
+			return Collections.emptyList();
 		List<UsersParticipationEventDTO> eventsDTO = new ArrayList<>();
 		events.forEach( e ->
 			eventsDTO.add(new UsersParticipationEventDTO(
@@ -184,8 +204,6 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 		);
 		return eventsDTO;
 	}
-
-
 
 	/**
 	 * Set UserDetailsDTO witch UserAccountDTO by UserAccount id
@@ -280,8 +298,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 */
 	@Override
 	public UserDetails getUserDetailsbyId(Long id) throws NoResultException {
-		UserDetails foundUserDetails = userDetailsRepository.findOne(id);
-		return foundUserDetails;
+		return userDetailsRepository.findOne(id);
 	}
 
 	/**
@@ -305,5 +322,4 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 		}
 		return foundUserAddress;
 	}
-
 }

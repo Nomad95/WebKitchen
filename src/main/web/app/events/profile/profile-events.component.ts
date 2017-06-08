@@ -51,7 +51,7 @@ export class ProfileEventsComponent implements OnInit {
     }
 
     /**
-     * gets all events which user participates in
+     * gets user id and then all events which user participates in
      */
     private getUserEventsWhichHeParticipatesIn(){
         this.loginService.getIdByUsername()

@@ -202,10 +202,10 @@ public class EventServiceImpl implements EventService {
      *
      * @param username
      * @param evntId
-     * @return true if is arleady binded/ false if not
+     * @return true if is arleady bound/false if not
      */
     @Override
-    public boolean checkIfBinded(String username, Long evntId) {
+    public boolean checkIfBound(String username, Long evntId) {
         //find positions
         UserAccount foundUserAccount = userAccountRepository.findByUsername(username);
         if (foundUserAccount == null)
@@ -219,7 +219,7 @@ public class EventServiceImpl implements EventService {
         List<UserDetails> accounts = foundEvent.getAccounts();
         Long id = foundUserDetails.getId();
         for (UserDetails account : accounts) {
-            if (id == account.getId())
+            if (id.equals(account.getId()))
                 return true;
         }
         return false;
@@ -308,6 +308,58 @@ public class EventServiceImpl implements EventService {
             throw new NoResultException("User with id: "+ userDetailsId +" couldn't be found");
 
         //remove id from acceptedIds (if was accepted) (use iterator when removing)
+        removeIdFromEventAcceptedIds(userAccountId, foundEvent);
+
+        //add free space to event
+        foundEvent.setPeople_remaining(foundEvent.getPeople_remaining()+1);
+
+        //remove user from participation
+        removeUserFromEvent(foundEvent, foundUserDetails);
+
+        //remove users event (use iterator when removing)
+        removeEventReferenceFromUserDetails(eventId, foundUserDetails);
+
+        //update
+        Event savedUserEvent = eventRepository.save(foundEvent);
+        userDetailsRepository.save(foundUserDetails);
+
+        //TODO: send message to user about refuse
+
+        return savedUserEvent;
+    }
+
+    /**
+     * Removes event ref from user details. Used in rejectUserParticipationRequest
+     */
+    private void removeEventReferenceFromUserDetails(Long eventId, UserDetails foundUserDetails) {
+        List<Event> events = foundUserDetails.getEvents();
+        Iterator<Event> iterator = events.iterator();
+        Long id = null;
+        Event next = null;
+        while (iterator.hasNext()) {
+            next = iterator.next();
+            id = next.getId();
+            if (id.equals(eventId))
+                break;
+        }
+        if(id != null && next != null)
+            events.remove(next);
+        foundUserDetails.setEvents(events);
+    }
+
+    /**
+     * Removes user from event. Used in rejectUserParticipationRequest
+     */
+    private void removeUserFromEvent(Event foundEvent, UserDetails foundUserDetails) {
+        List<UserDetails> joinedAccounts = foundEvent.getAccounts();
+        joinedAccounts.remove(foundUserDetails);
+        foundEvent.setAccounts(joinedAccounts);
+    }
+
+    /**
+     * Removes id from accepted ids. Used in rejectUserParticipationRequest
+     */
+    private void removeIdFromEventAcceptedIds(Long userAccountId, Event foundEvent) {
         Set<Long> acceptedIds = foundEvent.getAcceptedIds();
         Iterator<Long> it = acceptedIds.iterator();
         Long userId = -1L;
@@ -319,39 +371,6 @@ public class EventServiceImpl implements EventService {
         if(userId != -1L)
             acceptedIds.remove(userId);
         foundEvent.setAcceptedIds(acceptedIds);
-
-        //add free space to event
-        foundEvent.setPeople_remaining(foundEvent.getPeople_remaining()+1);
-
-        //remove user from participation
-        List<UserDetails> joinedAccounts = foundEvent.getAccounts();
-        joinedAccounts.remove(foundUserDetails);
-        foundEvent.setAccounts(joinedAccounts);
-
-        //remove users event (use iterator when removing)
-        List<Event> events = foundUserDetails.getEvents();
-        Iterator<Event> iterator = events.iterator();
-        Long id = null;
-        Event next = null;
-        while (iterator.hasNext()) {
-            next = iterator.next();
-            id = next.getId();
-            if (id.equals(eventId))
-                break;
-        }
-        System.out.println("try to remove event");
-        if(id != null && next != null)
-            events.remove(next);
-        System.out.println("removed event");
-        foundUserDetails.setEvents(events);
-
-        //update
-        Event savedUserEvent = eventRepository.save(foundEvent);
-        userDetailsRepository.save(foundUserDetails);
-
-        //TODO: send message to user about refuse
-
-        return savedUserEvent;
     }
 
 

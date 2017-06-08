@@ -4,9 +4,7 @@ import javassist.NotFoundException;
 import org.JKDW.user.model.DTO.EventForOwnerDTO;
 import org.JKDW.user.model.DTO.EventGeneralDTO;
 import org.JKDW.user.model.Event;
-import org.JKDW.user.model.UserDetails;
 import org.JKDW.user.service.EventService;
-import org.JKDW.user.service.UserAccountService;
 import org.JKDW.user.service.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -153,7 +151,7 @@ public class EventController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> checkIfUserIsBound(@PathVariable("username") String username,
                                                       @PathVariable("evntid") Long evntid) {
-        if (eventService.checkIfBinded(username, evntid))
+        if (eventService.checkIfBound(username, evntid))
             return new ResponseEntity<>(new Boolean("true"), HttpStatus.OK);
         return new ResponseEntity<>(new Boolean("false"), HttpStatus.OK);
     }

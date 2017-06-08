@@ -8,15 +8,12 @@ import { UserAccount } from './user-account';
 
 @Injectable()
 export class RegistrationService{
-
-
+	constructor(private http: Http) { }
+	
 	private headers = new Headers({
           'accept': 'application/json',
           'content-type' : 'application/json'});
-	private url;
-
-	constructor(private http: Http) { }
-
+	
 	/**
 	  * This methods returns an Observable class
 	  * The ajax http requests are asynchronous so
@@ -26,8 +23,7 @@ export class RegistrationService{
 	  * an interface and import it)
 	  */
 	getOneAccount(id): Observable<UserAccount>{
-		this.url = 'http://localhost:8080/api/user/account/'+id;
-		return this.http.get(this.url)
+		return this.http.get('http://localhost:8080/api/user/account/'+id)
 				   .map(res =>  res.json())
 				   .catch(this.handleError);
 	}
@@ -41,22 +37,19 @@ export class RegistrationService{
 	}
 
 	deleteUserAccount(id): Observable<void>{
-		this.url = 'http://localhost:8080/api/user/'+id;
-		return this.http.delete(this.url, {headers : this.headers})
+		return this.http.delete('http://localhost:8080/api/user/'+id, {headers : this.headers})
 				.map( () => null)
 				.catch(this.handleError);
 	}
 
 	createUserAccount(data): Observable<UserAccount>{
-		this.url = '/api/user/create';
-		return this.http.post(this.url,JSON.stringify(data),{headers :this.headers})
+		return this.http.post('/api/user/create',JSON.stringify(data),{headers :this.headers})
 				.map(res => res.json())
 				.catch(this.handleError);
 	}
 
 	updateUserAccount(data): Observable<UserAccount>{
-		this.url = 'http://localhost:8080/api/user/'+data.id;
-		return this.http.put(this.url,JSON.stringify(data),{headers :this.headers})
+		return this.http.put('http://localhost:8080/api/user/'+data.id,JSON.stringify(data),{headers :this.headers})
 				.map(res => res.json())
 				.catch(this.handleError);
 	}

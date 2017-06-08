@@ -64,6 +64,4 @@ export class EventListComponent implements OnInit {
                 console.log("can create? : " + this.canCreateEvent);
             })
     }
-    
-    
 }

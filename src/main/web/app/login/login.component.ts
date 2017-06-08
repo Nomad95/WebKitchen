@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
 import {SharedService} from "../shared.service"; //<==== this one
@@ -9,99 +9,101 @@ import {SharedService} from "../shared.service"; //<==== this one
     templateUrl: 'app/login/login.component.html',
      providers: [LoginService]
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent {
 
-    constructor(private loginService: LoginService, private router: Router, private sharedService: SharedService) {}
+    constructor(
+        private loginService: LoginService,
+        private router: Router,
+        private sharedService: SharedService) {}
 
-    nazwa;
+    nazwa;//?
 
     private myBan = {
         dateEndOfBan: '',
         timeEndOfBan: ''
     };
+
+    //username and password
     credentials = {
       username: '',
       password: ''
     };
+
     errorEncountered = false;
     private statusBan : String;
     private role :String;
 
-    // on-init
-    ngOnInit() {
-    }
 
     /**
      * we do post on /auth and get a token
      * token is preserved in browser local storage
      * then if login has been positive we check role of user and
-     * is not an account banned
+     * is not an banned account
      */
     logins(credentials):void {
-      this.loginService
-        .getToken(credentials)
-        .subscribe( result =>{
-          if(result===true){
-            this.credentials = {
-                username: '',
-                password: ''
+        this.loginService
+            .getToken(credentials)
+            .subscribe(result => {
+                if (result === true) {
+                    this.credentials = {
+                        username: '',
+                        password: ''
+                    };
+                    this.loginService.checkIsUserBanned().subscribe(result => {
+                        this.statusBan = result.status;
+                        if (this.statusBan == "true") {
+                            this.sharedService.setIsBanned(true);
+                            console.log("Sprawdzanie bana" + this.sharedService.getIsBanned());
+                            this.getInfoAboutMyBan();
+                            this.loginService.removeToken();
+                        }
+                        else if (this.statusBan == "false") {
+                            this.sharedService.setIsBanned(false);
+                            console.log("Sprawdzanie bana" + this.sharedService.getIsBanned());
+                        }
+                    });
+                    this.checkIsUserAnAdmin();
+                    this.errorEncountered = false;
 
-            };
-              this.loginService.checkIsUserBanned().subscribe(result => {
-                  this.statusBan = result.status;
-                  if(this.statusBan == "true"){
-                      this.sharedService.setIsBanned(true);
-                      console.log("Sprawdzanie bana" + this.sharedService.getIsBanned());
-                      this.getInfoAboutMyBan();
-                      this.loginService.removeToken();
-                  }
-                  else if(this.statusBan == "false"){
-                      this.sharedService.setIsBanned(false);
-                      console.log("Sprawdzanie bana" + this.sharedService.getIsBanned());
-                  }
+                    //forwards to main page
+                    this.router.navigate(['/login/success']);
+                } else {
+                    this.errorEncountered = true;
+                }
 
-              });
-              this.checkIsUserAnAdmin();
-              this.errorEncountered = false;
-
-            //forwards to main page
-              this.router.navigate(['/login/success']);
-          } else {
-              this.errorEncountered = true;
-          }
-
-          this.loginService.isLogged();
-        }, error => {
-            this.errorEncountered = true;
-        });
-
+                this.loginService.isLogged();
+            }, error => {
+                this.errorEncountered = true;
+            });
     }
-    checkIsUserAnAdmin():void{
-    this.loginService.checkIsUserAnAdmin().subscribe(result => {
-        this.role = result.role;
-        if(this.role == "user") {
-            this.sharedService.setIsAdmin(false);
-        }
-        else if(this.role == "admin") {
-            this.sharedService.setIsAdmin(true);
-        }
 
-    });
-   }
-    getInfoAboutMyBan():void{
+
+    checkIsUserAnAdmin():void {
+        this.loginService.checkIsUserAnAdmin().subscribe(result => {
+            this.role = result.role;
+            if (this.role == "user") {
+                this.sharedService.setIsAdmin(false);
+            }
+            else if (this.role == "admin") {
+                this.sharedService.setIsAdmin(true);
+            }
+
+        });
+    }
+
+    getInfoAboutMyBan():void {
         this.loginService.getInfoAboutMyBan().subscribe(
-            result =>{
+            result => {
                 this.myBan = result;
                 console.log("Data: " + this.myBan.dateEndOfBan + " godzina: " + this.myBan.timeEndOfBan);
-                this.router.navigate(['/login/banned/',{date: this.myBan.dateEndOfBan, time: this.myBan.timeEndOfBan}]);
-1            },
+                this.router.navigate(['/login/banned/', {
+                    date: this.myBan.dateEndOfBan,
+                    time: this.myBan.timeEndOfBan
+                }]);
+
+            },
             err => console.log('Wystąpił błąd podczas pobierania informacji o banie')
         );
-
     }
 
-    // on-destroy
-    ngOnDestroy() {
-
-    }
 }
