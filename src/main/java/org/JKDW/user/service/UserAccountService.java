@@ -4,7 +4,10 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.NoResultException;
+import javax.servlet.http.HttpServletRequest;
 
+import org.JKDW.security.AppConstant;
+import org.JKDW.security.TokenUtils;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 import org.JKDW.user.model.DTO.UserAccountDTO;
 import org.JKDW.user.model.UserAccount;
@@ -39,6 +42,14 @@ public interface UserAccountService {
 
 	Boolean checkIfUserHasRoleAdmin();
 
+	static String getMyUsernameFromToken(HttpServletRequest request, TokenUtils tokenUtils){
+		String myUsernameFromToken;
+		String token;
 
+		token = request.getHeader(AppConstant.tokenHeader);
+		myUsernameFromToken= tokenUtils.getUsernameFromToken(token);
+
+		return myUsernameFromToken;
+	}
 
 }

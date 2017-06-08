@@ -3,7 +3,7 @@ package org.JKDW.user.model;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 public class Message {
@@ -23,7 +23,7 @@ public class Message {
     private UserAccount recipient;
 
     @Column(name = "date_of_send")
-    private LocalDate dateOfSend;
+    private Date dateOfSend;
 
     @Lob
     @Column(name = "message_contents")
@@ -62,11 +62,11 @@ public class Message {
         this.recipient = recipient;
     }
 
-    public LocalDate getDateOfSend() {
+    public Date getDateOfSend() {
         return dateOfSend;
     }
 
-    public void setDateOfSend(LocalDate dateOfSend) {
+    public void setDateOfSend(Date dateOfSend) {
         this.dateOfSend = dateOfSend;
     }
 
