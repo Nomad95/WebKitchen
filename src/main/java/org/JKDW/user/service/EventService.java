@@ -39,4 +39,6 @@ public interface EventService {
     boolean acceptId(Long eventId,Long userAccountId) throws NotFoundException;
 
     long[] getAcceptedIdsList(Long eventId) throws NotFoundException;
+
+    Event rejectUserParticipationRequest(Long eventId, Long userId,Long userDetailsId) throws NotFoundException;
 }

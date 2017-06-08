@@ -37,6 +37,7 @@
                     <th class="text-center">Zweryfikowany</th>
                     <th class="text-center">Zobacz profil</th>
                     <th class="text-center">Akceptuj</th>
+                    <th class="text-center">Odrzuć</th>
                 </thead>
                 <tbody>
                     <tr *ngFor="let user of event.participantsDetails" class="text-center">
@@ -60,6 +61,9 @@
                             <i class="fa fa-check"
                                aria-hidden="true"
                                *ngIf="checkIfUserIsOnAAcceptedList(user.id)"></i></td>
+                        <td >
+                            <i (click)="rejectTheRequest(user)" class="fa fa-times" aria-hidden="true"></i>
+                        </td>
                     </tr>
                 </tbody>
             </table>

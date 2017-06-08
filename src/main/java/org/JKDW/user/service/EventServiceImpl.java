@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.naming.SizeLimitExceededException;
 import javax.persistence.NoResultException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -290,6 +287,71 @@ public class EventServiceImpl implements EventService {
         if(acceptedIds == null)
             return new long[1];
         return acceptedIds.stream().mapToLong(l -> l).toArray();
+    }
+
+
+    /**
+     * Removes id from event's accepted id, user from event and event from user
+     * @param eventId event id
+     * @param userAccountId user acc id
+     * @param userDetailsId user details id
+     * @return updated event
+     */
+    @Override
+    public Event rejectUserParticipationRequest(Long eventId, Long userAccountId, Long userDetailsId)
+            throws NotFoundException {
+        Event foundEvent = eventRepository.findOne(eventId);
+        if(foundEvent == null)
+            throw new NoResultException("Event with id: "+ eventId +" couldn't be found");
+        UserDetails foundUserDetails = userDetailsRepository.findOne(userDetailsId);
+        if(foundUserDetails == null)
+            throw new NoResultException("User with id: "+ userDetailsId +" couldn't be found");
+
+        //remove id from acceptedIds (if was accepted) (use iterator when removing)
+        Set<Long> acceptedIds = foundEvent.getAcceptedIds();
+        Iterator<Long> it = acceptedIds.iterator();
+        Long userId = -1L;
+        while (it.hasNext()){
+            userId = it.next();
+            if(userId.equals(userAccountId))
+                break;
+        }
+        if(userId != -1L)
+            acceptedIds.remove(userId);
+        foundEvent.setAcceptedIds(acceptedIds);
+
+        //add free space to event
+        foundEvent.setPeople_remaining(foundEvent.getPeople_remaining()+1);
+
+        //remove user from participation
+        List<UserDetails> joinedAccounts = foundEvent.getAccounts();
+        joinedAccounts.remove(foundUserDetails);
+        foundEvent.setAccounts(joinedAccounts);
+
+        //remove users event (use iterator when removing)
+        List<Event> events = foundUserDetails.getEvents();
+        Iterator<Event> iterator = events.iterator();
+        Long id = null;
+        Event next = null;
+        while (iterator.hasNext()) {
+            next = iterator.next();
+            id = next.getId();
+            if (id.equals(eventId))
+                break;
+        }
+        System.out.println("try to remove event");
+        if(id != null && next != null)
+            events.remove(next);
+        System.out.println("removed event");
+        foundUserDetails.setEvents(events);
+
+        //update
+        Event savedUserEvent = eventRepository.save(foundEvent);
+        userDetailsRepository.save(foundUserDetails);
+
+        //TODO: send message to user about refuse
+
+        return savedUserEvent;
     }
 
 

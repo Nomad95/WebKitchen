@@ -195,7 +195,7 @@ export class EventService {
      * @param userId user account id
      * @returns True if id was added
      */
-    addUserIdToAcceptedList(eventId: number, userId: number){//TODO: zmien na POST
+    addUserIdToAcceptedList(eventId: number, userId: number){
         var currentToKey = JSON.parse(localStorage.getItem('toKey'));
         let token = currentToKey && currentToKey.token;
 
@@ -204,7 +204,7 @@ export class EventService {
             'X-Auth-token': token
         });
 
-        return this.http.get('/api/event/userevents/'+eventId+'/accept/'+userId,{headers: headers})
+        return this.http.post('/api/event/userevents/'+eventId+'/accept/'+userId,null,{headers: headers})
             .map( res => res.json())
             .catch(this.handleError);
     }
@@ -224,6 +224,27 @@ export class EventService {
         });
 
         return this.http.get('/api/user/details/events/'+userId,{headers: headers})
+            .map( res => res.json())
+            .catch(this.handleError);
+    }
+
+    /**
+     * Removes user from event
+     * @param eventId user id
+     * @param userId user id
+     * @returns Updated event
+     */
+    rejectUserParticipation(eventId: number, userId: number){
+        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        let token = currentToKey && currentToKey.token;
+
+        var headers = new Headers({
+            'accept': 'application/json',
+            'content-type': 'application/json',
+            'X-Auth-token': token
+        });
+
+        return this.http.put('/api/event/userevents/refuse/'+eventId+'/'+userId,null,{headers: headers})
             .map( res => res.json())
             .catch(this.handleError);
     }
