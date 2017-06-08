@@ -1,12 +1,29 @@
 <div class="form-group ">
     <label>{{label}}</label>
     <div class="row">
-        <div class="col-md-10 col-sm-10 col-xs-10">
+        <div class="col-md-7 col-sm-12 col-xs-12">
             <input type="text" class="form-control" id="inputKey"
                    [(ngModel)]="currentItem"
+                   (keyup.enter)="addItem()"
                    name="currentItem">
         </div>
-        <div class="col-md-2 col-sm-1 col-xs-1">
+        <div class="col-md-2 col-sm-4 col-xs-4">
+            <input type="number" class="form-control"
+                   [(ngModel)]="quantity"
+                   placeholder="Ilość"
+                   name="currentItem">
+        </div>
+        <div class="col-md-2 col-sm-4 col-xs-4">
+            <select class="form-control"
+                    [(ngModel)]="measure" >
+                <option value="ml">ml</option>
+                <option value="l">l</option>
+                <option value="g">g</option>
+                <option value="kg">kg</option>
+                <option value="szt">szt.</option>
+            </select>
+        </div>
+        <div class="col-md-1 col-sm-4 col-xs-4">
             <button type="button" class="btn btn-default" (click)="addItem()">Dodaj</button>
         </div>
     </div>

@@ -1,4 +1,5 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {UtilMethods} from "../util-methods.service";
 
 
 /**
@@ -11,10 +12,12 @@ import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
     styles: [`.label{
                 display: inline-block;
                 margin: 1px;
-              }`]
+                font-size: 100%;
+              }`],
+    providers: [UtilMethods]
 })
 export class SimpleListComponent implements OnInit {
-    constructor() {
+    constructor(private utilMethods: UtilMethods) {
     }
 
     /**
@@ -40,6 +43,16 @@ export class SimpleListComponent implements OnInit {
      */
     private containsComma = false;
 
+    /**
+     * measure type (l, ml, g, kg...)
+     */
+    private measure = '';
+
+    /**
+     * quantity of product
+     */
+    private quantity = '';
+
     ngOnInit() {
     }
 
@@ -49,11 +62,14 @@ export class SimpleListComponent implements OnInit {
     addItem() {
         //if not specified do not show and also trim whitespaces
         this.currentItem = this.currentItem.replace(/\s\s+/g, ' ');
+        this.currentItem = this.utilMethods.stringToUpperCase(this.currentItem);
         //check if item contains comma
         if (this.currentItem.indexOf(',') > -1){
             this.containsComma = true;
             return;
         }
+        //combine a string
+        this.currentItem = this.currentItem + ' ' + this.quantity + ' ' + this.measure;
         //if item isnt empty, add it
         if (this.currentItem !== '') {
             this.listItems.push(this.currentItem);
