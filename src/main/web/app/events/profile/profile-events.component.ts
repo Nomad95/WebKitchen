@@ -19,10 +19,21 @@ export class ProfileEventsComponent implements OnInit {
     private userEvents: any[] = [];
     //user events in which he participates
     private userParticipatedEvents: any[] = [];
+    //can user create event? -> is profile filled?
+    private canCreateEvent: boolean = false;
 
     ngOnInit() {
         this.getUserEvents();
         this.getUserEventsWhichHeParticipatesIn();
+    }
+
+    /**
+     * checks if user can create event
+     * @param userId
+     */
+    private canUserCreateEvent(userId: number){
+        this.eventService.checkIfUserCanCreateEvent(userId)
+            .subscribe( data => this.canCreateEvent = data);
     }
 
     /**
@@ -48,8 +59,11 @@ export class ProfileEventsComponent implements OnInit {
                 this.userId = data;
                 this.eventService.getUserEventsWhichHeParticipates(this.userId).subscribe( events => {
                     this.userParticipatedEvents = events;
+                    this.canUserCreateEvent(this.userId);
                     console.log("events: "+ this.userParticipatedEvents);
                 });
             });
     }
+    
+    
 }

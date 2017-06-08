@@ -21,6 +21,9 @@ export class EventListComponent implements OnInit {
 
     //check if user can create event or he hasn't filled required profile fields
     private canCreateEvent = false;
+    
+    //disables some view before loading up events
+    private viewLoaded = false;
 
     ngOnInit() {
         this.getEvents();
@@ -57,6 +60,7 @@ export class EventListComponent implements OnInit {
         this.eventService.checkIfUserCanCreateEvent(userId)
             .subscribe((data) => {
                 this.canCreateEvent = data;
+                this.viewLoaded = true;
                 console.log("can create? : " + this.canCreateEvent);
             })
     }

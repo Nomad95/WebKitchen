@@ -178,7 +178,8 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 					e.getDish_name(),
 					e.getType(),
 					e.getTime(),
-					e.getDate()
+					e.getDate(),
+					e.getAcceptedIds().contains(userId)
 					))
 		);
 		return eventsDTO;

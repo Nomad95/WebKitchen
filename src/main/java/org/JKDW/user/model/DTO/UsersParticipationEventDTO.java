@@ -17,13 +17,24 @@ public class UsersParticipationEventDTO {
 
     private Date date;
 
-    public UsersParticipationEventDTO(Long id, String title, String dish_name, byte type, Time time, Date date) {
+    private boolean isAccepted;
+
+    public UsersParticipationEventDTO(Long id, String title, String dish_name, byte type, Time time, Date date, boolean isAccepted) {
         this.id = id;
         this.title = title;
         this.dish_name = dish_name;
         this.type = type;
         this.time = time;
         this.date = date;
+        this.isAccepted = isAccepted;
+    }
+
+    public boolean isAccepted() {
+        return isAccepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        isAccepted = accepted;
     }
 
     public Long getId() {

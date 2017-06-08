@@ -1,30 +1,37 @@
 <div class="well">
     <div class="row">
         <div class="col-md-12">
-            <table class="table" *ngIf="events.length > 0">
-                <thead >
-                <th class="text-center">Tytuł</th>
-                <th class="text-center">Nazwa posiłku</th>
-                <th class="text-center">Rodzaj wydarzenia</th>
-                <th class="text-center">Data</th>
-                <th class="text-center">Godzina</th>
-                <th class="text-center">Zobacz Szczegóły</th>
-                </thead>
-                <tbody>
-                <tr *ngFor="let event of events" class="text-center">
-                    <td>{{event.title}}</td>
-                    <td>{{event.dish_name}}</td>
-                    <td>{{convertToEventKind(event.type)}}</td>
-                    <td>{{event.date | date}}</td>
-                    <td>{{event.time}}</td>
-                    <td>
-                        <button class="btn btn-default"
-                        (click)="goToEventDetails(event.id)">
-                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                        </button>
-                    </td>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table" *ngIf="events.length > 0">
+                    <thead >
+                    <th class="text-center">Tytuł</th>
+                    <th class="text-center">Nazwa posiłku</th>
+                    <th class="text-center">Rodzaj wydarzenia</th>
+                    <th class="text-center">Data</th>
+                    <th class="text-center">Godzina</th>
+                    <th class="text-center">Zaakceptowany</th>
+                    <th class="text-center">Zobacz Szczegóły</th>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let event of events" class="text-center" [class.success]="event.accepted">
+                        <td>{{event.title}}</td>
+                        <td>{{event.dish_name}}</td>
+                        <td>{{convertToEventKind(event.type)}}</td>
+                        <td>{{event.date | date}}</td>
+                        <td>{{event.time}}</td>
+                        <td>
+                            <i class="fa fa-check" aria-hidden="true" *ngIf="event.accepted"></i>
+                            <i class="fa fa-times" aria-hidden="true" *ngIf="!event.accepted"></i>
+                        </td>
+                        <td>
+                            <button class="btn btn-default"
+                            (click)="goToEventDetails(event.id)">
+                                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                    </tbody>
+                </table>
+            </div>
             <h3 *ngIf="!events.length > 0">Nie uczestniczysz w żadnym wydarzeniu</h3>
         </div>
     </div>
