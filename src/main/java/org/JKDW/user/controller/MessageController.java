@@ -1,13 +1,9 @@
 package org.JKDW.user.controller;
 
-
-import org.JKDW.security.AppConstant;
 import org.JKDW.security.TokenUtils;
 import org.JKDW.user.model.Message;
-import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.service.MessageService;
 import org.JKDW.user.service.UserAccountService;
-import org.JKDW.user.service.UserAccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -65,6 +61,50 @@ public class MessageController {
         else
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
+
+    @RequestMapping(value = "/myMessages/sent", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Message>> getAllOfMySentMessage(HttpServletRequest request) {
+        List<Message> mySentMessages = messageService.getAllOfMySentMessage(UserAccountService.getMyUsernameFromToken(request, this.tokenUtils));
+        return new ResponseEntity<>(mySentMessages, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/myMessages/sent/{idMessage}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Message> getSentMessageById(@PathVariable("idMessage") Long idMessage, HttpServletRequest request) {
+        Message message = messageService.getSentMessageById(idMessage);
+        if(UserAccountService.getMyUsernameFromToken(request,this.tokenUtils).equals(message.getSender().getUsername()))
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @RequestMapping(value = "myMessages/received/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteMessageFromReceived(@PathVariable("id") Long id,
+                                                    HttpServletRequest request){
+
+        String usernameFromToken = UserAccountService.getMyUsernameFromToken(request,this.tokenUtils);
+        try{
+            messageService.deleteMessageFromReceived(id,usernameFromToken);
+            return new ResponseEntity(HttpStatus.OK);
+        }catch (NoResultException e){
+            return new ResponseEntity(HttpStatus.CONFLICT);
+        }
+
+    }
+
+    @RequestMapping(value = "myMessages/sent/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteMessageFromSent(@PathVariable("id") Long id ,
+                                                HttpServletRequest request) {
+        String usernameFromToken = UserAccountService.getMyUsernameFromToken(request,this.tokenUtils);
+        try {
+            messageService.deleteMessageFromSent(id,usernameFromToken);
+            return new ResponseEntity(HttpStatus.OK);
+        }catch (NoResultException e){
+            return new ResponseEntity(HttpStatus.CONFLICT);
+        }
+
+    }
+
+
 
 
 }

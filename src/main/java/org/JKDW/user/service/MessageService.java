@@ -14,4 +14,12 @@ public interface MessageService {
 
     Message getReceivedMessageById(Long id) throws NoResultException;
 
+    List<Message> getAllOfMySentMessage(String sender_username) throws NoResultException;
+
+    Message getSentMessageById(Long id) throws NoResultException;
+
+    void deleteMessageFromReceived(Long id, String usernameFromToken) throws NoResultException ;
+
+    void deleteMessageFromSent(Long id, String usernameFromToken) throws NoResultException;
+
 }
