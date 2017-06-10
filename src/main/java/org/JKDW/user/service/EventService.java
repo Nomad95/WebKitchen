@@ -32,11 +32,16 @@ public interface EventService {
 
     void bindEventWithUser(String username, Long evntId) throws SizeLimitExceededException;
 
-    boolean checkIfBinded(String username, Long evntId);
+    boolean checkIfBound(String username, Long evntId);
 
     List<EventForOwnerDTO> getEventsCreatedByUserId(Long id);
 
     boolean acceptId(Long eventId,Long userAccountId) throws NotFoundException;
 
     long[] getAcceptedIdsList(Long eventId) throws NotFoundException;
+
+    Event rejectUserParticipationRequest(Long eventId, Long userId,Long userDetailsId) throws NotFoundException;
+
+    String getEventOwnerUsername(Long eventId) throws NotFoundException;
+
 }

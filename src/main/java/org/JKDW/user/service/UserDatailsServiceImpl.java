@@ -1,6 +1,7 @@
 package org.JKDW.user.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -110,29 +111,66 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 *
 	 * This method checks whether user had fulfilled fields in his profile
 	 * required to create new event
-	 * @param accountUsername provided from users token
+	 * @param userId user account id
 	 * @return true if user has filled required fields else false
 	 * @throws NoResultException when acc or details couldn't be found
      */
 	@Override
-	public boolean canCreateEvent(String accountUsername) throws NoResultException {
-		UserAccount foundUserAccount = userAccountRepository.findByUsername(accountUsername);
+	public boolean canCreateEvent(Long userId) throws NoResultException {
+		UserAccount foundUserAccount = userAccountRepository.findOne(userId);
 		if(foundUserAccount == null)
-			throw new NoResultException("User with username: " + accountUsername + " couldn't be found");
+			throw new NoResultException("User with username: " + userId + " couldn't be found");
 
 		UserDetails foundUserDetails = userDetailsRepository.findByUserAccount(foundUserAccount);
 		if(foundUserDetails == null)
 			throw new NoResultException("Error in account->detail reference");
 
 		//if user has not filled fields we cannot allow him to create event
-		return !(foundUserDetails.getName() == null
+		return !canCreate(foundUserDetails);
+	}
+
+	/**
+	 * For canCreateEvent method
+	 */
+	private boolean canCreate(UserDetails foundUserDetails) {
+		return foundUserDetails.getName() == null
 				|| foundUserDetails.getSurname() == null
 				|| foundUserDetails.getCity() == null
 				|| foundUserDetails.getStreet() == null
 				|| foundUserDetails.getStreetNumber() == null
 				|| foundUserDetails.getBirthDate() == null
 				|| foundUserDetails.getPhoneNumber() == null
-				|| foundUserDetails.getSex() == null);
+				|| foundUserDetails.getSex() == null;
+	}
+
+	/**
+	 * Checks if user had fulfilled needed fields in his profile to be allowed to participate in event
+	 * @param accountId user account id
+	 * @return true if can
+	 * @throws NoResultException if user wasnt found
+     */
+	@Override
+	public boolean canParticipate(Long accountId) throws NoResultException {
+		UserAccount foundUserAccount = userAccountRepository.findOne(accountId);
+		if(foundUserAccount == null)
+			throw new NoResultException("User with username: " + accountId + " couldn't be found");
+
+		UserDetails foundUserDetails = userDetailsRepository.findByUserAccount(foundUserAccount);
+		if(foundUserDetails == null)
+			throw new NoResultException("Error in account->detail reference");
+
+		//if user hasnt fulfilled this fields he cannot take part in events
+		return !canParticipate(foundUserDetails);
+	}
+
+	/**
+	 * For canParticipate method
+     */
+	private boolean canParticipate(UserDetails foundUserDetails) {
+		return foundUserDetails.getName() == null
+				|| foundUserDetails.getSurname() == null
+				|| foundUserDetails.getBirthDate() == null
+				|| foundUserDetails.getSex() == null;
 	}
 
 	/**
@@ -142,13 +180,16 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 * @throws NotFoundException when user couldn't be found
      */
 	@Override
-	public List<UsersParticipationEventDTO> getAllUserEventsWhichHeParticipates(Long userId) throws NotFoundException {
+	public List<UsersParticipationEventDTO> getAllUserEventsInWhichHeParticipates(Long userId) throws NotFoundException {
+		//find user
 		UserDetails foundUserDetails = getUserDetailsByUserAccountId(userId);
 		if(foundUserDetails == null)
 			throw new NotFoundException("User couldn't be found");
+
+		//get all events ad extract only necassary information
 		List<Event> events = foundUserDetails.getEvents();
-		if(events == null)
-			return new ArrayList<>();
+		if(events == null) //return empty array list if isnt instantiated
+			return Collections.emptyList();
 		List<UsersParticipationEventDTO> eventsDTO = new ArrayList<>();
 		events.forEach( e ->
 			eventsDTO.add(new UsersParticipationEventDTO(
@@ -157,13 +198,12 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 					e.getDish_name(),
 					e.getType(),
 					e.getTime(),
-					e.getDate()
+					e.getDate(),
+					e.getAcceptedIds().contains(userId)
 					))
 		);
 		return eventsDTO;
 	}
-
-
 
 	/**
 	 * Set UserDetailsDTO witch UserAccountDTO by UserAccount id
@@ -258,8 +298,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 */
 	@Override
 	public UserDetails getUserDetailsbyId(Long id) throws NoResultException {
-		UserDetails foundUserDetails = userDetailsRepository.findOne(id);
-		return foundUserDetails;
+		return userDetailsRepository.findOne(id);
 	}
 
 	/**
@@ -283,5 +322,4 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 		}
 		return foundUserAddress;
 	}
-
 }

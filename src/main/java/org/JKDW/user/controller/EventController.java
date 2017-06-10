@@ -1,11 +1,12 @@
 package org.JKDW.user.controller;
 
+import com.google.gson.Gson;
 import javassist.NotFoundException;
 import org.JKDW.user.model.DTO.EventForOwnerDTO;
 import org.JKDW.user.model.DTO.EventGeneralDTO;
 import org.JKDW.user.model.Event;
 import org.JKDW.user.service.EventService;
-import org.JKDW.user.service.UserAccountService;
+import org.JKDW.user.service.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +24,9 @@ public class EventController {
 
     @Autowired
     private EventService eventService;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
 
     /**
@@ -148,7 +152,7 @@ public class EventController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> checkIfUserIsBound(@PathVariable("username") String username,
                                                       @PathVariable("evntid") Long evntid) {
-        if (eventService.checkIfBinded(username, evntid))
+        if (eventService.checkIfBound(username, evntid))
             return new ResponseEntity<>(new Boolean("true"), HttpStatus.OK);
         return new ResponseEntity<>(new Boolean("false"), HttpStatus.OK);
     }
@@ -173,8 +177,9 @@ public class EventController {
      * @return true if added
      */
     @RequestMapping(value = "/userevents/{eventId}/accept/{userId}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> addUserIdToEventAcceptedList(
             @PathVariable("eventId") Long eventId,
             @PathVariable("userId") Long userId){
@@ -216,4 +221,44 @@ public class EventController {
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
 
+    /**
+     * Tries to update an event removing user acc id from accepted id's, event in usersDetails and user acc in event
+     * @param eventId event Id
+     * @param userAccountId user acc id
+     * @return updated event
+     */
+    @RequestMapping(
+            value = "/userevents/refuse/{eventId}/{userAccountId}",
+            method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Event> rejectUsersWillToParticipateInEvent(
+            @PathVariable("eventId") Long eventId,
+            @PathVariable("userAccountId") Long userAccountId) {
+        Long userDetailsId = userDetailsService.getUserDetailsByUserAccountId(userAccountId).getId();
+        try {
+            Event updatedEvent = eventService.rejectUserParticipationRequest(eventId, userAccountId, userDetailsId);
+            return new ResponseEntity<>(updatedEvent,HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
+
+    /**
+     * Finds and return events owner username
+     */
+    @RequestMapping(
+            value = "/ownerusername/{eventId}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getEventOwnersUsernameI(@PathVariable("eventId") Long eventId){
+        try{
+            String eventOwnerUsername = eventService.getEventOwnerUsername(eventId);
+            final Gson gson = new Gson();
+            return new ResponseEntity<>(gson.toJson(eventOwnerUsername),HttpStatus.OK);
+        }
+        catch (NotFoundException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

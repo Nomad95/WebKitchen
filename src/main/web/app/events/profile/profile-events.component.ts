@@ -13,13 +13,27 @@ export class ProfileEventsComponent implements OnInit {
         private loginService: LoginService) {
     }
 
+    //user account id
     private userId = -1;
-    private userEvents: any[];
-    private userParticipatedEvents: any[];
+    //user created events
+    private userEvents: any[] = [];
+    //user events in which he participates
+    private userParticipatedEvents: any[] = [];
+    //can user create event? -> is profile filled?
+    private canCreateEvent: boolean = false;
 
     ngOnInit() {
         this.getUserEvents();
         this.getUserEventsWhichHeParticipatesIn();
+    }
+
+    /**
+     * checks if user can create event
+     * @param userId
+     */
+    private canUserCreateEvent(userId: number){
+        this.eventService.checkIfUserCanCreateEvent(userId)
+            .subscribe( data => this.canCreateEvent = data);
     }
 
     /**
@@ -37,7 +51,7 @@ export class ProfileEventsComponent implements OnInit {
     }
 
     /**
-     * gets all events which user participates in
+     * gets user id and then all events which user participates in
      */
     private getUserEventsWhichHeParticipatesIn(){
         this.loginService.getIdByUsername()
@@ -45,9 +59,11 @@ export class ProfileEventsComponent implements OnInit {
                 this.userId = data;
                 this.eventService.getUserEventsWhichHeParticipates(this.userId).subscribe( events => {
                     this.userParticipatedEvents = events;
+                    this.canUserCreateEvent(this.userId);
                     console.log("events: "+ this.userParticipatedEvents);
                 });
             });
     }
+    
     
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import javassist.NotFoundException;
 import org.JKDW.user.model.DTO.UserDetailsAddressDTO;
 import org.JKDW.user.model.DTO.UsersParticipationEventDTO;
-import org.JKDW.user.model.Event;
 import org.JKDW.user.model.UserDetails;
 import org.JKDW.user.model.DTO.UserDetailsUpdateDTO;
 import org.JKDW.user.service.UserDetailsService;
@@ -104,9 +103,18 @@ public class UserDetailsController {
 	 * This method checks whether user had fulfilled fields in his profile
 	 * required to create new event. See Service for more
      */
-	@RequestMapping(value="/eventcheck/{username}",method = RequestMethod.GET)
-	public boolean canUserCreateEvent(@PathVariable("username") String username){
-		return userDetailsService.canCreateEvent(username);
+	@RequestMapping(value="/eventcheck/cancreate/{userId}",method = RequestMethod.GET)
+	public boolean canUserCreateEvent(@PathVariable("userId") Long userId){
+		return userDetailsService.canCreateEvent(userId);
+	}
+
+	/**
+	 * This method checks whether user had fulfilled fields in his profile
+	 * required to join to evens. See Service for more
+	 */
+	@RequestMapping(value="/eventcheck/canjoin/{userId}",method = RequestMethod.GET)
+	public boolean canUserJoinAnEvent(@PathVariable("userId") Long userId){
+		return userDetailsService.canParticipate(userId);
 	}
 
 	/**
@@ -118,7 +126,7 @@ public class UserDetailsController {
 	@RequestMapping(value="/events/{userId}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<UsersParticipationEventDTO>> getAllUsersEventsWhichHeParticipates(@PathVariable("userId") Long userId){
 		try {
-			return new ResponseEntity<>(userDetailsService.getAllUserEventsWhichHeParticipates(userId),HttpStatus.OK);
+			return new ResponseEntity<>(userDetailsService.getAllUserEventsInWhichHeParticipates(userId),HttpStatus.OK);
 		} catch (NotFoundException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

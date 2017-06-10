@@ -65,7 +65,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     /**
      * @param id of user account we want to find
      * @return returns one account specified by an id
-     * TODO: this can only use ADMIN or noone!
+     * TODO: this can only use ADMIN
      */
     @Override
     public UserAccount getUserAccountById(Long id) {
@@ -230,7 +230,7 @@ public class UserAccountServiceImpl implements UserAccountService {
         LocalDate helpVariableWithEndDateOfBan = firstDateEndOfBan.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         Date dateEndOfBan = java.sql.Date.valueOf(helpVariableWithEndDateOfBan);
 
-        System.out.println("porównuje " + date + " i " + dateEndOfBan);
+        System.out.println("porï¿½wnuje " + date + " i " + dateEndOfBan);
         System.out.println("i czas  " + timeParsed + " i " + timeEndOfBan);
         if (date.before(dateEndOfBan)) {
             return true;
@@ -254,6 +254,7 @@ public class UserAccountServiceImpl implements UserAccountService {
                 "update user_account set is_banned = ? where id = ?",
                 status, idUser);
     }
+
 	/**
 	 * Finds users Id with provided username
 	 * @param username of userAccount

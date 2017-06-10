@@ -19,12 +19,11 @@ export class LoginService{
           'content-type' : 'application/json'});
 	private headersLoggedUser = null;
 
-	constructor(private http: Http, private sharedService: SharedService) {
+	constructor(private http:Http, private sharedService:SharedService) {
 		var currentToKey = JSON.parse(localStorage.getItem('toKey'));
-      	this.token = currentToKey && currentToKey.token;
+		this.token = currentToKey && currentToKey.token;
 		this.username = currentToKey && currentToKey.username;
-
-         }
+	}
 
     /* getToken aka Login */
 	getToken(credentials): Observable<boolean>{
@@ -49,33 +48,48 @@ export class LoginService{
 				.catch(this.handleError);
 	}
 
+	getInfoAboutMyBan(): Observable<any> {
+		return this.http.get('/api/user/banned/account/arek', {headers: this.headers})
+			.map(res => res.json())
+			.catch(this.handleError);
+	}
+
+	getIdByUsername(): Observable<number>{
+		var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+		let username = currentToKey && currentToKey.username;
+		let token = currentToKey && currentToKey.token;
+
+		var headers = new Headers({
+			'content-type': 'application/json',
+			'X-Auth-token': token
+		});
+
+		return this.http.get("api/user/account/"+username+"/getid", {headers: headers})
+			.map((res) => res.json())
+			.catch(this.handleError);
+	}
+
+	getUsername(): string {
+		var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+		return currentToKey.username;
+	}
+
 	/* removeToken aka Logout */
 	removeToken(): void{
 		this.token = null;
 		localStorage.removeItem('toKey');
 	}
 
+	isUsernameLoaded(): boolean {
+		return this.username != null;
+	}
 
 	/* checks if token exists */
 	isLogged(): boolean {
 		var currentToKey = JSON.parse(localStorage.getItem('toKey'));
-      	this.token = currentToKey && currentToKey.token;
+		this.token = currentToKey && currentToKey.token;
 
-		if (this.token != null)
-			return true;
-		else return false;
-	}
-
-	isUsernameLoaded(): boolean {
-		if (this.username != null) {
-			return true;
-		}
-		else return false;
-	}
-
-	getUsername(): string {
-		var currentToKey = JSON.parse(localStorage.getItem('toKey'));
-		return currentToKey.username;
+		return this.token != null;
 	}
 
 	checkIsUserBanned(): Observable<any>{
@@ -86,26 +100,12 @@ export class LoginService{
 	 * Finds user id by username
 	 * @returns id of username
      */
-	getIdByUsername(): Observable<number>{
-		var currentToKey = JSON.parse(localStorage.getItem('toKey'));
-		let username = currentToKey && currentToKey.username;
-		let token = currentToKey && currentToKey.token;
-
-		var headers = new Headers({
-			'content-type': 'application/json',
-			'X-Auth-token': token
-		});
-		
-		return this.http.get("api/user/account/"+username+"/getid", {headers: headers})
-			.map((res) => res.json())
-			.catch(this.handleError);
-	}
-
 
 	checkVariableIsBanned(): Observable<any>{
 		return this.http.get('/api/user/checkIsBanned/'+this.getUsername(),{headers :this.headers})
             .map(res => res.json());
 	}
+	
 	checkIsUserAnAdmin(): Observable<any>{
 		this.headersLoggedUser = new Headers({
 			'content-type' : 'application/json',
@@ -116,12 +116,6 @@ export class LoginService{
 			.catch(this.handleError);
 	}
 
-	getInfoAboutMyBan(): Observable<any> {
-		return this.http.get('/api/user/banned/account/arek', {headers: this.headers})
-            .map(res => res.json())
-            .catch(this.handleError);
-
-	}
 	/*private handleError(error: any): Promise<any> {
 	 console.error('An error occurred!!!!!!!!!', error);
 		return Promise.reject(error.message || error);

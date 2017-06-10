@@ -20,6 +20,7 @@
       '@angular/http': 'js/lib/@angular/http/bundles/http.umd.js',
       '@angular/router': 'js/lib/@angular/router/bundles/router.umd.js',
       '@angular/forms': 'js/lib/@angular/forms/bundles/forms.umd.js',
+      '@ngui/datetime-picker': 'js/lib/datetime-picker.umd.js',
       // other libraries
       'rxjs':                       'js/lib/rxjs',
       'angular2-in-memory-web-api': 'js/lib/angular2-in-memory-web-api',

@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.naming.SizeLimitExceededException;
 import javax.persistence.NoResultException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -114,9 +111,9 @@ public class EventServiceImpl implements EventService {
     @Override
     public EventGeneralDTO getEventDetails(Long id) throws NoResultException {
         Event foundEvent = eventRepository.findOne(id);
-        if (foundEvent == null) {
+        if (foundEvent == null)
             throw new NoResultException("Event couldnt be found.");
-        }
+        UserAccount foundUserAccount = userAccountRepository.findOne(foundEvent.getOwnerId());
         return new EventGeneralDTO(
                 foundEvent.getId(),
                 foundEvent.getType(),
@@ -126,7 +123,9 @@ public class EventServiceImpl implements EventService {
                 foundEvent.getDish_kind(),
                 foundEvent.getDish_name(),
                 foundEvent.getPeople_quantity(),
-                foundEvent.getPeople_remaining()
+                foundEvent.getPeople_remaining(),
+                foundUserAccount.getId().intValue(),
+                foundUserAccount.getUsername()
         );
     }
 
@@ -138,6 +137,7 @@ public class EventServiceImpl implements EventService {
         List<Event> allEvents = eventRepository.findAll();
         List<EventGeneralDTO> eventsDetails = new ArrayList<>();
         for (Event event : allEvents) {
+            UserAccount foundUserAccount = userAccountRepository.findOne(event.getOwnerId());
             eventsDetails.add(new EventGeneralDTO(
                     event.getId(),
                     event.getType(),
@@ -147,7 +147,9 @@ public class EventServiceImpl implements EventService {
                     event.getDish_kind(),
                     event.getDish_name(),
                     event.getPeople_quantity(),
-                    event.getPeople_remaining()
+                    event.getPeople_remaining(),
+                    foundUserAccount.getId().intValue(),
+                    foundUserAccount.getUsername()
             ));
         }
         return eventsDetails;
@@ -171,6 +173,46 @@ public class EventServiceImpl implements EventService {
             throw new NoResultException("This event couldn't be found");
 
         //add account in event
+        addAccountToEvent(foundUserDetails, foundEvent);
+
+        //add event in account
+        List<Event> events = addEventInUserDetails(foundUserDetails, foundEvent);
+        //decrease nmber of remaining ppl
+        decreaseEventRemainingPeople(foundUserDetails, foundEvent, events);
+
+        //save data
+        userDetailsRepository.save(foundUserDetails);
+        eventRepository.save(foundEvent);
+    }
+
+    /**
+     *  Adds event reference into user details event list
+     */
+    private List<Event> addEventInUserDetails(UserDetails foundUserDetails, Event foundEvent) {
+        List<Event> events = foundUserDetails.getEvents();
+        if (events == null)
+            events = new ArrayList<>();
+        events.add(foundEvent);
+        return events;
+    }
+
+    /**
+     *  Decreases number of people who can still join to event
+     */
+    private void decreaseEventRemainingPeople(UserDetails foundUserDetails, Event foundEvent, List<Event> events) throws SizeLimitExceededException {
+        int people_remaining = foundEvent.getPeople_remaining();
+        if (people_remaining == 0)//double checking vacancy
+            throw new SizeLimitExceededException("This event has reached its people capacity");
+        people_remaining--;
+        foundEvent.setPeople_remaining(people_remaining);
+        foundUserDetails.setEvents(events);
+    }
+
+    /**
+     *
+     * Adds account reference to an event account list
+     */
+    private void addAccountToEvent(UserDetails foundUserDetails, Event foundEvent) throws SizeLimitExceededException {
         List<UserDetails> accounts = foundEvent.getAccounts();
         if (accounts == null)
             accounts = new ArrayList<>();
@@ -180,23 +222,6 @@ public class EventServiceImpl implements EventService {
         }
         accounts.add(foundUserDetails);
         foundEvent.setAccounts(accounts);
-
-        //add event in account
-        List<Event> events = foundUserDetails.getEvents();
-        if (events == null)
-            events = new ArrayList<>();
-        events.add(foundEvent);
-        //decrease nmber of remaining ppl
-        int people_remaining = foundEvent.getPeople_remaining();
-        if (people_remaining == 0)//double checking vacancy
-            throw new SizeLimitExceededException("This event has reached its people capacity");
-        people_remaining--;
-        foundEvent.setPeople_remaining(people_remaining);
-        foundUserDetails.setEvents(events);
-
-        //save data
-        userDetailsRepository.save(foundUserDetails);
-        eventRepository.save(foundEvent);
     }
 
     /**
@@ -205,10 +230,10 @@ public class EventServiceImpl implements EventService {
      *
      * @param username
      * @param evntId
-     * @return true if is arleady binded/ false if not
+     * @return true if is arleady bound/false if not
      */
     @Override
-    public boolean checkIfBinded(String username, Long evntId) {
+    public boolean checkIfBound(String username, Long evntId) {
         //find positions
         UserAccount foundUserAccount = userAccountRepository.findByUsername(username);
         if (foundUserAccount == null)
@@ -219,10 +244,14 @@ public class EventServiceImpl implements EventService {
             throw new NoResultException("This event couldn't be found");
 
         //check if id's exists
+        return doesIdExist(foundUserDetails, foundEvent);
+    }
+
+    private boolean doesIdExist(UserDetails foundUserDetails, Event foundEvent) {
         List<UserDetails> accounts = foundEvent.getAccounts();
         Long id = foundUserDetails.getId();
         for (UserDetails account : accounts) {
-            if (id == account.getId())
+            if (id.equals(account.getId()))
                 return true;
         }
         return false;
@@ -294,6 +323,106 @@ public class EventServiceImpl implements EventService {
 
 
     /**
+     * Removes id from event's accepted id, user from event and event from user
+     * Used when user wants to resign from event too
+     * (Well its the same case as rejecting the user from event ;) )
+     * @param eventId event id
+     * @param userAccountId user acc id
+     * @param userDetailsId user details id
+     * @return updated event
+     */
+    @Override
+    public Event rejectUserParticipationRequest(Long eventId, Long userAccountId, Long userDetailsId)
+            throws NotFoundException {
+        Event foundEvent = eventRepository.findOne(eventId);
+        if(foundEvent == null)
+            throw new NoResultException("Event with id: "+ eventId +" couldn't be found");
+        UserDetails foundUserDetails = userDetailsRepository.findOne(userDetailsId);
+        if(foundUserDetails == null)
+            throw new NoResultException("User with id: "+ userDetailsId +" couldn't be found");
+
+        //remove id from acceptedIds (if was accepted) (use iterator when removing)
+        removeIdFromEventAcceptedIds(userAccountId, foundEvent);
+
+        //add free space to event
+        foundEvent.setPeople_remaining(foundEvent.getPeople_remaining()+1);
+
+        //remove user from participation
+        removeUserFromEvent(foundEvent, foundUserDetails);
+
+        //remove users event (use iterator when removing)
+        removeEventReferenceFromUserDetails(eventId, foundUserDetails);
+
+        //update
+        Event savedUserEvent = eventRepository.save(foundEvent);
+        userDetailsRepository.save(foundUserDetails);
+
+        //TODO: send message to user about refuse
+
+        return savedUserEvent;
+    }
+
+    /**
+     * Finds and returns events owner username
+     * @param eventId id of searched event
+     * @return event owner username
+     */
+    @Override
+    public String getEventOwnerUsername(Long eventId) throws NoResultException{
+        Event foundEvent = eventRepository.findOne(eventId);
+        if(foundEvent == null)
+            throw new NoResultException("Event with id: "+ eventId +" couldn't be found");
+        UserAccount ownerAccount = userAccountRepository.getOne(foundEvent.getOwnerId());
+        return ownerAccount.getUsername();
+    }
+
+    /**
+     * Removes event ref from user details. Used in rejectUserParticipationRequest
+     */
+    private void removeEventReferenceFromUserDetails(Long eventId, UserDetails foundUserDetails) {
+        List<Event> events = foundUserDetails.getEvents();
+        Iterator<Event> iterator = events.iterator();
+        Long id = null;
+        Event next = null;
+        while (iterator.hasNext()) {
+            next = iterator.next();
+            id = next.getId();
+            if (id.equals(eventId))
+                break;
+        }
+        if(id != null && next != null)
+            events.remove(next);
+        foundUserDetails.setEvents(events);
+    }
+
+    /**
+     * Removes user from event. Used in rejectUserParticipationRequest
+     */
+    private void removeUserFromEvent(Event foundEvent, UserDetails foundUserDetails) {
+        List<UserDetails> joinedAccounts = foundEvent.getAccounts();
+        joinedAccounts.remove(foundUserDetails);
+        foundEvent.setAccounts(joinedAccounts);
+    }
+
+    /**
+     * Removes id from accepted ids. Used in rejectUserParticipationRequest
+     * If user wasnt on accepted list it changes nothing
+     */
+    private void removeIdFromEventAcceptedIds(Long userAccountId, Event foundEvent) {
+        Set<Long> acceptedIds = foundEvent.getAcceptedIds();
+        Iterator<Long> it = acceptedIds.iterator();
+        Long userId = -1L;
+        while (it.hasNext()){
+            userId = it.next();
+            if(userId.equals(userAccountId))
+                break;
+        }
+        if(userId != -1L)
+            acceptedIds.remove(userId);
+        foundEvent.setAcceptedIds(acceptedIds);
+    }
+
+    /**
      * Helper method extracts participants useraccounts from event
      * @param userDetails list of user details from event
      * @return list of necessary info about users
@@ -323,9 +452,9 @@ public class EventServiceImpl implements EventService {
     @Override
     public EventGeneralDTO getEventDetailsByTitle(String title) throws NoResultException {
         Event foundEvent = eventRepository.findDetailsEventByTitle(title);
-        if (foundEvent == null) {
+        if (foundEvent == null)
             throw new NoResultException("Event details couldnt be found.");
-        }
+        UserAccount foundUserAccount = userAccountRepository.findOne(foundEvent.getOwnerId());
         return new EventGeneralDTO(
                 foundEvent.getId(),
                 foundEvent.getType(),
@@ -335,7 +464,9 @@ public class EventServiceImpl implements EventService {
                 foundEvent.getDish_kind(),
                 foundEvent.getDish_name(),
                 foundEvent.getPeople_quantity(),
-                foundEvent.getPeople_remaining()
+                foundEvent.getPeople_remaining(),
+                foundUserAccount.getId().intValue(),
+                foundUserAccount.getUsername()
         );
     }
 }

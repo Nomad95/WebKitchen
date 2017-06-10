@@ -1,7 +1,7 @@
 <div class="well">
     <div class="row">
-        <div class="col-md-5">
-            <h2>{{event.title}}</h2>
+        <div class="col-md-5 col-sm-12 col-xs-12">
+            <h2 style="word-wrap: break-word;">{{event.title}}</h2>
             <table class="table">
                 <tbody>
                 <tr>
@@ -10,7 +10,7 @@
                 </tr>
                 <tr>
                     <td class="text-right">Data rozpoczęcia: </td>
-                    <td>{{event.date | date}}</td>
+                    <td>{{event.date | date | polishDate}}</td>
                 </tr>
                 <tr>
                     <td class="text-right">Rodzaj: </td>
@@ -27,42 +27,50 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-7 col-sm-12 col-xs-12">
             <h2>Uczestnicy</h2>
-            <table class="table">
-                <thead >
-                    <th class="text-center">Użytkownik</th>
-                    <th class="text-center">Nick</th>
-                    <th class="text-center">Uzupełniony</th>
-                    <th class="text-center">Zweryfikowany</th>
-                    <th class="text-center">Zobacz profil</th>
-                    <th class="text-center">Akceptuj</th>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let user of event.participantsDetails" class="text-center">
-                        <td>{{user.username}}</td>
-                        <td>{{user.nick}}</td>
-                        <td>
-                            <i class="fa fa-check" aria-hidden="true" *ngIf="event.isFilled"></i>
-                            <i class="fa fa-times" aria-hidden="true" *ngIf="!event.isFilled"></i>
-                        </td>
-                        <td>
-                            <i class="fa fa-check" aria-hidden="true" *ngIf="event.isVerified"></i>
-                            <i class="fa fa-times" aria-hidden="true" *ngIf="!event.isVerified"></i>
-                        </td>
-                        <td >
-                            <i (click)="goToProfile(user.username)" class="fa fa-arrow-right" aria-hidden="true"></i>
-                        </td>
-                        <td><i class="fa fa-plus"
-                               aria-hidden="true"
-                               (click)="acceptUser(user.id)"
-                               *ngIf="!checkIfUserIsOnAAcceptedList(user.id)"></i>
-                            <i class="fa fa-check"
-                               aria-hidden="true"
-                               *ngIf="checkIfUserIsOnAAcceptedList(user.id)"></i></td>
-                    </tr>
-                </tbody>
-            </table>
+            <h3 *ngIf="!(event.participantsDetails.length > 0)">Brak chętnych</h3>
+            <div class="table-responsive" *ngIf="event.participantsDetails.length > 0">
+                <table class="table">
+                    <thead >
+                        <th class="text-center">Użytkownik</th>
+                        <th class="text-center">Nick</th>
+                        <th class="text-center">Uzupełniony</th>
+                        <th class="text-center">Zweryfikowany</th>
+                        <th class="text-center">Zobacz profil</th>
+                        <th class="text-center">Akceptuj</th>
+                        <th class="text-center">Odrzuć</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of event.participantsDetails" class="text-center"
+                            [class.success]="checkIfUserIsOnAAcceptedList(user.id)">
+                            <td>{{user.username}}</td>
+                            <td>{{user.nick}}</td>
+                            <td>
+                                <i class="fa fa-check" aria-hidden="true" *ngIf="event.isFilled"></i>
+                                <i class="fa fa-times" aria-hidden="true" *ngIf="!event.isFilled"></i>
+                            </td>
+                            <td>
+                                <i class="fa fa-check" aria-hidden="true" *ngIf="event.isVerified"></i>
+                                <i class="fa fa-times" aria-hidden="true" *ngIf="!event.isVerified"></i>
+                            </td>
+                            <td >
+                                <i (click)="goToProfile(user.username)" class="fa fa-arrow-right" aria-hidden="true"></i>
+                            </td>
+                            <td><i class="fa fa-plus"
+                                   aria-hidden="true"
+                                   (click)="acceptUser(user.id)"
+                                   *ngIf="!checkIfUserIsOnAAcceptedList(user.id)"></i>
+                                <i class="fa fa-check"
+                                   aria-hidden="true"
+                                   *ngIf="checkIfUserIsOnAAcceptedList(user.id)"></i></td>
+                            <td >
+                                <i (click)="rejectTheRequest(user)" class="fa fa-times" aria-hidden="true"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

@@ -15,7 +15,8 @@
                     </div>
                     <br/>
                     <ul class="list-unstyled">
-                        <li>Data: {{event.date | date}} {{event.time}}</li>
+                        <li>Stworzony przez: {{event.ownerUsername}}</li>
+                        <li>Data: {{event.date | date | polishDate}} {{event.time | shorterTime}}</li>
                         <li>Adres: {{event.address}}</li>
                         <li>Nazwa: {{event.dish_name}}</li>
                         <li>Rodzaj: {{event.dish_kind}}</li>
@@ -29,21 +30,32 @@
                         <li *ngIf="event.type == 2">Produkty do zakupu: {{event.shopping_list}}</li>
 
                     </ul>
-                    <div *ngIf="isFull" class="alert alert-danger " role="alert">
-                        Brak miejsc.
-                    </div>
                     <div *ngIf="hasJoined" class="alert alert-info " role="alert">
                         Uczestniczysz w tym wydarzeniu.
                     </div>
-                    <button *ngIf="!hasJoined && !isFull" class="btn btn-primary" (click)="assignUserToEvent()"
+                    <div *ngIf="isOwner" class="alert alert-info " role="alert">
+                        Jesteś twórcą tego wydarzenia.
+                    </div>
+                    <div *ngIf="!canJoin" class="alert alert-danger " role="alert">
+                        Aby uczestniczyć w wydarzeniach, uzupełnij w profilu: imię, nazwisko, datę urodzenia oraz płeć.
+                    </div>
+                    <div *ngIf="isFull" class="alert alert-danger " role="alert">
+                        Brak miejsc.
+                    </div>
+                    <button *ngIf="!hasJoined && !isFull && canJoin && !isOwner" class="btn btn-primary" (click)="assignUserToEvent()"
                             type="button" id="join" data-loading-text="Sprawdzanie..."
                             autocomplete="off">Dołącz!
                     </button><!--TODO: bootstrap.css ładnie-->
                     <button class="btn btn-primary"
-                            [routerLink]="['/events']"
+                            (click)="goBack()"
                             type="button" id="return"
                             autocomplete="off">Powrót
                     </button>
+                    <button *ngIf="hasJoined" class="btn btn-primary"
+                            (click)="resignFromEvent()"
+                            type="button">Zrezygnuj
+                    </button>
+
 
                 </div>
             </div>

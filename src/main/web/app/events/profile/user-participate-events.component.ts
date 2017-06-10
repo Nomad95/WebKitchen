@@ -1,16 +1,16 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input } from '@angular/core';
 import {Router} from '@angular/router';
 
 @Component({
     selector: 'user-participate-events',
     templateUrl: 'app/events/profile/user-participate-events.component.html'
 })
-export class UserParticipateEventsComponent {
+export class UserParticipateEventsComponent  {
     constructor(private router: Router) {
     }
 
     @Input() private events: any;
-
+    
     /**
      * navigates user to event details
      * @param eventId

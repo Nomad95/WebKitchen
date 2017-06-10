@@ -1,14 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import {Router} from '@angular/router';
 import { RegistrationService } from './registration.service';
+import {UtilMethods} from "../util/util-methods.service";
 
 @Component({
     selector: 'registration',
     templateUrl: 'app/registration/registration.component.html',
     styleUrls: ['css/hello.css'],
-    providers: [RegistrationService]
+    providers: [RegistrationService, UtilMethods]
 })
-export class RegistrationComponent implements OnInit, OnDestroy {
+export class RegistrationComponent {
     userAccountToAdd = {
       username: '',
       password: '',
@@ -16,25 +17,30 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       country: '',
       nick: ''
     };
+
     confirmPassword = '';
     acceptedRegulaions = false;
     acceptedMarketingRules = false;
+
     //if true, we do not show alert, on start its true
     validationResult = true;
-    //means false = accepted we do not show the error on start troche namieszane xDD
+
+    //means: false = accepted we do not show the error on start troche namieszane xDD
     isMarketAccepted = false;
     isRegAccepted = false;
     isPassNotEqual = false;
 
-    // constructor
-    constructor(private registrationService:RegistrationService, private router:Router) {
+
+    constructor(
+        private registrationService: RegistrationService,
+        private router: Router,
+        private utilMethods: UtilMethods) {
     }
 
-    // on-init
-    ngOnInit() {
-
-    }
-
+    /**
+     * Perform user account creation
+     * @param data
+     */
     createUserAccount(data): void{
         this.validationResult = this.finalDataValidation(data);
 
@@ -101,8 +107,12 @@ export class RegistrationComponent implements OnInit, OnDestroy {
         return result;
     }
 
-    // on-destroy
-    ngOnDestroy() {
-
+    /**
+     * Converts provided string to 1ts letter uppercase
+     * @param value string
+     * @returns string with upeprcased 1st letter
+     */
+    toUppercase(value: string){
+        return this.utilMethods.stringToUpperCase(value);
     }
 }

@@ -7,6 +7,7 @@ import { AlertModule, DatepickerModule } from 'ng2-bootstrap/ng2-bootstrap';
 import {JQ_TOKEN} from './events/j-query.service';
 import { MyDatePickerModule } from 'mydatepicker';
 import { SelectModule } from "ng2-select";
+import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 
 import { routing, appRouterProviders } from './app.routing';
 import { AppComponent } from './app.component';
@@ -35,13 +36,15 @@ import {UserCreatedEventsComponent} from "./events/profile/user-created-events.c
 import { AdminComponent } from './admin/admin.component'
 import { AdminPanelUEComponent } from './adminPanelUE/adminPanelUE.component'
 
+
 import {AuthGuard} from './app.auth-guard.service';
 import {LoginBanned} from "./login/login-banned-user.component";
 import {SharedService} from "./shared.service";
 
+import {PolishDatePipe} from "./util/pipes/polish.date.pipe"; 
+import {ShorterTimePipe} from "./util/pipes/shorter.time.pipe";
 
 declare let jQuery:Object;
-
 
 @NgModule({
     declarations: [AppComponent,
@@ -77,11 +80,14 @@ declare let jQuery:Object;
         LoginSuccess,
         LoginBanned,
         AdminComponent,
-        AdminPanelUEComponent
+        AdminPanelUEComponent,
+        PolishDatePipe,
+        ShorterTimePipe
     ],
     imports: [BrowserModule,
               FormsModule,
               ReactiveFormsModule,
+              NguiDatetimePickerModule,
               HttpModule,
               SelectModule,
               MyDatePickerModule,

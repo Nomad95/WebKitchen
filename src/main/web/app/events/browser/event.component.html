@@ -3,7 +3,8 @@
         <div class="col-md-12">
             <table style="width: 100%">
                 <tr>
-                    <th style="font-size: 1.8em; color: black" class="text-left">{{ event.title }}</th>
+                    <th style="font-size: 1.8em; color: black; word-wrap: break-word;"
+                        class="text-left">{{ event.title }}</th>
                     <th style="font-size: 1.0em; color: black" class="text-right">{{ eventType }}</th>
                 </tr>
             </table>
@@ -11,8 +12,9 @@
     </div>
     <br/>
     <ul class="list-unstyled">
+        <li>Stworzony przez: {{event.ownerUsername}}</li>
         <li>Nazwa: {{event.dish_name}}</li>
-        <li>Data: {{event.date | date}} {{event.time}}</li>
+        <li>Data: {{event.date | date | polishDate}} {{event.time | shorterTime}}</li>
         <li>Rodzaj: {{event.dish_kind}}</li>
         <li>Liczba osób: {{event.people_quantity}}</li>
         <li>Wolne miejsca: {{event.people_remaining}}</li>

@@ -25,9 +25,14 @@ public class EventGeneralDTO {
 
     private int people_remaining;
 
+    private int ownerId;
+
+    private String ownerUsername;
+
     public EventGeneralDTO(long id, byte type, String title, Time time,
                            Date date, DishKindEnum dish_kind, String dish_name,
-                           byte people_quantity, int people_remaining) {
+                           byte people_quantity, int people_remaining,
+                           int ownerId,String ownerUsername ) {
         this.id = id;
         this.type = type;
         this.title = title;
@@ -37,6 +42,24 @@ public class EventGeneralDTO {
         this.dish_name = dish_name;
         this.people_quantity = people_quantity;
         this.people_remaining = people_remaining;
+        this.ownerId = ownerId;
+        this.ownerUsername = ownerUsername;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public String getOwnerUsername() {
+        return ownerUsername;
+    }
+
+    public void setOwnerUsername(String ownerUsername) {
+        this.ownerUsername = ownerUsername;
     }
 
     public int getPeople_remaining() {
