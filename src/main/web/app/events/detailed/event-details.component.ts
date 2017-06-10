@@ -39,7 +39,7 @@ export class EventDetailsComponent implements OnInit {
 
     //is user an event owner?
     private isOwner = false;
-
+    
     ngOnInit() {
         //gets event
         //gets user id by username and then checks if user can join event
@@ -48,6 +48,7 @@ export class EventDetailsComponent implements OnInit {
         //checks user if he has already joined this event
         this.checkUser();
     }
+    
 
     /**
      * gets a info about event by id specified in URL

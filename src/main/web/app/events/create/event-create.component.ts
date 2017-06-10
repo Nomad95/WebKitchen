@@ -3,6 +3,9 @@ import {Router} from '@angular/router';
 import {EventService} from '../event.service';
 import {LoginService} from '../../login/login.service';
 import {UtilMethods} from '../../util/util-methods.service';
+import {IMyDpOptions, IMyDateModel} from 'mydatepicker';
+
+
 
 /* eventy pod profilem */
 @Component({
@@ -111,7 +114,47 @@ export class EventCreateComponent implements OnInit {
         quantity_of_products: '',
         ownerId: -1
     };
+    
 
+    //fields for proper date picker workflow
+    private dateNow: Date = new Date();
+    private maxBirthYear: number = this.dateNow.getFullYear()-16;
+    private minBirthYear: number = this.dateNow.getFullYear()-105;
+    private maxBirthDate: Date = new Date(this.dateNow.setFullYear(this.maxBirthYear));
+    private myDatePickerOptions: IMyDpOptions;
+    private defaultYearAndMonth:string;
+
+    /**
+     * Intializes datepicker variables
+     */
+    initializeDatePickerOptions(): void{
+        this.myDatePickerOptions = {
+            // other options...
+            minYear: <number> this.minBirthYear,
+            maxYear: <number> this.maxBirthYear,
+            indicateInvalidDate: true,
+            showTodayBtn: false,
+            openSelectorTopOfInput: true,
+            markCurrentYear: false,
+            allowDeselectDate: true,
+            disableSince: {year: this.maxBirthDate.getFullYear(), month: this.maxBirthDate.getMonth()+1, day: this.maxBirthDate.getDate()+1}
+        };
+        this.defaultYearAndMonth = this.maxBirthDate.getFullYear()+"-"+(this.maxBirthDate.getMonth()+1);
+    }
+
+    /**
+     * When user picks date save it to the model
+     */
+    onDateChanged(event: IMyDateModel) {
+        if(event.formatted !== '') {
+            this.newEventType1.date = event.formatted;
+            this.newEventType2.date = event.formatted;
+        }
+        else {
+            this.newEventType1.date = '';
+            this.newEventType2.date = '';
+        }
+    }
 
     /**
      * Sets shopping list property on model type 2 from form input
@@ -144,9 +187,9 @@ export class EventCreateComponent implements OnInit {
      * @param data
      */
     createNewEvent(data):void {
-        //needed for proper time sql type
-        if (data.time.length < 7)
-            data.time += ':00';
+        //parse date object to proper sql time
+        data.time = data.time.toLocaleTimeString();
+        console.log(data.time);
 
         //button loading toggle
         var $btn1 = $('#saveEventButton').button('loading');

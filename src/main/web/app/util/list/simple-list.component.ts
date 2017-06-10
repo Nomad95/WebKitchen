@@ -77,6 +77,8 @@ export class SimpleListComponent implements OnInit {
             this.eventClick.emit(this.listItems);
             this.containsComma = false;
         }
+        this.measure = '';
+        this.quantity = '';
     }
 
     /**

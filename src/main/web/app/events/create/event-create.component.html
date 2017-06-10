@@ -38,14 +38,20 @@
                                     <div class="form-group col-md-6"
                                          [class.has-error]="timet1.invalid && timet1.touched">
                                         <label class="control-label">Godzina</label>
-                                        <input #timet1="ngModel"
-                                               type="time"
-                                               class="form-control"
-                                               required
-                                               [(ngModel)]="newEventType1.time"
-                                               name="newEventType1.time">
+
+                                        <input
+                                                [(ngModel)]="newEventType1.time" ngui-datetime-picker
+                                                date-format="HH:mm"
+                                                parse-format="HH:mm:ss"
+                                                hour="23"
+                                                minute='59'
+                                                [time-only]="true"
+                                                [close-on-select]="false"
+                                                name="newEventType1.time"
+                                                #timet1="ngModel"
+                                                class="form-control"/>
                                     </div>
-                                    <div class="form-group col-md-6"
+                                    <!--<div class="form-group col-md-6"
                                          [class.has-error]="datet1.invalid && datet1.touched">
                                         <label class="control-label">Data</label>
                                         <input #datet1="ngModel"
@@ -54,6 +60,20 @@
                                                class="form-control"
                                                [(ngModel)]="newEventType1.date"
                                                name="newEventType1.date">
+                                    </div>-->
+                                    <div class="form-group col-md-6" [class.has-error]="datet1.invalid && datet1.touched">
+                                        <label class="control-label">Data</label>
+                                        <my-date-picker name="mydate" [options]="myDatePickerOptions"
+                                                        #datet1="ngModel"
+                                                        required
+                                                        [(ngModel)]="birthDateInput"
+                                                        name="newEventType1.date"
+                                                        (dateChanged)="onDateChanged($event)"
+                                                        [selDate]="selectedDateNormal"
+                                                        [defaultMonth]="defaultYearAndMonth"
+                                                        locale="pl"
+                                                        placeholder="rrrr-mm-dd">
+                                        </my-date-picker>
                                     </div>
                                 </div>
                                 <div *ngIf="(timet1.invalid && timet1.touched) || (datet1.invalid && datet1.touched)"
@@ -257,22 +277,32 @@
                                     <div class="form-group col-md-6"
                                          [class.has-error]="timet2.invalid && timet2.touched">
                                         <label class="control-label">Godzina</label>
-                                        <input #timet2="ngModel"
-                                               type="time"
-                                               class="form-control"
-                                               required
-                                               [(ngModel)]="newEventType2.time"
-                                               name="newEventType2.time">
+                                        <input
+                                                [(ngModel)]="newEventType2.time" ngui-datetime-picker
+                                                date-format="HH:mm"
+                                                parse-format="HH:mm:ss"
+                                                hour="23"
+                                                minute='59'
+                                                [time-only]="true"
+                                                [close-on-select]="false"
+                                                name="newEventType2.time"
+                                                #timet2="ngModel"
+                                                class="form-control"/>
+
                                     </div>
-                                    <div class="form-group col-md-6"
-                                         [class.has-error]="datet2.invalid && datet2.touched">
+                                    <div class="form-group col-md-6" [class.has-error]="datet2.invalid && datet2.touched">
                                         <label class="control-label">Data</label>
-                                        <input #datet2="ngModel"
-                                               type="date"
-                                               required
-                                               class="form-control"
-                                               [(ngModel)]="newEventType2.date"
-                                               name="newEventType2.date">
+                                        <my-date-picker name="mydate2" [options]="myDatePickerOptions"
+                                                        #datet2="ngModel"
+                                                        required
+                                                        [(ngModel)]="birthDateInput"
+                                                        name="newEventType2.date"
+                                                        (dateChanged)="onDateChanged($event)"
+                                                        [selDate]="selectedDateNormal"
+                                                        [defaultMonth]="defaultYearAndMonth"
+                                                        locale="pl"
+                                                        placeholder="rrrr-mm-dd">
+                                        </my-date-picker>
                                     </div>
                                 </div>
                                 <div *ngIf="(timet2.invalid && timet2.touched) || (datet2.invalid && datet2.touched)"
