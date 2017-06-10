@@ -15,6 +15,7 @@
                     </div>
                     <br/>
                     <ul class="list-unstyled">
+                        <li>Stworzony przez: {{event.ownerUsername}}</li>
                         <li>Data: {{event.date | date}} {{event.time}}</li>
                         <li>Adres: {{event.address}}</li>
                         <li>Nazwa: {{event.dish_name}}</li>
@@ -49,6 +50,10 @@
                             [routerLink]="['/events']"
                             type="button" id="return"
                             autocomplete="off">Powrót
+                    </button>
+                    <button *ngIf="hasJoined" class="btn btn-primary"
+                            (click)="resignFromEvent()"
+                            type="button">Zrezygnuj
                     </button>
 
 

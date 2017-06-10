@@ -15,6 +15,8 @@ export class EventDetailsComponent implements OnInit {
 
     //event stub
     private event = {
+        id: -1,
+        ownerUsername: '',
         type: '',
         people_remaining: -1,
         ownerId: -1
@@ -41,6 +43,7 @@ export class EventDetailsComponent implements OnInit {
     ngOnInit() {
         //gets event
         //gets user id by username and then checks if user can join event
+        //after that we find events owner username
         this.getDetailedEvent();
         //checks user if he has already joined this event
         this.checkUser();
@@ -56,9 +59,11 @@ export class EventDetailsComponent implements OnInit {
         this.eventService.getDetailedEvent(+this.router.snapshot.params['id'])
             .subscribe(data => {
                 this.event = data;
+                console.log(JSON.stringify(data));
                 this.switchTypeToNames();
                 this.checkFreeSpace();
                 this.getUserIdByUsername();
+                this.getEventOwnerUsername(this.event.id);
             });
     }
 
@@ -124,6 +129,14 @@ export class EventDetailsComponent implements OnInit {
     }
 
     /**
+     * Gets event owner username by providing event id
+     */
+    getEventOwnerUsername(eventId: number){
+        this.eventService.getEventsOwnerUsername(eventId)
+            .subscribe( data => this.event.ownerUsername = data)
+    }
+
+    /**
      * returns true if user can join events
      * @param userId account id
      */
@@ -135,6 +148,15 @@ export class EventDetailsComponent implements OnInit {
                 console.log('can join?: ' + data);
                 console.log('is owner?: ' + this.isOwner);
             });
+    }
+
+    /**
+     * Removes user from this event
+     */
+    resignFromEvent(){
+        //send info to update Event in database
+        this.eventService.rejectUserParticipation(this.event.id,this.userId)
+            .subscribe( data => this.hasJoined = false);
     }
 
     /**

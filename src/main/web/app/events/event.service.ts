@@ -1,5 +1,5 @@
 import {Injectable}    from '@angular/core';
-import {Headers, Http}    from '@angular/http';
+import { Http, Headers }    from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import {Observable}    from 'rxjs/Observable';
 import 'app/rxjs-operators';
@@ -7,11 +7,13 @@ import 'rxjs/Rx';
 
 @Injectable()
 export class EventService {
-    constructor(private http:Http) {
+    constructor(
+        private http: Http) {
     }
 
     private token = '';
     private username = '';
+
     /**
      *
      * Returns json with general informations of events
@@ -44,7 +46,7 @@ export class EventService {
      * @param userId users id
      * @returns some events information
      */
-    getUserEventsWhichHeParticipates(userId: number){
+    getUserEventsWhichHeParticipates(userId: number): Observable<any>{
         this.instantiateToken();
         var headers = this.createHeadersWithContentAndToken(this.token);
 
@@ -62,6 +64,31 @@ export class EventService {
         var headers = this.createHeadersWithContentAndToken(this.token);
 
         return this.http.get('/api/event/userevents/'+id, {headers: headers})
+            .map(res => res.json())
+            .catch(this.handleError);
+    }
+
+    /**
+     * Gets user address information (city, street, street nr, house nr)
+     * @param userId user account id
+     */
+    getUserAddress(userId: number): Observable<any>{
+        this.instantiateToken();
+        var headers = this.createHeadersWithContentAndToken(this.token);
+
+        return this.http.get('/api/user/details/address/'+userId, {headers: headers})
+            .map(res => res.json())
+            .catch(this.handleError);
+    }
+
+    /**
+     * finds evnt owner username
+     */
+    getEventsOwnerUsername(eventId: number){
+        this.instantiateToken();
+        var headers = this.createHeadersWithContentAndToken(this.token);
+
+        return this.http.get('/api/event/ownerusername/'+eventId, {headers: headers})
             .map(res => res.json())
             .catch(this.handleError);
     }
@@ -167,7 +194,7 @@ export class EventService {
      * @param userId user id
      * @returns Updated event
      */
-    rejectUserParticipation(eventId: number, userId: number){
+    rejectUserParticipation(eventId: number, userId: number): Observable<any>{
         this.instantiateToken();
         var headers = this.createHeadersWithContentAndToken(this.token);
 
@@ -191,13 +218,12 @@ export class EventService {
     }
 
 
-
     /**
      * Creates headers object with content-type appJson and token
      * @param token
      * @returns {Headers}
      */
-    private createHeadersWithContentAndToken(token:any) {
+    public createHeadersWithContentAndToken(token:any): Headers {
         return new Headers({
             'content-type': 'application/json',
             'X-Auth-token': token

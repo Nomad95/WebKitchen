@@ -18,6 +18,7 @@ export class EventCreateComponent implements OnInit {
     }
 
     ngOnInit() {
+        //gets id then address and check if can create event
         //more info in method beneath
         this.findUserId();
     }
@@ -67,7 +68,13 @@ export class EventCreateComponent implements OnInit {
     private isProperPhoto = true;
 
     /**
-     * model for type 1
+     * User address object.
+     * needs to be formatted
+     */
+    private userAddressObject = {};
+
+    /**
+     * model for type 1 //TODO: convert this to a model
      */
     private newEventType1 = {
         title: '',
@@ -104,10 +111,11 @@ export class EventCreateComponent implements OnInit {
         quantity_of_products: '',
         ownerId: -1
     };
-    
-    
+
+
     /**
      * Sets shopping list property on model type 2 from form input
+     * Used with simple-list.component
      * @param data array of strings
      */
     handleRecievedShoppingList(data:string[]):void {
@@ -119,6 +127,7 @@ export class EventCreateComponent implements OnInit {
 
     /**
      * Sets products list property on model type 2 from form input
+     * Used with simple-list.component
      * @param data array of strings
      */
     handleRecievedProductsList(data:string[]):void {
@@ -142,7 +151,7 @@ export class EventCreateComponent implements OnInit {
         //button loading toggle
         var $btn1 = $('#saveEventButton').button('loading');
         var $btn2 = $('#saveEventButtonType2').button('loading');
-        
+
         //perform file upload TODO: a co jak zdjecie bedzie dobre a event zly? albo odwrotnie??
         this.uploadPhoto(this.selectedFile);
 
@@ -188,6 +197,7 @@ export class EventCreateComponent implements OnInit {
                 console.log("Wrong file extension!");
                 return;
             }
+            //path to img (saved in DB)
             this.newEventType1.photo = "/img/dish/" + this.selectedFile.name;
         }
     }
@@ -198,6 +208,7 @@ export class EventCreateComponent implements OnInit {
      * @param event event object from form
      */
     fileChangeType2(event) {
+        //get file from input
         let fileList:FileList = event.target.files;
         if (fileList.length > 0) {
             this.selectedFile = fileList[0];
@@ -207,6 +218,7 @@ export class EventCreateComponent implements OnInit {
                 console.log("Wrong file extension!");
                 return;
             }
+            //path to img (saved in DB)
             this.newEventType2.photo = "/img/dish/" + this.selectedFile.name;
         }
     }
@@ -216,7 +228,7 @@ export class EventCreateComponent implements OnInit {
      * @param formData
      */
     uploadPhoto(formData) {
-        //prevents errors when user dont provide a photo
+        //prevent errors when user dont provide a photo
         if(formData == null || formData == undefined){
             console.log('No photo data provided');
             return;
@@ -251,13 +263,54 @@ export class EventCreateComponent implements OnInit {
         this.eventService.checkIfUserCanCreateEvent(userId)
             .subscribe((data) => {
                 console.log("can create? : " + data);
-                if(!data)
+                if(!data)//if not redirect him
                     this.router.navigate(['/events']);
             })
     }
 
     /**
+     * Gets user address. Next, formats address properly
+     * Used after getting user id
+     * @param userId user acc id
+     * @returns Object containing street city nr etc
+     */
+    getUsersAddressInformation(userId: number){
+        this.eventService.getUserAddress(userId)
+            .subscribe( data =>  {
+                //this.userAddressObject = data;
+                this.newEventType1.address = this.formatAddressObject(data);
+                this.newEventType2.address = this.formatAddressObject(data);
+            });
+    }
+
+    /**
+     * formats addressObject into one string
+     * @param addressObj address object
+     */
+    formatAddressObject(addressObj){
+        let resultString = '';
+        //add city
+        resultString = resultString + this.toUppercase(addressObj.city) + ' ';
+        //add street and street number
+        resultString = resultString + addressObj.street + ' ' + addressObj.streetNumber;
+        //if user lives in house and didnt provide flatNumber
+        if(this.hasProvidedFlatNumber(addressObj.flatNumber))
+            resultString = resultString + '/' +addressObj.flatNumber;
+        return resultString;
+    }
+
+    /**
+     * checks is user provided flat number
+     * @param flatNumber flat number from addressObj
+     * @returns {boolean}
+     */
+    private hasProvidedFlatNumber(flatNumber){
+        return flatNumber != null || flatNumber != '';
+    }
+
+    /**
      * finds user id by username then checks if user can create event
+     * and then gets user address information
      */
     findUserId(){
         this.loginService.getIdByUsername()
@@ -266,6 +319,7 @@ export class EventCreateComponent implements OnInit {
                 this.newEventType2.ownerId = data;
                 this.userId = data;
                 this.checkIfUserCanCreateEvent(this.userId);
+                this.getUsersAddressInformation(this.userId);
                 console.log("fetched user id: "+data);
             })
     }

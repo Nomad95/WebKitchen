@@ -41,4 +41,7 @@ public interface EventService {
     long[] getAcceptedIdsList(Long eventId) throws NotFoundException;
 
     Event rejectUserParticipationRequest(Long eventId, Long userId,Long userDetailsId) throws NotFoundException;
+
+    String getEventOwnerUsername(Long eventId) throws NotFoundException;
+
 }

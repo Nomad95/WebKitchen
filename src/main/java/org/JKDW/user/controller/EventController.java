@@ -1,5 +1,6 @@
 package org.JKDW.user.controller;
 
+import com.google.gson.Gson;
 import javassist.NotFoundException;
 import org.JKDW.user.model.DTO.EventForOwnerDTO;
 import org.JKDW.user.model.DTO.EventGeneralDTO;
@@ -241,5 +242,23 @@ public class EventController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+    }
+
+    /**
+     * Finds and return events owner username
+     */
+    @RequestMapping(
+            value = "/ownerusername/{eventId}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getEventOwnersUsernameI(@PathVariable("eventId") Long eventId){
+        try{
+            String eventOwnerUsername = eventService.getEventOwnerUsername(eventId);
+            final Gson gson = new Gson();
+            return new ResponseEntity<>(gson.toJson(eventOwnerUsername),HttpStatus.OK);
+        }
+        catch (NotFoundException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

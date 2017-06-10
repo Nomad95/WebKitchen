@@ -11,7 +11,7 @@
                                 [disabled]="!canCreateEvent ">Stwórz!</button>
                     </div>
                 </div>
-                <div class="row" *ngIf="!canCreateEvent || !viewLoaded">
+                <div class="row" *ngIf="!canCreateEvent && viewLoaded">
                     <div class="col-md-12">
                         <div class="jumbotron" style="margin-top: 20px !important">
                             <p>Aby móc tworzyć wydarzenia, wymagane jest uzupełnienie danych osobowych.</p>
