@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {EventService} from '../event.service';
 import {LoginService} from "../../login/login.service";
 import {Location} from '@angular/common';
+import {DetailedEvent} from "../model/detailedEvent";
 
 @Component({
     selector: 'event-detailed',
@@ -16,13 +17,14 @@ export class EventDetailsComponent implements OnInit {
                 private location: Location) {}
 
     //event stub
-    private event = {
+   /* private event = {
         id: -1,
         ownerUsername: '',
         type: '',
         people_remaining: -1,
         ownerId: -1
-    };
+    };*/
+    private event = new DetailedEvent();
 
     //user account id
     private userId: number = -1;

@@ -5,6 +5,9 @@ import {LoginService} from '../../login/login.service';
 import {UtilMethods} from '../../util/util-methods.service';
 import {IMyDpOptions, IMyDateModel} from 'mydatepicker';
 
+import { EventType1 } from '../model/eventType1';
+import { EventType2 } from "../model/eventType2";
+
 
 
 /* eventy pod profilem */
@@ -77,44 +80,15 @@ export class EventCreateComponent implements OnInit {
     private userAddressObject = {};
 
     /**
-     * model for type 1 //TODO: convert this to a model
+     * model for type 1 
      */
-    private newEventType1 = {
-        title: '',
-        type: '1',
-        time: '',
-        photo: '',
-        people_quantity: '',
-        dish_name: '',
-        dish_kind: '',
-        description: '',
-        date: '',
-        address: '',
-        additional_info: '',
-        ownerId: -1
-    };
+    private newEventType1 = new EventType1();
 
     /**
      * model for type 2
      */
-    private newEventType2 = {
-        title: '',
-        type: '2',
-        time: '',
-        photo: '',
-        people_quantity: '',
-        dish_name: '',
-        dish_kind: '',
-        description: '',
-        date: '',
-        address: '',
-        additional_info: '',
-        products_list: '',
-        shopping_list: '',
-        quantity_of_products: '',
-        ownerId: -1
-    };
-    
+    private newEventType2 = new EventType2();
+
 
     //fields for proper date picker workflow
     private dateNow: Date = new Date();
