@@ -41,6 +41,8 @@ import {AuthGuard} from './app.auth-guard.service';
 import {LoginBanned} from "./login/login-banned-user.component";
 import {SharedService} from "./shared.service";
 
+import {PolishDatePipe} from "./util/pipes/polish.date.pipe"; 
+import {ShorterTimePipe} from "./util/pipes/shorter.time.pipe";
 
 declare let jQuery:Object;
 
@@ -78,7 +80,9 @@ declare let jQuery:Object;
         LoginSuccess,
         LoginBanned,
         AdminComponent,
-        AdminPanelUEComponent
+        AdminPanelUEComponent,
+        PolishDatePipe,
+        ShorterTimePipe
     ],
     imports: [BrowserModule,
               FormsModule,

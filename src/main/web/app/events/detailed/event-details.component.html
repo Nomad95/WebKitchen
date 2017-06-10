@@ -16,7 +16,7 @@
                     <br/>
                     <ul class="list-unstyled">
                         <li>Stworzony przez: {{event.ownerUsername}}</li>
-                        <li>Data: {{event.date | date}} {{event.time}}</li>
+                        <li>Data: {{event.date | date | polishDate}} {{event.time | shorterTime}}</li>
                         <li>Adres: {{event.address}}</li>
                         <li>Nazwa: {{event.dish_name}}</li>
                         <li>Rodzaj: {{event.dish_kind}}</li>
@@ -47,7 +47,7 @@
                             autocomplete="off">Dołącz!
                     </button><!--TODO: bootstrap.css ładnie-->
                     <button class="btn btn-primary"
-                            [routerLink]="['/events']"
+                            (click)="goBack()"
                             type="button" id="return"
                             autocomplete="off">Powrót
                     </button>

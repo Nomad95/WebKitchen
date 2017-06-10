@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {EventService} from '../event.service';
 import {LoginService} from "../../login/login.service";
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'event-detailed',
@@ -11,7 +12,8 @@ import {LoginService} from "../../login/login.service";
 export class EventDetailsComponent implements OnInit {
     constructor(private router:ActivatedRoute,
                 private eventService:EventService,
-                private loginService: LoginService) {}
+                private loginService: LoginService,
+                private location: Location) {}
 
     //event stub
     private event = {
@@ -39,7 +41,7 @@ export class EventDetailsComponent implements OnInit {
 
     //is user an event owner?
     private isOwner = false;
-    
+
     ngOnInit() {
         //gets event
         //gets user id by username and then checks if user can join event
@@ -48,7 +50,7 @@ export class EventDetailsComponent implements OnInit {
         //checks user if he has already joined this event
         this.checkUser();
     }
-    
+
 
     /**
      * gets a info about event by id specified in URL
@@ -160,6 +162,13 @@ export class EventDetailsComponent implements OnInit {
             .subscribe( data => this.hasJoined = false);
     }
 
+    /**
+     * Takes user back to previous page
+     */
+    goBack(){
+        this.location.back();
+    }
+    
     /**
      * finds if user is owner of this event
      */

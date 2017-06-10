@@ -16,7 +16,6 @@ export class UserCreatedEventsComponent implements OnInit {
     @Input() private event: any;
 
     ngOnInit() {
-        console.log(this.event.acceptedIds);
     }
 
     /**
@@ -55,7 +54,7 @@ export class UserCreatedEventsComponent implements OnInit {
             this.event.acceptedIds.splice(index, 1);
         }
         console.log('accepted ids: ' + this.event.acceptedIds);
-        
+
         //remove from users list
         index = this.event.participantsDetails.indexOf(user);
         console.log('index of user: '+ index );
@@ -63,7 +62,7 @@ export class UserCreatedEventsComponent implements OnInit {
             this.event.participantsDetails.splice(index, 1);
         }
         console.log('accepted users: ' + this.event.participantsDetails);
-        
+
         //send info to update Event in database
         this.eventService.rejectUserParticipation(this.event.id,user.id)
             .subscribe( data => console.log(JSON.stringify(data)));

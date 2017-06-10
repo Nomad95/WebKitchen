@@ -17,8 +17,8 @@
                         <td>{{event.title}}</td>
                         <td>{{event.dish_name}}</td>
                         <td>{{convertToEventKind(event.type)}}</td>
-                        <td>{{event.date | date}}</td>
-                        <td>{{event.time}}</td>
+                        <td>{{event.date | date | polishDate}}</td>
+                        <td>{{event.time | shorterTime}}</td>
                         <td>
                             <i class="fa fa-check" aria-hidden="true" *ngIf="event.accepted"></i>
                             <i class="fa fa-times" aria-hidden="true" *ngIf="!event.accepted"></i>
