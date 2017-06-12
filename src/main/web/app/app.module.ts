@@ -40,6 +40,10 @@ import { AdminPanelUEComponent } from './adminPanelUE/adminPanelUE.component'
 import {AuthGuard} from './app.auth-guard.service';
 import {LoginBanned} from "./login/login-banned-user.component";
 import {SharedService} from "./shared.service";
+import {SendingMessageComponent} from "./messages/sending/sending-message.component";
+import {ReceivedMessagesComponent} from "./messages/received/received-messages.component";
+import {SentMessagesComponent} from "./messages/sent/sent-messages.component";
+import {MessageBoxComponent} from "./messages/messagebox/messagebox.component";
 
 import {PolishDatePipe} from "./util/pipes/polish.date.pipe"; 
 import {ShorterTimePipe} from "./util/pipes/shorter.time.pipe";
@@ -82,7 +86,11 @@ declare let jQuery:Object;
         AdminComponent,
         AdminPanelUEComponent,
         PolishDatePipe,
-        ShorterTimePipe
+        ShorterTimePipe,
+        SendingMessageComponent,
+        ReceivedMessagesComponent,
+        SentMessagesComponent,
+        MessageBoxComponent
     ],
     imports: [BrowserModule,
               FormsModule,

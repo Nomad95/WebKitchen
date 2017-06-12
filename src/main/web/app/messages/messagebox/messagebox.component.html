@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<section>
+    <ul class="nav nav-tabs-message">
+        <li class="active" class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Wiadomości
+                <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a data-toggle="tab" href="#received">Odebrane</a></li>
+                <li><a data-toggle="tab" href="#sent">Wysłane</a></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="received" class="tab-pane">
+            <received-messages></received-messages>
+        </div>
+        <div id="sent" class="tab-pane">
+            <sent-messages></sent-messages>
+        </div>
+    </div>
+
+    <sending-message> </sending-message>
+
+</section><!--section close-->

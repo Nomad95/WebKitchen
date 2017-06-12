@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface MessageService {
 
-    Message sendMessage(Message message, String sender_username, String recipient_username) throws NoResultException;
+    Message sendMessage(Message message, String sender_username, String recipient_nick) throws NoResultException;
 
     List<Message> getAllOfMyReceivedMessage(String recipient_username) throws NoResultException;
 

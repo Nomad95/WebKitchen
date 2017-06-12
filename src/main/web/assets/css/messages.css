@@ -1,0 +1,28 @@
+.new-message #nick{
+    width: 200px;
+}
+
+.new-message #title{
+    width: 400px;
+}
+
+.new-message #message-contents{
+    width: 90%;
+}
+
+.new-message .alert-danger{
+    width: 200px;
+}
+
+.new-message .alert-success{
+    width: 200px;
+}
+.new-message h3{
+    text-align: left;
+}
+
+.nav-tabs-message .dropdown-toggle{
+    width: 130px;
+    background: lightblue;
+}
+

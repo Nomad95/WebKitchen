@@ -5,9 +5,10 @@ import {Observable}    from 'rxjs/Observable';
 import 'app/rxjs-operators';
 import 'rxjs/Rx';
 import {UserAccount} from '../registration/user-account';
+import {Message} from "./message";
 
 @Injectable()
-export class AdminPanelUEService {
+export class MessageService {
 
     private headers = null;
     private url;
@@ -26,19 +27,32 @@ export class AdminPanelUEService {
 
     }
 
-    sendMessage(message): Observable<UserAccount>{
-        this.url = '/api/user/create';
-        return this.http.post(this.url,JSON.stringify(data),{headers :this.headers})
+    sendMessage(message,recipient_username ): Observable<Message>{
+        this.url = '/api/message/send/'+recipient_username;
+        return this.http.post(this.url,JSON.stringify(message),{headers :this.headers})
             .map(res => res.json())
             .catch(this.handleError);
+    }
+
+    getNicksAllUser(): Observable<any>{
+        this.url = '/api/user/nick/all';
+        return this.http.get(this.url,{headers :this.headers})
+            .map((res:Response) => res.json());
     }
 
 
 
 
+    getMyReceivedMessages(): Observable<any> {
+        this.url = '/api/message//myMessages/received';
+        return this.http.get(this.url, {headers: this.headers})
+            .map(res => res.json())
+            .catch(this.handleError);
 
-    getUserAccountByName(data): Observable<any> {
-        this.url = '/api/user/account/' + data;
+    }
+
+    getMySentMessages(): Observable<any> {
+        this.url = '/api/message//myMessages/sent';
         return this.http.get(this.url, {headers: this.headers})
             .map(res => res.json())
             .catch(this.handleError);
@@ -51,21 +65,6 @@ export class AdminPanelUEService {
         return this.http.delete(this.url, {headers: this.headers})
             .map(() => null)
             .catch(this.handleError);
-    }
-
-    createBanForUser(data, idUser): Observable<UserAccount> {
-        this.url = '/api/user/banned/create/' + idUser;
-        return this.http.post(this.url, JSON.stringify(data), {headers: this.headers})
-            .map(res => res.json())
-            .catch(this.handleError);
-    }
-
-    getEventDetailsByTitle(data): Observable<any> {
-        this.url = '/api/event/detailed/title/' + data;
-        return this.http.get(this.url, {headers: this.headers})
-            .map(res => res.json())
-            .catch(this.handleError);
-
     }
 
     private handleError(error: any): Promise<any> {

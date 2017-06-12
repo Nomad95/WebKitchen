@@ -2,6 +2,7 @@ package org.JKDW.user.service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +42,8 @@ public interface UserAccountService {
 	Boolean checkVariableIsBanned(String username);
 
 	Boolean checkIfUserHasRoleAdmin();
+
+	List<Map<String,Object>> getAllNicks();
 
 	static String getMyUsernameFromToken(HttpServletRequest request, TokenUtils tokenUtils){
 		String myUsernameFromToken;

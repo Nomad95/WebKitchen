@@ -1,8 +1,6 @@
-import {MessageService} from "./message.service";
+import {MessageService} from "../message.service";
 import {Component, OnInit} from "@angular/core";
 import {FormGroup} from "@angular/forms";
-import {find} from "../../../../../build/generated-web-resources/static/js/lib/rxjs/operator/find";
-
 interface Nicks {
     nick: string;
 }
@@ -10,66 +8,7 @@ interface Nicks {
 @Component({
     selector: 'sending-message',
     providers: [MessageService],
-    template:`        
-    <div class="new-message">    
-      <form #messageForm="ngForm">
-        <div class="form-group">
-            <label for="nick">Do: </label>
-            <input #nick="ngModel" 
-                   type="text"
-                   class="form-control" 
-                   name="messageToSend.recipient.nick"
-                   id="nick" 
-                   placeholder="Nick odbiorcy"
-                   (blur)="checkIfNickExist(recipient_nick);"
-                   [(ngModel)] ="recipient_nick"
-            >
-        </div>
-          <div *ngIf="recipientNotExist" class="alert alert-danger" role="alert">
-              Niepoprawny nick odbiorcy
-          </div>
-          <div *ngIf="recipientExist" class="alert alert-success" role="alert">
-              Znaleziono odbiorce
-          </div>
-        <div class="form-group">
-            <label for="title">Temat: </label>
-            <input #title="ngModel"
-                   type="text"
-                   class="form-control"
-                   name="messageToSend.title"
-                   id="title" 
-                   placeholder="Temat wiadomości"
-                   [(ngModel)] = "messageToSend.title"
-            >
-        </div>
-        <div class="form-group">
-            <label for="comment">Treść: </label>
-            <textarea
-                    #contents="ngModel"
-                    class="form-control"
-                    rows="5" 
-                    name="messageToSend.messageContents"
-                    id="message-contents"
-                    placeholder="Treść wiadomości"
-                    [(ngModel)] = "messageToSend.messageContents"
-            ></textarea>
-        </div>
-        <button type="submit" class="btn btn-default"
-                (click)="sendMessageToUser(messageToSend,messageForm);">
-            Wyślij
-        </button>
-        <br/>  
-        <br>
-        <div *ngIf="hasNotBeenSent" class="alert alert-danger" role="alert">
-            Nie wysłano wiadomości
-        </div>
-        <div *ngIf="hasBeenSent" class="alert alert-success" role="alert">
-            Wiadomość wysłana
-        </div>
-        <br>
-      </form>
-    </div>
-    `
+    templateUrl: 'app/messages/sending/sending-message.component.html'
 })
 export class SendingMessageComponent implements OnInit {
 

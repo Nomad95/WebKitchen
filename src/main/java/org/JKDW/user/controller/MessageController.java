@@ -32,6 +32,7 @@ public class MessageController {
                                                      HttpServletRequest request,
                                                     @PathVariable("recipient_username") String recipient_username) {
         try{
+            System.out.println("Wysyłam wiadomość z konta: " + UserAccountService.getMyUsernameFromToken(request, this.tokenUtils));
             Message messageToSend = messageService.sendMessage(message, UserAccountService.getMyUsernameFromToken(request, this.tokenUtils), recipient_username);
             return new ResponseEntity<>(messageToSend, HttpStatus.CREATED);
         }catch (NoResultException e) {

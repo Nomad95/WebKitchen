@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.NoResultException;
 import javax.sql.DataSource;
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
@@ -28,9 +29,9 @@ public class MessageServiceImpl implements MessageService {
 
 
     @Override
-    public Message sendMessage(Message message, String sender_username, String recipient_username) throws NoResultException {
+    public Message sendMessage(Message message, String sender_username, String recipient_nick) throws NoResultException {
         UserAccount sender = userAccountRepository.findByUsername(sender_username);
-        UserAccount recipient = userAccountRepository.findByUsername(recipient_username);
+        UserAccount recipient = userAccountRepository.findByNick(recipient_nick);
         Date date = new Date();
 
         if(sender == null )
@@ -40,6 +41,7 @@ public class MessageServiceImpl implements MessageService {
         message.setSender(sender);
         message.setRecipient(recipient);
         message.setDateOfSend(date);
+        message.setWasRead(false);
 
         messageRepository.save(message);
 
@@ -125,12 +127,14 @@ public class MessageServiceImpl implements MessageService {
             messageRepository.delete(messageToDelete);
     }
 
+    @Transactional
     public void updateSenderColumn(JdbcTemplate jdbcTemplate, String sender_username, Long idUser) {
         jdbcTemplate.update(
                 "update message set sender = ? where id = ?",
                 sender_username, idUser);
     }
 
+    @Transactional
     public void updateRecipientColumn(JdbcTemplate jdbcTemplate, String recipient_username, Long idUser) {
         jdbcTemplate.update(
                 "update message set recipient = ? where id = ?",

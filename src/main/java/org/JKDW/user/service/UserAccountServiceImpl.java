@@ -192,7 +192,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public Boolean checkIfUserHasRoleAdmin() {
         Boolean isAdmin = false;
-        /** Pobiera z SecuirtyUser role w formacie [ROLE_TYP] **/
+        /* Pobiera z SecuirtyUser role w formacie [ROLE_TYP] */
         Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
         System.out.println("W kontexcie jestem "+ authorities);
         for( SimpleGrantedAuthority element : authorities){
@@ -224,12 +224,10 @@ public class UserAccountServiceImpl implements UserAccountService {
         Date firstDateEndOfBan = bannedUser.getDateEndOfBan();
         Time timeEndOfBan = bannedUser.getTimeEndOfBan();
 
-        /** Start Delete timeZone from dateEndOfBan **/
+        /* Start Delete timeZone from dateEndOfBan */
         LocalDate helpVariableWithEndDateOfBan = firstDateEndOfBan.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         Date dateEndOfBan = java.sql.Date.valueOf(helpVariableWithEndDateOfBan);
 
-        System.out.println("por�wnuje " + date + " i " + dateEndOfBan);
-        System.out.println("i czas  " + timeParsed + " i " + timeEndOfBan);
         if (date.before(dateEndOfBan)) {
             return true;
         } else if (date.after(dateEndOfBan)) {
@@ -267,6 +265,13 @@ public class UserAccountServiceImpl implements UserAccountService {
 		return userAccount.getId();
 	}
 
+    @Override
+    public  List<Map<String, Object>> getAllNicks() {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        String sql = "SELECT nick FROM USER_ACCOUNT";
+
+        return jdbcTemplate.queryForList(sql);
+    }
 }
 
 

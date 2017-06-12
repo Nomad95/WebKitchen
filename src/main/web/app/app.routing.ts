@@ -21,6 +21,10 @@ import {LoginService} from './login/login.service';
 import {AdminComponent} from "./admin/admin.component";
 import {AdminPanelUEComponent} from "./adminPanelUE/adminPanelUE.component";
 import {LoginBanned} from "./login/login-banned-user.component";
+import {SendingMessageComponent} from "./messages/sending/sending-message.component";
+import {ReceivedMessagesComponent} from "./messages/received/received-messages.component";
+import {MessageBoxComponent} from "./messages/messagebox/messagebox.component";
+import {SentMessagesComponent} from "./messages/sent/sent-messages.component";
 
 /* TODO: Układać to ładnie i po kolei*/
 const appRoutes: Routes = [
@@ -41,7 +45,11 @@ const appRoutes: Routes = [
     {path: 'events/:id', component: EventDetailsComponent, canActivate: [AuthGuard]},
     {path: 'events/create/new', component: EventCreateComponent, canActivate: [AuthGuard]},
     {path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
-    {path: "admin/panelUE", component: AdminPanelUEComponent, canActivate: [AuthGuard]}
+    {path: "admin/panelUE", component: AdminPanelUEComponent, canActivate: [AuthGuard]},
+    {path: "message/send", component: SendingMessageComponent, canActivate: [AuthGuard]},
+    {path: "messagebox", component: MessageBoxComponent, canActivate: [AuthGuard]},
+    {path: "messagebox/received", component: ReceivedMessagesComponent, canActivate: [AuthGuard]},
+    {path: "messagebox/sent", component: SentMessagesComponent, canActivate: [AuthGuard]}
 ];
 
 export const appRouterProviders = [AuthGuard, LoginService];

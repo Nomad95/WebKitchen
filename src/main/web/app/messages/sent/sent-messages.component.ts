@@ -3,11 +3,11 @@ import {Router} from '@angular/router';
 import {MessageService} from "../message.service";
 
 @Component({
-    selector: 'received-messages',
-    templateUrl: 'app/messages/received/received-messages.component.html',
+    selector: 'sent-messages',
+    templateUrl: 'app/messages/sent/sent-messages.component.html',
     providers: [MessageService]
 })
-export class ReceivedMessagesComponent implements OnInit {
+export class SentMessagesComponent implements OnInit {
 
     constructor(private router: Router, private messageService: MessageService) {
     }

@@ -4,7 +4,7 @@ import {MessageService} from "../message.service";
 
 @Component({
     selector: 'received-messages',
-    templateUrl: 'app/messages/messagebox/received-messages.component.html',
+    templateUrl: 'app/messages/received/received-messages.component.html',
     providers: [MessageService]
 })
 export class ReceivedMessagesComponent implements OnInit {
