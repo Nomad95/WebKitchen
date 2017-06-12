@@ -1,6 +1,7 @@
 import {MessageService} from "../message.service";
 import {Component, OnInit} from "@angular/core";
 import {FormGroup} from "@angular/forms";
+
 interface Nicks {
     nick: string;
 }
