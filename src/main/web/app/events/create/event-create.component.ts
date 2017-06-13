@@ -7,6 +7,7 @@ import {IMyDpOptions, IMyDateModel} from 'mydatepicker';
 
 import { EventType1 } from '../model/eventType1';
 import { EventType2 } from "../model/eventType2";
+import {DatePickerValues} from "../../util/datepicker/date-picker-values.model";
 
 
 
@@ -14,7 +15,7 @@ import { EventType2 } from "../model/eventType2";
 @Component({
     selector: 'event-create',
     templateUrl: 'app/events/create/event-create.component.html',
-    providers: [EventService, LoginService, UtilMethods]
+    providers: [EventService, UtilMethods]
 })
 export class EventCreateComponent implements OnInit {
     constructor(private router: Router,
@@ -74,13 +75,23 @@ export class EventCreateComponent implements OnInit {
     private isProperPhoto = true;
 
     /**
+     * indicates that photo is loaded and can be shown in modal js
+     */
+    private isPhotoUploaded = false;
+
+    /**
+     * path to photo
+     */
+    private pathToPhotoPreview = '';
+
+    /**
      * User address object.
      * needs to be formatted
      */
     private userAddressObject = {};
 
     /**
-     * model for type 1 
+     * model for type 1
      */
     private newEventType1 = new EventType1();
 
@@ -89,31 +100,17 @@ export class EventCreateComponent implements OnInit {
      */
     private newEventType2 = new EventType2();
 
-
-    //fields for proper date picker workflow
-    private dateNow: Date = new Date();
-    private maxBirthYear: number = this.dateNow.getFullYear()-16;
-    private minBirthYear: number = this.dateNow.getFullYear()-105;
-    private maxBirthDate: Date = new Date(this.dateNow.setFullYear(this.maxBirthYear));
-    private myDatePickerOptions: IMyDpOptions;
-    private defaultYearAndMonth:string;
+    /**
+     * Needed for proper date picker input type
+     * @type {DatePickerValues}
+     */
+    private datePicker = new DatePickerValues();
 
     /**
      * Intializes datepicker variables
      */
     initializeDatePickerOptions(): void{
-        this.myDatePickerOptions = {
-            // other options...
-            minYear: <number> this.minBirthYear,
-            maxYear: <number> this.maxBirthYear,
-            indicateInvalidDate: true,
-            showTodayBtn: false,
-            openSelectorTopOfInput: true,
-            markCurrentYear: false,
-            allowDeselectDate: true,
-            disableSince: {year: this.maxBirthDate.getFullYear(), month: this.maxBirthDate.getMonth()+1, day: this.maxBirthDate.getDate()+1}
-        };
-        this.defaultYearAndMonth = this.maxBirthDate.getFullYear()+"-"+(this.maxBirthDate.getMonth()+1);
+        this.datePicker.initializeDatePicker();
     }
 
     /**
@@ -216,6 +213,8 @@ export class EventCreateComponent implements OnInit {
             }
             //path to img (saved in DB)
             this.newEventType1.photo = "/img/dish/" + this.selectedFile.name;
+            this.pathToPhotoPreview = this.newEventType1.photo;
+            this.uploadPhoto(this.selectedFile);
         }
     }
 
@@ -237,6 +236,8 @@ export class EventCreateComponent implements OnInit {
             }
             //path to img (saved in DB)
             this.newEventType2.photo = "/img/dish/" + this.selectedFile.name;
+            this.pathToPhotoPreview = this.newEventType2.photo;
+            this.uploadPhoto(this.selectedFile);
         }
     }
 
@@ -252,11 +253,16 @@ export class EventCreateComponent implements OnInit {
         }
         this.eventService.uploadPhoto(formData)
             .subscribe(data => {
-                    console.log("photo Added")
+                    console.log("photo Added");
                 },
                 err => {
                     console.log("error adding photo")
                 });
+    }
+
+    showPhotoInModal() {
+        if(this.pathToPhotoPreview !== '')
+            this.isPhotoUploaded = true;
     }
 
     /**

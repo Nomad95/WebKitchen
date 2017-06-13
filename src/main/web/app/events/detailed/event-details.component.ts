@@ -8,7 +8,7 @@ import {DetailedEvent} from "../model/detailedEvent";
 @Component({
     selector: 'event-detailed',
     templateUrl: 'app/events/detailed/event-details.component.html',
-    providers: [EventService, LoginService]
+    providers: [EventService]
 })
 export class EventDetailsComponent implements OnInit {
     constructor(private router:ActivatedRoute,

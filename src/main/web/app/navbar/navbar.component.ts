@@ -5,8 +5,7 @@ import {SharedService} from "../shared.service";
 
 @Component({
     selector: 'navbar',
-    templateUrl: 'app/navbar/navbar.component.html',
-  providers: [LoginService]
+    templateUrl: 'app/navbar/navbar.component.html'
 })
 export class NavbarComponent implements OnInit {
   constructor(private loginService:LoginService, private router:Router, private sharedService: SharedService) {
