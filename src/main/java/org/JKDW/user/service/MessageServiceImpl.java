@@ -58,6 +58,7 @@ public class MessageServiceImpl implements MessageService {
         List<Message> myMessagesToReceived = messageRepository.findByRecipient(recipient);
         if(myMessagesToReceived == null)
             throw new NoResultException("This user hasn't any massage to received");
+        myMessagesToReceived.sort((message, message2) ->message.getDateOfSend().compareTo(message2.getDateOfSend()));
 
         return myMessagesToReceived;
     }
@@ -78,6 +79,7 @@ public class MessageServiceImpl implements MessageService {
         List<Message> mySentMessage = messageRepository.findMessageBySender(sender);
         if(sender == null)
             throw new NoResultException("This user hasn't any sent massege ");
+        mySentMessage.sort((message, message2) ->message.getDateOfSend().compareTo(message2.getDateOfSend()));
 
         return mySentMessage;
     }

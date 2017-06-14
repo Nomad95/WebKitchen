@@ -47,6 +47,8 @@ import {MessageBoxComponent} from "./messages/messagebox/messagebox.component";
 
 import {PolishDatePipe} from "./util/pipes/polish.date.pipe"; 
 import {ShorterTimePipe} from "./util/pipes/shorter.time.pipe";
+import {DetailsReceivedMessagesComponent} from "./messages/details/details-received-message.component";
+import {DetailsSentMessagesComponent} from "./messages/details/details-sent-message.component";
 
 declare let jQuery:Object;
 
@@ -90,7 +92,9 @@ declare let jQuery:Object;
         SendingMessageComponent,
         ReceivedMessagesComponent,
         SentMessagesComponent,
-        MessageBoxComponent
+        MessageBoxComponent,
+        DetailsReceivedMessagesComponent,
+        DetailsSentMessagesComponent
     ],
     imports: [BrowserModule,
               FormsModule,

@@ -40,24 +40,36 @@ export class MessageService {
             .map((res:Response) => res.json());
     }
 
-
-
-
     getMyReceivedMessages(): Observable<any> {
-        this.url = '/api/message//myMessages/received';
+        this.url = '/api/message/myMessages/received';
         return this.http.get(this.url, {headers: this.headers})
             .map(res => res.json())
             .catch(this.handleError);
-
     }
 
     getMySentMessages(): Observable<any> {
-        this.url = '/api/message//myMessages/sent';
+        this.url = '/api/message/myMessages/sent';
         return this.http.get(this.url, {headers: this.headers})
             .map(res => res.json())
             .catch(this.handleError);
 
     }
+    getReceivedMessageDetails(id): Observable<any> {
+        this.url = '/api/message/myMessages/received/'+id;
+        return this.http.get(this.url, {headers: this.headers})
+            .map(res => res.json())
+            .catch(this.handleError);
+    }
+
+    getSentMessageDetails(id): Observable<any> {
+        this.url = '/api/message/myMessages/sent/'+id;
+        return this.http.get(this.url, {headers: this.headers})
+            .map(res => res.json())
+            .catch(this.handleError);
+
+    }
+
+
 
 
     deleteEvent(id): Observable<void> {
