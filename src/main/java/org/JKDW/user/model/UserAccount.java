@@ -162,4 +162,8 @@ public class UserAccount {
 	public void setIsBanned(Boolean banned) {
 		isBanned = banned;
 	}
+
+	public boolean isPasswordCorrect(String password){
+		return this.password.equalsIgnoreCase(password);
+	}
 }
