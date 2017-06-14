@@ -63,14 +63,14 @@
                                     </div>-->
                                     <div class="form-group col-md-6" [class.has-error]="datet1.invalid && datet1.touched">
                                         <label class="control-label">Data</label>
-                                        <my-date-picker name="mydate" [options]="myDatePickerOptions"
+                                        <my-date-picker name="mydate" [options]="datePicker.myDatePickerOptions"
                                                         #datet1="ngModel"
                                                         required
                                                         [(ngModel)]="birthDateInput"
                                                         name="newEventType1.date"
                                                         (dateChanged)="onDateChanged($event)"
-                                                        [selDate]="selectedDateNormal"
-                                                        [defaultMonth]="defaultYearAndMonth"
+                                                        [selDate]="datePicker.selectedDateNormal"
+                                                        [defaultMonth]="datePicker.defaultYearAndMonth"
                                                         locale="pl"
                                                         placeholder="rrrr-mm-dd">
                                         </my-date-picker>
@@ -187,10 +187,10 @@
                                 <div class="form-group" [class.has-error]="!isProperPhoto && photot1.touched">
                                     <label class="control-label">Zdjęcie</label>
                                     <input type="file"
+                                           ngModel
                                            class="form-control"
                                            #photot1="ngModel"
                                            placeholder="placeholderPhoto"
-                                           [(ngModel)]="newEventType1.photo"
                                            name="newEventType1.photo" (change)="fileChangeType1($event)"
                                            accept=".jpg,.JPG,.jpeg,.JPEG,.png,.PNG,.bmp,.BMP" >
                                     <div *ngIf="!isProperPhoto && photot1.touched" class="alert alert-danger"
@@ -202,6 +202,7 @@
                                 <div class="col-md-2">
                                     <button type="button" class="btn btn-default"
                                             data-toggle="modal" data-target="#myModalType1"
+                                            (click)="showPhotoInModal()"
                                             [disabled]="!eventCreateForm.valid || !isProperPhoto">Stwórz wydarzenie
                                     </button> <!--[disabled] -> makes button not accessable before validated-->
                                 </div>
@@ -233,6 +234,7 @@
                                                 </li>
                                                 <li>Opis: {{newEventType1.description}}</li>
                                             </ul>
+                                            <img *ngIf="isPhotoUploaded" [src]="pathToPhotoPreview" class="img-responsive">
                                         </div>
                                         <div class="modal-footer">
                                             <button *ngIf="!isEventCreated" type="button" class="btn btn-default"
@@ -292,14 +294,14 @@
                                     </div>
                                     <div class="form-group col-md-6" [class.has-error]="datet2.invalid && datet2.touched">
                                         <label class="control-label">Data</label>
-                                        <my-date-picker name="mydate2" [options]="myDatePickerOptions"
+                                        <my-date-picker name="mydate2" [options]="datePicker.myDatePickerOptions"
                                                         #datet2="ngModel"
                                                         required
                                                         [(ngModel)]="birthDateInput"
                                                         name="newEventType2.date"
                                                         (dateChanged)="onDateChanged($event)"
-                                                        [selDate]="selectedDateNormal"
-                                                        [defaultMonth]="defaultYearAndMonth"
+                                                        [selDate]="datePicker.selectedDateNormal"
+                                                        [defaultMonth]="datePicker.defaultYearAndMonth"
                                                         locale="pl"
                                                         placeholder="rrrr-mm-dd">
                                         </my-date-picker>
@@ -431,7 +433,7 @@
                                            class="form-control"
                                            placeholder="placeholderPhoto"
                                            #photot1="ngModel"
-                                           [(ngModel)]="newEventType2.photo"
+                                           ngModel
                                            (change)="fileChangeType2($event)" name="newEventType2.photo"
                                            accept=".jpg,.JPG,.jpeg,.JPEG,.png,.PNG,.bmp,.BMP">
                                     <div *ngIf="!isProperPhoto && photot2.touched" class="alert alert-danger"
@@ -443,6 +445,7 @@
                                     <div class="col-md-2">
                                         <button type="submit" class="btn btn-default"
                                                 data-toggle="modal" data-target="#myModalType2"
+                                                (click)="showPhotoInModal()"
                                                 [disabled]="!eventCreateForm.valid">Stwórz wydarzenie
                                         </button>
                                     </div>
@@ -483,6 +486,7 @@
                                                 </li>
                                                 <li>Opis: {{newEventType2.description}}</li>
                                             </ul>
+                                            <img *ngIf="isPhotoUploaded" [src]="pathToPhotoPreview" class="img-responsive">
                                         </div>
                                         <div class="modal-footer">
                                             <button *ngIf="!isEventCreated" type="button" class="btn btn-default"

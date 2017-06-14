@@ -5,7 +5,7 @@ import {LoginService} from "../../login/login.service";
 @Component({
     selector: 'event-list',
     templateUrl: 'app/events/browser/event-list.component.html',
-    providers: [EventService, LoginService]
+    providers: [EventService]
 })
 export class EventListComponent implements OnInit {
     constructor(

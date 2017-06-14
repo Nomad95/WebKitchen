@@ -185,6 +185,7 @@ export class EventService {
             xhr.setRequestHeader('X-Auth-token', this.token);
             xhr.setRequestHeader('enctype', 'multipart/form-data');
             xhr.send(formData);
+            //this.map(res => res.json());
         });
     }
 

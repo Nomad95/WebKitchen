@@ -35,20 +35,20 @@ import {UserParticipateEventsComponent} from "./events/profile/user-participate-
 import {UserCreatedEventsComponent} from "./events/profile/user-created-events.component";
 import { AdminComponent } from './admin/admin.component'
 import { AdminPanelUEComponent } from './adminPanelUE/adminPanelUE.component'
-
-
-import {AuthGuard} from './app.auth-guard.service';
-import {LoginBanned} from "./login/login-banned-user.component";
-import {SharedService} from "./shared.service";
+import {DetailsReceivedMessagesComponent} from "./messages/details/details-received-message.component";
+import {DetailsSentMessagesComponent} from "./messages/details/details-sent-message.component";
 import {SendingMessageComponent} from "./messages/sending/sending-message.component";
 import {ReceivedMessagesComponent} from "./messages/received/received-messages.component";
 import {SentMessagesComponent} from "./messages/sent/sent-messages.component";
 import {MessageBoxComponent} from "./messages/messagebox/messagebox.component";
+import {LoginService} from "./login/login.service";
+
+import {AuthGuard} from './app.auth-guard.service';
+import {LoginBanned} from "./login/login-banned-user.component";
+import {SharedService} from "./shared.service";
 
 import {PolishDatePipe} from "./util/pipes/polish.date.pipe"; 
 import {ShorterTimePipe} from "./util/pipes/shorter.time.pipe";
-import {DetailsReceivedMessagesComponent} from "./messages/details/details-received-message.component";
-import {DetailsSentMessagesComponent} from "./messages/details/details-sent-message.component";
 
 declare let jQuery:Object;
 
@@ -111,6 +111,7 @@ declare let jQuery:Object;
         AuthGuard,
         SharedService,
         appRouterProviders,
+        LoginService,
         [{provide: APP_BASE_HREF, useValue: '/'}],
         [{provide: LocationStrategy, useClass: HashLocationStrategy}],
         [{provide: JQ_TOKEN, useValue: jQuery}]
