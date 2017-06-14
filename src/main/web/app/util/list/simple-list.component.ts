@@ -51,7 +51,7 @@ export class SimpleListComponent implements OnInit {
     /**
      * quantity of product
      */
-    private quantity = '';
+    private quantity = 0;
 
     ngOnInit() {
     }
@@ -61,24 +61,39 @@ export class SimpleListComponent implements OnInit {
      */
     addItem() {
         //if not specified do not show and also trim whitespaces
-        this.currentItem = this.currentItem.replace(/\s\s+/g, ' ');
+        this.currentItem = this.currentItem.replace(/\s\s+/g, '');
+        console.log('string id now \''+this.currentItem+'\'');
         this.currentItem = this.utilMethods.stringToUpperCase(this.currentItem);
         //check if item contains comma
         if (this.currentItem.indexOf(',') > -1){
             this.containsComma = true;
             return;
         }
+
         //combine a string
-        this.currentItem = this.currentItem + ' ' + this.quantity + ' ' + this.measure;
+        if(this.isMeasureAndQuantityProvided())
+            this.currentItem = this.currentItem + ' ' + this.quantity + ' ' + this.measure;
+
         //if item isnt empty, add it
-        if (this.currentItem !== '') {
+        if (this.currentItem) {
             this.listItems.push(this.currentItem);
             this.currentItem = '';
             this.eventClick.emit(this.listItems);
             this.containsComma = false;
         }
         this.measure = '';
-        this.quantity = '';
+        this.quantity = 0;
+    }
+
+    /**
+     * checks is quantity and mesure values can be added to string
+     */
+    private isMeasureAndQuantityProvided() {
+        //quant cant be null
+        //measure cant be null
+        //quan cant be 0
+        //measure cant be empty
+        return (this.quantity && this.measure) && (this.quantity > 0 && this.measure != '');
     }
 
     /**

@@ -260,6 +260,10 @@ export class EventCreateComponent implements OnInit {
                 });
     }
 
+    /**
+     * sets boolean isPhotoUploaded to true if userhas provided a photo, to show 
+     * him in modal event overall presentation
+     */
     showPhotoInModal() {
         if(this.pathToPhotoPreview !== '')
             this.isPhotoUploaded = true;
