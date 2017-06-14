@@ -2,7 +2,7 @@
     Szczegóły wiadomości
     <br>
     <p> Od: {{message.sender.nick}} </p>
-    <p> Wysłana: {{message.dateOfSend}}</p>
+    <p> Wysłana: {{message.dateOfSend |date| polishDate}}</p>
 
     <hr>
     {{message.title}}
