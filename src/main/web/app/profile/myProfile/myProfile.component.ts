@@ -16,7 +16,7 @@ import { TAB_COMPONENTS  } from '../../tabs/Tabset';
     styleUrls: ['css/tabs.css'],
     providers: [MyProfileService, PreferedCuisineService, CuisinesService]
 })
-export class MyProfileComponent implements OnInit, OnDestroy {
+export class MyProfileComponent implements OnInit {
     private isDataAvailable: boolean = false;
     private precentageFilled: any = 0;
     private profileCompletion: number;
@@ -39,7 +39,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
     private birthDate: Date;
     private birthDateInput: Object = { date: 
                     { year: '', month: '', day: '' } 
-                };;
+                };
     private selectedBirthDateNormal: string = '';
     private selectedBirthDateTextNormal: string = '';
     private defaultYearAndMonth:string;
