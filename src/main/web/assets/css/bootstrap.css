@@ -8003,3 +8003,7 @@ p[data-value]:after {
 	}
 
 }
+/* preferred cuisines - dropdown menu */
+.ui-select-choices{
+	width: 300px !important;
+}
