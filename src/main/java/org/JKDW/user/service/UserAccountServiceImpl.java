@@ -10,15 +10,17 @@ import java.time.ZoneId;
 import java.util.*;
 
 import javax.persistence.NoResultException;
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 import org.JKDW.user.model.BannedUser;
-import org.JKDW.user.model.DTO.StringRequestBody;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 import org.JKDW.user.model.DTO.UserAccountDTO;
+import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.repository.BannedUserRepository;
 import org.JKDW.user.repository.UserAccountRepository;
+import org.apache.tomcat.jni.Local;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +50,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Autowired
     private BannedUserRepository bannedUserRepository;
 
-
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     /**
      * @return Returns all user accounts
      */
@@ -75,7 +78,6 @@ public class UserAccountServiceImpl implements UserAccountService {
      * without password etc
      */
     @Override
-    @Transactional
     public UserAccountDTO getUserAccountDTOById(Long id) {
         UserAccount userAccount = userAccountRepository.findOne(id);
         System.out.println(userAccount);
@@ -100,9 +102,8 @@ public class UserAccountServiceImpl implements UserAccountService {
      * @throws Exception when an account with specified id exists
      */
     @Override
-    @Transactional
     public UserAccount createUserAccount(UserAccountCreateDTO userAccount) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        /*passwordEncoder = new BCryptPasswordEncoder();*/
         UserAccount newUserAccount = new UserAccount(userAccount);
         newUserAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
         newUserAccount.setIsFilled(false);
@@ -190,7 +191,6 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    @Transactional
     public Boolean checkIfUserHasRoleAdmin() {
         Boolean isAdmin = false;
         /* Pobiera z SecuirtyUser role w formacie [ROLE_TYP] */
@@ -258,6 +258,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 	 * @return id of user
      */
 	@Override
+	@Transactional
 	public Long findIdOfUsersUsername(String username) {
 		UserAccount userAccount = loadUserByUsername(username);
 		if(userAccount == null)
@@ -266,40 +267,26 @@ public class UserAccountServiceImpl implements UserAccountService {
 	}
 
     @Override
-    @Transactional
     public  List<Map<String, Object>> getAllNicks() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         String sql = "SELECT nick FROM USER_ACCOUNT";
 
         return jdbcTemplate.queryForList(sql);
     }
-
-    /**
-     * Checks if username is taken, if is returns true if not false
-     */
     @Override
-    public Boolean checkIfUsernameIsTaken(String username) {
-        UserAccount byUsername = userAccountRepository.findByUsername(username);
-        return byUsername != null;
-    }
-
-    /**
-     * Checks if email is taken, if is returns true if not false
-     */
-    @Override
-    public Boolean checkIfEmailIsTaken(StringRequestBody email) {
-        System.out.println(email);
-        UserAccount byEmail = userAccountRepository.findByEmail(email.getEmail());
-        return byEmail != null;
-    }
-
-    /**
-     * Checks if nick is taken, if is returns true if not false
-     */
-    @Override
-    public Boolean checkIfNickIsTaken(String nick) {
-        UserAccount byNick = userAccountRepository.findByNick(nick);
-        return byNick != null;
+    public UserAccount changePassword(UserAccountPasswordChangeDTO userAccountPasswordDTO) {
+        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        UserAccount foundUserAccount = userAccountRepository.findOne(userAccountPasswordDTO.getId());
+        String oldPasswordEncoded = passwordEncoder.encode(userAccountPasswordDTO.getOldPassword());
+        System.out.println(oldPasswordEncoded);
+        if(foundUserAccount.isPasswordCorrect(oldPasswordEncoded)){
+            System.out.println("Is correct");
+            foundUserAccount.setPassword(passwordEncoder.encode(userAccountPasswordDTO.getPassword()));
+        }else{
+            System.out.println("Isn't correct");
+        }
+        System.out.println(passwordEncoder.encode(userAccountPasswordDTO.getPassword()));
+        return foundUserAccount;
     }
 }
 

@@ -16,7 +16,7 @@ import { TAB_COMPONENTS  } from '../../tabs/Tabset';
     styleUrls: ['css/tabs.css'],
     providers: [MyProfileService, PreferedCuisineService, CuisinesService]
 })
-export class MyProfileComponent implements OnInit {
+export class MyProfileComponent implements OnInit, OnDestroy {
     private isDataAvailable: boolean = false;
     private precentageFilled: any = 0;
     private profileCompletion: number;
@@ -39,7 +39,7 @@ export class MyProfileComponent implements OnInit {
     private birthDate: Date;
     private birthDateInput: Object = { date: 
                     { year: '', month: '', day: '' } 
-                };
+                };;
     private selectedBirthDateNormal: string = '';
     private selectedBirthDateTextNormal: string = '';
     private defaultYearAndMonth:string;
@@ -303,7 +303,7 @@ export class MyProfileComponent implements OnInit {
         
     calculatePercentageFilled(): void{
         this.profileCompletion = 0;
-        if(this.selectedBirthDateTextNormal) this.profileCompletion+=1;
+        if(this.userProfile.birthDate) this.profileCompletion+=1;
         if(this.userProfile.city) this.profileCompletion+=1;
         if(this.userProfile.description) this.profileCompletion+=1;
         if(this.userProfile.flatNumber || this.userProfile.streetNumber) this.profileCompletion+=1;
