@@ -1,0 +1,32 @@
+<section>
+    <div class="container-fluid">
+        <div class="row content">
+            <div class="col-sm-2 sidenav">
+                <h4>Wiadomości</h4>
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active"><a data-toggle="tab" href="#received">Odebrane</a></li>
+                    <li><a data-toggle="tab" href="#sent">Wysłane</a></li>
+                    <li><a data-toggle="tab" href="#sending"> Nowa </a> </li>
+                </ul><br>
+            </div>
+
+            <div class="col-sm-9">
+                <div class="tab-content">
+                    <div id="received" class="tab-pane">
+                        <received-messages></received-messages>
+                    </div>
+                    <div id="sent" class="tab-pane">
+                        <sent-messages></sent-messages>
+                    </div>
+                    <div id="sending" class="tab-pane">
+                        <sending-message></sending-message>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</section><!--section close-->

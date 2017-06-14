@@ -4,10 +4,11 @@ import { Injectable } from '@angular/core';
 export class SharedService {
     private isBanned: boolean;
     private isAdmin: boolean = false;
+    private hasNewMessage: boolean;
 
-    getIsBanned():boolean {
+    public getIsBanned():boolean {
     return this.isBanned;
-}
+    }
 
     public setIsBanned(_isBanned:boolean) {
         this.isBanned = _isBanned;
@@ -20,7 +21,12 @@ export class SharedService {
         this.isAdmin = _isAdmin;
     }
 
-    testService() {
-        console.log('share!');
+    public getHasNewMessage():boolean {
+        return this.hasNewMessage;
     }
+
+    public setHasNewMessage(_hasNewMessage:boolean) {
+        this.hasNewMessage = _hasNewMessage;
+    }
+
 }

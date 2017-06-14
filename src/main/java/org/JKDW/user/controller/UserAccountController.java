@@ -2,6 +2,7 @@ package org.JKDW.user.controller;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 import org.JKDW.user.model.DTO.UserAccountDTO;
@@ -132,5 +133,11 @@ public class UserAccountController {
 			return new ResponseEntity<>("{\"role\": \"user\"}", HttpStatus.OK);
 		}
 
+	}
+
+	@RequestMapping( value="/nick/all",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Map<String,Object>>> getNickAllOfUsers(){
+		List<Map<String,Object>> nicks = userAccountService.getAllNicks();
+		return new ResponseEntity<>(nicks,HttpStatus.OK);
 	}
 }

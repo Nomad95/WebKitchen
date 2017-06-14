@@ -1,0 +1,60 @@
+<div class="new-message">
+    <h3>Nowa wiadomość</h3>
+    <hr>
+    <form #messageForm="ngForm">
+        <div class="form-group">
+            <label for="nick" >Do: </label>
+            <input #nick="ngModel"
+                   type="text"
+                   class="form-control"
+                   name="messageToSend.recipient.nick"
+                   id="nick"
+                   placeholder="Nick odbiorcy"
+                   (blur)="checkIfNickExist(recipient_nick);"
+                   [(ngModel)] ="recipient_nick"
+            >
+        </div>
+        <div *ngIf="recipientNotExist" class="alert alert-danger" role="alert">
+            Niepoprawny nick odbiorcy
+        </div>
+        <div *ngIf="recipientExist" class="alert alert-success" role="alert">
+            Znaleziono odbiorce
+        </div>
+        <div class="form-group">
+            <label for="title">Temat: </label>
+            <input #title="ngModel"
+                   type="text"
+                   class="form-control"
+                   name="messageToSend.title"
+                   id="title"
+                   placeholder="Temat wiadomości"
+                   [(ngModel)] = "messageToSend.title"
+            >
+        </div>
+        <div class="form-group">
+            <label for="message-contents">Treść: </label>
+            <textarea
+                    #contents="ngModel"
+                    class="form-control"
+                    rows="5"
+                    name="messageToSend.messageContents"
+                    id="message-contents"
+                    placeholder="Treść wiadomości"
+                    [(ngModel)] = "messageToSend.messageContents"
+            ></textarea>
+        </div>
+        <button type="submit" class="btn btn-default"
+                (click)="sendMessageToUser(messageToSend,messageForm);">
+            Wyślij
+        </button>
+        <br/>
+        <br>
+        <div *ngIf="hasNotBeenSent" class="alert alert-danger" role="alert">
+            Nie wysłano wiadomości
+        </div>
+        <div *ngIf="hasBeenSent" class="alert alert-success" role="alert">
+            Wiadomość wysłana
+        </div>
+        <br>
+    </form>
+</div>

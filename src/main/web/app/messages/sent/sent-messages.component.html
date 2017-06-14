@@ -1,0 +1,78 @@
+<section>
+    <div class="well">
+        <div class="message-details">
+            <h3>Wiadomości wysłane</h3>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead></thead>
+                    <tbody>
+                    <div *ngFor="let message of sentMessages | slice:indexFirstMsgOnSite:indexFirstMsgOnSite+10; let i=index">
+                        <hr/>
+                        <tr>
+                            <div *ngIf="!message.wasRead">
+                                <td>
+                                    <div class="message-checkbox" style="font-weight: bold">
+                                        <input type="checkbox" value="">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="message-nick" style="font-weight: bold">
+                                        {{message.recipient.nick}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="message-title" style="font-weight: bold">
+                                        <a [routerLink]="['/messagebox/sent/details', message.id ]"> {{message.title}} </a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="message-date" style="font-weight: bold">
+                                        {{message.dateOfSend | date | polishDate }}
+                                    </div>
+                                </td>
+                            </div>
+                            <div *ngIf="message.wasRead">
+                                <td>
+                                    <div class="message-checkbox">
+                                        <input type="checkbox" value="">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="message-nick">
+                                        {{message.recipient.nick}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="message-title">
+                                        {{message.title}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="message-date">
+                                        {{message.dateOfSend}}
+                                    </div>
+                                </td>
+                            </div>
+                        </tr>
+                    </div>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <ul class="pagination">
+        <ng-container *ngFor="let page of indexesOfPage">
+            <li *ngIf="page == currentIndexOfPage" class="active" >
+                <a  href="#">{{page}}</a>
+            </li>
+            <li *ngIf="page != currentIndexOfPage">
+                <a  href="#">{{page}}</a>
+            </li>
+        </ng-container>
+
+    </ul>
+
+</section><!--section close-->
+
+
+
