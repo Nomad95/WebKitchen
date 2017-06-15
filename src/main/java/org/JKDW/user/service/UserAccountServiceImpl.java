@@ -10,16 +10,15 @@ import java.time.ZoneId;
 import java.util.*;
 
 import javax.persistence.NoResultException;
-import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 import org.JKDW.user.model.BannedUser;
+import org.JKDW.user.model.DTO.StringRequestBody;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 import org.JKDW.user.model.DTO.UserAccountDTO;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.repository.BannedUserRepository;
 import org.JKDW.user.repository.UserAccountRepository;
-import org.apache.tomcat.jni.Local;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -271,6 +269,34 @@ public class UserAccountServiceImpl implements UserAccountService {
         String sql = "SELECT nick FROM USER_ACCOUNT";
 
         return jdbcTemplate.queryForList(sql);
+    }
+
+    /**
+     * Checks if username is taken, if is returns true if not false
+     */
+    @Override
+    public Boolean checkIfUsernameIsTaken(String username) {
+        UserAccount byUsername = userAccountRepository.findByUsername(username);
+        return byUsername != null;
+    }
+
+    /**
+     * Checks if email is taken, if is returns true if not false
+     */
+    @Override
+    public Boolean checkIfEmailIsTaken(StringRequestBody email) {
+        System.out.println(email);
+        UserAccount byEmail = userAccountRepository.findByEmail(email.getEmail());
+        return byEmail != null;
+    }
+
+    /**
+     * Checks if nick is taken, if is returns true if not false
+     */
+    @Override
+    public Boolean checkIfNickIsTaken(String nick) {
+        UserAccount byNick = userAccountRepository.findByNick(nick);
+        return byNick != null;
     }
 }
 

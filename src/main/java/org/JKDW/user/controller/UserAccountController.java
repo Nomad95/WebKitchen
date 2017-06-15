@@ -4,18 +4,17 @@ package org.JKDW.user.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.JKDW.user.model.DTO.StringRequestBody;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 import org.JKDW.user.model.DTO.UserAccountDTO;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.model.UserDetails;
 import org.JKDW.user.service.UserAccountService;
 import org.JKDW.user.service.UserDetailsService;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -132,12 +131,39 @@ public class UserAccountController {
 		else{
 			return new ResponseEntity<>("{\"role\": \"user\"}", HttpStatus.OK);
 		}
-
 	}
 
 	@RequestMapping( value="/nick/all",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Map<String,Object>>> getNickAllOfUsers(){
 		List<Map<String,Object>> nicks = userAccountService.getAllNicks();
 		return new ResponseEntity<>(nicks,HttpStatus.OK);
+	}
+
+	/**
+	 * See service for more info
+     */
+	@RequestMapping( value="/registration/taken/username/{username}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> checkIfUsernameIsTaken(@PathVariable("username")String username){
+		Boolean bool = userAccountService.checkIfUsernameIsTaken(username);
+		return new ResponseEntity<>(bool,HttpStatus.OK);
+	}
+
+	/*
+	i made this POST bcuz we cant pass email with coma to url. Email is sent with request body
+	 */
+	@RequestMapping(
+			value="/registration/taken/email",
+			method = RequestMethod.POST,
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> checkIfEmailIsTaken(@RequestBody StringRequestBody email) {
+		Boolean bool = userAccountService.checkIfEmailIsTaken(email);
+		return new ResponseEntity<>(bool, HttpStatus.OK);
+	}
+
+	@RequestMapping( value="/registration/taken/nick/{nick}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> checkIfNickIsTaken(@PathVariable("nick")String nick) {
+		Boolean bool = userAccountService.checkIfNickIsTaken(nick);
+		return new ResponseEntity<>(bool, HttpStatus.OK);
 	}
 }
