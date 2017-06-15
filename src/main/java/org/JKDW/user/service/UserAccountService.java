@@ -11,7 +11,6 @@ import org.JKDW.security.TokenUtils;
 import org.JKDW.user.model.DTO.StringRequestBody;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 import org.JKDW.user.model.DTO.UserAccountDTO;
-import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
 import org.JKDW.user.model.UserAccount;
 
 /*
@@ -44,7 +43,6 @@ public interface UserAccountService {
 	Boolean checkIfUserHasRoleAdmin();
 
 	List<Map<String,Object>> getAllNicks();
-	UserAccount changePassword(UserAccountPasswordChangeDTO userAccountPasswordDTO);
 
 	Boolean checkIfUsernameIsTaken(String username);
 

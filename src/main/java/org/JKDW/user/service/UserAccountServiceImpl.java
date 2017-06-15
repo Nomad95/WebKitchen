@@ -75,7 +75,6 @@ public class UserAccountServiceImpl implements UserAccountService {
      * without password etc
      */
     @Override
-    @Transactional
     public UserAccountDTO getUserAccountDTOById(Long id) {
         UserAccount userAccount = userAccountRepository.findOne(id);
         System.out.println(userAccount);
@@ -100,7 +99,6 @@ public class UserAccountServiceImpl implements UserAccountService {
      * @throws Exception when an account with specified id exists
      */
     @Override
-    @Transactional
     public UserAccount createUserAccount(UserAccountCreateDTO userAccount) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         UserAccount newUserAccount = new UserAccount(userAccount);
@@ -119,7 +117,6 @@ public class UserAccountServiceImpl implements UserAccountService {
      * @return updated account information
      */
     @Override
-    @Transactional
     public UserAccount updateUserAccount(UserAccount userAccount) throws NoResultException {
         UserAccount foundUserAccount = userAccountRepository.findOne(userAccount.getId());
         if (foundUserAccount == null) {
@@ -134,7 +131,6 @@ public class UserAccountServiceImpl implements UserAccountService {
      * @param id of deleted user account
      */
     @Override
-    @Transactional
     public void deleteUserAccount(Long id) throws NoResultException {
         UserAccount foundUserAccount = userAccountRepository.findOne(id);
         if (foundUserAccount == null) {
@@ -192,7 +188,6 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    @Transactional
     public Boolean checkIfUserHasRoleAdmin() {
         Boolean isAdmin = false;
         /* Pobiera z SecuirtyUser role w formacie [ROLE_TYP] */
@@ -269,7 +264,6 @@ public class UserAccountServiceImpl implements UserAccountService {
 	}
 
     @Override
-    @Transactional
     public  List<Map<String, Object>> getAllNicks() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         String sql = "SELECT nick FROM USER_ACCOUNT";
@@ -281,7 +275,6 @@ public class UserAccountServiceImpl implements UserAccountService {
      * Checks if username is taken, if is returns true if not false
      */
     @Override
-    @Transactional
     public Boolean checkIfUsernameIsTaken(String username) {
         UserAccount byUsername = userAccountRepository.findByUsername(username);
         return byUsername != null;
@@ -291,7 +284,6 @@ public class UserAccountServiceImpl implements UserAccountService {
      * Checks if email is taken, if is returns true if not false
      */
     @Override
-    @Transactional
     public Boolean checkIfEmailIsTaken(StringRequestBody email) {
         System.out.println(email);
         UserAccount byEmail = userAccountRepository.findByEmail(email.getEmail());
@@ -302,7 +294,6 @@ public class UserAccountServiceImpl implements UserAccountService {
      * Checks if nick is taken, if is returns true if not false
      */
     @Override
-    @Transactional
     public Boolean checkIfNickIsTaken(String nick) {
         UserAccount byNick = userAccountRepository.findByNick(nick);
         return byNick != null;
