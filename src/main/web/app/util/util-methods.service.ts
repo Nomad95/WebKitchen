@@ -22,5 +22,17 @@ export class UtilMethods {
         }
         return value;
     }
-    
+
+    /**
+     * Takes string and return same string with lowercased all letters
+     * @param value to lowercase
+     * @returns {string} lowercased string
+     */
+    public stringAllToLowerCase(value: string): string{
+        if (value) {
+            return value.toLowerCase();
+        }
+        return value;
+    }
+
 }

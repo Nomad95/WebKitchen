@@ -8,7 +8,7 @@
                      z tymi twoimi placeholderami ewentualnie dodać tam nową klase w css tym placeholderowym aby sie zmieniało
                      np na czerwono obramowanie czy cośtam-->
 
-                    <div class="form-group" [class.has-error]="userName.invalid && userName.touched">
+                    <div class="form-group" [class.has-error]="(userName.invalid && userName.touched) || isUsernameTaken ">
                         <label class="control-label" for="idUsername">Login</label>
                         <input #userName="ngModel"
                                pattern="....+"
@@ -18,10 +18,14 @@
                                name="userAccountToAdd.username"
                                required
                                [(ngModel)]="userAccountToAdd.username"
+                               (blur)="checkIfUsernameIsTaken()"
                                id="idUsername">
                         <!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
                         <div *ngIf="userName.invalid && userName.touched" class="alert alert-danger" role="alert">
                             Login musi się składać od 4 do 25 liter.
+                        </div>
+                        <div *ngIf="isUsernameTaken" class="alert alert-danger" role="alert">
+                            Podany login jest już zajęty.
                         </div>
                     </div>
 
@@ -34,6 +38,7 @@
                                required
                                class="form-control"
                                name="userAccountToAdd.password"
+                               (blur)="checkIfPasswordsAreSame()"
                                [(ngModel)]="userAccountToAdd.password">
                         <div *ngIf="userPassword.invalid && userPassword.touched" class="alert alert-danger"
                              role="alert">
@@ -41,7 +46,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group" [class.has-error]="confirm.invalid && confirm.touched">
+                    <div class="form-group" [class.has-error]="(confirm.invalid && confirm.touched) || passwordsDiffer">
                         <label class="control-label">Potwierdź hasło</label>
                         <input #confirm="ngModel"
                                pattern="......+"
@@ -50,13 +55,17 @@
                                class="form-control"
                                required
                                name="confirmPassword"
+                               (blur)="checkIfPasswordsAreSame()"
                                [(ngModel)]="confirmPassword">
                         <div *ngIf="confirm.invalid && confirm.touched" class="alert alert-danger" role="alert">
                             Hasło musi się składać z przynajmniej 6 liter.
                         </div>
+                        <div *ngIf="passwordsDiffer" class="alert alert-danger" role="alert">
+                            Hasła się różnią.
+                        </div>
                     </div>
 
-                    <div class="form-group" [class.has-error]="email.invalid && email.touched">
+                    <div class="form-group" [class.has-error]="(email.invalid && email.touched) || isEmailTaken">
                         <label class="control-label">E-mail</label>
                         <input #email="ngModel"
                                type="email"
@@ -65,29 +74,31 @@
                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                                class="form-control"
                                name="userAccountToAdd.email"
+                               (blur)="checkIfEmailIsTaken()"
                                [(ngModel)]="userAccountToAdd.email">
                         <div *ngIf="email.invalid && email.touched" class="alert alert-danger" role="alert">
                             Ten E-mail jest niepoprawny.
+                        </div>
+                        <div *ngIf="isEmailTaken" class="alert alert-danger" role="alert">
+                            Podany E-mail jest już zajęty.
                         </div>
                     </div>
 
                     <div class="form-group" [class.has-error]="country.invalid && country.touched">
                         <label class="control-label">Kraj</label>
-                        <input #country="ngModel"
-                               type="text"
-                               pattern="....+"
-                               maxlength="45"
+                        <select #country="ngModel"
                                required
                                class="form-control"
                                name="userAccountToAdd.country"
-                               (keypress)="userAccountToAdd.country = toUppercase(userAccountToAdd.country)"
                                [(ngModel)]="userAccountToAdd.country">
+                            <option *ngFor="let item of countries" [value]="item">{{item}}</option>
+                        </select>
                         <div *ngIf="country.invalid && country.touched" class="alert alert-danger" role="alert">
                             Nazwa kraju musi składać się z przynajmniej 4 liter.
                         </div>
                     </div>
 
-                    <div class="form-group" [class.has-error]="nick.invalid && nick.touched">
+                    <div class="form-group" [class.has-error]="(nick.invalid && nick.touched) || isNickTaken">
                         <label class="control-label">Nick</label>
                         <input #nick="ngModel"
                                type="text"
@@ -96,10 +107,14 @@
                                maxlength="45"
                                class="form-control"
                                name="userAccountToAdd.nick"
+                               (blur)="checkIfNickIsTaken()"
                                (keypress)="userAccountToAdd.nick = toUppercase(userAccountToAdd.nick)"
                                [(ngModel)]="userAccountToAdd.nick">
                         <div *ngIf="nick.invalid && nick.touched" class="alert alert-danger" role="alert">
                             Nick musi składać się z przynajmniej 4 liter.
+                        </div>
+                        <div *ngIf="isNickTaken" class="alert alert-danger" role="alert">
+                            Podany nick jest już zajęty.
                         </div>
                     </div>
 
