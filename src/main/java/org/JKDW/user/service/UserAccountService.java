@@ -44,7 +44,6 @@ public interface UserAccountService {
 	Boolean checkIfUserHasRoleAdmin();
 
 	List<Map<String,Object>> getAllNicks();
-	UserAccount changePassword(UserAccountPasswordChangeDTO userAccountPasswordDTO);
 
 	Boolean checkIfUsernameIsTaken(String username);
 
