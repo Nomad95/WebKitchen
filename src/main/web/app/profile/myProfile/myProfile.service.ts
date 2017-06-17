@@ -3,6 +3,7 @@
  */
 import { Injectable, Inject } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
+import { Router } from "@angular/router";
 import 'rxjs/add/operator/map';
 import 'app/rxjs-operators';
 import 'rxjs/Rx';
@@ -12,8 +13,9 @@ import {Observable}    from 'rxjs/Observable';
 export class MyProfileService {
     private headers = null;
     public id: number;
+    public usernameChanged = false;
     private url;
-    constructor(private http: Http) {}
+    constructor(private http: Http, private router: Router) {}
 
     setId(id){
         this.id = id;
@@ -61,7 +63,10 @@ export class MyProfileService {
    updateProfile(data):Observable<any> {
          var currentToKey = JSON.parse(localStorage.getItem('toKey'));
         let token = currentToKey && currentToKey.token;
-        
+
+        //get username from the token 
+        let tokenUsername = currentToKey && currentToKey.username;
+
         //create appropriate
         this.headers = new Headers({
           'accept': 'application/json',
@@ -69,13 +74,53 @@ export class MyProfileService {
           'X-Auth-token' : token});
         console.log(JSON.stringify(data));
 
+        if(data.userAccountDTO.username.toString() == tokenUsername.toString()){
+            this.usernameChanged = false;
+        }
+        else{
+            this.usernameChanged = true;
+        }
         return this.http.put('/api/user/details/'+this.id,JSON.stringify(data),{headers :this.headers})
                 .map(res => res.json())
-                .catch(this.handleError);
+                .catch(this.handleUpdateError);
+    }
+
+    /* Check that the given password is correct */
+	oldPasswordIsCorrect(credentials): Observable<boolean>{
+		return this.http.post('/auth',JSON.stringify(credentials),{headers :this.headers})
+				.map(res => {
+                // login successful if there's a jwt token in the response
+                let token = res.json() && res.json().token;
+                if (token) {
+                    // return true if password correct
+                    return true;
+                } else {
+                    // return false if password incorrect
+                    return false;
+                }
+            })
+				.catch(this.handleError);
+	}
+
+    changePassword(userProfileChangePasswordDTO):Observable<any>{
+        return this.http.put('/api/user/changePassword/'+this.id,JSON.stringify(userProfileChangePasswordDTO),{headers :this.headers})
+                .map(res => res.json())
+                .catch(this.handleUpdateError);
     }
     
     private handleError(error: any): Promise<any> {
-        console.error('An error occurred in Registration', error);
+        console.error('An error occurred in Profile', error);
         return Promise.reject(error.message || error);
      }
+
+     private handleUpdateError(error: any): Promise<any> {
+        console.error('An error occurred in updateProfile', error);
+        return Promise.reject(error.message || error);
+     }
+
+    /* removeToken aka Logout */
+	removeToken(): void{
+		localStorage.removeItem('toKey');
+        this.router.navigate(['/login']);
+	}
 }

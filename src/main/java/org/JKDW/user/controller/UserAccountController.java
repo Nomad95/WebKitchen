@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 import org.JKDW.user.model.DTO.UserAccountDTO;
+import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.model.UserDetails;
 import org.JKDW.user.service.UserAccountService;
@@ -91,7 +92,7 @@ public class UserAccountController {
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
-	//TODO: Kondziu to twoja metoda?
+	//TODO: Kondziu to twoja metoda? chyba nie ale g³owy nie dam xD
 	@RequestMapping(value = "/account/test/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserAccountDTO> getUserAccountByName(@PathVariable("id") Long id) {
 		UserAccountDTO userAccountDTO = userAccountService.getUserAccountDTOById(id);
@@ -139,5 +140,16 @@ public class UserAccountController {
 	public ResponseEntity<List<Map<String,Object>>> getNickAllOfUsers(){
 		List<Map<String,Object>> nicks = userAccountService.getAllNicks();
 		return new ResponseEntity<>(nicks,HttpStatus.OK);
+	}
+
+	/**
+	 *
+	 * @param userAccountPasswordChangeDTO - id of UserAccount, oldPassword and newPassword
+	 * @return updated account information
+	 */
+	@RequestMapping(value="/changePassword/{id}",method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserAccount> updateUserAccount(@RequestBody UserAccountPasswordChangeDTO userAccountPasswordChangeDTO){
+		UserAccount updatedUserAccount = userAccountService.changePassword(userAccountPasswordChangeDTO);
+		return new ResponseEntity<>(updatedUserAccount,HttpStatus.OK);
 	}
 }
