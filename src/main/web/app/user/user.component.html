@@ -1,0 +1,19 @@
+<div class="container-fluid">
+    <div class="container">
+        <div>
+            <a [routerLink]="['']" class="btn btn-primary">Home Page</a>
+        </div>
+
+        <div><p class="h3">JSON</p><div>{{jsonResponse}}</div></div>
+
+        <div *ngFor="let message of messages">
+            
+            <p class="h3">{{message.title}}</p>
+            <div>{{message.message}}</div>
+        </div>
+        <div *ngFor="let user of users">
+            <a class="btn btn-primary btn-lg" role="button"
+                                          routerLink="/profile/{{user.username}}">{{user.username}}</a>
+        </div>
+    </div>
+</div>

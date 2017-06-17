@@ -1,0 +1,9 @@
+<div class="well">
+    <p> Do: {{message.sender.nick}} </p>
+    <p> Wysłana: {{message.dateOfSend | date | polishDate}}</p>
+
+    <hr>
+    {{message.title}}
+    <hr>
+    {{message.messageContents}}
+</div>

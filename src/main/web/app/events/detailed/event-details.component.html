@@ -1,0 +1,64 @@
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="well">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table style="width: 100%">
+                                <tr>
+                                    <th style="font-size: 1.8em; color: black" class="text-left">{{ event.title }}</th>
+                                    <th style="font-size: 1.0em; color: black" class="text-right">{{ eventType }}</th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <br/>
+                    <ul class="list-unstyled">
+                        <li>Stworzony przez: {{event.ownerUsername}}</li>
+                        <li>Data: {{event.date | date | polishDate}} {{event.time | shorterTime}}</li>
+                        <li>Adres: {{event.address}}</li>
+                        <li>Nazwa: {{event.dish_name}}</li>
+                        <li>Rodzaj: {{event.dish_kind}}</li>
+                        <li>Dodatkowe informacje: {{event.additional_info}}</li>
+                        <li>Liczba osób: {{event.people_quantity}}</li>
+                        <li>Wolne miejsca: {{event.people_remaining}}</li>
+                        <li>Opis: {{event.description}}</li>
+                        <li *ngIf="event.type == 2">Minimalna liczba przyniesionych produktów:
+                            {{event.quantity_of_products}}
+                        </li>
+                        <li *ngIf="event.type == 2">Produkty do zakupu: {{event.shopping_list}}</li>
+
+                    </ul>
+                    <div *ngIf="hasJoined" class="alert alert-info " role="alert">
+                        Uczestniczysz w tym wydarzeniu.
+                    </div>
+                    <div *ngIf="isOwner" class="alert alert-info " role="alert">
+                        Jesteś twórcą tego wydarzenia.
+                    </div>
+                    <div *ngIf="!canJoin" class="alert alert-danger " role="alert">
+                        Aby uczestniczyć w wydarzeniach, uzupełnij w profilu: imię, nazwisko, datę urodzenia oraz płeć.
+                    </div>
+                    <div *ngIf="isFull" class="alert alert-danger " role="alert">
+                        Brak miejsc.
+                    </div>
+                    <button *ngIf="!hasJoined && !isFull && canJoin && !isOwner" class="btn btn-primary" (click)="assignUserToEvent()"
+                            type="button" id="join" data-loading-text="Sprawdzanie..."
+                            autocomplete="off">Dołącz!
+                    </button><!--TODO: bootstrap.css ładnie-->
+                    <button class="btn btn-primary"
+                            (click)="goBack()"
+                            type="button" id="return"
+                            autocomplete="off">Powrót
+                    </button>
+                    <button *ngIf="hasJoined" class="btn btn-primary"
+                            (click)="resignFromEvent()"
+                            type="button">Zrezygnuj
+                    </button>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

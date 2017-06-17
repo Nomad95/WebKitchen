@@ -1,0 +1,159 @@
+<section>
+
+	<div class="container" style="margin-top: 30px;">
+		<div class="profile-head">
+			<div class="col-md- col-sm-4 col-xs-12">
+				<img src="/img/profile.jpg" class="img-responsive" />
+			</div>
+			<!--col-md-4 col-sm-4 col-xs-12 close-->
+
+			<div class="col-md-5 col-sm-5 col-xs-12">
+				<h5>{{ userProfile.name }} {{ userProfile.surname }}</h5>
+				<p>{{ userProfile.userAccountDTO.country }}</p>
+				<ul>
+					<li><span class="fa fa-briefcase"></span> -</li>
+
+					<li *ngIf="(userProfile.street || userProfile.postCode || userProfile.city) !== ''">
+						<span class="fa fa-home"></span> {{ userProfile.street }},{{ userProfile.postCode }} {{ userProfile.city }}</li>
+					<li *ngIf="(userProfile.street && userProfile.postCode && userProfile.city) === ''">
+						<span class="fa fa-home"></span> - </li>
+
+					<li *ngIf="(userProfile.phoneNumber) !== ''"><span class="fa fa-phone"></span> <a href="#" title="call">{{ userProfile.phoneNumber }}</a></li>
+					<li *ngIf="(userProfile.phoneNumber) === ''"><span class="fa fa-phone"></span> - </li>
+
+					<li *ngIf="(userProfile.userAccountDTO.email) !== ''"><span class="fa fa-envelope"></span>{{ userProfile.userAccountDTO.email }}</li>
+					<li *ngIf="(userProfile.userAccountDTO.email) === ''"><span class="fa fa-envelope"></span> - </li>
+					<br>
+					<li>
+						<p [style.width]="precentageFilled+5+'%'" [attr.data-value]="precentageFilled" class="progresText"> Wypełnienie</p><!--<div id="progress-triangle-down"></div>-->
+						<div id="progressBar"><progress max="100" [value]="precentageFilled" class="completion"></progress></div>
+					</li>
+				</ul>
+
+
+			</div>
+			<!--col-md-8 col-sm-8 col-xs-12 close-->
+
+
+
+
+		</div>
+		<!--profile-head close-->
+	</div>
+	<!--container close-->
+
+
+	<div id="sticky" class="container">
+
+		<!-- Nav tabs -->
+		<!--<ul class="nav nav-tabs nav-menu" role="tablist">
+			<li class="active"><a href="#profile" role="tab"
+				data-toggle="tab"> <i class="fa fa-male"></i> Profil
+			</a></li>
+			<li><a href="#change" role="tab" data-toggle="tab"> <i
+					class="fa fa-key"></i> Edytuj profil
+			</a></li>
+		</ul>-->
+		<tabset class="mainTabs">
+        <tab title="Profil">
+
+			<!--<div class="tab-pane fade active in" id="profile">-->
+				<div class="container">
+				
+					<!--col-sm-12 close-->
+					<br clear="all" />
+					<div class="row">
+						<div class="col-md-12">
+							<h4 class="pro-title">Twój profil:</h4>
+							<hr>
+						</div>
+						<!--col-md-12 close-->
+
+
+						<div class="col-md-6">
+
+							<div class="table-responsive responsiv-table">
+								<table class="table bio-table">
+									<tbody>
+										<tr>
+											<td>Imię</td>
+											<td *ngIf="(userProfile.name) !== ''">{{ userProfile.name }}</td>
+											<td *ngIf="(userProfile.name) === ''"> - </td>
+										</tr>
+										<tr>
+											<td>Nazwisko</td>
+											<td *ngIf="(userProfile.surname) !== ''">{{ userProfile.surname }}</td>
+											<td *ngIf="(userProfile.surname) === ''"> - </td>
+										</tr>
+										<tr>
+											<td>Data urodzenia</td>
+											<td  *ngIf="(userProfile.birthDate) !== ''">{{userProfile.birthDate | date: 'dd-MM-yyyy'}}</td>
+											<td *ngIf="(userProfile.birthDate) === null"> - </td>
+										</tr>
+										<tr>
+											<td>Kraj</td>
+											<td  *ngIf="(userProfile.userAccountDTO.country) !== ''">{{ userProfile.userAccountDTO.country }}</td>
+											<td *ngIf="(userProfile.userAccountDTO.country) === ''"> - </td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!--table-responsive close-->
+						</div>
+						<!--col-md-6 close-->
+
+						<div class="col-md-6">
+
+							<div class="table-responsive responsiv-table">
+								<table class="table bio-table">
+									<tbody>
+										<tr>
+											<td>Email</td>
+											<td *ngIf="(userProfile.userAccountDTO.email) !== ''">{{ userProfile.userAccountDTO.email }}</td>
+											<td *ngIf="(userProfile.userAccountDTO.email) === ''"> - </td>
+										</tr>
+										<tr>
+											<td>Tel</td>
+											<td *ngIf="(userProfile.phoneNumber) !== ''">{{ userProfile.phoneNumber }}</td>
+											<td *ngIf="(userProfile.phoneNumber) === ''"> - </td>
+										</tr>
+										<!--   <tr>    
+        <td>Wypełniony</td>
+        <td>: {{ userProfile.isFilled }}</td>       
+    </tr> -->
+										<tr>
+											<td>Preferowane kuchnie</td>
+											<td *ngIf="userProfile.preferredCuisine?.length > 0">
+												<button class ="cuisine" *ngFor="let prefered of userProfile.preferredCuisine">{{ prefered.name }}</button>
+											</td>
+											<td *ngIf="(userProfile.preferredCuisine | json) === '[]'"> - </td>
+										</tr>
+										<tr>
+											<td>Zweryfikowany</td>
+											<td *ngIf="userProfile.userAccountDTO.isVerified"><img src="/img/ok.png" width="40" heigth="40" class="img-responsive" /></td>
+											<td *ngIf="!userProfile.userAccountDTO.isVerified"><img src="/img/not.png" width="40" heigth="40" class="img-responsive" /></td>
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+							<!--table-responsive close-->
+						</div>
+						<!--col-md-6 close-->
+
+					</div>
+					<!--row close-->
+				</div>
+				<!--container close-->
+ </tab> 
+		
+	
+
+		</tabset>
+			<!--container close -->
+		</div>
+
+</section>
+<!--section close-->
+
+
