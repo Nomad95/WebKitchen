@@ -25,8 +25,7 @@
 					<li *ngIf="(userProfile.userAccountDTO.email) === ''"><span class="fa fa-envelope"></span> - </li>
 					<br>
 					<li>
-						<p [style.width]="precentageFilled+5+'%'" [attr.data-value]="precentageFilled" class="progresText"> Wypełnienie</p><!--<div id="progress-triangle-down"></div>-->
-						<div id="progressBar"><progress max="100" [value]="precentageFilled" class="completion"></progress></div>
+						<div id="progress" class="graph"><div id="bar" [style.width]="precentageFilled+5+'%'"><p>{{precentageFilled}}% wypełnienia</p></div></div>
 					</li>
 				</ul>
 

@@ -264,4 +264,35 @@ public class UserDetails {
 	public void setPreferredCuisine(List<Cuisines> preferredCuisine) {
 		this.preferredCuisine = preferredCuisine;
 	}
+
+	public void initProfileCompletionAtRegistration(){
+		this.setProfileCompletion(1);
+	}
+
+	public void updateUserDetails(UserDetailsUpdateDTO userDetailsDTO){
+		this.setId(userDetailsDTO.getId());
+		this.setName(userDetailsDTO.getName());
+		this.setSurname(userDetailsDTO.getSurname());
+		this.setStreet(userDetailsDTO.getStreet());
+		this.setStreetNumber(userDetailsDTO.getStreetNumber());
+		this.setFlatNumber(userDetailsDTO.getFlatNumber());
+		this.setPostCode(userDetailsDTO.getPostCode());
+		this.setCity(userDetailsDTO.getCity());
+		this.setBirthDate(userDetailsDTO.getBirthDate());
+		this.setPhoneNumber(userDetailsDTO.getPhoneNumber());
+		this.setSex(userDetailsDTO.getSex());
+		this.setInterests(userDetailsDTO.getInterests());
+		this.setDescription(userDetailsDTO.getDescription());
+		this.setPreferredCuisine(userDetailsDTO.getPreferredCuisine());
+		this.setProfileCompletion(userDetailsDTO.getProfileCompletion());
+
+		this.getUserAccount().setId(userDetailsDTO.getUserAccountDTO().getId());
+		this.getUserAccount().setUsername(userDetailsDTO.getUserAccountDTO().getUsername());
+		this.getUserAccount().setEmail(userDetailsDTO.getUserAccountDTO().getEmail());
+		this.getUserAccount().setCountry(userDetailsDTO.getUserAccountDTO().getCountry());
+		this.getUserAccount().setLastLogged(userDetailsDTO.getUserAccountDTO().getLastLogged());
+		this.getUserAccount().setIsFilled(userDetailsDTO.getUserAccountDTO().getIsFilled());
+		this.getUserAccount().setIsVerified(userDetailsDTO.getUserAccountDTO().getIsVerified());
+		this.getUserAccount().setCreatedAt(userDetailsDTO.getUserAccountDTO().getCreatedAt());
+	}
 }

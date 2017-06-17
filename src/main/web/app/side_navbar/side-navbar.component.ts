@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../login/login.service';
 import { Router } from '@angular/router';
+import {SharedService} from "../shared.service";
 
 @Component({
     selector: 'side-navbar',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
     styleUrls: ['css/sidebar.css']
 })
 export class SideNavbarComponent implements OnInit {
-  constructor(private loginService: LoginService, private router: Router){
+  constructor(private loginService: LoginService, private router: Router, private sharedService: SharedService){
 
   }
 

@@ -37,6 +37,7 @@ export class ProfileService {
         //get username from the token 
         let tokenUsername = currentToKey && currentToKey.username;
 
+        //TODO
         if(this.itWasMyProfile){
             
         }
