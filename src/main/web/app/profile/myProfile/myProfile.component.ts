@@ -303,7 +303,7 @@ export class MyProfileComponent implements OnInit {
         
     calculatePercentageFilled(): void{
         this.profileCompletion = 0;
-        if(this.userProfile.birthDate) this.profileCompletion+=1;
+        if(this.selectedBirthDateTextNormal) this.profileCompletion+=1;
         if(this.userProfile.city) this.profileCompletion+=1;
         if(this.userProfile.description) this.profileCompletion+=1;
         if(this.userProfile.flatNumber || this.userProfile.streetNumber) this.profileCompletion+=1;
