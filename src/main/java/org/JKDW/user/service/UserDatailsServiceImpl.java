@@ -18,6 +18,7 @@ import org.JKDW.user.repository.UserAccountRepository;
 import org.JKDW.user.repository.UserDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -51,6 +52,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 * @throws NoResultException when an Account couldn't be found
 	 */
 	@Override
+	@Transactional
 	public UserDetails getUserDetailsByUserAccountId(Long id) throws NoResultException{
 		UserAccount foundUserAccount = userAccountRepository.findOne(id);
 		UserDetails foundUserDetails = userDetailsRepository.findByUserAccount(foundUserAccount);
@@ -69,6 +71,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 * @throws Exception, NoResultException
 	 */
 	@Override
+	@Transactional
 	public UserDetails createUserDetails(UserDetails userDetails) throws NoResultException {
 		userDetails.initProfileCompletionAtRegistration();
 		userDetailsRepository.save(userDetails);
@@ -83,6 +86,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 * @throws NoResultException when details couldn't be found
 	 */
 	@Override
+	@Transactional
 	public UserDetails updateUserDetails(UserDetails userDetails) throws NoResultException {
 		UserDetails foundUserDetails = userDetailsRepository.findOne(userDetails.getId());
 		if(foundUserDetails == null){
@@ -98,6 +102,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 * @throws NoResultException when details couldn't be found
 	 */
 	@Override
+	@Transactional
 	public void deleteUserDetails(Long id) throws NoResultException {
 		UserDetails foundUserDetails = userDetailsRepository.findOne(id);
 		if(foundUserDetails == null){
@@ -117,6 +122,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 * @throws NoResultException when acc or details couldn't be found
      */
 	@Override
+	@Transactional
 	public boolean canCreateEvent(Long userId) throws NoResultException {
 		UserAccount foundUserAccount = userAccountRepository.findOne(userId);
 		if(foundUserAccount == null)
@@ -151,6 +157,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 * @throws NoResultException if user wasnt found
      */
 	@Override
+	@Transactional
 	public boolean canParticipate(Long accountId) throws NoResultException {
 		UserAccount foundUserAccount = userAccountRepository.findOne(accountId);
 		if(foundUserAccount == null)
@@ -181,6 +188,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 * @throws NotFoundException when user couldn't be found
      */
 	@Override
+	@Transactional
 	public List<UsersParticipationEventDTO> getAllUserEventsInWhichHeParticipates(Long userId) throws NotFoundException {
 		//find user
 		UserDetails foundUserDetails = getUserDetailsByUserAccountId(userId);
@@ -212,6 +220,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 * @throws NoResultException when details couldn't be found
 	 */
 	@Override
+	@Transactional
 	public UserDetails updateUserDetailsDTO(UserDetailsUpdateDTO userDetailsDTO) throws NoResultException {
 		UserDetails foundUserDetails = getUserDetailsByUserAccountId(userDetailsDTO.getUserAccountDTO().getId());
 
@@ -231,6 +240,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
      * @throws NoResultException when details couldn't be found
      */
 	@Override
+	@Transactional
 	public UserDetailsUpdateDTO getUserDetailsDTOByUserAccountId(Long id) throws NoResultException {
 		UserAccount foundUserAccount = userAccountRepository.findOne(id);
 		UserDetails foundUserDetails = userDetailsRepository.findByUserAccount(foundUserAccount);
@@ -250,6 +260,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 * @throws NoResultException when an Account couldn't be found
 	 */
 	@Override
+	@Transactional
 	public UserDetails getUserDetailsbyId(Long id) throws NoResultException {
 		return userDetailsRepository.findOne(id);
 	}
@@ -261,6 +272,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 * @throws NoResultException when an Account couldn't be found
 	 */
 	@Override
+	@Transactional
 	public UserDetailsAddressDTO getUserAddressByUserAccountId(Long userId) throws NotFoundException {
 		UserAccount foundUserAccount = userAccountRepository.findOne(userId);
 		UserDetails foundUserDetails = userDetailsRepository.findByUserAccount(foundUserAccount);

@@ -76,7 +76,7 @@ public class UserAccountController {
 	 * @return updated account information
 	 */
 	@RequestMapping(value="/{id}",method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserAccount> updateUserAccount(@RequestBody UserAccount userAccount){
+	public ResponseEntity<UserAccount> updateUserAccount(@RequestBody @Valid UserAccount userAccount){
 		UserAccount updatedUserAccount = userAccountService.updateUserAccount(userAccount);
 		return new ResponseEntity<>(updatedUserAccount,HttpStatus.OK);
 	}
