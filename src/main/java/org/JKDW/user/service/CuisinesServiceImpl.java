@@ -4,6 +4,7 @@ import org.JKDW.user.model.Cuisines;
 import org.JKDW.user.repository.CuisinesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class CuisinesServiceImpl implements CuisinesService {
 
 
 	@Override
+	@Transactional
 	public List<Cuisines> getAllCuisines() {
 		return cuisinesRepository.findAll();
 	}
