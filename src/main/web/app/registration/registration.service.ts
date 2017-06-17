@@ -9,11 +9,11 @@ import { UserAccount } from './user-account';
 @Injectable()
 export class RegistrationService{
 	constructor(private http: Http) { }
-	
+
 	private headers = new Headers({
           'accept': 'application/json',
           'content-type' : 'application/json'});
-	
+
 	/**
 	  * This methods returns an Observable class
 	  * The ajax http requests are asynchronous so
@@ -23,7 +23,7 @@ export class RegistrationService{
 	  * an interface and import it)
 	  */
 	getOneAccount(id): Observable<UserAccount>{
-		return this.http.get('http://localhost:8080/api/user/account/'+id)
+		return this.http.get('/api/user/account/'+id)
 				   .map(res =>  res.json())
 				   .catch(this.handleError);
 	}
@@ -31,13 +31,13 @@ export class RegistrationService{
 
 	/* Niech te metody nrazie tu beda te wszystkie */
 	getUsersAccounts(): Observable<UserAccount[]>{
-		return this.http.get('http://localhost:8080/api/user/all')
+		return this.http.get('/api/user/all')
                .map(res =>  res.json())
 			   .catch(this.handleError);
 	}
 
 	deleteUserAccount(id): Observable<void>{
-		return this.http.delete('http://localhost:8080/api/user/'+id, {headers : this.headers})
+		return this.http.delete('/api/user/'+id, {headers : this.headers})
 				.map( () => null)
 				.catch(this.handleError);
 	}
@@ -49,10 +49,30 @@ export class RegistrationService{
 	}
 
 	updateUserAccount(data): Observable<UserAccount>{
-		return this.http.put('http://localhost:8080/api/user/'+data.id,JSON.stringify(data),{headers :this.headers})
+		return this.http.put('/api/user/'+data.id,JSON.stringify(data),{headers :this.headers})
 				.map(res => res.json())
 				.catch(this.handleError);
 	}
+
+	//three methods below checks if username nick or email is taken
+	checkIfUsernameIsTaken(username): Observable<boolean>{
+		return this.http.get('/api/user/registration/taken/username/'+username)
+			.map(res =>  res.json())
+			.catch(this.handleError);
+	}
+
+	checkIfEmailIsTaken(email): Observable<boolean>{
+		return this.http.post('/api/user/registration/taken/email',{email : email})
+			.map(res =>  res.json())
+			.catch(this.handleError);
+	}
+
+	checkIfNickIsTaken(nick): Observable<boolean>{
+		return this.http.get('/api/user/registration/taken/nick/'+nick)
+			.map(res =>  res.json())
+			.catch(this.handleError);
+	}
+
 
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred in Registration', error);

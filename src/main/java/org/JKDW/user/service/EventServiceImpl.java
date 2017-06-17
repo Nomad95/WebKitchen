@@ -12,6 +12,7 @@ import org.JKDW.user.repository.UserAccountRepository;
 import org.JKDW.user.repository.UserDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.naming.SizeLimitExceededException;
 import javax.persistence.NoResultException;
@@ -109,6 +110,7 @@ public class EventServiceImpl implements EventService {
      * @throws NoResultException
      */
     @Override
+    @Transactional
     public EventGeneralDTO getEventDetails(Long id) throws NoResultException {
         Event foundEvent = eventRepository.findOne(id);
         if (foundEvent == null)
@@ -133,6 +135,7 @@ public class EventServiceImpl implements EventService {
      * @return returns general details of all events
      */
     @Override
+    @Transactional
     public List<EventGeneralDTO> getAllEventsGeneral() {
         List<Event> allEvents = eventRepository.findAll();
         List<EventGeneralDTO> eventsDetails = new ArrayList<>();
@@ -162,6 +165,7 @@ public class EventServiceImpl implements EventService {
      * @param evntId   event id
      */
     @Override
+    @Transactional
     public void bindEventWithUser(String username, Long evntId) throws SizeLimitExceededException, NoResultException {
         //find positions
         UserAccount foundUserAccount = userAccountRepository.findByUsername(username);
@@ -233,6 +237,7 @@ public class EventServiceImpl implements EventService {
      * @return true if is arleady bound/false if not
      */
     @Override
+    @Transactional
     public boolean checkIfBound(String username, Long evntId) {
         //find positions
         UserAccount foundUserAccount = userAccountRepository.findByUsername(username);
@@ -263,6 +268,7 @@ public class EventServiceImpl implements EventService {
      * @return list of events and participants
      */
     @Override
+    @Transactional
     public List<EventForOwnerDTO> getEventsCreatedByUserId(Long id) {
         List<EventForOwnerDTO> ownerEventsWithAccounts = new ArrayList<>();
         List<Event> foundOwnerEvents = eventRepository.findByOwnerId(id);
@@ -289,6 +295,7 @@ public class EventServiceImpl implements EventService {
      * @throws NotFoundException when event couldnt be found
      */
     @Override
+    @Transactional
     public boolean acceptId(Long eventId, Long userAccountId) throws NotFoundException {
         Event foundEvent = eventRepository.findOne(eventId);
         if(foundEvent == null)
@@ -311,6 +318,7 @@ public class EventServiceImpl implements EventService {
      * @throws NotFoundException when event couldnt be found
      */
     @Override
+    @Transactional
     public long[] getAcceptedIdsList(Long eventId) throws NotFoundException {
         Event foundEvent = eventRepository.findOne(eventId);
         if(foundEvent == null)
@@ -332,6 +340,7 @@ public class EventServiceImpl implements EventService {
      * @return updated event
      */
     @Override
+    @Transactional
     public Event rejectUserParticipationRequest(Long eventId, Long userAccountId, Long userDetailsId)
             throws NotFoundException {
         Event foundEvent = eventRepository.findOne(eventId);
@@ -368,6 +377,7 @@ public class EventServiceImpl implements EventService {
      * @return event owner username
      */
     @Override
+    @Transactional
     public String getEventOwnerUsername(Long eventId) throws NoResultException{
         Event foundEvent = eventRepository.findOne(eventId);
         if(foundEvent == null)
@@ -450,6 +460,7 @@ public class EventServiceImpl implements EventService {
      */
 
     @Override
+    @Transactional
     public EventGeneralDTO getEventDetailsByTitle(String title) throws NoResultException {
         Event foundEvent = eventRepository.findDetailsEventByTitle(title);
         if (foundEvent == null)
