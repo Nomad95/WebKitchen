@@ -24,7 +24,7 @@ export class SendingMessageComponent implements OnInit {
     private recipientExist: boolean;
     private recipientNotExist: boolean;
 
-    private listOfNick: Array<Nicks>;
+    private listOfNick: Array<Nicks> =[];
 
     constructor(private messageService: MessageService) {
     }
