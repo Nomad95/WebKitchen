@@ -44,7 +44,7 @@
 .main-menu li {
   position: relative;
   display: block;
-  width: 260px;
+  width: 200px;
   cursor: pointer;
 }
 .main-menu li>a {
@@ -74,7 +74,7 @@
   display: table-cell;
   vertical-align: middle;
   padding-left: 10px;
-  width: 200px;
+  width: 140px;
   font-family: 'Titillium Web', sans-serif;
 }
 .main-menu>ul.logout {
@@ -196,7 +196,7 @@ body {
 @media(min-width:768px) {
   .main-menu:hover,
   nav.main-menu.expanded {
-    width: 260px;
+    width: 200px;
     overflow: visible;
   }
 }
