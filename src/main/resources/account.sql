@@ -1,5 +1,6 @@
 
 
+/*
 
 INSERT INTO  user_account(id, country, email, is_filled, is_verified, username, nick, password,authorities)
 VALUES (1,'Polska' ,'Truskawki@gmail.com',true,true,'walecznyrycerz99',	'Pogromca smaku','$2a$06$86wYILRRu.fGIrXn9uuxG.CQHLPtfzjsssd9jMY62eM6FKcvFniOm','ROLE_USER'),
@@ -7,6 +8,7 @@ VALUES (1,'Polska' ,'Truskawki@gmail.com',true,true,'walecznyrycerz99',	'Pogromc
 ( 3,'Polska','jechaneztymkoksem@wp.pl',true,true,'Terqa5','Terka99'	,'$2a$06$86wYILRRu.fGIrXn9uuxG.CQHLPtfzjsssd9jMY62eM6FKcvFniOm', 'ROLE_USER'),
 (4,'Polska', 'emailpo@gmail.com',true, true, 'admin','admin','$2a$06$Vsgf.quMHsFTOWJXayJV1umaJMcs1FUFrs9uwc1QFBJRh9RHkPQNC','ROLE_ADMIN'),
 (5,'Polska', 'arek@gmail.com',true, true, 'arek','arek','$2a$06$Vsgf.quMHsFTOWJXayJV1umaJMcs1FUFrs9uwc1QFBJRh9RHkPQNC','ROLE_USER');
+*/
 
 
 
@@ -71,6 +73,7 @@ VALUES
 ('kuchniawłoska');
 
 
+/*
 INSERT INTO user_details(id, birth_date, city, description, flat_number, interests, name, phone_number, photo, post_code, profile_completion, sex, street, street_number, surname, user_account_id)
 VALUES
 (2,	'1995-05-17','Krasnystaw',null,20,'Informatyka','Łukasz',725150126,	null,'22-300',8,'m','Piekarskiego',	20,	'Borkowski',2),
@@ -79,3 +82,4 @@ VALUES
 (4,	'1985-11-11','Opole',null,44,'Kolarstws o, Filmy','Tomasz',997997997,null,'99-777',8,'m','Chujowa',100,'Terka',4),
 (5,	'1985-11-11','Opole',null,44,'Kolarstws o, Filmy','Tomasz',997997997,null,'99-777',8,'m','Chujowa',100,'Terka',5)
 
+*/
