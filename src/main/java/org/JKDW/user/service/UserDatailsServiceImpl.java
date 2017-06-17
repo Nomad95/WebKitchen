@@ -71,7 +71,6 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 * @throws Exception, NoResultException
 	 */
 	@Override
-	@Transactional
 	public UserDetails createUserDetails(UserDetails userDetails) throws NoResultException {
 		userDetailsRepository.save(userDetails);
 		return userDetails;
@@ -85,7 +84,6 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 * @throws NoResultException when details couldn't be found
 	 */
 	@Override
-	@Transactional
 	public UserDetails updateUserDetails(UserDetails userDetails) throws NoResultException {
 		UserDetails foundUserDetails = userDetailsRepository.findOne(userDetails.getId());
 		if(foundUserDetails == null){
@@ -101,7 +99,6 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 * @throws NoResultException when details couldn't be found
 	 */
 	@Override
-	@Transactional
 	public void deleteUserDetails(Long id) throws NoResultException {
 		UserDetails foundUserDetails = userDetailsRepository.findOne(id);
 		if(foundUserDetails == null){
@@ -307,7 +304,6 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 * @throws NoResultException when an Account couldn't be found
 	 */
 	@Override
-	@Transactional
 	public UserDetails getUserDetailsbyId(Long id) throws NoResultException {
 		return userDetailsRepository.findOne(id);
 	}
