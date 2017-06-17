@@ -261,7 +261,7 @@ export class EventCreateComponent implements OnInit {
     }
 
     /**
-     * sets boolean isPhotoUploaded to true if userhas provided a photo, to show 
+     * sets boolean isPhotoUploaded to true if userhas provided a photo, to show
      * him in modal event overall presentation
      */
     showPhotoInModal() {
@@ -327,12 +327,12 @@ export class EventCreateComponent implements OnInit {
     }
 
     /**
-     * checks is user provided flat number
+     * checks if user provided flat number
      * @param flatNumber flat number from addressObj
      * @returns {boolean}
      */
     private hasProvidedFlatNumber(flatNumber){
-        return flatNumber != null || flatNumber != '';
+        return flatNumber != null && flatNumber != '';
     }
 
     /**

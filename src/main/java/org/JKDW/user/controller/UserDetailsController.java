@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/user/details")
 public class UserDetailsController {
@@ -52,7 +54,7 @@ public class UserDetailsController {
 	 * @return created details
 	 */
 	@RequestMapping(value="/create",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserDetails> createUserDetails(@RequestBody UserDetails userDetails){
+	public ResponseEntity<UserDetails> createUserDetails(@RequestBody @Valid UserDetails userDetails){
 		UserDetails createdUserDetails = userDetailsService.createUserDetails(userDetails);
 		return new ResponseEntity(createdUserDetails,HttpStatus.CREATED);
 	}
@@ -63,7 +65,7 @@ public class UserDetailsController {
 	 * @return updated user details
 	 */
 	@RequestMapping(value="/acc/{id}",method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserDetails> updateUserDetails(@RequestBody UserDetails userDetails){
+	public ResponseEntity<UserDetails> updateUserDetails(@RequestBody @Valid UserDetails userDetails){
 		UserDetails updatedUserDetails = userDetailsService.updateUserDetails(userDetails);
 		return new ResponseEntity(updatedUserDetails,HttpStatus.OK);
 	}
