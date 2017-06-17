@@ -255,7 +255,6 @@ public class UserAccountServiceImpl implements UserAccountService {
 	 * @return id of user
      */
 	@Override
-	@Transactional
 	public Long findIdOfUsersUsername(String username) {
 		UserAccount userAccount = loadUserByUsername(username);
 		if(userAccount == null)

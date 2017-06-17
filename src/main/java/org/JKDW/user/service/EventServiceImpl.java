@@ -54,7 +54,6 @@ public class EventServiceImpl implements EventService {
      * @return newly saved event
      */
     @Override
-    @Transactional
     public Event createEvent(Event event) {
         Event savedEvent = eventRepository.save(event);
         return savedEvent;
@@ -66,7 +65,6 @@ public class EventServiceImpl implements EventService {
      * @throws NoResultException when an event couldn't be found
      */
     @Override
-    @Transactional
     public Event updateEvent(Event event) throws NoResultException {
         Event foundEvent = eventRepository.findOne(event.getId());
         if (foundEvent == null) {
@@ -81,7 +79,6 @@ public class EventServiceImpl implements EventService {
      * @throws NoResultException when an event couldn't be found
      */
     @Override
-    @Transactional
     public void deleteEvent(Long id) throws NoResultException {
         Event foundEvent = eventRepository.findOne(id);
         if (foundEvent == null) {
