@@ -7,6 +7,7 @@ import { MyProfileService } from './myProfile.service';
 import { PreferedCuisineService } from './preferedCuisine.service';
 import { CuisinesService } from '../../cuisines/cuisines.service';
 import {Cuisine} from '../model/cuisine.model';
+import {UserProfile} from '../model/userProfile.model';
 import { TAB_COMPONENTS  } from '../../tabs/Tabset';
 
 
@@ -46,73 +47,9 @@ export class MyProfileComponent implements OnInit {
 
     gender: number;
 
-    private userProfile = {
-        name: '',
-        surname: '',
-        street: '',
-        streetNumber: '',
-        flatNumber: '',
-        postCode: '',
-        city: '',
-        birthDate: '',
-        phoneNumber: '',
-        sex: '',
-        interests: '',
-        description: '',
-        preferredCuisine: [],
-        profileCompletion: '',
-        userAccountDTO: {
-          username: '',
-          email: '',
-          country: '',
-          nick: '',
-          lastLogged: '',
-          isFilled: '',
-          isVerified: '',
-          createdAt: '',
-          id: ''
-        },
-            id: '' 
-    };
+    private userProfile = new UserProfile;
     
-    private originalUserProfile = {
-        name: '',
-        surname: '',
-        street: '',
-        streetNumber: '',
-        flatNumber: '',
-        postCode: '',
-        city: '',
-        birthDate: '',
-        phoneNumber: '',
-        sex: '',
-        interests: '',
-        description: '',
-        preferredCuisine: [],
-        profileCompletion: '',
-        userAccountDTO: {
-          username: '',
-          email: '',
-          country: '',
-          nick: '',
-          lastLogged: '',
-          isFilled: '',
-          isVerified: '',
-          createdAt: '',
-          id: ''
-        },
-            id: '' 
-    };
-
-    private credentials = {
-      username: '',
-      oldPassword: ''
-    };
-    private userProfileChangePasswordDTO = {
-        id: '',
-        oldPassword: '',
-        newPassword: ''
-    }
+    private originalUserProfile = new UserProfile;
 
     constructor(private myProfileService: MyProfileService,
                 private preferedCuisineService: PreferedCuisineService,
@@ -155,7 +92,6 @@ export class MyProfileComponent implements OnInit {
                 this.userProfile.userAccountDTO = result;
                 //pass userProfile.userAccountDTO.id to profileService.id
                 this.myProfileService.setId(result.id);
-                this.credentials.username=this.userProfile.userAccountDTO.username;
                 this.getProfileDetails();
             });
 
@@ -337,20 +273,6 @@ export class MyProfileComponent implements OnInit {
     } 
 
     changePassword(): void{
-        if(this.givenOldPasswordIsCorrect()){
-
-            this.myProfileService.changePassword(this.userProfileChangePasswordDTO);
-        }
-    }
-
-    givenOldPasswordIsCorrect(){
-        this.myProfileService.oldPasswordIsCorrect(this.credentials).subscribe( result =>{
-            if(result){
-                this.userProfileChangePasswordDTO.oldPassword = this.credentials.oldPassword;
-                return true;
-            }
-            else return false;
-        });
     }
 
     //logs out and redirects to '/login'

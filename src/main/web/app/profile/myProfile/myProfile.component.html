@@ -132,7 +132,7 @@
 		
 			<tab title="Edytuj profil"> 
 		
-				<div class="container fom-main">
+				<div class="container form-main">
 				
 					<div class="row">
 						<form class="form-horizontal main_form text-left" action=" "
@@ -145,15 +145,15 @@
 									<div class="col-md-12 inputGroupContainer">
 										<div class="input-group">
 											<input name="userProfile.userAccountDTO.username" 
-												placeholder="Login"
+												placeholder="Login" 
 												class="form-control" 
-												type="text"
+												type="text" 
 												[(ngModel)]="userProfile.userAccountDTO.username" 
-												#userName="ngModel"
+												#userName="ngModel" 
 												pattern="....+" 
 												maxlength="25" 
 												required 
-												id="idUsername"
+												id="idUsername" 
 												title="Twój login, za pomocą którego się logujesz">
 											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
 											<div *ngIf="userName.invalid && userName.touched"
