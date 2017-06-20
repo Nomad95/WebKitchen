@@ -64,9 +64,6 @@ export class EventCreateComponent implements OnInit {
      */
     private isEventCreated: boolean = false;
 
-    /**
-     * Selected file from form
-     */
     private selectedFile: File;
 
     /**
@@ -78,6 +75,11 @@ export class EventCreateComponent implements OnInit {
      * indicates that photo is loaded and can be shown in modal js
      */
     private isPhotoUploaded = false;
+
+    /**
+     * indicates whether user provided time from popup sliders, otherwise it can produce errors
+     */
+    private isTimeValid = true;
 
     /**
      * path to photo
@@ -175,9 +177,6 @@ export class EventCreateComponent implements OnInit {
 
     /**
      * make POST and create event
-     * @param data event
-     * @param $btn1 button1
-     * @param $btn2 button2
      */
     tryCreateEvent(data, $btn1, $btn2){
         this.eventService.createEvent(data)
@@ -187,12 +186,33 @@ export class EventCreateComponent implements OnInit {
                     $btn1.button('reset');
                     $btn2.button('reset');
                     this.isEventCreated = true;
+                    //assign current user to new event
+                    this.assignUserToEvent(data.id);
                 },
                 err => {
                     console.log('error adding event!');
                     $btn1.button('reset');
                     $btn2.button('reset');
                 });
+    }
+
+    /**
+     * Assigns owner of created event to his event
+     */
+    assignUserToEvent(eventId: number){
+        this.eventService.assignUserToEvent(eventId)
+            .subscribe((data) => console.log("added owner to new event"));
+    }
+
+    /**
+     * checks if user get time from javascript sliders component
+     */
+    checkIfTimeIsCorrect(time: any){
+        if(typeof time != "object") {
+            console.log("zly typ czasu");
+            this.isTimeValid = false;
+        }
+        else this.isTimeValid = true;
     }
 
     /**

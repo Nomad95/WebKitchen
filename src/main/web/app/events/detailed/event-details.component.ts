@@ -26,10 +26,8 @@ export class EventDetailsComponent implements OnInit {
     };*/
     private event = new DetailedEvent();
 
-    //user account id
     private userId: number = -1;
 
-    //the type of event (1,2)
     private eventType: string;
 
     // if current user has already joined to this event

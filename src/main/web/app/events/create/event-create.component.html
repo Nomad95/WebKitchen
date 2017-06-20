@@ -36,7 +36,7 @@
 
                                 <div class="row">
                                     <div class="form-group col-md-6"
-                                         [class.has-error]="timet1.invalid && timet1.touched">
+                                         [class.has-error]="(timet1.invalid && timet1.touched) || !isTimeValid">
                                         <label class="control-label">Godzina</label>
 
                                         <input
@@ -48,6 +48,7 @@
                                                 [time-only]="true"
                                                 [close-on-select]="false"
                                                 name="newEventType1.time"
+                                                (popupClosed)="checkIfTimeIsCorrect(newEventType1.time)"
                                                 #timet1="ngModel"
                                                 class="form-control"/>
                                     </div>
@@ -80,6 +81,11 @@
                                      class="alert alert-danger"
                                      role="alert">
                                     Podaj datę i godzinę rozpoczęcia wydarzenia.
+                                </div>
+                                <div *ngIf="!isTimeValid"
+                                     class="alert alert-danger"
+                                     role="alert">
+                                    Ustaw czas za pomocą suwaków.
                                 </div>
 
                                 <div class="form-group" [class.has-error]="addresst1.invalid && addresst1.touched">
@@ -203,7 +209,7 @@
                                     <button type="button" class="btn btn-default"
                                             data-toggle="modal" data-target="#myModalType1"
                                             (click)="showPhotoInModal()"
-                                            [disabled]="!eventCreateForm.valid || !isProperPhoto">Stwórz wydarzenie
+                                            [disabled]="!eventCreateForm.valid || !isProperPhoto || !isTimeValid">Stwórz wydarzenie
                                     </button> <!--[disabled] -> makes button not accessable before validated-->
                                 </div>
 
@@ -277,12 +283,13 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-6"
-                                         [class.has-error]="timet2.invalid && timet2.touched">
+                                         [class.has-error]="(timet2.invalid && timet2.touched) || !isTimeValid">
                                         <label class="control-label">Godzina</label>
                                         <input
                                                 [(ngModel)]="newEventType2.time" ngui-datetime-picker
                                                 date-format="HH:mm"
                                                 parse-format="HH:mm:ss"
+                                                (popupClosed)="checkIfTimeIsCorrect(newEventType2.time)"
                                                 hour="23"
                                                 minute='59'
                                                 [time-only]="true"
@@ -311,6 +318,11 @@
                                      class="alert alert-danger"
                                      role="alert">
                                     Podaj datę i godzinę rozpoczęcia wydarzenia.
+                                </div>
+                                <div *ngIf="!isTimeValid"
+                                     class="alert alert-danger"
+                                     role="alert">
+                                    Ustaw czas za pomocą suwaków.
                                 </div>
 
                                 <div class="form-group" [class.has-error]="addresst2.invalid && addresst2.touched">
@@ -352,7 +364,7 @@
                                             required
                                             [(ngModel)]="newEventType2.dish_kind"
                                             name="dish_kind"
-                                            id="dishkind">
+                                            id="dishkind2">
                                         <option *ngFor="let item of dishTypes" [value]="item">{{item}}</option>
                                     </select>
                                     <div *ngIf="dishkindt2.invalid && dishkindt2.touched" class="alert alert-danger"
@@ -446,7 +458,7 @@
                                         <button type="submit" class="btn btn-default"
                                                 data-toggle="modal" data-target="#myModalType2"
                                                 (click)="showPhotoInModal()"
-                                                [disabled]="!eventCreateForm.valid">Stwórz wydarzenie
+                                                [disabled]="!eventCreateForm.valid || !isProperPhoto ||!isTimeValid">Stwórz wydarzenie
                                         </button>
                                     </div>
                                 </div>

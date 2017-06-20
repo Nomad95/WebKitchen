@@ -27,6 +27,7 @@ import {MessageBoxComponent} from "./messages/messagebox/messagebox.component";
 import {SentMessagesComponent} from "./messages/sent/sent-messages.component";
 import {DetailsReceivedMessagesComponent} from "./messages/details/details-received-message.component";
 import {DetailsSentMessagesComponent} from "./messages/details/details-sent-message.component";
+import {CaptchaComponent} from "./captcha-test/captcha.component";
 
 /* TODO: Układać to ładnie i po kolei*/
 const appRoutes: Routes = [
@@ -54,6 +55,7 @@ const appRoutes: Routes = [
     {path: "messagebox/sent", component: SentMessagesComponent, canActivate: [AuthGuard]},
     {path: "messagebox/received/details/:id", component: DetailsReceivedMessagesComponent, canActivate:[AuthGuard]},
     {path: "messagebox/sent/details/:id", component: DetailsSentMessagesComponent, canActivate:[AuthGuard]},
+    {path: "captcha", component: CaptchaComponent}
 
 ];
 

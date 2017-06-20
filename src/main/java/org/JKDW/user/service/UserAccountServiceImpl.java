@@ -75,7 +75,6 @@ public class UserAccountServiceImpl implements UserAccountService {
      * without password etc
      */
     @Override
-    @Transactional
     public UserAccountDTO getUserAccountDTOById(Long id) {
         UserAccount userAccount = userAccountRepository.findOne(id);
         System.out.println(userAccount);
@@ -100,7 +99,6 @@ public class UserAccountServiceImpl implements UserAccountService {
      * @throws Exception when an account with specified id exists
      */
     @Override
-    @Transactional
     public UserAccount createUserAccount(UserAccountCreateDTO userAccount) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         UserAccount newUserAccount = new UserAccount(userAccount);
@@ -190,7 +188,6 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
-    @Transactional
     public Boolean checkIfUserHasRoleAdmin() {
         Boolean isAdmin = false;
         /* Pobiera z SecuirtyUser role w formacie [ROLE_TYP] */
@@ -258,6 +255,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 	 * @return id of user
      */
 	@Override
+    @Transactional
 	public Long findIdOfUsersUsername(String username) {
 		UserAccount userAccount = loadUserByUsername(username);
 		if(userAccount == null)
@@ -266,7 +264,6 @@ public class UserAccountServiceImpl implements UserAccountService {
 	}
 
     @Override
-    @Transactional
     public  List<Map<String, Object>> getAllNicks() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         String sql = "SELECT nick FROM USER_ACCOUNT";

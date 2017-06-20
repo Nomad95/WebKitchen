@@ -73,6 +73,17 @@ export class RegistrationService{
 			.catch(this.handleError);
 	}
 
+	verifyCaptcha(response): Observable<any>{
+		//request body -> goes to backend 
+		let body = {
+			'response' : response
+		};
+
+		return this.http.post('captcha/verify',body)
+			.map(res => res.json())
+			.catch(this.handleError);
+	}
+
 
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred in Registration', error);
