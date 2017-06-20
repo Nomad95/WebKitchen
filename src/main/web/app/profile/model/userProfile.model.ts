@@ -1,4 +1,5 @@
 import {Cuisine} from './cuisine.model';
+import {UserAccountDTO} from './userAccountDTO.model';
 
 export class UserProfile{
         name: string;
@@ -14,17 +15,26 @@ export class UserProfile{
         interests: string;
         description: string;
         preferredCuisine: Cuisine[];
-        profileCompletion: number;
-        userAccountDTO: {
-          username: string,
-          email: string,
-          country: string,
-          nick: string,
-          lastLogged: any,
-          isFilled: boolean,
-          isVerified: boolean,
-          createdAt: any,
-          id: number
-        };
+        profileCompletion: string;
+        userAccountDTO: UserAccountDTO;
             id: number; 
-    };
+
+      constructor(){
+        this.name = '';
+        this.surname = '';
+        this.street = '';
+        this.streetNumber = '';
+        this.flatNumber = '';
+        this.postCode = '';
+        this.city = '';
+        this.birthDate = '';
+        this.phoneNumber = '';
+        this.sex = '';
+        this.interests = '';
+        this.description = '';
+        this.preferredCuisine = [];
+        this.profileCompletion = '';
+        this.userAccountDTO = new UserAccountDTO;
+        this.id = -1;
+      }  
+            }
