@@ -1,38 +1,44 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
 import {Router} from '@angular/router';
 import {MessageService} from "../message.service";
-import {Message} from "../message";
+import {MessageReceived} from "../message-received";
+import {SharedService} from "../../shared.service";
 
 @Component({
     selector: 'received-messages',
     templateUrl: 'app/messages/received/received-messages.component.html',
     providers: [MessageService]
 })
-export class ReceivedMessagesComponent implements OnInit {
-    private receivedMessages: Array<Message>;
-    private currentIndexOfPage = 1;
+export class ReceivedMessagesComponent implements OnInit{
+    receivedMessages: Array<MessageReceived>;
+    currentIndexOfPage: number;
     private indexesOfPage = [];
-    private indexFirstMsgOnSite = 0;
+    @Input() indexFirstMsgOnSite: number;
+    private messagesToDelete = [];
 
-    constructor(private router: Router, private messageService: MessageService) {
+
+    constructor(private router: Router, private messageService: MessageService, private sharedService: SharedService) {
     }
 
     ngOnInit() {
+        this.setIndexOfPageFromMain();
         this.getReceivedMessage();
+        console.log(this.indexFirstMsgOnSite)
     }
 
     getReceivedMessage(): void{
         this.messageService
             .getMyReceivedMessages()
             .subscribe( result => {
-                for(let message of result){
-                    message.dateOfSend = new Date(message.dateOfSend).toDateString();
-                }
-                this.receivedMessages = result;
-                this.genereteTabForPagination(Object.keys(this.receivedMessages).length);
-            },
-                    err => console.log("Nie ma żadnych odebranych wiadomości")
-             );
+                    this.receivedMessages = result;
+                    for(let res of result){
+                        res.checked = false;
+                    }
+                    this.genereteTabForPagination(Object.keys(this.receivedMessages).length);
+                    console.log(result);
+                },
+                err => console.log("Nie ma żadnych odebranych wiadomości")
+            );
     }
 
     // generate list with number of pages
@@ -50,5 +56,35 @@ export class ReceivedMessagesComponent implements OnInit {
         }
     }
 
-}
+    setIndexOfPageFromMain():void{
+        if(this.indexFirstMsgOnSite == 0)
+            this.currentIndexOfPage = 1;
+        else
+            this.currentIndexOfPage = (this.indexFirstMsgOnSite/10)+1;
+        console.log("index page: " + this.currentIndexOfPage);
+    }
 
+    setIndexOfPage(number):void{
+        this.currentIndexOfPage = number;
+
+    }
+
+    decreaseNumberOfUnreadMessage():void{
+        this.sharedService.setNumberOfUnreadMessages(this.sharedService.getNumberOfUnreadMessages()-1)
+    }
+
+    deleteSelectedMessages():void{
+        this.getSelectedOptions();
+        for(let message of this.messagesToDelete)
+            this.messageService
+                .deleteMyReceivedMessage(message)
+                .subscribe();
+    }
+
+    getSelectedOptions() {
+        this.messagesToDelete = [];
+        this.messagesToDelete = this.receivedMessages
+            .filter(opt => opt.checked)
+            .map(opt => opt.id);
+    }
+}

@@ -124,6 +124,37 @@
     }
 }
 
+#message-contents {
+    white-space:pre-wrap;
+}
 
+.container-fluid .message-menu .btn-default{
+    margin-bottom: 3%;
+    margin-right: 10px;
+}
+.container-fluid .message-menu{
+    margin-right: 60%;
+}
 
-
+.has-subnav .badge {
+    padding: 1px 7px 2px;
+    font-size: 12.025px;
+    font-weight: bold;
+    white-space: nowrap;
+    color: #ffffff;
+    background-color: #999999;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+}
+.has-subnav .badge:hover {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+.has-subnav .badge-error {
+    background-color: red;
+}
+.has-subnav .badge-error:hover {
+    background-color: #953b39;
+}

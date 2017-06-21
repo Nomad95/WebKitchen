@@ -1,5 +1,5 @@
 import {Person} from "./person";
-export interface Message{
+export interface MessageSent{
     id: number;
     title: string;
     messageContents: any;
@@ -7,4 +7,7 @@ export interface Message{
     wasRead: boolean;
     sender: Array<Person>;
     recipient: Array<Person>;
+    checked: boolean;
+    nickRecipient:string;
+    nickSender:string;
 }

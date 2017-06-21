@@ -3,11 +3,11 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MessageService} from "../message.service";
 
 @Component({
-    selector: 'message-box',
-    templateUrl: 'app/messages/messagebox/messagebox.component.html',
+    selector: 'message-box-sent',
+    templateUrl: 'app/messages/messagebox/messagebox-sent.component.html',
     providers: [MessageService]
 })
-export class MessageBoxComponent implements OnInit {
+export class MessageBoxSentComponent implements OnInit {
     private sub:any
     private indexFirstMsgOnSite;
 

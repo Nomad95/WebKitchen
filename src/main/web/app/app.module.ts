@@ -41,14 +41,18 @@ import {DetailsSentMessagesComponent} from "./messages/details/details-sent-mess
 import {SendingMessageComponent} from "./messages/sending/sending-message.component";
 import {ReceivedMessagesComponent} from "./messages/received/received-messages.component";
 import {SentMessagesComponent} from "./messages/sent/sent-messages.component";
+import {MessageBoxSentComponent} from "./messages/messagebox/messagebox-sent.component";
 import {MessageBoxComponent} from "./messages/messagebox/messagebox.component";
 import {LoginService} from "./login/login.service";
+import { RecaptchaModule } from 'ng2-recaptcha';
+import {CaptchaComponent} from "./captcha-test/captcha.component";
+
 
 import {AuthGuard} from './app.auth-guard.service';
 import {LoginBanned} from "./login/login-banned-user.component";
 import {SharedService} from "./shared.service";
 
-import {PolishDatePipe} from "./util/pipes/polish.date.pipe"; 
+import {PolishDatePipe} from "./util/pipes/polish.date.pipe";
 import {ShorterTimePipe} from "./util/pipes/shorter.time.pipe";
 
 declare let jQuery:Object;
@@ -60,6 +64,7 @@ declare let jQuery:Object;
         HomeComponent,
         UserComponent,
         RegistrationComponent,
+        CaptchaComponent,
         LoginComponent,
         NavbarComponent,
         EventListComponent,
@@ -95,6 +100,7 @@ declare let jQuery:Object;
         ReceivedMessagesComponent,
         SentMessagesComponent,
         MessageBoxComponent,
+        MessageBoxSentComponent,
         DetailsReceivedMessagesComponent,
         DetailsSentMessagesComponent
     ],
@@ -105,6 +111,7 @@ declare let jQuery:Object;
               HttpModule,
               SelectModule,
               MyDatePickerModule,
+              RecaptchaModule.forRoot(),
               AlertModule.forRoot(),
               DatepickerModule.forRoot(),
               routing],

@@ -5,16 +5,17 @@ export class SharedService {
     private isBanned: boolean;
     private isAdmin: boolean = false;
     private hasNewMessage: boolean;
+    private numberOfUnreadMessages: number;
 
     public getIsBanned():boolean {
-    return this.isBanned;
+        return this.isBanned;
     }
 
     public setIsBanned(_isBanned:boolean) {
         this.isBanned = _isBanned;
     }
     public getIsAdmin():boolean {
-          return this.isAdmin;
+        return this.isAdmin;
     }
 
     public setIsAdmin(_isAdmin:boolean) {
@@ -27,6 +28,14 @@ export class SharedService {
 
     public setHasNewMessage(_hasNewMessage:boolean) {
         this.hasNewMessage = _hasNewMessage;
+    }
+
+    public getNumberOfUnreadMessages():number {
+        return this.numberOfUnreadMessages;
+    }
+
+    public setNumberOfUnreadMessages(_numberOfUnreadMessages:number) {
+        this.numberOfUnreadMessages = _numberOfUnreadMessages;
     }
 
 }
