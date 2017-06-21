@@ -4,8 +4,6 @@ import 'rxjs/add/operator/toPromise';
 import {Observable}    from 'rxjs/Observable';
 import 'app/rxjs-operators';
 import 'rxjs/Rx';
-import {UserAccount} from '../registration/user-account';
-import {Message} from "./message";
 
 @Injectable()
 export class MessageService {
@@ -27,7 +25,7 @@ export class MessageService {
 
     }
 
-    sendMessage(message,recipient_username ): Observable<Message>{
+    sendMessage(message,recipient_username ): Observable<any>{
         this.url = '/api/message/send/'+recipient_username;
         return this.http.post(this.url,JSON.stringify(message),{headers :this.headers})
             .map(res => res.json())
@@ -69,11 +67,15 @@ export class MessageService {
 
     }
 
+    deleteMyReceivedMessage(id): Observable<void> {
+        this.url = '/api/message/myMessages/received/' + id;
+        return this.http.delete(this.url, {headers: this.headers})
+            .map(() => null)
+            .catch(this.handleError);
+    }
 
-
-
-    deleteEvent(id): Observable<void> {
-        this.url = '/api/event/' + id;
+    deleteMySentMessage(id): Observable<void> {
+        this.url = '/api/message/myMessages/sent/' + id;
         return this.http.delete(this.url, {headers: this.headers})
             .map(() => null)
             .catch(this.handleError);

@@ -7451,6 +7451,7 @@ body {
 	float: left;
 	padding: 15px 5px;
 	border-radius: 20px;
+	margin-bottom: 10px; 
 }
 
 .profile-head img {
@@ -7762,183 +7763,42 @@ h4.pro-title {
 
 /*progres bar ---begin---*/
 
-progress:not(value) {
-    /* Add your styles here. As part of this walkthrough we will focus only on determinate progress bars. */
-}
-
-/* Styling the determinate progress element */
-
-progress[value] {
-    /* Get rid of the default appearance */
-    appearance: none;
-    
-    /* This unfortunately leaves a trail of border behind in Firefox and Opera. We can remove that by setting the border to none. */
-    border: none;
-    
-    /* Add dimensions */
-    width: 100%; /*height: 20px;*/
-    
-    /* Although firefox doesn't provide any additional pseudo class to style the progress element container, any style applied here works on the container. */
-      background-color: whiteSmoke;
-      border-radius: 3px;
-      box-shadow: 0 2px 3px rgba(0,0,0,.5) inset;
-    
-    /* Of all IE, only IE10 supports progress element that too partially. It only allows to change the background-color of the progress value using the 'color' attribute. */
-    color: royalblue;
-    
-    position: relative;
-    margin: 0 0 0; /*1.5em;*/ 
-}
-
-/*
-Webkit browsers provide two pseudo classes that can be use to style HTML5 progress element.
--webkit-progress-bar -> To style the progress element container
--webkit-progress-value -> To style the progress element value.
-*/
-
-progress[value]::-webkit-progress-bar {
-    background-color: whiteSmoke;
-    border-radius: 3px;
-    box-shadow: 0 2px 3px rgba(0,0,0,.5) inset;
-}
-
-progress[value]::-webkit-progress-value {
-    position: relative;
-    
-    background-size: 35px 20px, 100% 100%, 100% 100%;
-    border-radius:3px;
-    
-    /* Let's animate this */
-    animation: animate-stripes 5s linear infinite;
-}
-
-@keyframes animate-stripes { 100% { background-position: -100px 0; } }
-
-/* Let's spice up things little bit by using pseudo elements. */
-
-progress[value]::-webkit-progress-value:after {
-    /* Only webkit/blink browsers understand pseudo elements on pseudo classes. A rare phenomenon! */
-    content: '';
-    position: absolute;
-    
-    width:5px; height:5px;
-    top:7px; right:7px;
-    
-    background-color: white;
-    border-radius: 100%;
-}
-
-/* Firefox provides a single pseudo class to style the progress element value and not for container. -moz-progress-bar */
-
-progress[value]::-moz-progress-bar {
-    /* Gradient background with Stripes */
-    background-image:
-    -moz-linear-gradient( 135deg,
-                                                     transparent,
-                                                     transparent 33%,
-                                                     rgba(0,0,0,.1) 33%,
-                                                     rgba(0,0,0,.1) 66%,
-                                                     transparent 66%),
-    -moz-linear-gradient( top,
-                                                        rgba(255, 255, 255, .25),
-                                                        rgba(0,0,0,.2)),
-     -moz-linear-gradient( left, #09c, #f44);
-    
-    background-size: 35px 20px, 100% 100%, 100% 100%;
-    border-radius:3px;
-    
-    /* Firefox doesn't support CSS3 keyframe animations on progress element. Hence, we did not include animate-stripes in this code block */
-}
-
-/* Fallback technique styles */
-.progress-bar {
-    background-color: whiteSmoke;
-    border-radius: 3px;
-    box-shadow: 0 2px 3px rgba(0,0,0,.5) inset;
-
-    /* Dimensions should be similar to the parent progress element. */
-    width: 100%; height:20px;
-}
-
-.progress-bar span {
-    background-color: royalblue;
-    border-radius: 3px;
-    
-    display: block;
-    text-indent: -9999px;
-}
-
-p[data-value] { 
-  
-  position: relative; 
-}
-
-/* The percentage will automatically fall in place as soon as we make the width fluid. Now making widths fluid. */
-
-p[data-value]:after {
-    content: attr(data-value) '%';
-    position: absolute; right:0;
-}
-
-.completion::-webkit-progress-value {
-    /* Gradient background with Stripes */
-    background-image:
-    -webkit-linear-gradient( 135deg,
-                                                     transparent,
-                                                     transparent 33%,
-                                                     rgba(0,0,0,.1) 33%,
-                                                     rgba(0,0,0,.1) 66%,
-                                                     transparent 66%),
-    -webkit-linear-gradient( top,
-                                                        rgba(255, 255, 255, .25),
-                                                        rgba(0,0,0,.2)),
-     -webkit-linear-gradient( left, #09c, #690);
-}
-
-.completion::-moz-progress-bar {
-    /* Gradient background with Stripes */
-    background-image:
-    -moz-linear-gradient( 135deg,
-                                                     transparent,
-                                                     transparent 33%,
-                                                     rgba(0,0,0,.1) 33%,
-                                                     rgba(0,0,0,.1) 66%,
-                                                     transparent 66%),
-    -moz-linear-gradient( top,
-                                                        rgba(255, 255, 255, .25),
-                                                        rgba(0,0,0,.2)),
-     -moz-linear-gradient( left, #09c, #690);
-}
-
-.progresText{
-	padding: 0px;
-	font-size: 14px !important;
-}
-
-#progressBar{
-    padding: 4px 10px;
-    border-radius: 9px;
-    background-color: rgb(190, 80, 10);
-}
-
-#progress-triangle-down {
-	width: 0;
-	height: 0;
-	margin-bottom: -4px;
-	border-left: 10px solid transparent;
-	border-right: 10px solid transparent;
-	border-top: 20px solid white;
-}
-#progress-triangle-down::after {
-	content: "";
-	width: 0;
-	height: 0;
-	position: absolute;
-    margin: -20 -7;
-	border-left: 7px solid transparent;
-	border-right: 7px solid transparent;
-	border-top: 14px solid rgb(255, 102, 0);
-}
+.graph {
+                width: 100%; /* width and height are arbitrary, just make sure the #bar styles are changed accordingly */
+                height: 22px;
+                border: 1px solid #888; 
+				border-radius: 6px;
+                background: rgb(168,168,168);
+                background: -moz-linear-gradient(top, rgba(168,168,168,1) 0%, rgba(204,204,204,1) 23%);
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(168,168,168,1)), color-stop(23%,rgba(204,204,204,1)));
+                background: -webkit-linear-gradient(top, rgba(168,168,168,1) 0%,rgba(204,204,204,1) 23%);
+                background: -o-linear-gradient(top, rgba(168,168,168,1) 0%,rgba(204,204,204,1) 23%);
+                background: -ms-linear-gradient(top, rgba(168,168,168,1) 0%,rgba(204,204,204,1) 23%);
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a8a8a8', endColorstr='#cccccc',GradientType=0 );
+                background: linear-gradient(top, rgba(168,168,168,1) 0%,rgba(204,204,204,1) 23%);
+                position: relative;
+            }
+            #bar {
+                height: 20px; /* Not 30px because the 1px top-border brings it up to 30px to match #graph */
+				border-radius: 6px;
+                background: rgb(255,197,120); 
+                background: -moz-linear-gradient(top, rgba(255,197,120,1) 0%, rgba(244,128,38,1) 100%); 
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,197,120,1)), color-stop(100%,rgba(244,128,38,1))); 
+                background: -webkit-linear-gradient(top, rgba(255,197,120,1) 0%,rgba(244,128,38,1) 100%); 
+                background: -o-linear-gradient(top, rgba(255,197,120,1) 0%,rgba(244,128,38,1) 100%); 
+                background: -ms-linear-gradient(top, rgba(255,197,120,1) 0%,rgba(244,128,38,1) 100%); 
+                background: linear-gradient(top, rgba(255,197,120,1) 0%,rgba(244,128,38,1) 100%); 
+                border-top: 1px solid #fceabb;
+            }
+            #bar p { position: absolute; text-align: center; width: 100%; margin: 0; line-height: 20px; font-size: 14px; }
+            .error {
+                /* These styles are arbitrary */
+                background-color: #fceabb;
+                padding: 1em;
+                font-weight: bold;
+                color: red;
+                border: 1px solid red;
+            }
 
 /*progres bar ---end---*/
 
@@ -8002,4 +7862,8 @@ p[data-value]:after {
 		font-size: 13px;
 	}
 
+}
+/* preferred cuisines - dropdown menu */
+.ui-select-choices{
+	width: 300px !important;
 }

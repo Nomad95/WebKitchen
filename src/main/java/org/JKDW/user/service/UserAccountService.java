@@ -1,6 +1,5 @@
 package org.JKDW.user.service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -9,10 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.JKDW.security.AppConstant;
 import org.JKDW.security.TokenUtils;
+import org.JKDW.user.model.DTO.StringRequestBody;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 import org.JKDW.user.model.DTO.UserAccountDTO;
 import org.JKDW.user.model.UserAccount;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /*
  *
@@ -44,6 +43,12 @@ public interface UserAccountService {
 	Boolean checkIfUserHasRoleAdmin();
 
 	List<Map<String,Object>> getAllNicks();
+
+	Boolean checkIfUsernameIsTaken(String username);
+
+	Boolean checkIfEmailIsTaken(StringRequestBody email);
+
+	Boolean checkIfNickIsTaken(String nick);
 
 	static String getMyUsernameFromToken(HttpServletRequest request, TokenUtils tokenUtils){
 		String myUsernameFromToken;

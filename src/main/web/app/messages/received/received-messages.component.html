@@ -1,4 +1,12 @@
 <section>
+    <div class="message-menu">
+        <a class="btn btn-default" data-toggle="modal" data-target="#new-message">
+            <span class="glyphicon glyphicon-plus"></span> Nowa
+        </a>
+        <a (click)="deleteSelectedMessages()" [routerLink]="['/messagebox', 0 ]" class="btn btn-default" >
+            <span class="glyphicon glyphicon-minus"></span> Usuń zaznaczone
+        </a>
+    </div>
     <div class="well">
         <div class="message-details">
             <h3>Wiadomości odebrane</h3>
@@ -12,44 +20,49 @@
                             <div *ngIf="!message.wasRead">
                                 <td>
                                     <div class="message-checkbox" style="font-weight: bold">
-                                        <input type="checkbox" value="">
+                                        <input type="checkbox"
+                                               name="receivedMessages"  [(ngModel)]="message.checked" value="message.id">
                                     </div>
                                 </td>
                                 <td>
                                     <div class="message-nick" style="font-weight: bold">
-                                        {{message.sender.nick}}
+                                        {{message.nickSender}}
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="message-title" style="font-weight: bold">
-                                        <a [routerLink]="['/messagebox/received/details', message.id ]">{{message.title}} </a>
+                                    <div class="message-title" style="font-weight: bold; ">
+                                        <a (click)="decreaseNumberOfUnreadMessage();"
+                                           [routerLink]="['/messagebox/received/details', message.id ]">{{message.title}} </a>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="message-date" style="font-weight: bold">
                                         {{message.dateOfSend | date | polishDate}}
+                                        {{message.dateOfSend | date:'HH:mm:ss'}}
                                     </div>
                                 </td>
                             </div>
                             <div *ngIf="message.wasRead">
                                 <td>
                                     <div class="message-checkbox">
-                                        <input type="checkbox" value="">
+                                        <input type="checkbox"
+                                               name="receivedMessages"  [(ngModel)]="message.checked" value="message.id">
                                     </div>
                                 </td>
                                 <td>
                                     <div class="message-nick">
-                                        {{message.sender.nick}}
+                                        {{message.nickSender}}
                                     </div>
                                 </td>
                                 <td>
                                     <div class="message-title">
-                                        {{message.title}}
+                                        <a [routerLink]="['/messagebox/received/details', message.id ]">{{message.title}} </a>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="message-date">
-                                        {{message.dateOfSend}}
+                                        {{message.dateOfSend | date | polishDate}}
+                                        {{message.dateOfSend | date:'HH:mm:ss'}}
                                     </div>
                                 </td>
                             </div>
@@ -62,17 +75,15 @@
     </div>
     <ul class="pagination">
         <ng-container *ngFor="let page of indexesOfPage">
-            <li *ngIf="page == currentIndexOfPage" class="active" >
-                <a  href="#">{{page}}</a>
+            <li *ngIf="page == currentIndexOfPage" class="active">
+                <a [routerLink]="['/messagebox', (page*10)-10 ]" class="btn">{{page}}</a>
             </li>
             <li *ngIf="page != currentIndexOfPage">
-                <a  href="#">{{page}}</a>
+                <a (click)="setIndexOfPage(page);" [routerLink]="['/messagebox', (page*10)-10 ]"
+                   class="btn">{{page}}</a>
             </li>
         </ng-container>
 
     </ul>
 
 </section><!--section close-->
-
-
-

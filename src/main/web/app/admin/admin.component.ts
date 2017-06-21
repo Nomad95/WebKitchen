@@ -42,7 +42,7 @@ export class AdminComponent implements OnInit, OnDestroy {
                 // this.userProfile = JSON.stringify(result);
                 this.userProfile.username = result.username;
                 this.userProfile.country = result.country;
-                this.userProfile.e_mail = result.e_mail;
+                this.userProfile.email = result.email;
                 this.userProfile.nick = result.nick;
                 this.userProfile.isFilled = result.isFilled;
                 this.userProfile.isVerified = result.isVerified;

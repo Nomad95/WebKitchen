@@ -1,6 +1,7 @@
 package org.JKDW.user.model.DTO;
 
 import org.JKDW.user.model.Cuisines;
+import org.JKDW.user.model.UserDetails;
 
 import java.util.Date;
 import java.util.List;
@@ -61,6 +62,25 @@ public class UserDetailsUpdateDTO {
 		this.description = description;
 		this.preferredCuisine = preferredCuisine;
 		this.profileCompletion = profileCompletion;
+		this.userAccountDTO = userAccountDTO;
+	}
+
+	public UserDetailsUpdateDTO(UserDetails userDetails, UserAccountDTO userAccountDTO){
+		this.Id = userDetails.getId();
+		this.name = userDetails.getName();
+		this.surname = userDetails.getSurname();
+		this.street = userDetails.getStreet();
+		this.streetNumber = userDetails.getStreetNumber();
+		this.flatNumber = userDetails.getFlatNumber();
+		this.postCode = userDetails.getPostCode();
+		this.city = userDetails.getCity();
+		this.birthDate = userDetails.getBirthDate();
+		this.phoneNumber = userDetails.getPhoneNumber();
+		this.sex = userDetails.getSex();
+		this.interests = userDetails.getInterests();
+		this.description = userDetails.getDescription();
+		this.preferredCuisine = userDetails.getPreferredCuisine();
+		this.profileCompletion = userDetails.getProfileCompletion();
 		this.userAccountDTO = userAccountDTO;
 	}
 

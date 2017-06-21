@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {Router} from '@angular/router';
 import { RegistrationService } from './registration.service';
 import {UtilMethods} from "../util/util-methods.service";
+import {CountriesLocalName} from "../util/countries/countriesLocalName";
 
 @Component({
     selector: 'registration',
@@ -10,10 +11,16 @@ import {UtilMethods} from "../util/util-methods.service";
     providers: [RegistrationService, UtilMethods]
 })
 export class RegistrationComponent {
+    constructor(
+        private registrationService: RegistrationService,
+        private router: Router,
+        private utilMethods: UtilMethods) {
+    }
+
     userAccountToAdd = {
       username: '',
       password: '',
-      e_mail: '',
+      email: '',
       country: '',
       nick: ''
     };
@@ -29,13 +36,17 @@ export class RegistrationComponent {
     isMarketAccepted = false;
     isRegAccepted = false;
     isPassNotEqual = false;
+    passwordsDiffer = false;
 
+    //is taken
+    isUsernameTaken = false;
+    isEmailTaken = false;
+    isNickTaken = false;
 
-    constructor(
-        private registrationService: RegistrationService,
-        private router: Router,
-        private utilMethods: UtilMethods) {
-    }
+    /**
+     * list of all countries for select type
+     */
+    countries = CountriesLocalName.countries;
 
     /**
      * Perform user account creation
@@ -43,36 +54,11 @@ export class RegistrationComponent {
      */
     createUserAccount(data): void{
         this.validationResult = this.finalDataValidation(data);
-
-
         if (!this.validationResult) {
             return;
         }
-
-        /**
-         * if we success we clear the text fields
-         * if we have an error, we show a message
-         */
-      this.registrationService
-        .createUserAccount(data)
-        .subscribe(newAccount => {
-            this.userAccountToAdd = {
-                  username: '',
-                  password: '',
-                  e_mail: '',
-                  country: '',
-                  nick: ''
-            };
-            this.confirmPassword = '';
-            this.isMarketAccepted = false;
-            this.isRegAccepted = false;
-            this.isPassNotEqual = false;
-            this.validationResult = true;
-            this.router.navigate(['/registration/success']);
-        }, err => {
-            this.validationResult = false;
-            //TODO: username is already taken
-        });
+        //perform user creation.
+        this.performCreationOfUserAccount(data);
   }
 
     /**
@@ -105,6 +91,99 @@ export class RegistrationComponent {
             return false;
         }
         return result;
+    }
+
+    /**
+     * Checks whether passwords are the same
+     */
+    checkIfPasswordsAreSame(){
+        //if user proveded two passwords check if they are different
+        if(this.userAccountToAdd.password && this.confirmPassword)
+            (this.userAccountToAdd.password != this.confirmPassword)
+                ? this.passwordsDiffer = true : this.passwordsDiffer = false;
+    }
+
+    /**
+     *
+     * @returns {boolean} True if all data is unique
+     */
+    fieldsAreNotTaken(){
+        return !(this.isEmailTaken || this.isNickTaken || this.isUsernameTaken);
+    }
+
+    /**
+     * Checks if all fields are unique and then pushes data to server
+     * @param data user account data
+     */
+    performCreationOfUserAccount(data){
+        /* if we success we clear the text fields
+         * if we have an error, we show a message */
+        if(this.fieldsAreNotTaken()) {
+            //lowercase email
+            this.userAccountToAdd.email = this.toLowercase(this.userAccountToAdd.email);
+            //push account data
+            this.registrationService
+                .createUserAccount(data)
+                .subscribe(newAccount => {
+                    //clear data
+                    this.userAccountToAdd = {
+                        username: '',
+                        password: '',
+                        email: '',
+                        country: '',
+                        nick: ''
+                    };
+                    this.confirmPassword = '';
+                    this.isMarketAccepted = false;
+                    this.isRegAccepted = false;
+                    this.isPassNotEqual = false;
+                    this.validationResult = true;
+                    this.passwordsDiffer = false;
+                    this.router.navigate(['/registration/success']);
+                }, err => {
+                    this.validationResult = false;
+                });
+        }
+    }
+
+    /**
+     * Checks if username is taken
+     */
+    checkIfUsernameIsTaken(){
+        this.registrationService.checkIfUsernameIsTaken(this.userAccountToAdd.username)
+            .subscribe( res => {
+                this.isUsernameTaken = res;
+            });
+    }
+
+    /**
+     * Checks if email is taken. Downcases it
+     */
+    checkIfEmailIsTaken(){
+        this.registrationService.checkIfEmailIsTaken(this.toLowercase(this.userAccountToAdd.email))
+            .subscribe( res => {
+                this.isEmailTaken = res;
+            });
+    }
+
+    /**
+     * Checks if Nick is taken
+     */
+    checkIfNickIsTaken(){
+        console.log(this.userAccountToAdd.nick);
+        this.registrationService.checkIfNickIsTaken(this.userAccountToAdd.nick)
+            .subscribe( res => {
+                this.isNickTaken = res;
+            });
+    }
+
+    /**
+     * Converts string to be all letters lowercase
+     * @param value string
+     * @returns string all lowercase
+     */
+    toLowercase(value: string){
+        return this.utilMethods.stringAllToLowerCase(value);
     }
 
     /**

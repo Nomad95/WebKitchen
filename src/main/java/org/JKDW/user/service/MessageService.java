@@ -22,4 +22,6 @@ public interface MessageService {
 
     void deleteMessageFromSent(Long id, String usernameFromToken) throws NoResultException;
 
+    int countNumberOfUnreadMessages(String usernameFromToken);
+
 }

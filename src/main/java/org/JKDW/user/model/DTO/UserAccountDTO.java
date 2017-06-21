@@ -1,5 +1,7 @@
 package org.JKDW.user.model.DTO;
 
+import org.JKDW.user.model.UserAccount;
+
 import java.util.Date;
 
 public class UserAccountDTO {
@@ -36,6 +38,18 @@ public class UserAccountDTO {
         this.isFilled = isFilled;
         this.isVerified = isVerified;
         this.createdAt = createdAt;
+    }
+
+    public UserAccountDTO(UserAccount userAccount){
+        this.Id = userAccount.getId();
+        this.username = userAccount.getUsername();
+        this.email = userAccount.getEmail();
+        this.country = userAccount.getCountry();
+        this.nick = userAccount.getNick();
+        this.lastLogged = userAccount.getLastLogged();
+        this.isFilled = userAccount.getFilled();
+        this.isVerified = userAccount.getIsVerified();
+        this.createdAt = userAccount.getCreatedAt();
     }
 
     public Long getId() {
