@@ -42,6 +42,8 @@ public class MessageServiceImpl implements MessageService {
         message.setRecipient(recipient);
         message.setDateOfSend(date);
         message.setWasRead(false);
+        message.setNickRecipient(recipient.getNick());
+        message.setNickSender(sender.getNick());
 
         messageRepository.save(message);
 
@@ -58,7 +60,7 @@ public class MessageServiceImpl implements MessageService {
         List<Message> myMessagesToReceived = messageRepository.findByRecipient(recipient);
         if(myMessagesToReceived == null)
             throw new NoResultException("This user hasn't any massage to received");
-        myMessagesToReceived.sort((message, message2) ->message.getDateOfSend().compareTo(message2.getDateOfSend()));
+        myMessagesToReceived.sort((message, message2) ->message2.getDateOfSend().compareTo(message.getDateOfSend()));
 
         return myMessagesToReceived;
     }
@@ -66,6 +68,12 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public Message getReceivedMessageById(Long id){
         Message message = messageRepository.findOne(id);
+        if(message == null)
+            throw new NoResultException("This message doesn't exist");
+        if(!message.getWasRead()){
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+            this.setMessageToRead(jdbcTemplate, id);
+        }
         return message;
     }
 
@@ -79,7 +87,7 @@ public class MessageServiceImpl implements MessageService {
         List<Message> mySentMessage = messageRepository.findMessageBySender(sender);
         if(sender == null)
             throw new NoResultException("This user hasn't any sent massege ");
-        mySentMessage.sort((message, message2) ->message.getDateOfSend().compareTo(message2.getDateOfSend()));
+        mySentMessage.sort((message, message2) ->message2.getDateOfSend().compareTo(message.getDateOfSend()));
 
         return mySentMessage;
     }
@@ -129,6 +137,18 @@ public class MessageServiceImpl implements MessageService {
             messageRepository.delete(messageToDelete);
     }
 
+    @Override
+    @Transactional
+    public int countNumberOfUnreadMessages(String usernameFromToken) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        UserAccount userAccount = userAccountRepository.findByUsername(usernameFromToken);
+        Long id = userAccount.getId();
+        String sql = "SELECT count(*) FROM message WHERE recipient = ? AND was_read=FALSE ";
+
+        int count = jdbcTemplate.queryForObject(sql, Integer.class, id);
+        return count;
+    }
+
     @Transactional
     public void updateSenderColumn(JdbcTemplate jdbcTemplate, String sender_username, Long idUser) {
         jdbcTemplate.update(
@@ -141,5 +161,11 @@ public class MessageServiceImpl implements MessageService {
         jdbcTemplate.update(
                 "update message set recipient = ? where id = ?",
                 recipient_username, idUser);
+    }
+
+    @Transactional
+    public void setMessageToRead(JdbcTemplate jdbcTemplate,  Long idUser) {
+        jdbcTemplate.update(
+                "update message set was_read = TRUE where id = ?", idUser);
     }
 }

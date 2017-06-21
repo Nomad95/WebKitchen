@@ -1,5 +1,5 @@
 import {MessageService} from "../message.service";
-import {Component, OnInit} from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 import {FormGroup} from "@angular/forms";
 
 interface Nicks {
@@ -18,7 +18,7 @@ export class SendingMessageComponent implements OnInit {
         dateOfSend: '',
         messageContents: ''
     };
-    private recipient_nick;
+    @Input() recipient_nick;
     private hasBeenSent;
     private hasNotBeenSent;
     private recipientExist: boolean;
@@ -40,26 +40,27 @@ export class SendingMessageComponent implements OnInit {
                 this.messageToSend;
                 this.hasBeenSent = true;
                 this.hasNotBeenSent = false;
+                form.reset();
             },err => {
                 this.hasBeenSent = false;
                 this.hasNotBeenSent = true;
-                });
-        if(this.hasBeenSent)
-            form.reset();
+            });
     }
 
     getAllNicks():void{
         this.messageService
             .getNicksAllUser()
-            .subscribe( result => this.listOfNick);
+            .subscribe( result => {
+                this.listOfNick = result;
+            });
 
     }
 
     //TODO: Coorect the algorithm to improve speed: for example we can start search from nick where first character is the same like search nick
     checkIfNickExist(nickOfRecipientFromUser):void{
-       this.recipientExist = false;
-       this.recipientNotExist = false;
-       // loop forEach in typescript for list
+        this.recipientExist = false;
+        this.recipientNotExist = false;
+        // loop forEach in typescript for list
         var czy = this.listOfNick.find(myObj => myObj.nick == nickOfRecipientFromUser);
         if(czy != null){
             this.recipientExist = true;
@@ -69,4 +70,3 @@ export class SendingMessageComponent implements OnInit {
         }
     }
 }
-

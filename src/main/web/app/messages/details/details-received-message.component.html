@@ -1,11 +1,33 @@
 <div class="well">
-    Szczegóły wiadomości
+    <div class="message-details-content">
+        <h2>Szczegóły wiadomości</h2>
+        <br>
+        <p> Od: {{message.nickSender}} </p>
+        <p> Wysłana:  {{message.dateOfSend | date | polishDate}}
+            {{message.dateOfSend | date:'HH:mm:ss'}}</p>
+        <hr>
+        {{message.title}}
+        <hr>
+        <div id="message-contents">{{message.messageContents}}</div>
+    </div>
     <br>
-    <p> Od: {{message.sender.nick}} </p>
-    <p> Wysłana: {{message.dateOfSend |date| polishDate}}</p>
+    <br>
+    <a class="btn btn-default" data-toggle="modal" data-target="#new-message"> Odpowiedz
+    </a>
+</div>
+<!-- Modal -->
+<div id="new-message" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
-    <hr>
-    {{message.title}}
-    <hr>
-    {{message.messageContents}}
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <sending-message [recipient_nick]="message.sender.nick"></sending-message>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Powrót</button>
+            </div>
+        </div>
+
+    </div>
 </div>

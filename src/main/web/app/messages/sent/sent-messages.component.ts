@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {MessageService} from "../message.service";
-import {Message} from "../message";
+import {MessageSent} from "../message-sent";
 
 @Component({
     selector: 'sent-messages',
@@ -10,25 +10,25 @@ import {Message} from "../message";
 })
 export class SentMessagesComponent implements OnInit {
 
-    private sentMessages: Array<Message>;
-    private currentIndexOfPage = 1;
+    private sentMessages: Array<MessageSent>;
+    private currentIndexOfPage;
     private indexesOfPage = [];
-    private indexFirstMsgOnSite = 0;
+    @Input() indexFirstMsgOnSite: number;
+    private messagesToDelete = [];
 
     constructor(private router: Router, private messageService: MessageService) {
     }
 
     ngOnInit() {
+        this.setIndexOfPageFromMain();
         this.getSentMessage();
+        console.log(this.indexFirstMsgOnSite);
     }
 
     getSentMessage(): void{
         this.messageService
             .getMySentMessages()
             .subscribe( result => {
-                    for(let message of result){
-                        message.dateOfSend = new Date(message.dateOfSend).toDateString();
-                    }
                     this.sentMessages = result;
                     this.genereteTabForPagination(Object.keys(this.sentMessages).length);
                 },
@@ -50,5 +50,31 @@ export class SentMessagesComponent implements OnInit {
                 this.indexesOfPage.push(i/10);
         }
     }
-}
+    setIndexOfPageFromMain():void{
+        if(this.indexFirstMsgOnSite == 0)
+            this.currentIndexOfPage = 1;
+        else
+            this.currentIndexOfPage = (this.indexFirstMsgOnSite/10)+1;
+        console.log("index page: " + this.currentIndexOfPage);
+    }
 
+    setIndexOfPage(number):void{
+        this.currentIndexOfPage = number;
+
+    }
+
+    deleteSelectedMessages():void{
+        this.getSelectedOptions();
+        for(let message of this.messagesToDelete)
+            this.messageService
+                .deleteMySentMessage(message)
+                .subscribe();
+    }
+
+    getSelectedOptions() {
+        this.messagesToDelete = [];
+        this.messagesToDelete = this.sentMessages
+            .filter(opt => opt.checked)
+            .map(opt => opt.id);
+    }
+}
