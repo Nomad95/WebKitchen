@@ -19,6 +19,9 @@ export class AppComponent implements OnInit {
         dateEndOfBan: '',
         timeEndOfBan: ''
     };
+    private countUnreadMessages = {
+        count:''
+    }
 
     constructor(private loginService: LoginService, private router: Router, private sharedService: SharedService) {
     }
@@ -27,6 +30,7 @@ export class AppComponent implements OnInit {
         if(this.loginService.isLogged()) {
             this.checkIsUserAnAdmin();
             this.ifUserHasBannedLogOut();
+            this.countMyUnreadMessages();
         }
 
     }
@@ -68,9 +72,18 @@ export class AppComponent implements OnInit {
                 console.log("Data: " + this.myBan.dateEndOfBan + " godzina: " + this.myBan.timeEndOfBan);
                 this.router.navigate(['/login/banned/',{date: this.myBan.dateEndOfBan, time: this.myBan.timeEndOfBan}]);
             },
-            err => console.log('Wystąpił błąd podczas pobierania informacji o banie')
+            err => console.log('An error occurred while retrieving the ban information')
         );
 
+    }
+    countMyUnreadMessages():void{
+        this.loginService.countMyUnreadMessages().subscribe(
+            result => {
+                this.countUnreadMessages = result;
+                this.sharedService.setNumberOfUnreadMessages(Number(this.countUnreadMessages.count));
+            },
+            err => console.log("An error occurred while retrieving count of unread message")
+        );
     }
 
 }

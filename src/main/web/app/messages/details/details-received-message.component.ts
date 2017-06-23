@@ -1,7 +1,7 @@
 import {ActivatedRoute, Route, Router} from "@angular/router";
 import {MessageService} from "../message.service";
 import {Component, OnInit} from "@angular/core";
-import {Message} from "../message";
+
 @Component({
     selector: 'details-received-messages',
     templateUrl: 'app/messages/details/details-received-message.component.html',
@@ -35,10 +35,9 @@ export class DetailsReceivedMessagesComponent implements OnInit{
         this.messageService
             .getReceivedMessageDetails(this.id)
             .subscribe( result =>{
-                result.dateOfSend = new Date(result.dateOfSend).toDateString();
-                this.message = result;
+                    console.log(result.messageContents);
+                    this.message = result;
                 }
-
             )
     }
 

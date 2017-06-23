@@ -40,6 +40,7 @@ import {DetailsSentMessagesComponent} from "./messages/details/details-sent-mess
 import {SendingMessageComponent} from "./messages/sending/sending-message.component";
 import {ReceivedMessagesComponent} from "./messages/received/received-messages.component";
 import {SentMessagesComponent} from "./messages/sent/sent-messages.component";
+import {MessageBoxSentComponent} from "./messages/messagebox/messagebox-sent.component";
 import {MessageBoxComponent} from "./messages/messagebox/messagebox.component";
 import {LoginService} from "./login/login.service";
 import { RecaptchaModule } from 'ng2-recaptcha';
@@ -97,6 +98,7 @@ declare let jQuery:Object;
         ReceivedMessagesComponent,
         SentMessagesComponent,
         MessageBoxComponent,
+        MessageBoxSentComponent,
         DetailsReceivedMessagesComponent,
         DetailsSentMessagesComponent
     ],

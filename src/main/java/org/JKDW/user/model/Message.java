@@ -34,6 +34,12 @@ public class Message {
     @Column(name = "was_read")
     private Boolean wasRead;
 
+    @Column(name = "nick_recipient")
+    private String nickRecipient;
+
+    @Column(name = "nick_sender")
+    private String nickSender;
+
     public Long getId() {
         return id;
     }
@@ -84,5 +90,21 @@ public class Message {
 
     public void setWasRead(Boolean wasRead) {
         this.wasRead = wasRead;
+    }
+
+    public String getNickRecipient() {
+        return nickRecipient;
+    }
+
+    public void setNickRecipient(String nickRecipient) {
+        this.nickRecipient = nickRecipient;
+    }
+
+    public String getNickSender() {
+        return nickSender;
+    }
+
+    public void setNickSender(String nickSender) {
+        this.nickSender = nickSender;
     }
 }

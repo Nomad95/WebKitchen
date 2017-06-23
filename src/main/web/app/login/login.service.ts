@@ -14,9 +14,10 @@ export class LoginService{
 	public redirectUrl:string;
 	private isAdmin: boolean;
 	private isBanned: boolean;
+	private url;
 
 	private headers = new Headers({
-          'content-type' : 'application/json'});
+		'content-type' : 'application/json'});
 	private headersLoggedUser = null;
 
 	constructor(private http:Http, private sharedService:SharedService) {
@@ -25,33 +26,33 @@ export class LoginService{
 		this.username = currentToKey && currentToKey.username;
 	}
 
-    /* getToken aka Login */
+	/* getToken aka Login */
 	getToken(credentials): Observable<boolean>{
 		return this.http.post('/auth',JSON.stringify(credentials),{headers :this.headers})
-				.map(res => {
-                // login successful if there's a jwt token in the response
-                let token = res.json() && res.json().token;
-                if (token) {
-                    // set token property
-                    this.token = token;
+            .map(res => {
+				// login successful if there's a jwt token in the response
+				let token = res.json() && res.json().token;
+				if (token) {
+					// set token property
+					this.token = token;
 
-                    // store username and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('toKey', JSON.stringify({ username: credentials.username, token: token }));
+					// store username and jwt token in local storage to keep user logged in between page refreshes
+					localStorage.setItem('toKey', JSON.stringify({ username: credentials.username, token: token }));
 
-                    // return true to indicate successful login
-                    return true;
-                } else {
-                    // return false to indicate failed login
-                    return false;
-                }
-            })
-				.catch(this.handleError);
+					// return true to indicate successful login
+					return true;
+				} else {
+					// return false to indicate failed login
+					return false;
+				}
+			})
+            .catch(this.handleError);
 	}
 
 	getInfoAboutMyBan(): Observable<any> {
 		return this.http.get('/api/user/banned/account/arek', {headers: this.headers})
-			.map(res => res.json())
-			.catch(this.handleError);
+            .map(res => res.json())
+            .catch(this.handleError);
 	}
 
 	getIdByUsername(): Observable<number>{
@@ -65,8 +66,8 @@ export class LoginService{
 		});
 
 		return this.http.get("api/user/account/"+username+"/getid", {headers: headers})
-			.map((res) => res.json())
-			.catch(this.handleError);
+            .map((res) => res.json())
+            .catch(this.handleError);
 	}
 
 	getUsername(): string {
@@ -99,13 +100,13 @@ export class LoginService{
 	/**
 	 * Finds user id by username
 	 * @returns id of username
-     */
+	 */
 
 	checkVariableIsBanned(): Observable<any>{
 		return this.http.get('/api/user/checkIsBanned/'+this.getUsername(),{headers :this.headers})
             .map(res => res.json());
 	}
-	
+
 	checkIsUserAnAdmin(): Observable<any>{
 		this.headersLoggedUser = new Headers({
 			'content-type' : 'application/json',
@@ -113,16 +114,26 @@ export class LoginService{
 		})
 		return this.http.get('/api/user/getMyRole',{headers :this.headersLoggedUser})
             .map(res => res.json())
-			.catch(this.handleError);
+            .catch(this.handleError);
+	}
+
+	countMyUnreadMessages(){
+		this.headersLoggedUser = new Headers({
+			'content-type' : 'application/json',
+			'X-Auth-token' : this.token
+		});
+		this.url = "/api/message/myMessages/received/quantity/unread";
+		return this.http.get(this.url,{headers :this.headersLoggedUser})
+            .map(res => res.json())
+            .catch(this.handleError);
 	}
 
 	/*private handleError(error: any): Promise<any> {
 	 console.error('An error occurred!!!!!!!!!', error);
-		return Promise.reject(error.message || error);
+	 return Promise.reject(error.message || error);
 	 }*/
 	private handleError(error:any):Observable<any> {
 		console.error('An error in login service occurred!', error);
 		return Observable.throw(error.statusText);
 	}
-
 }
