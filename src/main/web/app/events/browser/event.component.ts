@@ -10,7 +10,7 @@ export class EventGeneralComponent implements OnInit {
 
     //event from all event list component
     @Input() private event: any;
-
+    
     private eventType: string;
 
     ngOnInit() {

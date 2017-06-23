@@ -65,12 +65,24 @@
                                    aria-hidden="true"
                                    *ngIf="checkIfUserIsOnAAcceptedList(user.id)"></i></td>
                             <td >
-                                <i (click)="rejectTheRequest(user)" class="fa fa-times" aria-hidden="true"></i>
+                                <!--if user is an owner of this event he cannot be removed //todo: cos tu zle-->
+                                <i *ngIf="user.id != event.ownerId"
+                                   (click)="rejectTheRequest(user)"
+                                   class="fa fa-times"
+                                   aria-hidden="true"></i>
+                                <i *ngIf="user.id == event.ownerId"
+                                   class="fa fa-star"
+                                   aria-hidden="true"></i>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-12 col-xs-12">
+            <button class="btn btn-primary" [routerLink]="['/events',event.id]">Zobacz wydarzenie</button>
         </div>
     </div>
 </div>

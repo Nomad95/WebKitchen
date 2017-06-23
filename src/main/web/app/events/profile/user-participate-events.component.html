@@ -13,22 +13,25 @@
                     <th class="text-center">Zobacz Szczegóły</th>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let event of events" class="text-center" [class.success]="event.accepted">
-                        <td>{{event.title}}</td>
-                        <td>{{event.dish_name}}</td>
-                        <td>{{convertToEventKind(event.type)}}</td>
-                        <td>{{event.date | date | polishDate}}</td>
-                        <td>{{event.time | shorterTime}}</td>
-                        <td>
-                            <i class="fa fa-check" aria-hidden="true" *ngIf="event.accepted"></i>
-                            <i class="fa fa-times" aria-hidden="true" *ngIf="!event.accepted"></i>
-                        </td>
-                        <td>
-                            <button class="btn btn-default"
-                            (click)="goToEventDetails(event.id)">
-                                <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                            </button>
-                        </td>
+                    <tr *ngFor="let event of events"
+                         class="text-center" [class.success]="event.accepted">
+                        <ng-container *ngIf="event.ownerId != userId">
+                            <td>{{event.title}}</td>
+                            <td>{{event.dish_name}}</td>
+                            <td>{{convertToEventKind(event.type)}}</td>
+                            <td>{{event.date | date | polishDate}}</td>
+                            <td>{{event.time | shorterTime}}</td>
+                            <td>
+                                <i class="fa fa-check" aria-hidden="true" *ngIf="event.accepted"></i>
+                                <i class="fa fa-times" aria-hidden="true" *ngIf="!event.accepted"></i>
+                            </td>
+                            <td>
+                                <button class="btn btn-default"
+                                (click)="goToEventDetails(event.id)">
+                                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                </button>
+                            </td>
+                        </ng-container>
                     </tbody>
                 </table>
             </div>

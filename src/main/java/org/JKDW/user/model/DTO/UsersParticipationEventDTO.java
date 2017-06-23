@@ -19,7 +19,9 @@ public class UsersParticipationEventDTO {
 
     private boolean isAccepted;
 
-    public UsersParticipationEventDTO(Long id, String title, String dish_name, byte type, Time time, Date date, boolean isAccepted) {
+    private Long ownerId;
+
+    public UsersParticipationEventDTO(Long id, String title, String dish_name, byte type, Time time, Date date, boolean isAccepted, Long ownerId) {
         this.id = id;
         this.title = title;
         this.dish_name = dish_name;
@@ -27,6 +29,15 @@ public class UsersParticipationEventDTO {
         this.time = time;
         this.date = date;
         this.isAccepted = isAccepted;
+        this.ownerId = ownerId;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
     public boolean isAccepted() {
