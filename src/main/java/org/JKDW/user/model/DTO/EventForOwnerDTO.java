@@ -28,6 +28,8 @@ public class EventForOwnerDTO {
 
     private int people_remaining;
 
+    private Long ownerId;
+
     private long[] acceptedIds;
 
     private List<UserAccountForEventOwnerDTO> participantsDetails;
@@ -44,7 +46,8 @@ public class EventForOwnerDTO {
                             byte people_quantity,
                             int people_remaining,
                             long[] acceptedIds,
-                            List<UserAccountForEventOwnerDTO> participantsDetails) {
+                            List<UserAccountForEventOwnerDTO> participantsDetails,
+                            long ownerId) {
         this.id = id;
         this.type = type;
         this.title = title;
@@ -55,6 +58,15 @@ public class EventForOwnerDTO {
         this.people_remaining = people_remaining;
         this.participantsDetails = participantsDetails;
         this.acceptedIds = acceptedIds;
+        this.ownerId = ownerId;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
     public long[] getAcceptedIds() {

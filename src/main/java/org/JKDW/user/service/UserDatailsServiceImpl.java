@@ -200,7 +200,8 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 					e.getType(),
 					e.getTime(),
 					e.getDate(),
-					e.getAcceptedIds().contains(userId)
+					e.getAcceptedIds().contains(userId),
+					e.getOwnerId()
 					))
 		);
 		return eventsDTO;

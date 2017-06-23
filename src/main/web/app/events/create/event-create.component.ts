@@ -201,7 +201,21 @@ export class EventCreateComponent implements OnInit {
      */
     assignUserToEvent(eventId: number){
         this.eventService.assignUserToEvent(eventId)
-            .subscribe((data) => console.log("added owner to new event"));
+            .subscribe((data) => {
+                console.log("added owner to new event");
+                this.acceptUser(eventId,this.userId);
+            });
+    }
+
+    /**
+     * Instantly accepts owner participation 
+     */
+    acceptUser(eventId: number, userId: number){
+        this.eventService.addUserIdToAcceptedList(eventId,userId)
+            .subscribe( data => {
+                console.log('accepted id: '+userId);
+
+            });
     }
 
     /**

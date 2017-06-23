@@ -11,6 +11,8 @@ export class UserParticipateEventsComponent  {
 
     @Input() private events: any;
     
+    @Input() private userId: number = -1;
+    
     /**
      * navigates user to event details
      * @param eventId

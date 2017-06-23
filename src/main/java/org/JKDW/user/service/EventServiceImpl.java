@@ -278,8 +278,9 @@ public class EventServiceImpl implements EventService {
                         event.getPeople_quantity(),
                         event.getPeople_remaining(),
                         event.getAcceptedIds().stream().mapToLong(l -> l).toArray(),
-                        processAccountsParticipatingInEvent(event.getAccounts()))
-        ));
+                        processAccountsParticipatingInEvent(event.getAccounts()),
+                        event.getOwnerId()
+        )));
         return ownerEventsWithAccounts;
     }
 
