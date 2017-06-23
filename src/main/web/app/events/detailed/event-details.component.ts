@@ -15,21 +15,11 @@ export class EventDetailsComponent implements OnInit {
                 private eventService:EventService,
                 private loginService: LoginService,
                 private location: Location) {}
-
-    //event stub
-   /* private event = {
-        id: -1,
-        ownerUsername: '',
-        type: '',
-        people_remaining: -1,
-        ownerId: -1
-    };*/
+    
     private event = new DetailedEvent();
 
-    //user account id
     private userId: number = -1;
 
-    //the type of event (1,2)
     private eventType: string;
 
     // if current user has already joined to this event

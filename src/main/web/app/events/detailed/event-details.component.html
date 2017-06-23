@@ -30,7 +30,7 @@
                         <li *ngIf="event.type == 2">Produkty do zakupu: {{event.shopping_list}}</li>
 
                     </ul>
-                    <div *ngIf="hasJoined" class="alert alert-info " role="alert">
+                    <div *ngIf="hasJoined && !isOwner" class="alert alert-info " role="alert">
                         Uczestniczysz w tym wydarzeniu.
                     </div>
                     <div *ngIf="isOwner" class="alert alert-info " role="alert">
@@ -51,7 +51,7 @@
                             type="button" id="return"
                             autocomplete="off">Powrót
                     </button>
-                    <button *ngIf="hasJoined" class="btn btn-primary"
+                    <button *ngIf="hasJoined && !isOwner" class="btn btn-primary"
                             (click)="resignFromEvent()"
                             type="button">Zrezygnuj
                     </button>

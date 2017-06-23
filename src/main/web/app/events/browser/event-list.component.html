@@ -24,7 +24,7 @@
                 <h2 class="lead">Wydarzenia</h2>
                 <div class="row">
                     <div *ngFor="let event of events">
-                        <div class="col-md-6 col-sm-12">
+                        <div class="col-md-6 col-sm-12" *ngIf="event.ownerId != userId">
                             <event-detail [event]="event">Ładowanie...</event-detail>
                         </div>
                     </div>
