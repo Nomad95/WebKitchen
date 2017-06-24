@@ -31,6 +31,7 @@
     "mydatepicker": "^2.0.17",
     "ng2-bootstrap": "^1.1.16",
     "ng2-datepicker": "^1.8.3",
+    "ng2-recaptcha": "^1.7.0",
     "ng2-select": "^1.2.0",
     "npm": "^4.0.5",
     "reflect-metadata": "^0.1.9",
