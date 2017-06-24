@@ -37,6 +37,7 @@ export class RegistrationComponent {
     isRegAccepted = false;
     isPassNotEqual = false;
     passwordsDiffer = false;
+    isCaptchaVerified = false;
 
     //is taken
     isUsernameTaken = false;
@@ -54,12 +55,23 @@ export class RegistrationComponent {
      */
     createUserAccount(data): void{
         this.validationResult = this.finalDataValidation(data);
-        if (!this.validationResult) {
+        if (!this.validationResult) 
             return;
-        }
+        if(!this.isCaptchaVerified)
+            return;
         //perform user creation.
         this.performCreationOfUserAccount(data);
-  }
+    }
+
+    /**
+     * performs backend captcha validation returning true or false
+     * @param response string from captcha component
+     */
+    resolved(response: string){
+        console.log('resolved');
+        this.registrationService.verifyCaptcha(response)
+            .subscribe( res => this.isCaptchaVerified = res);
+    }
 
     /**
      * we perform a front-end validation pass

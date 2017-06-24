@@ -31,7 +31,6 @@ export class EventService {
      * @param id id of event
      * @returns one detailed event information
      */
-    //TODO: zamiast Any zrobic typeSafe model?? i wydobyc metode z headerami
     getDetailedEvent(id:number):Observable<any> {
         this.instantiateToken();
         var headers = this.createHeadersWithContentAndToken(this.token);
@@ -167,7 +166,7 @@ export class EventService {
      * URI is stored in database
      * @param file - photo binaries
      */
-    uploadPhoto(file:File):Observable<any> {
+    uploadPhoto(file:File): Observable<any> {
         this.instantiateToken();
 
         //create new observable; we use xhr instead of http
@@ -208,6 +207,7 @@ export class EventService {
      * Assigns logged user to Event
      * @param id
      * @returns {Promise<R>|any|Promise<any|T>|Promise<any>|Promise<T>}
+     * //TODO: username
      */
     assignUserToEvent(id:number) {
         this.instantiateUsernameAndToken();
