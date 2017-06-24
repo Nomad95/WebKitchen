@@ -32,6 +32,8 @@ public class FileUploadController {
      *                   see event.service.ts uploadPhoto method
      * @return Http Status
      * consumes multipart form-data are files format
+     *
+     * //TODO ogranicz wielksoc pliku
      */
     @RequestMapping(value = "/api/upload/photo/dish", method = RequestMethod.POST, consumes = "multipart/form-data")
     private ResponseEntity<?> uploadDishPhoto(

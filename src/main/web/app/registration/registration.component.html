@@ -151,6 +151,18 @@
                         Błędne dane.
                     </div>
 
+                    <div>
+                        <recaptcha
+                                (resolved)="resolved($event)"
+                                siteKey="6Le1ACYUAAAAAKmYDSLyh47BghFTpL2FCObFxtZA"
+                                #captcha="ngModel"
+                                ngModel
+                                required
+                                name="captcha" ></recaptcha>
+                    </div>
+                    <div *ngIf="captcha.invalid && captcha.touched && !isCaptchaVerified" class="alert alert-danger" role="alert">
+                        Błąd captcha.
+                    </div>
 
                     <button type="submit" class="btn btn-default"
                             (click)="createUserAccount(userAccountToAdd);">OK
