@@ -50,7 +50,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Autowired
     private BannedUserRepository bannedUserRepository;
 
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private BCryptPasswordEncoder passwordEncoder;
     /**
      * @return Returns all user accounts
      */
@@ -103,7 +103,7 @@ public class UserAccountServiceImpl implements UserAccountService {
      */
     @Override
     public UserAccount createUserAccount(UserAccountCreateDTO userAccount) {
-        /*passwordEncoder = new BCryptPasswordEncoder();*/
+        passwordEncoder = new BCryptPasswordEncoder();
         UserAccount newUserAccount = new UserAccount(userAccount);
         newUserAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
         newUserAccount.setIsFilled(false);
@@ -275,17 +275,10 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
     @Override
     public UserAccount changePassword(UserAccountPasswordChangeDTO userAccountPasswordDTO) {
-        //BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         UserAccount foundUserAccount = userAccountRepository.findOne(userAccountPasswordDTO.getId());
-        String oldPasswordEncoded = passwordEncoder.encode(userAccountPasswordDTO.getOldPassword());
-        System.out.println(oldPasswordEncoded);
-        if(foundUserAccount.isPasswordCorrect(oldPasswordEncoded)){
-            System.out.println("Is correct");
-            foundUserAccount.setPassword(passwordEncoder.encode(userAccountPasswordDTO.getPassword()));
-        }else{
-            System.out.println("Isn't correct");
-        }
-        System.out.println(passwordEncoder.encode(userAccountPasswordDTO.getPassword()));
+        passwordEncoder = new BCryptPasswordEncoder();
+        foundUserAccount.setPassword(passwordEncoder.encode(userAccountPasswordDTO.getNewPassword()));
+        userAccountRepository.save(foundUserAccount);
         return foundUserAccount;
     }
 }
