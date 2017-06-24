@@ -92,7 +92,7 @@ public class UserAccountController {
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
-	//TODO: Kondziu to twoja metoda? chyba nie ale g?owy nie dam xD
+	//TODO: Kondziu to twoja metoda? chyba nie ale g�owy nie dam xD
 	@RequestMapping(value = "/account/test/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserAccountDTO> getUserAccountByName(@PathVariable("id") Long id) {
 		UserAccountDTO userAccountDTO = userAccountService.getUserAccountDTOById(id);
