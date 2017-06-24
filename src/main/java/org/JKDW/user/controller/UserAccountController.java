@@ -78,6 +78,7 @@ public class UserAccountController {
 	 * @return updated account information
 	 */
 	@RequestMapping(value="/{id}",method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserAccount> updateUserAccount(@RequestBody UserAccount userAccount){
 		UserAccount updatedUserAccount = userAccountService.updateUserAccount(userAccount);
 		return new ResponseEntity<>(updatedUserAccount,HttpStatus.OK);
 	}
@@ -146,11 +147,6 @@ public class UserAccountController {
 	 * @param userAccountPasswordChangeDTO - id of UserAccount, oldPassword and newPassword
 	 * @return updated account information
 	 */
-	@RequestMapping(value="/changePassword/{id}",method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserAccount> updateUserAccount(@RequestBody UserAccountPasswordChangeDTO userAccountPasswordChangeDTO){
-		System.out.println("user AccountPasswordDTO: "+userAccountPasswordChangeDTO.toString());
-		UserAccount updatedUserAccount = userAccountService.changePassword(userAccountPasswordChangeDTO);
-		return new ResponseEntity<>(updatedUserAccount,HttpStatus.OK);
 	@RequestMapping(value="/changePassword/{id}",method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserAccount> updateUserAccount(@RequestBody UserAccountPasswordChangeDTO userAccountPasswordChangeDTO){
 		System.out.println("user AccountPasswordDTO: "+userAccountPasswordChangeDTO.toString());
