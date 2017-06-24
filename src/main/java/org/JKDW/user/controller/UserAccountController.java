@@ -92,7 +92,7 @@ public class UserAccountController {
 		return new ResponseEntity(HttpStatus.OK);
 	}
 
-	//TODO: Kondziu to twoja metoda? chyba nie ale g³owy nie dam xD
+	//TODO: Kondziu to twoja metoda? chyba nie ale gï¿½owy nie dam xD
 	@RequestMapping(value = "/account/test/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserAccountDTO> getUserAccountByName(@PathVariable("id") Long id) {
 		UserAccountDTO userAccountDTO = userAccountService.getUserAccountDTOById(id);
@@ -149,6 +149,7 @@ public class UserAccountController {
 	 */
 	@RequestMapping(value="/changePassword/{id}",method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserAccount> updateUserAccount(@RequestBody UserAccountPasswordChangeDTO userAccountPasswordChangeDTO){
+		System.out.println("user AccountPasswordDTO: "+userAccountPasswordChangeDTO.toString());
 		UserAccount updatedUserAccount = userAccountService.changePassword(userAccountPasswordChangeDTO);
 		return new ResponseEntity<>(updatedUserAccount,HttpStatus.OK);
 	}

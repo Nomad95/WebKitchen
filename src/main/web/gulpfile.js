@@ -64,7 +64,8 @@ gulp.task('libcopy', function() {
         './node_modules/ng2-bootstrap/bundles/ngx-bootstrap.umd.js',
         './node_modules/ng2-select/bundles/ng2-select.umd.js',
         './node_modules/mydatepicker/bundles/mydatepicker.umd.min.js',
-        './node_modules/@ngui/datetime-picker/dist/datetime-picker.umd.js'
+        './node_modules/@ngui/datetime-picker/dist/datetime-picker.umd.js',
+        './node_modules/angular2-modal/bundle/angular2-modal.js'
     ])
         .pipe(gulp.dest(staticDir + 'js/lib'));
     gulp.src(['./node_modules/tether/dist/css/tether.css',

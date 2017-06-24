@@ -187,6 +187,7 @@
 					</div>
 					</div>
 					</div>
+					<button class="btn btn-warning changePassword-submit-button" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Zmień hasło</button>
         </tab>
         <tab title="Dane osobowe" [classTab]="name.invalid || surname.invalid || street.invalid || streetNumber.invalid || 
 											flatNumber.invalid || postCode.invalid || city.invalid || country.invalid || 
@@ -554,9 +555,17 @@
 	<div *ngIf=!isDataAvailable style="margin-left: 400px">
 		Loading...
 	</div>
-</section>
+
 <!--section close-->
-
-
-
-
+<!-- Modal -->
+<div class="modal fade bs-modal-sm" #modal id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog-changePassword">
+    <div class="modal-content-changePassword">
+      <!--<div class="modal-body">-->
+		<change-password [id]="userProfile.userAccountDTO.id">Wczytuję..</change-password>
+      <!--</div>-->
+    </div>
+      </div>
+    </div>
+	<!-- Modal end -->
+</section>

@@ -29,7 +29,8 @@
       'symbol-observable': 'js/lib/symbol-observable',
       'ng2-bootstrap/ng2-bootstrap': 'js/lib/ngx-bootstrap.umd.js',
       'ng2-select': 'js/lib',
-      'mydatepicker': 'js/lib/mydatepicker.umd.min.js'
+      'mydatepicker': 'js/lib/mydatepicker.umd.min.js',
+      'angular2-modal': 'js/lib/angular2-modal.js'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {

@@ -19,7 +19,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
 import { MyProfileComponent } from './profile/myProfile/myProfile.component';
 import { ProfileComponent } from './profile/userProfile/profile.component';
-import { ChangePasswordComponent } from './profile/myProfile/change-password/change-password.component';
+import { ChangePasswordComponent } from './profile/changePassword/change-password.component';
 import { Tabset } from './tabs/Tabset';
 import { Tab } from './tabs/Tab';
 import { NavbarComponent } from './navbar/navbar.component';

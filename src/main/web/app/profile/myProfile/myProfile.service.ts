@@ -17,7 +17,7 @@ export class MyProfileService {
     private url;
     private credentials = {
             username: '',
-            oldPassword: ''
+            password: ''
         };
     constructor(private http: Http, private router: Router) {}
 
@@ -91,7 +91,9 @@ export class MyProfileService {
 
     /* Check that the given password is correct */
 	oldPasswordIsCorrect(oldPassword): Observable<boolean>{
-        this.credentials.oldPassword=oldPassword;
+        this.headers = new Headers({
+          'content-type' : 'application/json'});
+        this.credentials.password=oldPassword;
         this.credentials.username = this.getLoggedUsernameFromToken();
 		return this.http.post('/auth',JSON.stringify(this.credentials),{headers :this.headers})
 				.map(res => {
@@ -99,13 +101,15 @@ export class MyProfileService {
                 let token = res.json() && res.json().token;
                 if (token) {
                     // return true if password correct
+                    console.log("true, old password correct!");
                     return true;
                 } else {
                     // return false if password incorrect
+                    console.log("false, old password incorrect!");
                     return false;
                 }
             })
-				.catch(this.handleError);
+				.catch(this.handleErrorPassword);
 	}
 
     getLoggedUsernameFromToken(){
@@ -116,9 +120,9 @@ export class MyProfileService {
     }
 
     changePassword(userProfileChangePasswordDTO):Observable<any>{
-
         var currentToKey = JSON.parse(localStorage.getItem('toKey'));
         let token = currentToKey && currentToKey.token;
+        console.log(JSON.stringify(userProfileChangePasswordDTO));
         //create appropriate
         this.headers = new Headers({
           'accept': 'application/json',
@@ -132,6 +136,11 @@ export class MyProfileService {
     private handleError(error: any): Promise<any> {
         console.error('An error occurred in Profile', error);
         return Promise.reject(error.message || error);
+     }
+
+     private handleErrorPassword(error: any): Promise<any> {
+        console.error('An error occurred in Profile', error);
+        return Promise.resolve(false);
      }
 
      private handleUpdateError(error: any): Promise<any> {
