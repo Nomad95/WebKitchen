@@ -15,6 +15,7 @@ import {RegistrationSuccess} from './registration/registration-success.component
 import {LoginSuccess} from './login/login-success.component';
 import {EventCreateComponent} from './events/create/event-create.component';
 import {ProfileEventsComponent} from "./events/profile/profile-events.component";
+import {ConfirmRegistrationComponent} from "./registration/confirmation/confirm.registration.component";
 
 import {AuthGuard} from './app.auth-guard.service';
 import {LoginService} from './login/login.service';
@@ -33,6 +34,7 @@ const appRoutes: Routes = [
     {path: 'user', component: UserComponent},
     {path: 'registration', component: RegistrationComponent},
     {path: 'registration/success', component: RegistrationSuccess},
+    {path: 'registration/confirm', component: ConfirmRegistrationComponent},
     {path: 'login', component: LoginComponent},
     {path: 'login/success', component: LoginSuccess},
     {path: 'login/banned', component: LoginBanned},

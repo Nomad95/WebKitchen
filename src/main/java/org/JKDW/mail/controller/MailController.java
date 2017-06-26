@@ -16,9 +16,13 @@ public class MailController {
     @Autowired
     private MailService mailService;
 
+    /**
+     * Example method that sends simple email
+     * @return true if email was sent
+     */
     @RequestMapping(value = "/send", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<Boolean> sendEmail(){
-        mailService.sendSimpleMessage("igokop99@gmail.com","cos","asdasddd");
+        mailService.sendSimpleMessage("igokop9999@gmail.com","cos","asdasddd");
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 }

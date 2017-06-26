@@ -70,7 +70,7 @@ export class LoginComponent {
                     this.getMyNickAndConnectWithStomp();
                     this.countMyUnreadMessages();
 
-                    //forwards to main page
+                    //forwards to success page
                     this.router.navigate(['/login/success']);
                 } else {
                     this.errorEncountered = true;

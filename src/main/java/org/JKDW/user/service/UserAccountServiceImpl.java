@@ -16,10 +16,12 @@ import org.JKDW.user.model.BannedUser;
 import org.JKDW.user.model.DTO.StringRequestBody;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 import org.JKDW.user.model.DTO.UserAccountDTO;
-import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
 import org.JKDW.user.model.UserAccount;
+import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
 import org.JKDW.user.repository.BannedUserRepository;
+import org.JKDW.user.model.VerificationToken;
 import org.JKDW.user.repository.UserAccountRepository;
+import org.JKDW.user.repository.VerificationTokenRepository;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,9 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Autowired
     private BannedUserRepository bannedUserRepository;
+
+    @Autowired
+    private VerificationTokenRepository tokenRepository;
 
 
     /**
@@ -193,6 +198,7 @@ public class UserAccountServiceImpl implements UserAccountService {
         Boolean isAdmin = false;
         /* Pobiera z SecuirtyUser role w formacie [ROLE_TYP] */
         Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        System.out.println("W kontexcie jestem "+ authorities);
         for( SimpleGrantedAuthority element : authorities){
             if(element.toString().equals(ADMIN)) {
                 isAdmin = true;
@@ -297,6 +303,23 @@ public class UserAccountServiceImpl implements UserAccountService {
     public Boolean checkIfNickIsTaken(String nick) {
         UserAccount byNick = userAccountRepository.findByNick(nick);
         return byNick != null;
+    }
+
+    @Override
+    public void createVerificationToken(UserAccount user, String token) {
+        VerificationToken myToken = new VerificationToken(token, user);
+        tokenRepository.save(myToken);
+    }
+
+    @Override
+    public VerificationToken getVerificationToken(String VerificationToken) {
+        return tokenRepository.findByToken(VerificationToken);
+    }
+
+    @Override
+    public UserAccount getUserByVerificationToken(String verificationToken) {
+        UserAccount userAccount = tokenRepository.findByToken(verificationToken).getUserAccount();
+        return userAccount;
     }
 
     public UserAccount changePassword(UserAccountPasswordChangeDTO userAccountPasswordDTO) {

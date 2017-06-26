@@ -1,21 +1,25 @@
 package org.JKDW.user.controller;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.JKDW.security.TokenUtils;
+import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
 import org.JKDW.user.model.DTO.StringRequestBody;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 import org.JKDW.user.model.DTO.UserAccountDTO;
-import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.model.UserDetails;
+import org.JKDW.user.model.VerificationToken;
+import org.springframework.context.ApplicationEventPublisher;
+
 import org.JKDW.user.service.UserAccountService;
 import org.JKDW.user.service.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +31,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -39,6 +45,7 @@ public class UserAccountController {
 	 * we get project directory and add path to static\img path
 	 */
 	private static String UPLOADED_FOLDER = System.getProperty("user.dir") + "\\build\\generated-web-resources\\static\\img\\";
+
 
 	@Autowired
 	private UserAccountService userAccountService;
@@ -84,6 +91,16 @@ public class UserAccountController {
 		userDetails.setUserAccount(createdUserAccount);
 		userDetailsService.createUserDetails(userDetails);
 		prepareUserDirectories(createdUserAccount.getNick()+"\\profilePhoto\\");
+
+		//publish event to create email validation token
+		try {
+			String appUrl = request.getContextPath();
+			eventPublisher.publishEvent(new OnRegistrationCompleteEvent
+					(createdUserAccount, request.getLocale(), appUrl));
+		} catch (Exception me) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
 		return new ResponseEntity<>(createdUserAccount,HttpStatus.CREATED);
 	}
 
@@ -184,6 +201,7 @@ public class UserAccountController {
 		return new ResponseEntity<>(bool, HttpStatus.OK);
 	}
 
+
 	/**
 	 *
 	 * @param userAccountPasswordChangeDTO - id of UserAccount, oldPassword and newPassword
@@ -219,6 +237,25 @@ public class UserAccountController {
 	public ResponseEntity<String> getMyNick(HttpServletRequest request) {
 		String nick = userAccountService.getMyNickByToken(UserAccountService.getMyUsernameFromToken(request, this.tokenUtils));
 		return new ResponseEntity<>("{\"nick\": \"" + nick + "\"}", HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/registration/confirm", method = RequestMethod.GET)
+	public ResponseEntity<Boolean> confirmRegistration(@RequestParam("token") String token) {
+
+		VerificationToken verificationToken = userAccountService.getVerificationToken(token);
+		//token not provided
+		if (verificationToken == null)
+			return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
+
+		UserAccount userAccount = verificationToken.getUserAccount();
+		//Calendar cal = Calendar.getInstance();
+		//token expired //TODO: zaimplementowac to ( narazie odpuszczam)
+		/*if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0)
+			return new ResponseEntity<>(false,HttpStatus.PRECONDITION_FAILED);*/
+
+		userAccount.setEnabled(true);
+		userAccountService.updateUserAccount(userAccount);
+		return new ResponseEntity<>(true,HttpStatus.OK);
 	}
 
 }

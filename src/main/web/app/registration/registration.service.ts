@@ -74,12 +74,18 @@ export class RegistrationService{
 	}
 
 	verifyCaptcha(response): Observable<any>{
-		//request body -> goes to backend 
+		//request body -> goes to backend
 		let body = {
 			'response' : response
 		};
 
 		return this.http.post('captcha/verify',body)
+			.map(res => res.json())
+			.catch(this.handleError);
+	}
+
+	confirmRegistration(token: string): Observable<boolean>{
+		return this.http.get('/api/user/registration/confirm?token='+token)
 			.map(res => res.json())
 			.catch(this.handleError);
 	}

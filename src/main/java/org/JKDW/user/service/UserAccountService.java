@@ -11,8 +11,11 @@ import org.JKDW.security.TokenUtils;
 import org.JKDW.user.model.DTO.StringRequestBody;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 import org.JKDW.user.model.DTO.UserAccountDTO;
-import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
 import org.JKDW.user.model.UserAccount;
+import org.JKDW.user.model.VerificationToken;
+import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
+
+
 
 /*
  *
@@ -50,6 +53,12 @@ public interface UserAccountService {
 	Boolean checkIfEmailIsTaken(StringRequestBody email);
 
 	Boolean checkIfNickIsTaken(String nick);
+
+	void createVerificationToken(UserAccount user, String token);
+
+	VerificationToken getVerificationToken(String VerificationToken);
+
+	UserAccount getUserByVerificationToken(String verificationToken);
 
 	UserAccount changePassword(UserAccountPasswordChangeDTO userAccountPasswordDTO);
 
