@@ -7,7 +7,6 @@ import { MyProfileService } from './myProfile.service';
 import { PreferedCuisineService } from './preferedCuisine.service';
 import { CuisinesService } from '../../cuisines/cuisines.service';
 import {Cuisine} from '../model/cuisine.model';
-import {UserProfile} from '../model/userProfile.model';
 import { TAB_COMPONENTS  } from '../../tabs/Tabset';
 
 
@@ -17,7 +16,7 @@ import { TAB_COMPONENTS  } from '../../tabs/Tabset';
     styleUrls: ['css/tabs.css'],
     providers: [MyProfileService, PreferedCuisineService, CuisinesService]
 })
-export class MyProfileComponent implements OnInit, OnDestroy {
+export class MyProfileComponent implements OnInit {
     private isDataAvailable: boolean = false;
     private precentageFilled: any = 0;
     private profileCompletion: number;
@@ -40,16 +39,80 @@ export class MyProfileComponent implements OnInit, OnDestroy {
     private birthDate: Date;
     private birthDateInput: Object = { date: 
                     { year: '', month: '', day: '' } 
-                };;
+                };
     private selectedBirthDateNormal: string = '';
     private selectedBirthDateTextNormal: string = '';
     private defaultYearAndMonth:string;
 
     gender: number;
 
-    private userProfile = new UserProfile;
+    private userProfile = {
+        name: '',
+        surname: '',
+        street: '',
+        streetNumber: '',
+        flatNumber: '',
+        postCode: '',
+        city: '',
+        birthDate: '',
+        phoneNumber: '',
+        sex: '',
+        interests: '',
+        description: '',
+        preferredCuisine: [],
+        profileCompletion: '',
+        userAccountDTO: {
+          username: '',
+          email: '',
+          country: '',
+          nick: '',
+          lastLogged: '',
+          isFilled: '',
+          isVerified: '',
+          createdAt: '',
+          id: ''
+        },
+            id: '' 
+    };
     
-    private originalUserProfile = new UserProfile;
+    private originalUserProfile = {
+        name: '',
+        surname: '',
+        street: '',
+        streetNumber: '',
+        flatNumber: '',
+        postCode: '',
+        city: '',
+        birthDate: '',
+        phoneNumber: '',
+        sex: '',
+        interests: '',
+        description: '',
+        preferredCuisine: [],
+        profileCompletion: '',
+        userAccountDTO: {
+          username: '',
+          email: '',
+          country: '',
+          nick: '',
+          lastLogged: '',
+          isFilled: '',
+          isVerified: '',
+          createdAt: '',
+          id: ''
+        },
+            id: '' 
+    };
+
+    private credentials = {
+      username: '',
+      oldPassword: ''
+    };
+    private userProfileChangePasswordDTO = {
+        id: '',
+        oldPassword: '',
+        newPassword: ''
+    }
 
     constructor(private myProfileService: MyProfileService,
                 private preferedCuisineService: PreferedCuisineService,
@@ -92,6 +155,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
                 this.userProfile.userAccountDTO = result;
                 //pass userProfile.userAccountDTO.id to profileService.id
                 this.myProfileService.setId(result.id);
+                this.credentials.username=this.userProfile.userAccountDTO.username;
                 this.getProfileDetails();
             });
 
@@ -273,6 +337,20 @@ export class MyProfileComponent implements OnInit, OnDestroy {
     } 
 
     changePassword(): void{
+        if(this.givenOldPasswordIsCorrect()){
+
+            this.myProfileService.changePassword(this.userProfileChangePasswordDTO);
+        }
+    }
+
+    givenOldPasswordIsCorrect(){
+        this.myProfileService.oldPasswordIsCorrect(this.credentials).subscribe( result =>{
+            if(result){
+                this.userProfileChangePasswordDTO.oldPassword = this.credentials.oldPassword;
+                return true;
+            }
+            else return false;
+        });
     }
 
     //logs out and redirects to '/login'

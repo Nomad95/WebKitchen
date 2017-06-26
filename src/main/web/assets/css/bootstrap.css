@@ -7451,7 +7451,7 @@ body {
 	float: left;
 	padding: 15px 5px;
 	border-radius: 20px;
-	margin-bottom: 10px; 
+	margin-bottom: 10px;
 }
 
 .profile-head img {
@@ -7766,7 +7766,7 @@ h4.pro-title {
 .graph {
                 width: 100%; /* width and height are arbitrary, just make sure the #bar styles are changed accordingly */
                 height: 22px;
-                border: 1px solid #888; 
+                border: 1px solid #888;
 				border-radius: 6px;
                 background: rgb(168,168,168);
                 background: -moz-linear-gradient(top, rgba(168,168,168,1) 0%, rgba(204,204,204,1) 23%);
@@ -7781,13 +7781,13 @@ h4.pro-title {
             #bar {
                 height: 20px; /* Not 30px because the 1px top-border brings it up to 30px to match #graph */
 				border-radius: 6px;
-                background: rgb(255,197,120); 
-                background: -moz-linear-gradient(top, rgba(255,197,120,1) 0%, rgba(244,128,38,1) 100%); 
-                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,197,120,1)), color-stop(100%,rgba(244,128,38,1))); 
-                background: -webkit-linear-gradient(top, rgba(255,197,120,1) 0%,rgba(244,128,38,1) 100%); 
-                background: -o-linear-gradient(top, rgba(255,197,120,1) 0%,rgba(244,128,38,1) 100%); 
-                background: -ms-linear-gradient(top, rgba(255,197,120,1) 0%,rgba(244,128,38,1) 100%); 
-                background: linear-gradient(top, rgba(255,197,120,1) 0%,rgba(244,128,38,1) 100%); 
+                background: rgb(255,197,120);
+                background: -moz-linear-gradient(top, rgba(255,197,120,1) 0%, rgba(244,128,38,1) 100%);
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,197,120,1)), color-stop(100%,rgba(244,128,38,1)));
+                background: -webkit-linear-gradient(top, rgba(255,197,120,1) 0%,rgba(244,128,38,1) 100%);
+                background: -o-linear-gradient(top, rgba(255,197,120,1) 0%,rgba(244,128,38,1) 100%);
+                background: -ms-linear-gradient(top, rgba(255,197,120,1) 0%,rgba(244,128,38,1) 100%);
+                background: linear-gradient(top, rgba(255,197,120,1) 0%,rgba(244,128,38,1) 100%);
                 border-top: 1px solid #fceabb;
             }
             #bar p { position: absolute; text-align: center; width: 100%; margin: 0; line-height: 20px; font-size: 14px; }
@@ -7870,11 +7870,11 @@ h4.pro-title {
 
 /*password change*/
 .changePassword-submit-button{
-    color: #fff;
-    background-color: rgb(255, 102, 0);
-    border: 0px solid;
-    transition: all ease 0.3s;
-    margin: 5px;
+	color: #fff;
+	background-color: rgb(255, 102, 0);
+	border: 0px solid;
+	transition: all ease 0.3s;
+	margin: 5px;
 }
 .modal-content-changePassword{
 	width: 480px;
@@ -7894,7 +7894,8 @@ h4.pro-title {
 }
 
 .modal-dialog-changePassword {
-    position: relative;
-    width: auto;
-    margin: auto;
+	position: relative;
+	width: auto;
+	margin: auto;
 }
+

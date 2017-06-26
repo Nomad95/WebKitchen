@@ -4,14 +4,15 @@ public class UserAccountPasswordChangeDTO {
 
     private Long id;
 
-    private String newPassword;
+    private String password;
 
-    public UserAccountPasswordChangeDTO(){
-    }
+    private String oldPassword;
 
-    public UserAccountPasswordChangeDTO(Long id, String newPassword) {
+    public UserAccountPasswordChangeDTO(){}
+
+    public UserAccountPasswordChangeDTO(Long id, String password) {
         this.id = id;
-        this.newPassword = newPassword;
+        this.password = password;
     }
 
     public Long getId() {
@@ -22,12 +23,19 @@ public class UserAccountPasswordChangeDTO {
         this.id = id;
     }
 
-    public String getNewPassword() {
-        return newPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
 }
