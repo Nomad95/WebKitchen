@@ -16,7 +16,6 @@ import org.JKDW.user.model.BannedUser;
 import org.JKDW.user.model.DTO.StringRequestBody;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 import org.JKDW.user.model.DTO.UserAccountDTO;
-import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.repository.BannedUserRepository;
 import org.JKDW.user.repository.UserAccountRepository;
@@ -48,7 +47,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Autowired
     private BannedUserRepository bannedUserRepository;
 
-    private BCryptPasswordEncoder passwordEncoder;
+
     /**
      * @return Returns all user accounts
      */
@@ -101,7 +100,7 @@ public class UserAccountServiceImpl implements UserAccountService {
      */
     @Override
     public UserAccount createUserAccount(UserAccountCreateDTO userAccount) {
-        passwordEncoder = new BCryptPasswordEncoder();
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         UserAccount newUserAccount = new UserAccount(userAccount);
         newUserAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
         newUserAccount.setIsFilled(false);
@@ -256,6 +255,7 @@ public class UserAccountServiceImpl implements UserAccountService {
 	 * @return id of user
      */
 	@Override
+    @Transactional
 	public Long findIdOfUsersUsername(String username) {
 		UserAccount userAccount = loadUserByUsername(username);
 		if(userAccount == null)
@@ -269,14 +269,6 @@ public class UserAccountServiceImpl implements UserAccountService {
         String sql = "SELECT nick FROM USER_ACCOUNT";
 
         return jdbcTemplate.queryForList(sql);
-    }
-
-    public UserAccount changePassword(UserAccountPasswordChangeDTO userAccountPasswordDTO) {
-        UserAccount foundUserAccount = userAccountRepository.findOne(userAccountPasswordDTO.getId());
-        passwordEncoder = new BCryptPasswordEncoder();
-        foundUserAccount.setPassword(passwordEncoder.encode(userAccountPasswordDTO.getNewPassword()));
-        userAccountRepository.save(foundUserAccount);
-        return foundUserAccount;
     }
 
     /**

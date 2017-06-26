@@ -132,7 +132,7 @@
 		
 			<tab title="Edytuj profil"> 
 		
-				<div class="container form-main">
+				<div class="container fom-main">
 				
 					<div class="row">
 						<form class="form-horizontal main_form text-left" action=" "
@@ -145,15 +145,15 @@
 									<div class="col-md-12 inputGroupContainer">
 										<div class="input-group">
 											<input name="userProfile.userAccountDTO.username" 
-												placeholder="Login" 
+												placeholder="Login"
 												class="form-control" 
-												type="text" 
+												type="text"
 												[(ngModel)]="userProfile.userAccountDTO.username" 
-												#userName="ngModel" 
+												#userName="ngModel"
 												pattern="....+" 
 												maxlength="25" 
 												required 
-												id="idUsername" 
+												id="idUsername"
 												title="Twój login, za pomocą którego się logujesz">
 											<!--jeśli wystapił błąd to wyswietlamy ten alert bootstrap-->
 											<div *ngIf="userName.invalid && userName.touched"
@@ -187,7 +187,6 @@
 					</div>
 					</div>
 					</div>
-					<button class="btn btn-warning changePassword-submit-button" href="#signup" data-toggle="modal" data-target=".bs-modal-sm">Zmień hasło</button>
         </tab>
         <tab title="Dane osobowe" [classTab]="name.invalid || surname.invalid || street.invalid || streetNumber.invalid || 
 											flatNumber.invalid || postCode.invalid || city.invalid || country.invalid || 
@@ -555,17 +554,9 @@
 	<div *ngIf=!isDataAvailable style="margin-left: 400px">
 		Loading...
 	</div>
-
-<!--section close-->
-<!-- Modal -->
-<div class="modal fade bs-modal-sm" #modal id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog-changePassword">
-    <div class="modal-content-changePassword">
-      <!--<div class="modal-body">-->
-		<change-password [id]="userProfile.userAccountDTO.id">Wczytuję..</change-password>
-      <!--</div>-->
-    </div>
-      </div>
-    </div>
-	<!-- Modal end -->
 </section>
+<!--section close-->
+
+
+
+

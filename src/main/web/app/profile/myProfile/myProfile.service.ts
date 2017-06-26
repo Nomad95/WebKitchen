@@ -15,10 +15,6 @@ export class MyProfileService {
     public id: number;
     public usernameChanged = false;
     private url;
-    private credentials = {
-            username: '',
-            password: ''
-        };
     constructor(private http: Http, private router: Router) {}
 
     setId(id){
@@ -90,44 +86,23 @@ export class MyProfileService {
     }
 
     /* Check that the given password is correct */
-	oldPasswordIsCorrect(oldPassword): Observable<boolean>{
-        this.headers = new Headers({
-          'content-type' : 'application/json'});
-        this.credentials.password=oldPassword;
-        this.credentials.username = this.getLoggedUsernameFromToken();
-		return this.http.post('/auth',JSON.stringify(this.credentials),{headers :this.headers})
+	oldPasswordIsCorrect(credentials): Observable<boolean>{
+		return this.http.post('/auth',JSON.stringify(credentials),{headers :this.headers})
 				.map(res => {
                 // login successful if there's a jwt token in the response
                 let token = res.json() && res.json().token;
                 if (token) {
                     // return true if password correct
-                    console.log("true, old password correct!");
                     return true;
                 } else {
                     // return false if password incorrect
-                    console.log("false, old password incorrect!");
                     return false;
                 }
             })
-				.catch(this.handleErrorPassword);
+				.catch(this.handleError);
 	}
 
-    getLoggedUsernameFromToken(){
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
-
-        //get username from the token 
-        return currentToKey && currentToKey.username;
-    }
-
     changePassword(userProfileChangePasswordDTO):Observable<any>{
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
-        let token = currentToKey && currentToKey.token;
-        console.log(JSON.stringify(userProfileChangePasswordDTO));
-        //create appropriate
-        this.headers = new Headers({
-          'accept': 'application/json',
-          'content-type' : 'application/json',
-          'X-Auth-token' : token});
         return this.http.put('/api/user/changePassword/'+this.id,JSON.stringify(userProfileChangePasswordDTO),{headers :this.headers})
                 .map(res => res.json())
                 .catch(this.handleUpdateError);
@@ -136,11 +111,6 @@ export class MyProfileService {
     private handleError(error: any): Promise<any> {
         console.error('An error occurred in Profile', error);
         return Promise.reject(error.message || error);
-     }
-
-     private handleErrorPassword(error: any): Promise<any> {
-        console.error('An error occurred in Profile', error);
-        return Promise.resolve(false);
      }
 
      private handleUpdateError(error: any): Promise<any> {
