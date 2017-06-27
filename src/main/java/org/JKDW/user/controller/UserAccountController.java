@@ -239,6 +239,11 @@ public class UserAccountController {
 		return new ResponseEntity<>("{\"nick\": \"" + nick + "\"}", HttpStatus.OK);
 	}
 
+	/**
+	 * Method executes when user clicks on activation link.
+	 * If token is valid change his account to 'Enabled"
+	 * @return true if token was valid.
+	 */
 	@RequestMapping(value = "/registration/confirm", method = RequestMethod.GET)
 	public ResponseEntity<Boolean> confirmRegistration(@RequestParam("token") String token) {
 
@@ -258,6 +263,12 @@ public class UserAccountController {
 		return new ResponseEntity<>(true,HttpStatus.OK);
 	}
 
+	/**
+	 * Checks if user is enabled or not.
+	 * Returns true if user isn't registered in database
+	 * @param username
+	 * @return true if passed the check or isnt egistered
+	 */
 	@RequestMapping(value = "registration/enable/{username}", method = RequestMethod.GET)
 	public ResponseEntity<Boolean> checkIfUserIsEnabled(@PathVariable("username") String username) {
 		UserAccount userAccount = userAccountService.getUserAccountByUsername(username);

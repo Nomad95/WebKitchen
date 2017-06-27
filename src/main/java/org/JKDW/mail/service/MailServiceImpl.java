@@ -11,6 +11,12 @@ public class MailServiceImpl implements MailService {
     @Autowired
     public JavaMailSender emailSender;
 
+    /**
+     * Creates and sends simple email without attachements
+     * @param to email
+     * @param subject
+     * @param text
+     */
     public void sendSimpleMessage(
             String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();

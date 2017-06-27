@@ -13,6 +13,12 @@ export class ConfirmRegistrationComponent implements OnInit{
         private activatedRoute: ActivatedRoute) {
     }
 
+    //dont show message before data is loaded
+    private dataLoaded = false;
+    
+    //checks is uder is enabled or not
+    private isAccepted = false;
+    
     ngOnInit() {
         //extract params from URI
         this.activatedRoute.queryParams
@@ -23,9 +29,17 @@ export class ConfirmRegistrationComponent implements OnInit{
         });
     }
 
+    /**
+     * perform account acceptation
+     * @param token
+     * returns true if user becomes 'Enabled'
+     */
     confirmRegistration(token: string){
         this.registrationService.confirmRegistration(token)
-            .subscribe( res => console.log(res));
+            .subscribe( res => {
+                this.dataLoaded = true;
+                this.isAccepted = res;
+            });
     }
 
 }

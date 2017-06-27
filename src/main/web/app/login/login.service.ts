@@ -116,7 +116,10 @@ export class LoginService{
             .map(res => res.json())
             .catch(this.handleError);
 	}
-	
+
+	/**
+	 * Performs a check if user has clicked acceptation link
+     */
 	checkIfUserIsEnabled(username: string): Observable<boolean>{
 		return this.http.get('api/user/registration/enable/'+username)
 			.map(res => res.json())

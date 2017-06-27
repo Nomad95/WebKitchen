@@ -5,6 +5,9 @@ import org.springframework.context.ApplicationEvent;
 
 import java.util.Locale;
 
+/**
+ * Class - event containing registered user and some info
+ */
 public class OnRegistrationCompleteEvent extends ApplicationEvent {
 
     private String appUrl;

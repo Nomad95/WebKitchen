@@ -305,6 +305,11 @@ public class UserAccountServiceImpl implements UserAccountService {
         return byNick != null;
     }
 
+    /**
+     * Creates verification token for provided user
+     * @param user
+     * @param token
+     */
     @Override
     public void createVerificationToken(UserAccount user, String token) {
         VerificationToken myToken = new VerificationToken(token, user);

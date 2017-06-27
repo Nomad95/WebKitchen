@@ -26,6 +26,9 @@ public class RegistrationListener implements
         this.confirmRegistration(event);
     }
 
+    /**
+     * Recieve emitted event, create token and send activation email
+     */
     private void confirmRegistration(OnRegistrationCompleteEvent event) {
         UserAccount user = event.getUserAccount();
         String token = UUID.randomUUID().toString();
@@ -45,9 +48,11 @@ public class RegistrationListener implements
         mailSender.send(email);
     }
 
+    /**
+     * @return Template message that is written to email text
+     */
     private String makeTemplateMessage(){
-        String sb = "Dziękujemy za rejestrację w serwisie Kuchnia po sąsiedzku!\n" +
+        return "Dziękujemy za rejestrację w serwisie Kuchnia po sąsiedzku!\n" +
                 "Aby aktywować konto, prosimy o kliknięcie w poniższy link.\n\n";
-        return sb;
     }
 }
