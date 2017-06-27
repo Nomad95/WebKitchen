@@ -1,4 +1,4 @@
-package org.JKDW.websocket;
+package org.JKDW.websocket.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
