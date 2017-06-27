@@ -7,6 +7,7 @@ import { MyProfileService } from './myProfile.service';
 import { PreferedCuisineService } from './preferedCuisine.service';
 import { CuisinesService } from '../../cuisines/cuisines.service';
 import {Cuisine} from '../model/cuisine.model';
+import {UserProfile} from '../model/userProfile.model';
 import { TAB_COMPONENTS  } from '../../tabs/Tabset';
 
 
@@ -27,98 +28,34 @@ export class MyProfileComponent implements OnInit {
     private value:any = ['Kuchnia'];
     @ViewChild('SelectId') public selectCuisinesItems: SelectComponent;
     @ViewChild('SelectId2') public selectPreferredCuisinesItems: SelectComponent;
-    
+
     dateNow: Date = new Date();
     maxBirthYear: number = this.dateNow.getFullYear()-16;
     minBirthYear: number = this.dateNow.getFullYear()-105;
     maxBirthDate: Date = new Date(this.dateNow.setFullYear(this.maxBirthYear));
-   
+
     private birthDateInputValue="";
-    
+
     private myDatePickerOptions: IMyDpOptions;
     private birthDate: Date;
-    private birthDateInput: Object = { date: 
-                    { year: '', month: '', day: '' } 
-                };
+    private birthDateInput: Object = { date:
+        { year: '', month: '', day: '' }
+    };
     private selectedBirthDateNormal: string = '';
     private selectedBirthDateTextNormal: string = '';
     private defaultYearAndMonth:string;
 
     gender: number;
 
-    private userProfile = {
-        name: '',
-        surname: '',
-        street: '',
-        streetNumber: '',
-        flatNumber: '',
-        postCode: '',
-        city: '',
-        birthDate: '',
-        phoneNumber: '',
-        sex: '',
-        interests: '',
-        description: '',
-        preferredCuisine: [],
-        profileCompletion: '',
-        userAccountDTO: {
-          username: '',
-          email: '',
-          country: '',
-          nick: '',
-          lastLogged: '',
-          isFilled: '',
-          isVerified: '',
-          createdAt: '',
-          id: ''
-        },
-            id: '' 
-    };
-    
-    private originalUserProfile = {
-        name: '',
-        surname: '',
-        street: '',
-        streetNumber: '',
-        flatNumber: '',
-        postCode: '',
-        city: '',
-        birthDate: '',
-        phoneNumber: '',
-        sex: '',
-        interests: '',
-        description: '',
-        preferredCuisine: [],
-        profileCompletion: '',
-        userAccountDTO: {
-          username: '',
-          email: '',
-          country: '',
-          nick: '',
-          lastLogged: '',
-          isFilled: '',
-          isVerified: '',
-          createdAt: '',
-          id: ''
-        },
-            id: '' 
-    };
+    private userProfile = new UserProfile();
 
-    private credentials = {
-      username: '',
-      oldPassword: ''
-    };
-    private userProfileChangePasswordDTO = {
-        id: '',
-        oldPassword: '',
-        newPassword: ''
-    }
+    private originalUserProfile = new UserProfile();
 
     constructor(private myProfileService: MyProfileService,
                 private preferedCuisineService: PreferedCuisineService,
                 private cuisinesService: CuisinesService,
                 private _titleService: Title) {
-        
+
         this.initializeDatePickerOptions();
     }
 
@@ -138,9 +75,9 @@ export class MyProfileComponent implements OnInit {
     }
 
     /*
-    ** on-init, get profile information, all cuisines
-    ** and set page Title
-    */
+     ** on-init, get profile information, all cuisines
+     ** and set page Title
+     */
     ngOnInit() {
         this._titleService.setTitle("Kuchnia po sąsiedzku - mój profil");
         this.getProfile();
@@ -155,7 +92,6 @@ export class MyProfileComponent implements OnInit {
                 this.userProfile.userAccountDTO = result;
                 //pass userProfile.userAccountDTO.id to profileService.id
                 this.myProfileService.setId(result.id);
-                this.credentials.username=this.userProfile.userAccountDTO.username;
                 this.getProfileDetails();
             });
 
@@ -168,10 +104,10 @@ export class MyProfileComponent implements OnInit {
             .getProfileDetails()
             .subscribe(result => {
                 this.userProfile = result;
-                this.swappingOfReceivedDataToTheExpectedFormat();                
+                this.swappingOfReceivedDataToTheExpectedFormat();
 
                 console.log("getUserProfile - USERPROFILE: "+JSON.stringify(this.userProfile));
-        });
+            });
     }
 
     swappingOfReceivedDataToTheExpectedFormat(){
@@ -194,14 +130,14 @@ export class MyProfileComponent implements OnInit {
         this.preferedCuisineService.setPreferedCuisines(this.userProfile.preferredCuisine);
     }
     conversionUserProfileBirthDateToDatePickerFormatDate(){
-        if(this.userProfile.birthDate) { 
+        if(this.userProfile.birthDate) {
             this.birthDate = new Date(+this.userProfile.birthDate);
-            this.birthDateInput = { date: 
-                    { year: this.birthDate.getFullYear(), month: (this.birthDate.getMonth()+1), day: this.birthDate.getDate() } 
-                };
+            this.birthDateInput = { date:
+                { year: this.birthDate.getFullYear(), month: (this.birthDate.getMonth()+1), day: this.birthDate.getDate() }
+            };
             this.selectedBirthDateNormal = this.birthDate.getFullYear()+"-"+(this.birthDate.getMonth()+1)+"-"+this.birthDate.getDate();
             console.log("selectedBirthDateNormal: "+this.selectedBirthDateNormal);
-            
+
             this.selectedBirthDateTextNormal = this.selectedBirthDateNormal;
         }
         else {
@@ -215,28 +151,28 @@ export class MyProfileComponent implements OnInit {
         if(this.userProfile.sex=="m")
             this.gender = 1;
         else if(this.userProfile.sex=="k")
-                this.gender = 2;
-            else this.gender = 0;
+            this.gender = 2;
+        else this.gender = 0;
     }
 
     getAllCuisines(): void{
         this.isDataAvailable=true;
         this.cuisinesService
-        .getAllCuisines()
-        .subscribe(result => {
-            this.preferedCuisineService.setCuisines(result);
-            this.selectedCuisine=result[0];
-            this.cuisines = this.preferedCuisineService.getCuisines();
-            this.cuisines.forEach(cuisine =>{
-                this.cuisinesItems.push(cuisine.name);
-                this.selectCuisinesItems.items = this.cuisinesItems;})        
-        });           
+            .getAllCuisines()
+            .subscribe(result => {
+                this.preferedCuisineService.setCuisines(result);
+                this.selectedCuisine=result[0];
+                this.cuisines = this.preferedCuisineService.getCuisines();
+                this.cuisines.forEach(cuisine =>{
+                    this.cuisinesItems.push(cuisine.name);
+                    this.selectCuisinesItems.items = this.cuisinesItems;})
+            });
     }
-    
+
     updateProfile(): void {
         this.preparingDataForUpdateProfile();
         this.myProfileService.updateProfile(this.userProfile).subscribe(result =>{
-            
+
             if(this.myProfileService.usernameChanged) this.logout();
             else this.getProfile();
         });
@@ -246,16 +182,16 @@ export class MyProfileComponent implements OnInit {
         this.conversionDatePickerDateToUserProfileBirthDate();
         this.conversionFormGenderToUserProfileGender();
         this.calculatePercentageFilled();
-        
+        this.profileFilled();
         this.userProfile.profileCompletion = this.profileCompletion.toString();
     }
 
     conversionDatePickerDateToUserProfileBirthDate(): void{
         if(this.theCorrectDateWasSelected()){
-           this.userProfile.birthDate = this.selectedBirthDateTextNormal; 
+            this.userProfile.birthDate = this.selectedBirthDateTextNormal;
         }
         else {
-           this.userProfile.birthDate = '';
+            this.userProfile.birthDate = '';
         }
     }
     theCorrectDateWasSelected(){
@@ -269,38 +205,11 @@ export class MyProfileComponent implements OnInit {
         if(this.gender==1)
             this.userProfile.sex = "m";
         else if(this.gender==2)
-                this.userProfile.sex = "k";
-            else 
-                this.userProfile.sex = "";
+            this.userProfile.sex = "k";
+        else
+            this.userProfile.sex = "";
     }
 
-    onDateChanged(event: IMyDateModel) {
-        if(event.formatted !== '') {
-            this.selectedBirthDateNormal = event.formatted;
-            this.selectedBirthDateTextNormal = this.selectedBirthDateNormal;
-        }
-        else {
-            this.selectedBirthDateTextNormal = '';
-        }
-        console.log(this.selectedBirthDateNormal);
-            
-    }
-
-    public selected(value:any):void {
-        this.preferedCuisineService.addPreferedCuisineToCuisinesArray(value.text);
-        this.userProfile.preferredCuisine=this.preferedCuisineService.getPreferedCuisines();
-        console.log('Selected value is: ', value.text);
-    }
-    
-    public removed(value:any):void {
-        this.preferedCuisineService.deletePreferedCuisineFromCuisinesArray(value.text);
-        console.log('Removed value is: ', value);
-    }
-    
-    public refreshValue(value:any):void {
-        this.value = value;
-    }
-        
     calculatePercentageFilled(): void{
         this.profileCompletion = 0;
         if(this.selectedBirthDateTextNormal) this.profileCompletion+=1;
@@ -312,7 +221,7 @@ export class MyProfileComponent implements OnInit {
         if(this.userProfile.surname) this.profileCompletion+=1;
         if(this.userProfile.phoneNumber) this.profileCompletion+=1;
         if(this.userProfile.postCode) this.profileCompletion+=1;
-        if(this.userProfile.preferredCuisine || this.userProfile.preferredCuisine !== []) this.profileCompletion+=1;
+        if(this.userProfile.preferredCuisine.length>0) this.profileCompletion+=1;
         if(this.userProfile.sex) this.profileCompletion+=1;
         if(this.userProfile.street) this.profileCompletion+=1;
         if(this.userProfile.userAccountDTO.email) this.profileCompletion+=1;
@@ -326,31 +235,53 @@ export class MyProfileComponent implements OnInit {
     getPercentageFilled(): number{
         return Math.floor(this.profileCompletion*7.7) / 1;
     }
-    
-    /** 
-    * TODO - restore profile without get request.
-    */
+
+    profileFilled(){
+        this.userProfile.userAccountDTO.isFilled = this.isProfileFilled();
+
+    }
+
+    isProfileFilled(){
+        return (this.precentageFilled==100);
+    }
+
+    onDateChanged(event: IMyDateModel) {
+        if(event.formatted !== '') {
+            this.selectedBirthDateNormal = event.formatted;
+            this.selectedBirthDateTextNormal = this.selectedBirthDateNormal;
+        }
+        else {
+            this.selectedBirthDateTextNormal = '';
+        }
+        console.log(this.selectedBirthDateNormal);
+
+    }
+
+    public selected(value:any):void {
+        this.preferedCuisineService.addPreferedCuisineToCuisinesArray(value.text);
+        this.userProfile.preferredCuisine=this.preferedCuisineService.getPreferedCuisines();
+        console.log('Selected value is: ', value.text);
+    }
+
+    public removed(value:any):void {
+        this.preferedCuisineService.deletePreferedCuisineFromCuisinesArray(value.text);
+        console.log('Removed value is: ', value);
+    }
+
+    public refreshValue(value:any):void {
+        this.value = value;
+    }
+
+    /**
+     * TODO - restore profile without get request.
+     */
     restoreProfile(): void{
         this.getProfile();
         this.getAllCuisines();
-       console.log(JSON.stringify(this.userProfile));
-    } 
-
-    changePassword(): void{
-        if(this.givenOldPasswordIsCorrect()){
-
-            this.myProfileService.changePassword(this.userProfileChangePasswordDTO);
-        }
+        console.log(JSON.stringify(this.userProfile));
     }
 
-    givenOldPasswordIsCorrect(){
-        this.myProfileService.oldPasswordIsCorrect(this.credentials).subscribe( result =>{
-            if(result){
-                this.userProfileChangePasswordDTO.oldPassword = this.credentials.oldPassword;
-                return true;
-            }
-            else return false;
-        });
+    changePassword(): void{
     }
 
     //logs out and redirects to '/login'
@@ -358,11 +289,11 @@ export class MyProfileComponent implements OnInit {
         this.myProfileService.removeToken();
     }
 
-    
 
-    /** 
-    ** TODO - original User Profile for cancel edit without get request.
-    */
-    setOriginalUserProfile(): void{ 
+
+    /**
+     ** TODO - original User Profile for cancel edit without get request.
+     */
+    setOriginalUserProfile(): void{
     }
 }

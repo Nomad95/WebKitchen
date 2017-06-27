@@ -10,7 +10,7 @@ import { MyProfileService } from '../myProfile/myProfile.service';
 })
 export class ChangePasswordComponent implements OnInit{
 
-    @Input() id: '';
+    @Input() public id: '';
     private invalidPasswordMessage: string = "";
     private confirmPassword: '';
     private oldPassword: '';
@@ -18,8 +18,8 @@ export class ChangePasswordComponent implements OnInit{
     private passwordChanged = false;
 
     private userProfileChangePasswordDTO = {
-        id: '',
-        newPassword: ''
+        newPassword: '',
+        id: -1
     }
 
     constructor(private myProfileService: MyProfileService){}
@@ -66,7 +66,7 @@ export class ChangePasswordComponent implements OnInit{
                     console.log("result = true");
                     console.log("id = "+this.id);
                     this.invalidPasswordMessage = "";
-                    this.userProfileChangePasswordDTO.id = this.id;          
+                    this.userProfileChangePasswordDTO.id = +this.id;
                     resolve(true);
                 }
                 else {

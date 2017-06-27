@@ -11,6 +11,7 @@ import org.JKDW.security.TokenUtils;
 import org.JKDW.user.model.DTO.StringRequestBody;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 import org.JKDW.user.model.DTO.UserAccountDTO;
+import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
 import org.JKDW.user.model.UserAccount;
 
 /*
@@ -49,6 +50,8 @@ public interface UserAccountService {
 	Boolean checkIfEmailIsTaken(StringRequestBody email);
 
 	Boolean checkIfNickIsTaken(String nick);
+
+	UserAccount changePassword(UserAccountPasswordChangeDTO userAccountPasswordDTO);
 
 	static String getMyUsernameFromToken(HttpServletRequest request, TokenUtils tokenUtils){
 		String myUsernameFromToken;
