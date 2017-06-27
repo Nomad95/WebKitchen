@@ -64,6 +64,8 @@ public interface UserAccountService {
 
 	String getMyNickByToken(String username);
 
+	UserAccount getUserAccountByUsername(String username);
+
 	static String getMyUsernameFromToken(HttpServletRequest request, TokenUtils tokenUtils){
 		String myUsernameFromToken;
 		String token;

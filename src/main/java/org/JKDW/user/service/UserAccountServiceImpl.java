@@ -177,9 +177,9 @@ public class UserAccountServiceImpl implements UserAccountService {
         });
 
         if (userAccount.getIsBanned())
-           return checkThatBanIsFinished(userAccount, jdbcTemplate);
+            return checkThatBanIsFinished(userAccount, jdbcTemplate);
         else
-           return userAccount.getIsBanned();
+            return userAccount.getIsBanned();
     }
 
     /** Checking if user has ban. Method invoked at every action logged user. **/
@@ -204,7 +204,7 @@ public class UserAccountServiceImpl implements UserAccountService {
                 isAdmin = true;
             }
         }
-       return isAdmin;
+        return isAdmin;
     }
 
     public void deleteBanFromUserAfterTime(UserAccount user) {
@@ -255,19 +255,19 @@ public class UserAccountServiceImpl implements UserAccountService {
                 status, idUser);
     }
 
-	/**
-	 * Finds users Id with provided username
-	 * @param username of userAccount
-	 * @return id of user
+    /**
+     * Finds users Id with provided username
+     * @param username of userAccount
+     * @return id of user
      */
-	@Override
+    @Override
     @Transactional
-	public Long findIdOfUsersUsername(String username) {
-		UserAccount userAccount = loadUserByUsername(username);
-		if(userAccount == null)
-			return -1L;
-		return userAccount.getId();
-	}
+    public Long findIdOfUsersUsername(String username) {
+        UserAccount userAccount = loadUserByUsername(username);
+        if(userAccount == null)
+            return -1L;
+        return userAccount.getId();
+    }
 
     @Override
     public  List<Map<String, Object>> getAllNicks() {
@@ -337,6 +337,11 @@ public class UserAccountServiceImpl implements UserAccountService {
         String sql = "SELECT nick FROM USER_ACCOUNT WHERE USERNAME = ?";
         String myNick = jdbcTemplate.queryForObject(sql, new Object[] { username }, String.class);
         return myNick;
+    }
+
+    @Override
+    public UserAccount getUserAccountByUsername(String username) {
+        return userAccountRepository.findByUsername(username);
     }
 }
 

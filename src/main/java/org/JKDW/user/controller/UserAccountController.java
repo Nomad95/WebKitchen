@@ -135,7 +135,7 @@ public class UserAccountController {
 	 * Finds id of user provided with username
 	 * @param username username of user
 	 * @return id of user
-     */
+	 */
 	@RequestMapping(value="/account/{username}/getid", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Long> getUserIdWithUsername(@PathVariable("username") String username){
 		Long idOfUsersUsername = userAccountService.findIdOfUsersUsername(username);
@@ -144,8 +144,8 @@ public class UserAccountController {
 
 	@RequestMapping(value = "/checkIsBanned/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> checkIsUserBanned(@PathVariable("username") String username) {
-        Boolean status = userAccountService.checkIsUserBanned(username);
-        String stringStatus ="{\"status\": \""+ Boolean.toString(status) +"\"}";
+		Boolean status = userAccountService.checkIsUserBanned(username);
+		String stringStatus ="{\"status\": \""+ Boolean.toString(status) +"\"}";
 		return new ResponseEntity<>(stringStatus, HttpStatus.OK);
 	}
 
@@ -175,7 +175,7 @@ public class UserAccountController {
 
 	/**
 	 * See service for more info
-     */
+	 */
 	@RequestMapping( value="/registration/taken/username/{username}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> checkIfUsernameIsTaken(@PathVariable("username")String username){
 		Boolean bool = userAccountService.checkIfUsernameIsTaken(username);
@@ -256,6 +256,17 @@ public class UserAccountController {
 		userAccount.setEnabled(true);
 		userAccountService.updateUserAccount(userAccount);
 		return new ResponseEntity<>(true,HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "registration/enable/{username}", method = RequestMethod.GET)
+	public ResponseEntity<Boolean> checkIfUserIsEnabled(@PathVariable("username") String username) {
+		UserAccount userAccount = userAccountService.getUserAccountByUsername(username);
+		//if user is not found we do not check if account enabled and allow to proces data further
+		if (userAccount == null)
+			return new ResponseEntity<>(true,HttpStatus.OK);
+		if	(userAccount.isEnabled())
+			return new ResponseEntity<>(true,HttpStatus.OK);
+		else return new ResponseEntity<>(false,HttpStatus.OK);
 	}
 
 }

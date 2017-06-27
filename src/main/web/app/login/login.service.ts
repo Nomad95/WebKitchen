@@ -116,6 +116,12 @@ export class LoginService{
             .map(res => res.json())
             .catch(this.handleError);
 	}
+	
+	checkIfUserIsEnabled(username: string): Observable<boolean>{
+		return this.http.get('api/user/registration/enable/'+username)
+			.map(res => res.json())
+			.catch(this.handleError);
+	}
 
 	countMyUnreadMessages(){
 		this.headersLoggedUser = new Headers({

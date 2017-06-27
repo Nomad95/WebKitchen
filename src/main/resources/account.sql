@@ -1,12 +1,12 @@
 
 
 
-INSERT INTO  user_account(id, country, email, is_filled, is_verified, username, nick, password,authorities)
-VALUES (999999999995,'Polska' ,'Truskawki@gmail.com',true,true,'walecznyrycerz99',	'Pogromca smaku','$2a$06$86wYILRRu.fGIrXn9uuxG.CQHLPtfzjsssd9jMY62eM6FKcvFniOm','ROLE_USER'),
-(999999999996,	'Polska','borkowski95@onet.pl',	true,true,'noth168','Braines','$2a$06$86wYILRRu.fGIrXn9uuxG.CQHLPtfzjsssd9jMY62eM6FKcvFniOm','ROLE_USER'),
-(999999999997,'Polska','jechaneztymkoksem@wp.pl',true,true,'Terqa5','Terka99'	,'$2a$06$86wYILRRu.fGIrXn9uuxG.CQHLPtfzjsssd9jMY62eM6FKcvFniOm', 'ROLE_USER'),
-(999999999998,'Polska', 'emailpo@gmail.com',true, true, 'admin','admin','$2a$06$Vsgf.quMHsFTOWJXayJV1umaJMcs1FUFrs9uwc1QFBJRh9RHkPQNC','ROLE_ADMIN'),
-(999999999999,'Polska', 'arek@gmail.com',true, true, 'arek','arek','$2a$06$Vsgf.quMHsFTOWJXayJV1umaJMcs1FUFrs9uwc1QFBJRh9RHkPQNC','ROLE_USER');
+INSERT INTO  user_account(id, country, email, is_enabled, is_filled, is_verified, username, nick, password,authorities)
+VALUES (999999999995,'Polska' ,'igokop99@gmail.com',true,true,true,'ciasteczka',	'Ciasteczex','$2a$06$hMOcRg69ji1BmFvnAFvEEOxVzWb5pj5v7GBMlSu8FHzofGlw8A34G','ROLE_USER'),
+(999999999996,	'Polska','borkowski95@onet.pl',true,	true,true,'noth168','Braines','$2a$06$86wYILRRu.fGIrXn9uuxG.CQHLPtfzjsssd9jMY62eM6FKcvFniOm','ROLE_USER'),
+(999999999997,'Polska','jechaneztymkoksem@wp.pl',true,true,true,'Terqa5','Terka99'	,'$2a$06$86wYILRRu.fGIrXn9uuxG.CQHLPtfzjsssd9jMY62eM6FKcvFniOm', 'ROLE_USER'),
+(999999999998,'Polska', 'emailpo@gmail.com',true,true, true, 'admin','admin','$2a$06$Vsgf.quMHsFTOWJXayJV1umaJMcs1FUFrs9uwc1QFBJRh9RHkPQNC','ROLE_ADMIN'),
+(999999999999,'Polska', 'arek@gmail.com',true,true, true, 'arek','arek','$2a$06$Vsgf.quMHsFTOWJXayJV1umaJMcs1FUFrs9uwc1QFBJRh9RHkPQNC','ROLE_USER');
 
 
 
