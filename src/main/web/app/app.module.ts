@@ -18,6 +18,7 @@ import { UserComponent } from './user/user.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
 import { MyProfileComponent } from './profile/myProfile/myProfile.component';
+import { ChangePasswordComponent } from './profile/changePassword/change-password.component';
 import { ProfileComponent } from './profile/userProfile/profile.component';
 import { Tabset } from './tabs/Tabset';
 import { Tab } from './tabs/Tab';
@@ -82,6 +83,7 @@ declare let jQuery:Object;
         RegistrationComponent,
         LoginComponent,
         MyProfileComponent,
+        ChangePasswordComponent,
         NavbarComponent,
         EventListComponent,
         EventGeneralComponent,

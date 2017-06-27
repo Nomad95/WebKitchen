@@ -7,6 +7,7 @@ import java.util.Map;
 import org.JKDW.user.model.DTO.StringRequestBody;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 import org.JKDW.user.model.DTO.UserAccountDTO;
+import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.model.UserDetails;
 import org.JKDW.user.service.UserAccountService;
@@ -165,5 +166,16 @@ public class UserAccountController {
 	public ResponseEntity<Boolean> checkIfNickIsTaken(@PathVariable("nick")String nick) {
 		Boolean bool = userAccountService.checkIfNickIsTaken(nick);
 		return new ResponseEntity<>(bool, HttpStatus.OK);
+	}
+
+	/**
+	 *
+	 * @param userAccountPasswordChangeDTO - id of UserAccount, oldPassword and newPassword
+	 * @return updated account information
+	 */
+	@RequestMapping(value="/changePassword/{id}",method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserAccount> updateUserAccount(@RequestBody UserAccountPasswordChangeDTO userAccountPasswordChangeDTO){
+		UserAccount updatedUserAccount = userAccountService.changePassword(userAccountPasswordChangeDTO);
+		return new ResponseEntity<>(updatedUserAccount,HttpStatus.OK);
 	}
 }

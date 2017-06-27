@@ -18,7 +18,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     private userProfile = {
         username: '',
         country: '',
-        e_mail: '',
+        email: '',
         nick: '',
         isFilled: '',
         isVerified: ''

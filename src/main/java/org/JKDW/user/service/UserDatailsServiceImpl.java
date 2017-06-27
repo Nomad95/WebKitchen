@@ -71,6 +71,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 */
 	@Override
 	public UserDetails createUserDetails(UserDetails userDetails) throws NoResultException {
+		userDetails.initProfileCompletionAtRegistration();
 		userDetailsRepository.save(userDetails);
 		return userDetails;
 	}
@@ -220,30 +221,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 			throw new NoResultException("Cannot update details. Details not found");
 		}
 
-		foundUserDetails.setId(userDetailsDTO.getId());
-		foundUserDetails.setName(userDetailsDTO.getName());
-		foundUserDetails.setSurname(userDetailsDTO.getSurname());
-		foundUserDetails.setStreet(userDetailsDTO.getStreet());
-		foundUserDetails.setStreetNumber(userDetailsDTO.getStreetNumber());
-		foundUserDetails.setFlatNumber(userDetailsDTO.getFlatNumber());
-		foundUserDetails.setPostCode(userDetailsDTO.getPostCode());
-		foundUserDetails.setCity(userDetailsDTO.getCity());
-		foundUserDetails.setBirthDate(userDetailsDTO.getBirthDate());
-		foundUserDetails.setPhoneNumber(userDetailsDTO.getPhoneNumber());
-		foundUserDetails.setSex(userDetailsDTO.getSex());
-		foundUserDetails.setInterests(userDetailsDTO.getInterests());
-		foundUserDetails.setDescription(userDetailsDTO.getDescription());
-		foundUserDetails.setPreferredCuisine(userDetailsDTO.getPreferredCuisine());
-		foundUserDetails.setProfileCompletion(userDetailsDTO.getProfileCompletion());
-
-		foundUserDetails.getUserAccount().setId(userDetailsDTO.getUserAccountDTO().getId());
-		foundUserDetails.getUserAccount().setUsername(userDetailsDTO.getUserAccountDTO().getUsername());
-		foundUserDetails.getUserAccount().setEmail(userDetailsDTO.getUserAccountDTO().getEmail());
-		foundUserDetails.getUserAccount().setCountry(userDetailsDTO.getUserAccountDTO().getCountry());
-		foundUserDetails.getUserAccount().setLastLogged(userDetailsDTO.getUserAccountDTO().getLastLogged());
-		foundUserDetails.getUserAccount().setIsFilled(userDetailsDTO.getUserAccountDTO().getIsFilled());
-		foundUserDetails.getUserAccount().setIsVerified(userDetailsDTO.getUserAccountDTO().getIsVerified());
-		foundUserDetails.getUserAccount().setCreatedAt(userDetailsDTO.getUserAccountDTO().getCreatedAt());
+		foundUserDetails.updateUserDetails(userDetailsDTO);
 
 		userDetailsRepository.save(foundUserDetails);
 
@@ -286,8 +264,8 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 				foundUserDetails.getPreferredCuisine(),
 				foundUserDetails.getProfileCompletion(),
 				foundUserAccountDTO);
-		if(foundUserDetailsDTO == null){
-			throw new NoResultException("Cannot find account. Account doesn't exist");
+		if(foundUserAccountDTO == null || foundUserDetailsDTO == null){
+			throw new NoResultException("Cannot find account or accountDetils. Account/Details doesn't exist");
 		}
 		return foundUserDetailsDTO;
 	}

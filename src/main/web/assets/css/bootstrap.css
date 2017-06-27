@@ -5571,7 +5571,7 @@ a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
 
 @-o-keyframes progress-bar-stripes {
 	from {
-		background-position: 40 px0;
+		background-position: 40px;
 
 	}
 
@@ -7189,8 +7189,7 @@ button.close {
 	position: fixed;
 }
 
-@
--ms-viewport {
+@-ms-viewport {
 	width: device-width;
 }
 
@@ -7601,7 +7600,7 @@ legend {
 }
 
 .main_form {
-	background-color: #;
+	/*background-color: #;*/
 }
 
 label.control-label {
@@ -7868,6 +7867,7 @@ h4.pro-title {
 	width: 300px !important;
 }
 
+
 /*password change*/
 .changePassword-submit-button{
 	color: #fff;
@@ -7898,4 +7898,3 @@ h4.pro-title {
 	width: auto;
 	margin: auto;
 }
-

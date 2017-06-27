@@ -16,6 +16,7 @@ import org.JKDW.user.model.BannedUser;
 import org.JKDW.user.model.DTO.StringRequestBody;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 import org.JKDW.user.model.DTO.UserAccountDTO;
+import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.repository.BannedUserRepository;
 import org.JKDW.user.repository.UserAccountRepository;
@@ -297,6 +298,14 @@ public class UserAccountServiceImpl implements UserAccountService {
     public Boolean checkIfNickIsTaken(String nick) {
         UserAccount byNick = userAccountRepository.findByNick(nick);
         return byNick != null;
+    }
+
+    public UserAccount changePassword(UserAccountPasswordChangeDTO userAccountPasswordDTO) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        UserAccount foundUserAccount = userAccountRepository.findOne(userAccountPasswordDTO.getId());
+        foundUserAccount.setPassword(passwordEncoder.encode(userAccountPasswordDTO.getNewPassword()));
+        userAccountRepository.save(foundUserAccount);
+        return foundUserAccount;
     }
 }
 
