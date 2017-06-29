@@ -7860,41 +7860,65 @@ h4.pro-title {
 	.bio-table>tbody>tr>td {
 		font-size: 13px;
 	}
+	.submit-button {
+		width: auto;
+	}
 
 }
+/*main responsywność*/
+@media(max-width:315px){
+	#main {
+   		width: 240px;
+	}
+}
+
 /* preferred cuisines - dropdown menu */
 .ui-select-choices{
 	width: 300px !important;
 }
 
 
-/*password change*/
-.changePassword-submit-button{
+/*modal edit profile*/
+.modal-submit-button-ng2{
 	color: #fff;
 	background-color: rgb(255, 102, 0);
 	border: 0px solid;
 	transition: all ease 0.3s;
 	margin: 5px;
 }
-.modal-content-changePassword{
+.modal-content-ng2{
 	width: 480px;
 	padding: 15px;
 	margin: auto;
+	border-radius: 10px;
 }
 @media (max-width:523px) {
-	.modal-content-changePassword{
+	.modal-content-ng2{
 		width: auto;
 		padding: 15px;
 	}
 }
 @media (max-width: 304px){
-	.modal-content-changePassword{
+	.modal-content-ng2{
 		width: 257px;
 	}
 }
 
-.modal-dialog-changePassword {
+.modal-dialog-ng2 {
 	position: relative;
 	width: auto;
 	margin: auto;
+}
+
+.modal-button-section{
+	text-align: right;
+}
+
+.modal-close-ng2{
+    font-size: 30px;
+	padding-top: 15px !important;
+}
+
+.modal-backdrop.in {
+	opacity: 0.6;
 }

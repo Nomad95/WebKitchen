@@ -31,7 +31,7 @@
       'ng2-select': 'js/lib',
       'mydatepicker': 'js/lib/mydatepicker.umd.min.js',
       'ng2-recaptcha':'js/lib/ng2-recaptcha.js',
-	  'angular2-modal': 'js/lib/angular2-modal.js'
+	    'ng2-bootstrap-modal': 'app/modal'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -53,7 +53,11 @@
       'ng2-select': {
         defaultExtension: 'js',
         main: 'ng2-select.umd.js'
-    }
+      },
+      'ng2-bootstrap-modal': {
+        main: 'index.js',
+        defaultExtension: 'js'
+      }
     }
   });
 })(this);

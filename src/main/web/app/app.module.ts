@@ -46,6 +46,8 @@ import {MessageBoxComponent} from "./messages/messagebox/messagebox.component";
 import {LoginService} from "./login/login.service";
 import { RecaptchaModule } from 'ng2-recaptcha';
 import {CaptchaComponent} from "./captcha-test/captcha.component";
+import { BootstrapModalModule } from 'ng2-bootstrap-modal';
+import { AlertComponent } from './profile/myProfile/username-changed-alert.component';
 
 
 import {AuthGuard} from './app.auth-guard.service';
@@ -67,6 +69,7 @@ declare let jQuery:Object;
         CaptchaComponent,
         LoginComponent,
         ProfileComponent,
+        AlertComponent,
         NavbarComponent,
         EventListComponent,
         Tabset,
@@ -114,7 +117,9 @@ declare let jQuery:Object;
               RecaptchaModule.forRoot(),
               AlertModule.forRoot(),
               DatepickerModule.forRoot(),
+              BootstrapModalModule,
               routing],
+    entryComponents: [AlertComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
         AuthGuard,

@@ -207,3 +207,8 @@ body {
     bottom: 0;
   }
 }
+@media(max-width:767px){
+  #box:hover + #main{
+    opacity: 1;
+  }
+}

@@ -32,7 +32,6 @@
     "ng2-datepicker": "^1.8.3",
     "ng2-recaptcha": "^1.7.0",
     "ng2-select": "^1.2.0",
-	"angular2-modal": "^3.0.1",
     "npm": "^4.0.5",
     "reflect-metadata": "^0.1.9",
     "rxjs": "^5.0.2",
