@@ -30,7 +30,7 @@
                             <p [style.width]="precentageFilled+5+'%'" [attr.data-value]="precentageFilled" class="progresText"> </p>
                             <div id="progressBar"><progress max="100" [value]="precentageFilled" class="completion"></progress></div>
                             </div>-->
-							<div id="progress" class="graph"><div id="bar" [style.width]="precentageFilled+5+'%'"><p>{{precentageFilled}}% wypełnienia</p></div></div>
+							<div id="progress" class="graph"><div id="bar" [style.width]="precentageFilled+'%'"><p>{{precentageFilled}}% wypełnienia</p></div></div>
 						</li>
 					</ul>
 
@@ -187,7 +187,7 @@
 												</div>
 											</div>
 										</div>
-										<button class="btn btn-warning changePassword-submit-button" data-toggle="modal" data-target="#myModal">Zmień hasło</button>
+										<button class="btn btn-warning modal-submit-button-ng2" data-toggle="modal" data-target="#myModal">Zmień hasło</button>
 									</tab>
 									<tab title="Dane osobowe" [classTab]="name.invalid || surname.invalid || street.invalid || streetNumber.invalid ||
 											flatNumber.invalid || postCode.invalid || city.invalid || country.invalid ||
@@ -559,8 +559,8 @@
 
 	<!-- Modal -->
 	<div class="modal fade bs-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-		<div class="modal-dialog-changePassword">
-			<div class="modal-content-changePassword">
+		<div class="modal-dialog-ng2">
+			<div class="modal-content-ng2">
 				<!--<div class="modal-body">-->
 				<change-password [id]="userProfile.userAccountDTO.id">Wczytuję..</change-password>
 				<!--</div>-->

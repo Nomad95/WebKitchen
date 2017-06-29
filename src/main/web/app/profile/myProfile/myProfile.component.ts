@@ -9,6 +9,8 @@ import { CuisinesService } from '../../cuisines/cuisines.service';
 import {Cuisine} from '../model/cuisine.model';
 import {UserProfile} from '../model/userProfile.model';
 import { TAB_COMPONENTS  } from '../../tabs/Tabset';
+import { DialogComponent, DialogService } from 'ng2-bootstrap-modal';
+import { AlertComponent } from './username-changed-alert.component';
 
 
 @Component({
@@ -19,6 +21,7 @@ import { TAB_COMPONENTS  } from '../../tabs/Tabset';
 })
 export class MyProfileComponent implements OnInit {
     private isDataAvailable: boolean = false;
+    private username: string;
     private precentageFilled: any = 0;
     private profileCompletion: number;
     private cuisines:Array<Cuisine>;
@@ -51,9 +54,13 @@ export class MyProfileComponent implements OnInit {
 
     private originalUserProfile = new UserProfile();
 
+    //when username changed - modal confirm
+    confirmResult:boolean = null;
+
     constructor(private myProfileService: MyProfileService,
                 private preferedCuisineService: PreferedCuisineService,
                 private cuisinesService: CuisinesService,
+                private dialogService:DialogService,
                 private _titleService: Title) {
 
         this.initializeDatePickerOptions();
@@ -92,6 +99,7 @@ export class MyProfileComponent implements OnInit {
                 this.userProfile.userAccountDTO = result;
                 //pass userProfile.userAccountDTO.id to profileService.id
                 this.myProfileService.setId(result.id);
+                this.username = result.username;
                 this.getProfileDetails();
             });
 
@@ -170,11 +178,42 @@ export class MyProfileComponent implements OnInit {
     }
 
     updateProfile(): void {
-        this.preparingDataForUpdateProfile();
-        this.myProfileService.updateProfile(this.userProfile).subscribe(result =>{
+        if(this.username !== this.userProfile.userAccountDTO.username){
+            this.showUsernameChangedAlert();
+        }
+        else {
+            this.preparingDataForUpdateProfile();
+            this.myProfileService.updateProfile(this.userProfile).subscribe(result =>{
+                this.getProfile();
+            });
+        }
+    }
 
-            if(this.myProfileService.usernameChanged) this.logout();
-            else this.getProfile();
+    isUsernameChanged(){
+        return (this.username !== this.userProfile.userAccountDTO.username); 
+    }
+
+    showUsernameChangedAlert() {
+        this.dialogService.addDialog(AlertComponent, {
+        title:'Zmieniłeś login!',
+        message:''}, { closeByClickingOutside:true })
+        .subscribe((isConfirmed)=>{
+            //Get dialog result
+            this.confirmResult = isConfirmed;
+            if(this.confirmResult){
+                this.preparingDataForUpdateProfile();
+                this.myProfileService.updateProfile(this.userProfile).subscribe(result =>{
+                    if(this.myProfileService.usernameChanged) this.logout();
+                    else this.getProfile();
+                });
+            }
+            else {
+                this.userProfile.userAccountDTO.username = this.username;
+                this.preparingDataForUpdateProfile();
+                this.myProfileService.updateProfile(this.userProfile).subscribe(result =>{
+                    this.getProfile();
+                });
+            }
         });
     }
 

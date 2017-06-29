@@ -65,19 +65,17 @@ gulp.task('libcopy', function() {
         './node_modules/ng2-select/bundles/ng2-select.umd.js',
         './node_modules/mydatepicker/bundles/mydatepicker.umd.min.js',
         './node_modules/@ngui/datetime-picker/dist/datetime-picker.umd.js',
-        './node_modules/ng2-recaptcha/ng2-recaptcha.js',
-		'./node_modules/angular2-modal/bundle/angular2-modal.js'
+        './node_modules/ng2-recaptcha/ng2-recaptcha.js'
     ])
         .pipe(gulp.dest(staticDir + 'js/lib'));
 
-    gulp.src([
+        gulp.src([
             './node_modules/ng2-recaptcha/recaptcha/*.js'
         ])
         .pipe(gulp.dest(staticDir + 'js/lib/recaptcha'));
 
-    gulp.src(['./node_modules/tether/dist/css/tether.css'
-        // './node_modules/bootstrap/dist/css/bootstrap.css'
-    ])
+        gulp.src(['./node_modules/tether/dist/css/tether.css'
+        ])
         .pipe(gulp.dest(staticDir + 'css/lib'));
 
     // copy font-awesome
