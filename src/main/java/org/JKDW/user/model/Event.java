@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 @Entity(name = "event")
@@ -62,6 +64,8 @@ public class Event {
     /**
      * max number of incoming people
      */
+    @Min(2)
+    @Max(25)
     private byte people_quantity;
 
     /**
@@ -123,6 +127,8 @@ public class Event {
      * a quantity of items every participant should bring
      */
     @Column(nullable = true)
+    @Min(0)
+    @Max(25)
     private byte quantity_of_products;
 
     /**

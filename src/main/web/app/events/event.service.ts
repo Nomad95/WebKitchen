@@ -168,7 +168,7 @@ export class EventService {
      */
     uploadPhoto(file:File): Observable<any> {
         this.instantiateToken();
-
+        
         //create new observable; we use xhr instead of http
         return Observable.create(observer => {
             let formData:FormData = new FormData();

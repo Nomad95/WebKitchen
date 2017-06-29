@@ -143,14 +143,16 @@
                                     <input #peoplequantt1="ngModel"
                                            type="number"
                                            required
-                                           min="1"
+                                           min="2"
                                            max="25"
+                                           placeholder="2"
                                            class="form-control"
+                                           (blur)="validateParticipantsQuantity(newEventType1.people_quantity)"
                                            [(ngModel)]="newEventType1.people_quantity"
                                            name="newEventType1.people_quantity">
-                                    <div *ngIf="peoplequantt1.invalid && peoplequantt1.touched"
-                                         class="alert alert-danger" role="alert">
-                                        Liczba osób powinna zawierać się w przedziale 1-25.
+                                    <div *ngIf="!isParticipantsQuantityProper"
+                                         class="alert alert-danger" role="alert"> <!--liczba do uzgodnienia-->
+                                        Liczba osób powinna zawierać się w przedziale 2-25.
                                     </div>
                                 </div>
 
@@ -203,13 +205,18 @@
                                          role="alert">
                                         Zdjęcie jest niepoprawne.
                                     </div>
+                                    <div *ngIf="isPhotoSizeTooBig" class="alert alert-danger"
+                                         role="alert">
+                                        Rozmiar zdjęcia jest za duży (max. 1 MB)
+                                    </div>
                                 </div>
 
                                 <div class="col-md-2">
                                     <button type="button" class="btn btn-default"
                                             data-toggle="modal" data-target="#myModalType1"
                                             (click)="showPhotoInModal()"
-                                            [disabled]="!eventCreateForm.valid || !isProperPhoto || !isTimeValid">Stwórz wydarzenie
+                                            [disabled]="!eventCreateForm.valid || !isProperPhoto
+                                             || !isTimeValid || !isParticipantsQuantityProper">Stwórz wydarzenie
                                     </button> <!--[disabled] -> makes button not accessable before validated-->
                                 </div>
 
@@ -378,14 +385,16 @@
                                     <input #peoplequantt2="ngModel"
                                            type="number"
                                            required
-                                           min="1"
+                                           min="2"
                                            max="25"
+                                           placeholder="2"
+                                           (blur)="validateParticipantsQuantity(newEventType2.people_quantity)"
                                            class="form-control"
                                            [(ngModel)]="newEventType2.people_quantity"
                                            name="newEventType2.people_quantity">
-                                    <div *ngIf="peoplequantt2.invalid && peoplequantt2.touched"
+                                    <div *ngIf="!isParticipantsQuantityProper"
                                          class="alert alert-danger" role="alert">
-                                        Liczba osób powinna zawierać się w przedziale 1-25.
+                                        Liczba osób powinna zawierać się w przedziale 2-25.
                                     </div>
                                 </div>
 
@@ -402,10 +411,11 @@
                                            type="number"
                                            class="form-control"
                                            [(ngModel)]="newEventType2.quantity_of_products"
+                                           (blur)="validateQuantityOfProducts(newEventType2.quantity_of_products)"
                                            name="newEventType2.quantity_of_products">
-                                    <div *ngIf="minitemst2.invalid && minitemst2.touched" class="alert alert-danger"
+                                    <div *ngIf="!isQuantityOfProductsProper" class="alert alert-danger"
                                          role="alert">
-                                        Liczba produktów nie może być pusta.
+                                        Liczba produktów musi zawierać się w przedziale 0-25.
                                     </div><!-- co jak moze ktos nie chce aby ktos cos kupowal? -->
                                 </div>
                                 <div class="form-group"
@@ -452,13 +462,19 @@
                                          role="alert">
                                         Zdjęcie jest niepoprawne.
                                     </div>
+                                    <div *ngIf="isPhotoSizeTooBig" class="alert alert-danger"
+                                         role="alert">
+                                        Rozmiar zdjęcia jest za duży (max. 1 MB)
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-2">
                                         <button type="submit" class="btn btn-default"
                                                 data-toggle="modal" data-target="#myModalType2"
                                                 (click)="showPhotoInModal()"
-                                                [disabled]="!eventCreateForm.valid || !isProperPhoto ||!isTimeValid">Stwórz wydarzenie
+                                                [disabled]="!eventCreateForm.valid || !isProperPhoto
+                                                 ||!isTimeValid || !isParticipantsQuantityProper
+                                                 || !isQuantityOfProductsProper">Stwórz wydarzenie
                                         </button>
                                     </div>
                                 </div>

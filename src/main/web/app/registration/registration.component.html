@@ -103,15 +103,14 @@
                         <input #nick="ngModel"
                                type="text"
                                required
-                               pattern="....+"
+                               pattern="^[a-zA-Z0-9_-]{4,}"
                                maxlength="45"
                                class="form-control"
                                name="userAccountToAdd.nick"
                                (blur)="checkIfNickIsTaken()"
-                               (keypress)="userAccountToAdd.nick = toUppercase(userAccountToAdd.nick)"
                                [(ngModel)]="userAccountToAdd.nick">
                         <div *ngIf="nick.invalid && nick.touched" class="alert alert-danger" role="alert">
-                            Nick musi składać się z przynajmniej 4 liter.
+                            Nick musi składać się z przynajmniej 4 znaków (a-z, 0-9, -, _).
                         </div>
                         <div *ngIf="isNickTaken" class="alert alert-danger" role="alert">
                             Podany nick jest już zajęty.
