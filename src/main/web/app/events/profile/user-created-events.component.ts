@@ -65,6 +65,9 @@ export class UserCreatedEventsComponent implements OnInit {
 
         //send info to update Event in database
         this.eventService.rejectUserParticipation(this.event.id,user.id)
-            .subscribe( data => console.log(JSON.stringify(data)));
+            .subscribe( data => {
+                console.log(JSON.stringify(data));
+                this.event.people_remaining++;
+            });
     }
 }

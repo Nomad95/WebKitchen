@@ -233,19 +233,19 @@
                                             <h4 class="modal-title" id="myModalLabelType1">Potwierdź dane
                                                 wydarzenia</h4>
                                         </div>
-                                        <div class="modal-body">
+                                        <div class="modal-body lead-small indent-text" style="word-break: break-all !important;">
                                             <span>Zostanie stworzone następujące wydarzenie:</span>
                                             <ul>
-                                                <li>Tytuł wydarzenia: {{newEventType1.title}}</li>
-                                                <li>Godzina: {{newEventType1.time}}</li>
-                                                <li>Data: {{newEventType1.date}}</li>
-                                                <li>Adres: {{newEventType1.address}}</li>
-                                                <li>Nazwa posiłku: {{newEventType1.dish_name}}</li>
-                                                <li>Rodzaj posiłku: {{newEventType1.dish_kind}}</li>
-                                                <li>Ilość osób: {{newEventType1.people_quantity}}</li>
-                                                <li>Dodatkowe informacje o posiłku: {{newEventType1.additional_info}}
+                                                <li><strong>Tytuł wydarzenia: </strong> {{newEventType2.title}}</li>
+                                                <li><strong>Godzina: </strong> {{newEventType2.time}}</li>
+                                                <li><strong>Data: </strong> {{newEventType2.date}}</li>
+                                                <li><strong>Adres: </strong> {{newEventType2.address}}</li>
+                                                <li><strong>Nazwa posiłku: </strong> {{newEventType2.dish_name}}</li>
+                                                <li><strong>Rodzaj posiłku: </strong> {{newEventType2.dish_kind}}</li>
+                                                <li><strong>Ilość osób: </strong> {{newEventType2.people_quantity}}</li>
+                                                <li><strong>Dodatkowe informacje o posiłku: </strong> {{newEventType1.additional_info}}
                                                 </li>
-                                                <li>Opis: {{newEventType1.description}}</li>
+                                                <li><strong>Opis: </strong> {{newEventType1.description}}</li>
                                             </ul>
                                             <img *ngIf="isPhotoUploaded" [src]="pathToPhotoPreview" class="img-responsive">
                                         </div>
@@ -491,28 +491,28 @@
                                             <h4 class="modal-title" id="myModalLabelType2">Potwierdź dane
                                                 wydarzenia</h4>
                                         </div>
-                                        <div class="modal-body">
+                                        <div class="modal-body lead-small indent-text" style="word-break: break-all !important;">
                                             <span>Zostanie stworzone następujące wydarzenie:</span>
                                             <ul>
-                                                <li>Tytuł wydarzenia: {{newEventType2.title}}</li>
-                                                <li>Godzina: {{newEventType2.time}}</li>
-                                                <li>Data: {{newEventType2.date}}</li>
-                                                <li>Adres: {{newEventType2.address}}</li>
-                                                <li>Nazwa posiłku: {{newEventType2.dish_name}}</li>
-                                                <li>Rodzaj posiłku: {{newEventType2.dish_kind}}</li>
-                                                <li>Ilość osób: {{newEventType2.people_quantity}}</li>
-                                                <li>Lista potrzebnych zakupów:
+                                                <li><strong>Tytuł wydarzenia: </strong> {{newEventType2.title}}</li>
+                                                <li><strong>Godzina: </strong> {{newEventType2.time}}</li>
+                                                <li><strong>Data: </strong> {{newEventType2.date}}</li>
+                                                <li><strong>Adres: </strong> {{newEventType2.address}}</li>
+                                                <li><strong>Nazwa posiłku: </strong> {{newEventType2.dish_name}}</li>
+                                                <li><strong>Rodzaj posiłku: </strong> {{newEventType2.dish_kind}}</li>
+                                                <li><strong>Ilość osób: </strong> {{newEventType2.people_quantity}}</li>
+                                                <li><strong>Lista potrzebnych zakupów: </strong>
                                                     <span *ngFor="let item of tempShoppingListList">{{item}} </span>
                                                 </li>
-                                                <li>Lista posiadanych zakupów:
+                                                <li><strong>Lista posiadanych zakupów: </strong>
                                                     <span *ngFor="let item of tempProductsListList">{{item}} </span>
                                                 </li>
-                                                <li>Minimalna liczba produktów przyniesionych przez uczestnika:
+                                                <li><strong>Minimalna liczba produktów przyniesionych przez uczestnika: </strong>
                                                     {{newEventType2.quantity_of_products}}
                                                 </li>
-                                                <li>Dodatkowe informacje o posiłku: {{newEventType2.additional_info}}
+                                                <li><strong>Dodatkowe informacje o posiłku: </strong> {{newEventType2.additional_info}}
                                                 </li>
-                                                <li>Opis: {{newEventType2.description}}</li>
+                                                <li><strong>Opis: </strong> {{newEventType2.description}}</li>
                                             </ul>
                                             <img *ngIf="isPhotoUploaded" [src]="pathToPhotoPreview" class="img-responsive">
                                         </div>

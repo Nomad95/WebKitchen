@@ -37,15 +37,13 @@ export class DatePickerValues{
         this.myDatePickerOptions = {
             indicateInvalidDate: true,
             showTodayBtn: false,
-            openSelectorTopOfInput: false,
-            markCurrentYear: false,
+            markCurrentYear: true,
             allowDeselectDate: true,
-            disableSince: {year: this.dateNow.getFullYear()+2, month: this.dateNow.getMonth()+1, day: this.dateNow.getDate()+1}
         };
-        this.defaultYearAndMonth = this.dateNow.getFullYear()+"-"+(this.dateNow.getMonth()+1);
+        this.defaultYearAndMonth = this.dateNow.getFullYear()+16+"-"+(this.dateNow.getMonth()+1);
     }
 
     addDisableUntil(){
-        this.myDatePickerOptions.disableUntil = {year: this.dateNow.getFullYear(), month: this.dateNow.getMonth()+1, day: this.dateNow.getDate()-1};
+        this.myDatePickerOptions.disableUntil = {year: this.dateNow.getFullYear()+16, month: this.dateNow.getMonth()+1, day: this.dateNow.getDate()};
     }
 }

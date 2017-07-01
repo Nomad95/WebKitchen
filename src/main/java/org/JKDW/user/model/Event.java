@@ -23,7 +23,7 @@ public class Event {
     /**
      * title
      */
-    @Size(min = 1)
+    @Size(min = 1, max = 100)
     private String title;
 
     /**

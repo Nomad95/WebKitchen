@@ -71,6 +71,7 @@ export class EventDetailsComponent implements OnInit {
             .subscribe((data) => {
                     //when succeded we reset the button and hide it with hasJoined
                     $btn.button('reset');
+                    this.event.people_remaining--;
                     this.hasJoined = true;
                 }
             );
@@ -151,7 +152,10 @@ export class EventDetailsComponent implements OnInit {
     resignFromEvent(){
         //send info to update Event in database
         this.eventService.rejectUserParticipation(this.event.id,this.userId)
-            .subscribe( data => this.hasJoined = false);
+            .subscribe( data => {
+                this.event.people_remaining++;
+                this.hasJoined = false;
+            });
     }
 
     /**
