@@ -22,7 +22,6 @@ export class SentMessagesComponent implements OnInit {
     ngOnInit() {
         this.setIndexOfPageFromMain();
         this.getSentMessage();
-        console.log(this.indexFirstMsgOnSite);
     }
 
     getSentMessage(): void{
@@ -55,7 +54,6 @@ export class SentMessagesComponent implements OnInit {
             this.currentIndexOfPage = 1;
         else
             this.currentIndexOfPage = (this.indexFirstMsgOnSite/10)+1;
-        console.log("index page: " + this.currentIndexOfPage);
     }
 
     setIndexOfPage(number):void{
@@ -69,6 +67,7 @@ export class SentMessagesComponent implements OnInit {
             this.messageService
                 .deleteMySentMessage(message)
                 .subscribe();
+        this.reloadPage();
     }
 
     getSelectedOptions() {
@@ -76,5 +75,11 @@ export class SentMessagesComponent implements OnInit {
         this.messagesToDelete = this.sentMessages
             .filter(opt => opt.checked)
             .map(opt => opt.id);
+    }
+
+    reloadPage():void{
+        var currentUrl = this.router.url;
+        var refreshUrl = currentUrl.indexOf('messagebox/0') > -1 ? '/messagebox' : 'messagebox/0';
+        this.router.navigateByUrl(refreshUrl).then(() => this.router.navigateByUrl(currentUrl));
     }
 }

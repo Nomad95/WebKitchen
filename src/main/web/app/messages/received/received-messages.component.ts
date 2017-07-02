@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {MessageService} from "../message.service";
 import {MessageReceived} from "../message-received";
 import {SharedService} from "../../shared.service";
+import {LoginService} from "../../login/login.service";
 
 @Component({
     selector: 'received-messages',
@@ -15,15 +16,20 @@ export class ReceivedMessagesComponent implements OnInit{
     private indexesOfPage = [];
     @Input() indexFirstMsgOnSite: number;
     private messagesToDelete = [];
+    private countUnreadMessages = {
+        count:''
+    };
 
 
-    constructor(private router: Router, private messageService: MessageService, private sharedService: SharedService) {
+    constructor(private router: Router,
+                private messageService: MessageService,
+                private sharedService: SharedService,
+                private loginService: LoginService) {
     }
 
     ngOnInit() {
         this.setIndexOfPageFromMain();
         this.getReceivedMessage();
-        console.log(this.indexFirstMsgOnSite)
     }
 
     getReceivedMessage(): void{
@@ -35,7 +41,6 @@ export class ReceivedMessagesComponent implements OnInit{
                         res.checked = false;
                     }
                     this.genereteTabForPagination(Object.keys(this.receivedMessages).length);
-                    console.log(result);
                 },
                 err => console.log("Nie ma żadnych odebranych wiadomości")
             );
@@ -61,7 +66,6 @@ export class ReceivedMessagesComponent implements OnInit{
             this.currentIndexOfPage = 1;
         else
             this.currentIndexOfPage = (this.indexFirstMsgOnSite/10)+1;
-        console.log("index page: " + this.currentIndexOfPage);
     }
 
     setIndexOfPage(number):void{
@@ -75,10 +79,22 @@ export class ReceivedMessagesComponent implements OnInit{
 
     deleteSelectedMessages():void{
         this.getSelectedOptions();
-        for(let message of this.messagesToDelete)
+        // check the amount of message to delete in order to update amount unread messages on the last loop
+        var countMessage =  this.messagesToDelete.length;
+        for(let message of this.messagesToDelete){
+            if(countMessage == 1)
             this.messageService
                 .deleteMyReceivedMessage(message)
-                .subscribe();
+                .subscribe(()=>{
+                   this.countMyUnreadMessages();
+                });
+            else
+                this.messageService
+                    .deleteMyReceivedMessage(message)
+                    .subscribe();
+            countMessage--;
+        }
+        this.reloadPage();
     }
 
     getSelectedOptions() {
@@ -86,5 +102,21 @@ export class ReceivedMessagesComponent implements OnInit{
         this.messagesToDelete = this.receivedMessages
             .filter(opt => opt.checked)
             .map(opt => opt.id);
+    }
+
+    countMyUnreadMessages():void{
+        this.loginService.countMyUnreadMessages().subscribe(
+            result => {
+                this.countUnreadMessages = result;
+                this.sharedService.setNumberOfUnreadMessages(Number(this.countUnreadMessages.count));
+            },
+            err => console.log("An error occurred while retrieving count of unread message")
+        );
+    }
+    reloadPage():void{
+        var currentUrl = this.router.url;
+        var refreshUrl = currentUrl.indexOf('messagebox/sent') > -1 ? '/messagebox' : 'messagebox/sent';
+        this.router.navigateByUrl(refreshUrl).then(() => this.router.navigateByUrl(currentUrl));
+        this.countMyUnreadMessages();
     }
 }

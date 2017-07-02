@@ -133,20 +133,21 @@
     margin-right: 10px;
 }
 .container-fluid .message-menu{
-    margin-right: 60%;
+    margin-right: 30%;
 }
 
 .has-subnav .badge {
-    padding: 1px 7px 2px;
+    padding: 1px 5px 2px;
     font-size: 12.025px;
     font-weight: bold;
-    white-space: nowrap;
     color: #ffffff;
     background-color: #999999;
     -webkit-border-radius: 9px;
     -moz-border-radius: 9px;
     border-radius: 9px;
-    margin-right: 2px;
+    position:relative;
+    top: -5px;
+    left: -15px;
 }
 .has-subnav .badge:hover {
     color: #ffffff;

@@ -87,6 +87,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/img/**").permitAll()
                 .antMatchers("/systemjs.config.js").permitAll()
+                .antMatchers("/**/*.ttf").permitAll()
                 .antMatchers(HttpMethod.GET,"/app/**/*.js").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated()

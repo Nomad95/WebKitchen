@@ -307,6 +307,15 @@ public class UserAccountServiceImpl implements UserAccountService {
         userAccountRepository.save(foundUserAccount);
         return foundUserAccount;
     }
+
+    @Override
+    @Transactional
+    public String getMyNickByToken(String username) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        String sql = "SELECT nick FROM USER_ACCOUNT WHERE USERNAME = ?";
+        String myNick = jdbcTemplate.queryForObject(sql, new Object[] { username }, String.class);
+        return myNick;
+    }
 }
 
 

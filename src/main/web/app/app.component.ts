@@ -22,9 +22,9 @@ export class AppComponent implements OnInit {
     };
     private countUnreadMessages = {
         count:''
-    }
-    public inputField = '<enter some text>!';
+    };
     public serverResponse: string;
+    private nick: string;
 
 
     constructor(private loginService: LoginService,
@@ -36,19 +36,19 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         if(this.loginService.isLogged()) {
+            this.getMyNick();
             this.checkIsUserAnAdmin();
             this.ifUserHasBannedLogOut();
-                this.countMyUnreadMessages();
-        }
-        this.stompService.connect('ws://localhost:8080/stomp');
-        this.stompService.getObservable().subscribe(payload => {
-            this.serverResponse = payload.message;
-            if(this.serverResponse === "newMessage")
-                this.countMyUnreadMessages();
-            else if(this.serverResponse === "ban")
-                this.ifUserHasBannedLogOut();
+            this.countMyUnreadMessages();
+            this.stompService.getObservable().subscribe(payload => {
+                this.serverResponse = payload.message;
+                if (this.serverResponse === "newMessage")
+                    this.countMyUnreadMessages();
+                else if (this.serverResponse === "ban")
+                    this.ifUserHasBannedLogOut();
 
-        });
+            });
+        }
 
     }
 
@@ -100,6 +100,14 @@ export class AppComponent implements OnInit {
                 this.sharedService.setNumberOfUnreadMessages(Number(this.countUnreadMessages.count));
             },
             err => console.log("An error occurred while retrieving count of unread message")
+        );
+    }
+
+    getMyNick():void{
+        this.loginService.getMyNick().subscribe(result =>{
+            this.nick = result.nick;
+            this.stompService.connect('ws://localhost:8080/stomp', this.nick);
+        }, err => console.log("You hasn't nick ??")
         );
     }
 

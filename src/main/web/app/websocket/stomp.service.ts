@@ -12,17 +12,13 @@ export class StompService {
     private _stompClient;
     private _stompSubject : Subject<any> = new Subject<any>();
 
-    public connect(_webSocketUrl: string) : void {
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
-        let username = currentToKey && currentToKey.username;
-        let token = currentToKey && currentToKey.token;
-
+    public connect(_webSocketUrl: string, _nick: string) : void {
 
         let self = this;
         let webSocket = new WebSocket(_webSocketUrl);
         this._stompClient = Stomp.over(webSocket);
         this._stompClient.connect({}, function (frame) {
-            self._stompClient.subscribe('/topic/notification/'+username, function (stompResponse) {
+            self._stompClient.subscribe('/topic/notification/'+_nick, function (stompResponse) {
                 // stompResponse = {command, headers, body with JSON
                 // reflecting the object returned by Spring framework}
                 self._stompSubject.next(JSON.parse(stompResponse.body));
@@ -30,6 +26,10 @@ export class StompService {
         });
     }
 
+    /**
+     * Method  when get a parametr to addres which is subsribing
+     * @returns {Observable<any>}
+     */
     public getObservable() : Observable<any> {
         return this._stompSubject.asObservable();
     }
