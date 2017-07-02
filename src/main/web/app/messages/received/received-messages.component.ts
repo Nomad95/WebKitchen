@@ -41,6 +41,7 @@ export class ReceivedMessagesComponent implements OnInit{
                         res.checked = false;
                     }
                     this.genereteTabForPagination(Object.keys(this.receivedMessages).length);
+                    console.log(result);
                 },
                 err => console.log("Nie ma żadnych odebranych wiadomości")
             );
@@ -66,6 +67,7 @@ export class ReceivedMessagesComponent implements OnInit{
             this.currentIndexOfPage = 1;
         else
             this.currentIndexOfPage = (this.indexFirstMsgOnSite/10)+1;
+        console.log("index page: " + this.currentIndexOfPage);
     }
 
     setIndexOfPage(number):void{
@@ -79,7 +81,7 @@ export class ReceivedMessagesComponent implements OnInit{
 
     deleteSelectedMessages():void{
         this.getSelectedOptions();
-        // check the amount of message to delete in order to update amount unread messages on the last loop
+        // check
         var countMessage =  this.messagesToDelete.length;
         for(let message of this.messagesToDelete){
             if(countMessage == 1)
@@ -114,6 +116,7 @@ export class ReceivedMessagesComponent implements OnInit{
         );
     }
     reloadPage():void{
+        console.log("Reload");
         var currentUrl = this.router.url;
         var refreshUrl = currentUrl.indexOf('messagebox/sent') > -1 ? '/messagebox' : 'messagebox/sent';
         this.router.navigateByUrl(refreshUrl).then(() => this.router.navigateByUrl(currentUrl));
