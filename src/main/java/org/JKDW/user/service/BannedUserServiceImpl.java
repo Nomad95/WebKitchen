@@ -5,6 +5,8 @@ import org.JKDW.user.model.BannedUser;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.repository.BannedUserRepository;
 import org.JKDW.user.repository.UserAccountRepository;
+import org.JKDW.websocket.model.Shout;
+import org.JKDW.websocket.service.WebSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,9 @@ public class BannedUserServiceImpl implements BannedUserService{
     @Autowired
     private UserAccountRepository userAccountRepository;
 
+    @Autowired
+    private WebSocketService webSocketService;
+
 
     @Override
     public BannedUser createBanForUser(BannedUser bannedUser, Long idUserForBan) throws NoResultException,IllegalArgumentException {
@@ -29,8 +34,10 @@ public class BannedUserServiceImpl implements BannedUserService{
             throw new IllegalArgumentException("This account is already banned");
         bannedUser.setUserAccount(userAccountForBan);
         userAccountForBan.setIsBanned(true);
-
         bannedUserRepository.save(bannedUser);
+
+        this.webSocketService.sendNotificationToUser(userAccountForBan.getNick(), new Shout("ban"));
+
         return bannedUser;
     }
 

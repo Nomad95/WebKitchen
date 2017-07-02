@@ -32,7 +32,9 @@
       'mydatepicker': 'js/lib/mydatepicker.umd.min.js',
       'ng2-recaptcha':'js/lib/ng2-recaptcha.js',
 	    'ng2-bootstrap-modal': 'app/modal',
-      'ng2-img-cropper': 'js/lib/ng2-img-cropper'
+      'ng2-img-cropper': 'js/lib/ng2-img-cropper',
+      'sockjs-client':'js/lib/sockjs.min.js',
+      'stompjs':'js/lib/stomp.min.js'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {

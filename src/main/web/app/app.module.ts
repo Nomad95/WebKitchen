@@ -55,12 +55,14 @@ import {UploadPhotoComponent} from './profile/uploadPhoto/upload-photo.component
 import {ProfilePhotoAlertComponent} from './profile/uploadPhoto/profile-photo-not-changed-alert.component';
 
 
+
 import {AuthGuard} from './app.auth-guard.service';
 import {LoginBanned} from "./login/login-banned-user.component";
 import {SharedService} from "./shared.service";
 
 import {PolishDatePipe} from "./util/pipes/polish.date.pipe";
 import {ShorterTimePipe} from "./util/pipes/shorter.time.pipe";
+
 
 declare let jQuery:Object;
 

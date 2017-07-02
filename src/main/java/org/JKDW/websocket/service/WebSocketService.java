@@ -1,9 +1,9 @@
-package org.JKDW.websocket.Service;
+package org.JKDW.websocket.service;
 
 import org.JKDW.websocket.model.Shout;
 
 public interface WebSocketService {
 
-    void sendMessageByStomp(Shout notification);
+    void sendNotificationToUser(String nick,Shout notification);
 
 }

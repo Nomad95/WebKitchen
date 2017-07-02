@@ -146,6 +146,7 @@
     -webkit-border-radius: 9px;
     -moz-border-radius: 9px;
     border-radius: 9px;
+    margin-right: 2px;
 }
 .has-subnav .badge:hover {
     color: #ffffff;
