@@ -69,7 +69,6 @@ gulp.task('libcopy', function() {
 		'./node_modules/angular2-modal/bundle/angular2-modal.js',
         './node_modules/sockjs-client/dist/sockjs.min.js',
         './node_modules/stompjs/lib/stomp.min.js',
-        './node_modules/ng2-stomp-service/dist/stomp.service.js'
     ])
         .pipe(gulp.dest(staticDir + 'js/lib'));
 

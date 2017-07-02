@@ -193,7 +193,6 @@ public class UserAccountServiceImpl implements UserAccountService {
         Boolean isAdmin = false;
         /* Pobiera z SecuirtyUser role w formacie [ROLE_TYP] */
         Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        System.out.println("W kontexcie jestem "+ authorities);
         for( SimpleGrantedAuthority element : authorities){
             if(element.toString().equals(ADMIN)) {
                 isAdmin = true;

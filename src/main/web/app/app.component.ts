@@ -86,7 +86,6 @@ export class AppComponent implements OnInit {
         this.loginService.getInfoAboutMyBan().subscribe(
             result =>{
                 this.myBan = result;
-                console.log("Data: " + this.myBan.dateEndOfBan + " godzina: " + this.myBan.timeEndOfBan);
                 this.router.navigate(['/login/banned/',{date: this.myBan.dateEndOfBan, time: this.myBan.timeEndOfBan}]);
             },
             err => console.log('An error occurred while retrieving the ban information')

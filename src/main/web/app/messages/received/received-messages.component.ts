@@ -41,7 +41,6 @@ export class ReceivedMessagesComponent implements OnInit{
                         res.checked = false;
                     }
                     this.genereteTabForPagination(Object.keys(this.receivedMessages).length);
-                    console.log(result);
                 },
                 err => console.log("Nie ma żadnych odebranych wiadomości")
             );
@@ -67,7 +66,6 @@ export class ReceivedMessagesComponent implements OnInit{
             this.currentIndexOfPage = 1;
         else
             this.currentIndexOfPage = (this.indexFirstMsgOnSite/10)+1;
-        console.log("index page: " + this.currentIndexOfPage);
     }
 
     setIndexOfPage(number):void{
@@ -116,7 +114,6 @@ export class ReceivedMessagesComponent implements OnInit{
         );
     }
     reloadPage():void{
-        console.log("Reload");
         var currentUrl = this.router.url;
         var refreshUrl = currentUrl.indexOf('messagebox/sent') > -1 ? '/messagebox' : 'messagebox/sent';
         this.router.navigateByUrl(refreshUrl).then(() => this.router.navigateByUrl(currentUrl));
