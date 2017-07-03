@@ -24,8 +24,6 @@ export class AppComponent implements OnInit {
         count:''
     };
     public serverResponse: string;
-    private nick: string;
-
 
     constructor(private loginService: LoginService,
                 private router: Router,
@@ -36,7 +34,7 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         if(this.loginService.isLogged()) {
-            this.getMyNick();
+            this.getMyNickAndConnectWithStomp();
             this.checkIsUserAnAdmin();
             this.ifUserHasBannedLogOut();
             this.countMyUnreadMessages();
@@ -102,10 +100,10 @@ export class AppComponent implements OnInit {
         );
     }
 
-    getMyNick():void{
+    getMyNickAndConnectWithStomp():void{
         this.loginService.getMyNick().subscribe(result =>{
-            this.nick = result.nick;
-            this.stompService.connect('ws://localhost:8080/stomp', this.nick);
+            this.sharedService.setMyNick(result.nick);
+            this.stompService.connect('ws://localhost:8080/stomp', this.sharedService.getMyNick());
         }, err => console.log("You hasn't nick ??")
         );
     }

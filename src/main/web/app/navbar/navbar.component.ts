@@ -21,10 +21,8 @@ export class NavbarComponent implements OnInit {
     //this.username = this.loginService.getUsername();
   }
 
-  getMyNick():void{
-    this.loginService.getMyNick().subscribe(result => {
-      this.nick = result.nick;
-    })
+  getMyNick():string{
+    return this.sharedService.getMyNick();
   }
 
   //just checks a token, refreshing variables
