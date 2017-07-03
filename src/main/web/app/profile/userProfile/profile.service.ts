@@ -69,6 +69,22 @@ export class ProfileService {
             .map(res => res.json())
             .catch(this.handleError);
     }
+
+    isProfilePhotoExists(nick: string):Observable<any> {
+        //We get token from local storage
+        var currentToKey = JSON.parse(localStorage.getItem('toKey'))
+        let token = currentToKey && currentToKey.token;
+
+        //create appropriate
+        this.headers = new Headers({
+            'content-type' : 'application/json',
+            'X-Auth-token' : token});
+
+        //and passing them in the request
+        return this.http.get('/isProfilePhotoExists/'+ nick,{headers :this.headers})
+            .map(res => res.json())
+            .catch(this.handleError);
+    }
     
     private handleError(error: any): Promise<any> {
         console.error('An error occurred in Registration', error);

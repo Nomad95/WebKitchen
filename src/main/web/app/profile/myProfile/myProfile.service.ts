@@ -113,10 +113,14 @@ export class MyProfileService {
             .catch(this.handleErrorPassword);
     }
 
+    /**
+     * @param userProfileChangePasswordDTO - new password and UserAccount id
+     * 
+     */
     changePassword(userProfileChangePasswordDTO):Observable<any>{
         var currentToKey = JSON.parse(localStorage.getItem('toKey'));
         let token = currentToKey && currentToKey.token;
-        console.log(JSON.stringify(userProfileChangePasswordDTO));
+ 
         //create appropriate
         this.headers = new Headers({
             'accept': 'application/json',
@@ -128,7 +132,8 @@ export class MyProfileService {
     }
 
     /**
-     * 
+     * @param data - photo as base64 string
+     *  @param nick - User account nick
      */
     uploadProfilePhoto(data, nick:string): Observable<any> {
         var currentToKey = JSON.parse(localStorage.getItem('toKey'));
@@ -143,24 +148,6 @@ export class MyProfileService {
         return this.http.post('/api/upload/photo/' + nick,data,{headers :this.headers})
             .map(res => res)
             .catch(this.handleUpdateError);
-            //create new observable; we use xhr instead of http
-       /* return Observable.create(observer => {
-            let formData:FormData = new FormData();
-            let xhr:XMLHttpRequest = new XMLHttpRequest();
-            console.log(file);
-            
-            //add file nad filename to FormData objct
-            //first parameter should match request parameter name in rest controller!!!
-            formData.append("uploadfile", file, file.name);
-
-            //we open xhr, set headers (important. we must set headers after
-            //.open), and send FormData
-            xhr.open('POST', '/api/upload/photo/'+nick, true);
-            xhr.setRequestHeader('X-Auth-token', token);
-            xhr.setRequestHeader('enctype', 'multipart/form-data');
-            xhr.send(formData);
-            //this.map(res => res.json());
-            });*/
     }
 
     isProfilePhotoExists(nick: string):Observable<any> {

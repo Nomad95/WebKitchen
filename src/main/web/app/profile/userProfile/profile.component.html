@@ -3,43 +3,67 @@
 	<div class="container" style="margin-top: 30px;">
 		<div class="profile-head">
 			<div class="col-md- col-sm-4 col-xs-12">
-				<img src="/img/profile.jpg" class="img-responsive" />
-			</div>
-			<!--col-md-4 col-sm-4 col-xs-12 close-->
+					<div *ngIf="profilePhotoLoaded">
+						<img [src]="profilePhotoUrl" class="img-responsive" />
+					</div>
+					<div *ngIf="!profilePhotoLoaded" class="loadingPhoto">
+						<div class="spinner">
+							<div class="bounce1"></div>
+							<div class="bounce2"></div>
+							<div class="bounce3"></div>
+						</div>
+					</div>
+				</div> <!--col-md-4 col-sm-4 col-xs-12 close-->
 
-			<div class="col-md-5 col-sm-5 col-xs-12">
-				<h5>{{ userProfile.name }} {{ userProfile.surname }}</h5>
-				<p>{{ userProfile.userAccountDTO.country }}</p>
-				<ul>
-					<li><span class="fa fa-briefcase"></span> -</li>
+				<div *ngIf=isDataAvailable>
+					<div class="col-md-5 col-sm-5 col-xs-12">
+						<h5>{{ userProfile.name }} {{ userProfile.surname }}</h5>
+						<p>{{ userProfile.userAccountDTO.country }}</p>
+						<ul>
 
-					<li *ngIf="(userProfile.street || userProfile.postCode || userProfile.city) !== ''">
-						<span class="fa fa-home"></span> {{ userProfile.street }},{{ userProfile.postCode }} {{ userProfile.city }}</li>
-					<li *ngIf="(userProfile.street && userProfile.postCode && userProfile.city) === ''">
-						<span class="fa fa-home"></span> - </li>
-
-					<li *ngIf="(userProfile.phoneNumber) !== ''"><span class="fa fa-phone"></span> <a href="#" title="call">{{ userProfile.phoneNumber }}</a></li>
-					<li *ngIf="(userProfile.phoneNumber) === ''"><span class="fa fa-phone"></span> - </li>
-
-					<li *ngIf="(userProfile.userAccountDTO.email) !== ''"><span class="fa fa-envelope"></span>{{ userProfile.userAccountDTO.email }}</li>
-					<li *ngIf="(userProfile.userAccountDTO.email) === ''"><span class="fa fa-envelope"></span> - </li>
-					<br>
-					<li>
-						<div id="progress" class="graph"><div id="bar" [style.width]="precentageFilled+5+'%'"><p>{{precentageFilled}}% wypełnienia</p></div></div>
-					</li>
-				</ul>
+							<li *ngIf="(userProfile.street !== '' && userProfile.street !== null) || (userProfile.postCode !== '' && userProfile.postCode !== null) || (userProfile.city !== '' && userProfile.city !== null)">
+								<span class="fa fa-home"></span>
+							<div *ngIf="(userProfile.street !== '') && (userProfile.street !== null) && (((userProfile.postCode !== '') && (userProfile.postCode !== null)) || ((userProfile.city !== '') && (userProfile.city !== null)))" class="d-inline">
+								{{ userProfile.street }},</div>
+							<div *ngIf="(userProfile.street !== '') && (userProfile.street !== null) && (((userProfile.postCode === '') || (userProfile.postCode === null)) && ((userProfile.city === '') || (userProfile.city === null)))" class="d-inline">
+								{{ userProfile.street }}</div>
+								<div *ngIf="(userProfile.postCode !== '') && (userProfile.postCode !== null)" class="d-inline">
+							   {{ userProfile.postCode }}</div>
+								<div *ngIf="(userProfile.city !== '') && (userProfile.city !== null)" class="d-inline">
+									{{ userProfile.city }}</div>
+							</li>
+							<li *ngIf="(userProfile.street === '' || userProfile.street === null) && (userProfile.postCode === '' || userProfile.postCode === null) && (userProfile.city === '' || userProfile.city === null)">
+								<span class="fa fa-home"></span> - </li>
 
 
-			</div>
-			<!--col-md-8 col-sm-8 col-xs-12 close-->
+							<li *ngIf="userProfile.phoneNumber !== '' && userProfile.phoneNumber !== null"><span class="fa fa-phone"></span> <a href="#" title="call">{{ userProfile.phoneNumber }}</a></li>
+							<li *ngIf="userProfile.phoneNumber === '' || userProfile.phoneNumber === null"><span class="fa fa-phone"></span> - </li>
 
+							<li *ngIf="(userProfile.userAccountDTO.email !== '') && (userProfile.userAccountDTO.email !== null)"><span class="fa fa-envelope"></span>{{ userProfile.userAccountDTO.email }}</li>
+							<li *ngIf="(userProfile.userAccountDTO.email === '') || (userProfile.userAccountDTO.email === null)"><span class="fa fa-envelope"></span> - </li>
+							<br>
+							<li>
+								<!--<div>Wypełnienie
+								<p [style.width]="precentageFilled+5+'%'" [attr.data-value]="precentageFilled" class="progresText"> </p>
+								<div id="progressBar"><progress max="100" [value]="precentageFilled" class="completion"></progress></div>
+								</div>-->
+								<div id="progress" class="graph"><div id="bar" [style.width]="precentageFilled+'%'"><p>{{precentageFilled}}% wypełnienia</p></div></div>
+							</li>
+						</ul>
 
+					</div><!--col-md-8 col-sm-8 col-xs-12 close-->
+				</div> <!--<div *ngIf=isDataAvailable> close-->
+				<div *ngIf=!isDataAvailable>
+					<div class="spinner">
+						<div class="bounce1"></div>
+						<div class="bounce2"></div>
+						<div class="bounce3"></div>
+					</div>
+				</div>
+			</div> <!--profile-head close-->
+			
+		</div> <!--container close-->
 
-
-		</div>
-		<!--profile-head close-->
-	</div>
-	<!--container close-->
 
 
 	<div id="sticky" class="container">
@@ -69,76 +93,73 @@
 						<!--col-md-12 close-->
 
 
-						<div class="col-md-6">
+						<div class="col-md-6 col-sm-12">
 
-							<div class="table-responsive responsiv-table">
-								<table class="table bio-table">
-									<tbody>
+								<div class="table-responsive responsiv-table">
+									<table class="table bio-table">
+										<tbody>
 										<tr>
 											<td>Imię</td>
-											<td *ngIf="(userProfile.name) !== ''">{{ userProfile.name }}</td>
-											<td *ngIf="(userProfile.name) === ''"> - </td>
+											<td *ngIf="userProfile.name !== '' && userProfile.name !== null">{{ userProfile.name }}</td>
+											<td *ngIf="userProfile.name === '' || userProfile.name === null"> - </td>
 										</tr>
 										<tr>
 											<td>Nazwisko</td>
-											<td *ngIf="(userProfile.surname) !== ''">{{ userProfile.surname }}</td>
-											<td *ngIf="(userProfile.surname) === ''"> - </td>
+											<td *ngIf="userProfile.surname !== '' && userProfile.surname !== null">{{ userProfile.surname }}</td>
+											<td *ngIf="userProfile.surname === '' || userProfile.surname === null"> - </td>
 										</tr>
 										<tr>
 											<td>Data urodzenia</td>
-											<td  *ngIf="(userProfile.birthDate) !== ''">{{userProfile.birthDate | date: 'dd-MM-yyyy'}}</td>
-											<td *ngIf="(userProfile.birthDate) === null"> - </td>
+											<td  *ngIf="userProfile.birthDate !== '' && userProfile.birthDate !== null">{{userProfile.birthDate | date: 'dd-MM-yyyy'}}</td>
+											<td *ngIf="userProfile.birthDate === null || userProfile.birthDate === ''"> - </td>
 										</tr>
 										<tr>
 											<td>Kraj</td>
-											<td  *ngIf="(userProfile.userAccountDTO.country) !== ''">{{ userProfile.userAccountDTO.country }}</td>
-											<td *ngIf="(userProfile.userAccountDTO.country) === ''"> - </td>
+											<td  *ngIf="userProfile.userAccountDTO.country !== '' && userProfile.userAccountDTO.country !== null">{{ userProfile.userAccountDTO.country }}</td>
+											<td *ngIf="userProfile.userAccountDTO.country === '' || userProfile.userAccountDTO.country === null"> - </td>
 										</tr>
-									</tbody>
-								</table>
+										</tbody>
+									</table>
+								</div>
+								<!--table-responsive close-->
 							</div>
-							<!--table-responsive close-->
-						</div>
-						<!--col-md-6 close-->
+							<!--col-md-6 close-->
 
-						<div class="col-md-6">
+							<div class="col-md-6 col-sm-12">
 
-							<div class="table-responsive responsiv-table">
-								<table class="table bio-table">
-									<tbody>
+								<div class="table-responsive responsiv-table">
+									<table class="table bio-table">
+										<tbody>
 										<tr>
 											<td>Email</td>
-											<td *ngIf="(userProfile.userAccountDTO.email) !== ''">{{ userProfile.userAccountDTO.email }}</td>
-											<td *ngIf="(userProfile.userAccountDTO.email) === ''"> - </td>
+											<td *ngIf="userProfile.userAccountDTO.email !== '' && userProfile.userAccountDTO.email !== null">{{ userProfile.userAccountDTO.email }}</td>
+											<td *ngIf="userProfile.userAccountDTO.email === '' || userProfile.userAccountDTO.email === ''"> - </td>
 										</tr>
 										<tr>
 											<td>Tel</td>
-											<td *ngIf="(userProfile.phoneNumber) !== ''">{{ userProfile.phoneNumber }}</td>
-											<td *ngIf="(userProfile.phoneNumber) === ''"> - </td>
+											<td *ngIf="userProfile.phoneNumber !== '' && userProfile.phoneNumber !== null">{{ userProfile.phoneNumber }}</td>
+											<td *ngIf="userProfile.phoneNumber === '' || userProfile.phoneNumber === ''"> - </td>
 										</tr>
-										<!--   <tr>    
-        <td>Wypełniony</td>
-        <td>: {{ userProfile.isFilled }}</td>       
-    </tr> -->
 										<tr>
 											<td>Preferowane kuchnie</td>
 											<td *ngIf="userProfile.preferredCuisine?.length > 0">
-												<button class ="cuisine" *ngFor="let prefered of userProfile.preferredCuisine">{{ prefered.name }}</button>
+												<button class ="cuisine" *ngFor="let preferred of userProfile.preferredCuisine">{{ preferred.name }}</button>
 											</td>
 											<td *ngIf="(userProfile.preferredCuisine | json) === '[]'"> - </td>
 										</tr>
-										<tr>
+										<!--<tr>
 											<td>Zweryfikowany</td>
 											<td *ngIf="userProfile.userAccountDTO.isVerified"><img src="/img/ok.png" width="40" heigth="40" class="img-responsive" /></td>
 											<td *ngIf="!userProfile.userAccountDTO.isVerified"><img src="/img/not.png" width="40" heigth="40" class="img-responsive" /></td>
-										</tr>
+										</tr>-->
 
-									</tbody>
-								</table>
+										</tbody>
+									</table>
+								</div>
+								<!--table-responsive close-->
 							</div>
-							<!--table-responsive close-->
-						</div>
-						<!--col-md-6 close-->
+							<!--col-md-6 close-->
+
 
 					</div>
 					<!--row close-->

@@ -63,8 +63,7 @@ export class ChangePasswordComponent implements OnInit{
         return new Promise((resolve, reject) => {
             this.myProfileService.oldPasswordIsCorrect(this.oldPassword).subscribe( result =>{
                 if(result){
-                    console.log("result = true");
-                    console.log("id = "+this.id);
+                    console.log("Old password is correct -> result = true");
                     this.invalidPasswordMessage = "";
                     this.userProfileChangePasswordDTO.id = +this.id;
                     resolve(true);

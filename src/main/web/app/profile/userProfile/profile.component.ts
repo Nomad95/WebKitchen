@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, EventEmitter, ViewChild } from '@angular/
 import {Title} from "@angular/platform-browser";
 import { ProfileService } from './profile.service';
 import { TAB_COMPONENTS  } from '../../tabs/Tabset';
+import {UserProfile} from '../model/userProfile.model';
 
 
 @Component({
@@ -11,37 +12,14 @@ import { TAB_COMPONENTS  } from '../../tabs/Tabset';
     providers: [ProfileService]
 })
 export class ProfileComponent implements OnInit, OnDestroy {
+    private isDataAvailable: boolean = false;
     private precentageFilled: any = 0;
     private profileCompletion: number;
    
-    private userProfile = {
-        name: '',
-        surname: '',
-        street: '',
-        streetNumber: '',
-        flatNumber: '',
-        postCode: '',
-        city: '',
-        birthDate: '',
-        phoneNumber: '',
-        sex: '',
-        interests: '',
-        description: '',
-        preferredCuisine: [],
-        profileCompletion: '',
-        userAccountDTO: {
-          username: '',
-          email: '',
-          country: '',
-          nick: '',
-          lastLogged: '',
-          isFilled: '',
-          isVerified: '',
-          createdAt: '',
-          id: ''
-        },
-            id: '' 
-    };
+    private userProfile:UserProfile = new UserProfile();
+
+    private profilePhotoLoaded = false;
+    private profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile.jpg";
    
     constructor(private profileService: ProfileService, private _titleService: Title) { }
 
@@ -58,6 +36,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
                 this.userProfile.userAccountDTO = result;
                 this.profileService.setId(result.id); //pass id to profileService.id
                 this.getProfileDetails();
+                this.checkIfTheUserHasProfilePhoto(result.nick);
                 this._titleService.setTitle("Kuchnia po sąsiedzku - "+this.userProfile.userAccountDTO.username);
             });
 
@@ -72,12 +51,30 @@ export class ProfileComponent implements OnInit, OnDestroy {
                 this.userProfile = result;
                 this.profileCompletion = +this.userProfile.profileCompletion;
                 this.precentageFilled = Math.floor(this.profileCompletion * 7.2) / 1;
-             
+                this.isDataAvailable=true;
         });
     }
     
     getPrectangeFilledString(): String{
         return this.precentageFilled.toString();
+    }
+
+    checkIfTheUserHasProfilePhoto(nick:string){
+        this.profileService.isProfilePhotoExists(nick).subscribe(result => {
+            if(result){
+                this.setUserProfilePhoto();
+            }
+            else this.setDefaultProfilePhoto();
+            this.profilePhotoLoaded = true;
+        })
+    }
+
+    setUserProfilePhoto(){
+        this.profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile1.jpg";
+    }
+
+    setDefaultProfilePhoto(){
+        this.profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile.jpg";
     }
 
     // on-destroy
