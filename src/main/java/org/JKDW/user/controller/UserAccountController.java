@@ -1,6 +1,11 @@
 package org.JKDW.user.controller;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +32,11 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/user")
 public class UserAccountController {
+
+	/**
+	 * we get project directory and add path to static\img path
+	 */
+	private static String UPLOADED_FOLDER = System.getProperty("user.dir") + "\\build\\generated-web-resources\\static\\img\\";
 
 	@Autowired
 	private UserAccountService userAccountService;
@@ -68,6 +78,7 @@ public class UserAccountController {
 		UserDetails userDetails = new UserDetails();
 		userDetails.setUserAccount(createdUserAccount);
 		userDetailsService.createUserDetails(userDetails);
+		prepareUserDirectories(createdUserAccount.getNick()+"\\profilePhoto\\");
 		return new ResponseEntity<>(createdUserAccount,HttpStatus.CREATED);
 	}
 
@@ -177,5 +188,26 @@ public class UserAccountController {
 	public ResponseEntity<UserAccount> updateUserAccount(@RequestBody UserAccountPasswordChangeDTO userAccountPasswordChangeDTO){
 		UserAccount updatedUserAccount = userAccountService.changePassword(userAccountPasswordChangeDTO);
 		return new ResponseEntity<>(updatedUserAccount,HttpStatus.OK);
+	}
+
+	void prepareUserDirectories(String additionalPath) {
+		//create directory if doesn't exist
+		File userDirectory = new File(UPLOADED_FOLDER + additionalPath);
+		File mainDirectory = new File(UPLOADED_FOLDER);
+		mainDirectory.setReadable(true);
+		if (!userDirectory.exists()) {
+			userDirectory.mkdirs();
+			// If you require it to make the entire directory path including parents,
+			// use directory.mkdirs(); here instead.
+		}
+
+		copyDefaultProfilePhoto(Paths.get(UPLOADED_FOLDER + "profile.jpg"),Paths.get(UPLOADED_FOLDER + additionalPath + "profile.jpg"));
+	}
+	void copyDefaultProfilePhoto(Path sourcePath, Path targetPath){
+		try {
+			Files.copy(sourcePath,targetPath);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

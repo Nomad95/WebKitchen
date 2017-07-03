@@ -14,7 +14,7 @@ var cssDir = './assets/';
 gulp.task('assetscopy', function() {
 
     // clean dest using sync
-    del.sync([staticDir + 'img',
+    del.sync([/*staticDir + 'img',*/
         staticDir + 'css'], {force: true});
 
     // copy assets
@@ -74,9 +74,15 @@ gulp.task('libcopy', function() {
         ])
         .pipe(gulp.dest(staticDir + 'js/lib/recaptcha'));
 
+        gulp.src([
+            './node_modules/ng2-img-cropper/**/*.js'
+        ])
+        .pipe(gulp.dest(staticDir + 'js/lib/ng2-img-cropper'));
+
         gulp.src(['./node_modules/tether/dist/css/tether.css'
         ])
         .pipe(gulp.dest(staticDir + 'css/lib'));
+
 
     // copy font-awesome
     gulp.src(['./node_modules/font-awesome/css/font-awesome.css'])

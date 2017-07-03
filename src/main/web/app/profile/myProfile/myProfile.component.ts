@@ -12,7 +12,6 @@ import { TAB_COMPONENTS  } from '../../tabs/Tabset';
 import { DialogComponent, DialogService } from 'ng2-bootstrap-modal';
 import { AlertComponent } from './username-changed-alert.component';
 
-
 @Component({
     selector: 'profile',
     templateUrl: 'app/profile/myProfile/myProfile.component.html',
@@ -57,6 +56,17 @@ export class MyProfileComponent implements OnInit {
     //when username changed - modal confirm
     confirmResult:boolean = null;
 
+    //file upload - profile photo
+    private selectedFile: File;
+    /**
+     * This boolean indicates that photo extension is proper
+     */
+    private isProperPhoto = true;
+
+    private profilePhotoExists = false;
+    private profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile.jpg";
+    private profilePhotoLoaded = false;
+
     constructor(private myProfileService: MyProfileService,
                 private preferedCuisineService: PreferedCuisineService,
                 private cuisinesService: CuisinesService,
@@ -100,10 +110,28 @@ export class MyProfileComponent implements OnInit {
                 //pass userProfile.userAccountDTO.id to profileService.id
                 this.myProfileService.setId(result.id);
                 this.username = result.username;
+                this.checkIfTheUserHasProfilePhoto(result.nick);
                 this.getProfileDetails();
             });
 
 
+    }
+    checkIfTheUserHasProfilePhoto(nick:string){
+        this.myProfileService.isProfilePhotoExists(nick).subscribe(result => {
+            if(result){
+                this.setUserProfilePhoto();
+            }
+            else this.setDefaultProfilePhoto();
+            this.profilePhotoLoaded = true;
+        })
+    }
+
+    setUserProfilePhoto(){
+        this.profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile1.jpg";
+    }
+
+    setDefaultProfilePhoto(){
+        this.profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile.jpg";
     }
 
     //get user details information to variable userProfile
@@ -113,7 +141,7 @@ export class MyProfileComponent implements OnInit {
             .subscribe(result => {
                 this.userProfile = result;
                 this.swappingOfReceivedDataToTheExpectedFormat();
-
+                this.isDataAvailable=true;
                 console.log("getUserProfile - USERPROFILE: "+JSON.stringify(this.userProfile));
             });
     }
@@ -164,7 +192,6 @@ export class MyProfileComponent implements OnInit {
     }
 
     getAllCuisines(): void{
-        this.isDataAvailable=true;
         this.cuisinesService
             .getAllCuisines()
             .subscribe(result => {
@@ -320,7 +347,59 @@ export class MyProfileComponent implements OnInit {
         console.log(JSON.stringify(this.userProfile));
     }
 
-    changePassword(): void{
+    /**
+     * Uploads a file priovided in form
+     * @param formData
+     */
+    uploadProfilePhoto() {
+        //prevent errors when user dont provide a photo
+        if(this.selectedFile == null || this.selectedFile == undefined){
+            console.log('No photo data provided');
+            return;
+        }
+        this.myProfileService.uploadProfilePhoto(this.selectedFile,this.userProfile.userAccountDTO.nick)
+            .subscribe(data => {
+                    console.log("photo Added");
+                },
+                err => {
+                    console.log("error adding photo")
+                });
+    }
+
+    /**
+     * Sets private field "selectedFile" with file provided via form input
+     * Photo is relative static img path
+     * @param event event object from form
+     */
+    fileChangeType(event) {
+        //get file list from form input (by event)
+        let fileList:FileList = event.target.files;
+        if (fileList.length > 0) {
+            this.selectedFile = fileList[0];
+            //check extention
+            this.isProperPhoto = MyProfileComponent.checkFileExtension(this.selectedFile);
+            if (!this.isProperPhoto) {
+                console.log("Wrong file extension!");
+                return;
+            }
+        }
+    }
+
+     /**
+     * Checks wether file name has valid picture extension
+     * @param file file to check ext.
+     * @returns {boolean} true when valid
+     */
+    static checkFileExtension(file: File):boolean {
+        console.log("checking extention");
+        return !!(file.name.endsWith(".jpg") || file.name.endsWith(".JPG")
+        || file.name.endsWith(".jpeg") || file.name.endsWith(".JPEG")
+        || file.name.endsWith(".png") || file.name.endsWith(".PNG")
+        || file.name.endsWith(".bmp") || file.name.endsWith(".BMP"));
+    }
+
+    public myProfilePhotoChanged(date: boolean):void {
+        if(date) this.profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile1.jpg#" + new Date().getTime();
     }
 
     //logs out and redirects to '/login'
