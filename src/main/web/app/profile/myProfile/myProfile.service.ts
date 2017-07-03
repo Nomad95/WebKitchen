@@ -19,6 +19,7 @@ export class MyProfileService {
         username: '',
         password: ''
     };
+    public photoUploaded = false;
     constructor(private http: Http, private router: Router) {}
 
     setId(id){
@@ -112,13 +113,6 @@ export class MyProfileService {
             .catch(this.handleErrorPassword);
     }
 
-    getLoggedUsernameFromToken(){
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
-
-        //return username from the token
-        return currentToKey && currentToKey.username;
-    }
-
     changePassword(userProfileChangePasswordDTO):Observable<any>{
         var currentToKey = JSON.parse(localStorage.getItem('toKey'));
         let token = currentToKey && currentToKey.token;
@@ -131,6 +125,66 @@ export class MyProfileService {
         return this.http.put('/api/user/changePassword/'+userProfileChangePasswordDTO.id,JSON.stringify(userProfileChangePasswordDTO),{headers :this.headers})
             .map(res => res.json())
             .catch(this.handleUpdateError);
+    }
+
+    /**
+     * 
+     */
+    uploadProfilePhoto(data, nick:string): Observable<any> {
+        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        let token = currentToKey && currentToKey.token;
+
+        //create appropriate
+        this.headers = new Headers({
+            'accept': 'application/json',
+            'content-type' : 'application/json',
+            'X-Auth-token' : token});
+
+        return this.http.post('/api/upload/photo/' + nick,data,{headers :this.headers})
+            .map(res => res)
+            .catch(this.handleUpdateError);
+            //create new observable; we use xhr instead of http
+       /* return Observable.create(observer => {
+            let formData:FormData = new FormData();
+            let xhr:XMLHttpRequest = new XMLHttpRequest();
+            console.log(file);
+            
+            //add file nad filename to FormData objct
+            //first parameter should match request parameter name in rest controller!!!
+            formData.append("uploadfile", file, file.name);
+
+            //we open xhr, set headers (important. we must set headers after
+            //.open), and send FormData
+            xhr.open('POST', '/api/upload/photo/'+nick, true);
+            xhr.setRequestHeader('X-Auth-token', token);
+            xhr.setRequestHeader('enctype', 'multipart/form-data');
+            xhr.send(formData);
+            //this.map(res => res.json());
+            });*/
+    }
+
+    isProfilePhotoExists(nick: string):Observable<any> {
+        //We get token from local storage
+        var currentToKey = JSON.parse(localStorage.getItem('toKey'))
+        let token = currentToKey && currentToKey.token;
+
+        //create appropriate
+        this.headers = new Headers({
+            'content-type' : 'application/json',
+            'X-Auth-token' : token});
+
+        //and passing them in the request
+        return this.http.get('/isProfilePhotoExists/'+ nick,{headers :this.headers})
+            .map(res => res.json())
+            .catch(this.handleError);
+    }
+    
+
+    getLoggedUsernameFromToken(){
+        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+
+        //return username from the token
+        return currentToKey && currentToKey.username;
     }
 
     private handleError(error: any): Promise<any> {

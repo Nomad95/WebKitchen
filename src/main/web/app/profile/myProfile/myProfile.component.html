@@ -1,42 +1,58 @@
 
 <section>
-	<div *ngIf=isDataAvailable>
 		<div class="container" style="margin-top: 30px;">
 			<div class="profile-head">
 				<div class="col-md- col-sm-4 col-xs-12">
-					<img src="/img/profile.jpg" class="img-responsive" />
+					<div *ngIf="profilePhotoLoaded">
+						<img [src]="profilePhotoUrl" class="img-responsive" />
+					</div>
+					<div *ngIf="!profilePhotoLoaded" class="loadingPhoto">
+						<div class="spinner">
+							<div class="bounce1"></div>
+							<div class="bounce2"></div>
+							<div class="bounce3"></div>
+						</div>
+					</div>
 				</div> <!--col-md-4 col-sm-4 col-xs-12 close-->
 
+				<div *ngIf=isDataAvailable>
+					<div class="col-md-5 col-sm-5 col-xs-12">
+						<h5>{{ userProfile.name }} {{ userProfile.surname }}</h5>
+						<p>{{ userProfile.userAccountDTO.country }}</p>
+						<ul>
+							<li><span class="fa fa-briefcase"></span> -</li>
 
-				<div class="col-md-5 col-sm-5 col-xs-12">
-					<h5>{{ userProfile.name }} {{ userProfile.surname }}</h5>
-					<p>{{ userProfile.userAccountDTO.country }}</p>
-					<ul>
-						<li><span class="fa fa-briefcase"></span> -</li>
+							<li *ngIf="(userProfile.street || userProfile.postCode || userProfile.city) !== ''">
+								<span class="fa fa-home"></span> {{ userProfile.street }},{{ userProfile.postCode }} {{ userProfile.city }}</li>
+							<li *ngIf="(userProfile.street && userProfile.postCode && userProfile.city) === ''">
+								<span class="fa fa-home"></span> - </li>
 
-						<li *ngIf="(userProfile.street || userProfile.postCode || userProfile.city) !== ''">
-							<span class="fa fa-home"></span> {{ userProfile.street }},{{ userProfile.postCode }} {{ userProfile.city }}</li>
-						<li *ngIf="(userProfile.street && userProfile.postCode && userProfile.city) === ''">
-							<span class="fa fa-home"></span> - </li>
+							<li *ngIf="(userProfile.phoneNumber) !== ''"><span class="fa fa-phone"></span> <a href="#" title="call">{{ userProfile.phoneNumber }}</a></li>
+							<li *ngIf="(userProfile.phoneNumber) === ''"><span class="fa fa-phone"></span> - </li>
 
-						<li *ngIf="(userProfile.phoneNumber) !== ''"><span class="fa fa-phone"></span> <a href="#" title="call">{{ userProfile.phoneNumber }}</a></li>
-						<li *ngIf="(userProfile.phoneNumber) === ''"><span class="fa fa-phone"></span> - </li>
+							<li *ngIf="(userProfile.userAccountDTO.email) !== ''"><span class="fa fa-envelope"></span>{{ userProfile.userAccountDTO.email }}</li>
+							<li *ngIf="(userProfile.userAccountDTO.email) === ''"><span class="fa fa-envelope"></span> - </li>
+							<br>
+							<li>
+								<!--<div>Wypełnienie
+								<p [style.width]="precentageFilled+5+'%'" [attr.data-value]="precentageFilled" class="progresText"> </p>
+								<div id="progressBar"><progress max="100" [value]="precentageFilled" class="completion"></progress></div>
+								</div>-->
+								<div id="progress" class="graph"><div id="bar" [style.width]="precentageFilled+'%'"><p>{{precentageFilled}}% wypełnienia</p></div></div>
+							</li>
+						</ul>
 
-						<li *ngIf="(userProfile.userAccountDTO.email) !== ''"><span class="fa fa-envelope"></span>{{ userProfile.userAccountDTO.email }}</li>
-						<li *ngIf="(userProfile.userAccountDTO.email) === ''"><span class="fa fa-envelope"></span> - </li>
-						<br>
-						<li>
-							<!--<div>Wypełnienie
-                            <p [style.width]="precentageFilled+5+'%'" [attr.data-value]="precentageFilled" class="progresText"> </p>
-                            <div id="progressBar"><progress max="100" [value]="precentageFilled" class="completion"></progress></div>
-                            </div>-->
-							<div id="progress" class="graph"><div id="bar" [style.width]="precentageFilled+'%'"><p>{{precentageFilled}}% wypełnienia</p></div></div>
-						</li>
-					</ul>
-
-				</div><!--col-md-8 col-sm-8 col-xs-12 close-->
-
+					</div><!--col-md-8 col-sm-8 col-xs-12 close-->
+				</div> <!--<div *ngIf=isDataAvailable> close-->
+				<div *ngIf=!isDataAvailable>
+					<div class="spinner">
+						<div class="bounce1"></div>
+						<div class="bounce2"></div>
+						<div class="bounce3"></div>
+					</div>
+				</div>
 			</div> <!--profile-head close-->
+			
 		</div> <!--container close-->
 
 
@@ -187,7 +203,27 @@
 												</div>
 											</div>
 										</div>
-										<button class="btn btn-warning modal-submit-button-ng2" data-toggle="modal" data-target="#myModal">Zmień hasło</button>
+										<button class="btn btn-warning modal-submit-button-ng2" data-toggle="modal" data-target="#myModal"title="Kliknij aby zmienić swoje hasło">Zmień hasło</button>
+										<button class="btn btn-warning modal-submit-button-ng2" data-toggle="modal" data-target="#myModal1" title="Kliknij aby zmienić swoje zdjecie profilowe">Zmień zdjęcie profilowe</button>
+										<!--<div class="form-group col-md-12" [class.has-error]="!isProperPhoto && photot1.touched">
+											<label class="control-label col-md-10">Zdjęcie profilowe</label>
+													<input type="file"
+														ngModel
+														class="form-control profile-photo-choose"
+														#photot1="ngModel"
+														placeholder="placeholderPhoto"
+														name="photo" (change)="fileChangeType($event)" 
+														accept=".jpg,.JPG,.jpeg,.JPEG,.png,.PNG,.bmp,.BMP" >
+
+														<div *ngIf="!isProperPhoto && photot1.touched" class="alert alert-danger"
+															role="alert">
+															Zdjęcie jest niepoprawne.
+														</div>
+														<div class="profile-photo-upload">
+															<button class="btn btn-warning modal-submit-button-ng2" (click)="uploadProfilePhoto()" [disabled]="!selectedFile" [title]="!selectedFile ? 'Nie wybrałeś zdjęcia' : 'Wczytaj nowe zdjęcie'">Zmień zdjęcie profilowe</button>
+														</div>
+                                		</div>-->
+					
 									</tab>
 									<tab title="Dane osobowe" [classTab]="name.invalid || surname.invalid || street.invalid || streetNumber.invalid ||
 											flatNumber.invalid || postCode.invalid || city.invalid || country.invalid ||
@@ -549,8 +585,6 @@
 			<!--container close -->
 		</div>
 
-		<!--<div *ngIf=isDataAvailable> close-->
-	</div>
 
 	<div *ngIf=!isDataAvailable style="margin-left: 400px">
 		Loading...
@@ -567,6 +601,20 @@
 			</div>
 		</div>
 	</div>
+<!--
+	<upload-photo> </upload-photo>-->
+	<!-- Modal end -->
+
+	<!-- Modal -->
+	<div class="modal fade bs-modal-sm" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+		
+				<!--<div class="modal-body">-->
+				<upload-photo [nick]="userProfile.userAccountDTO.nick" (onProfilePhotoChanged)="myProfilePhotoChanged($event)"></upload-photo>
+				<!--</div>-->
+			</div>
+		
+<!--
+	<upload-photo> </upload-photo>-->
 	<!-- Modal end -->
 </section>
 <!--section close-->

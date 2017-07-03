@@ -31,7 +31,8 @@
       'ng2-select': 'js/lib',
       'mydatepicker': 'js/lib/mydatepicker.umd.min.js',
       'ng2-recaptcha':'js/lib/ng2-recaptcha.js',
-	    'ng2-bootstrap-modal': 'app/modal'
+	    'ng2-bootstrap-modal': 'app/modal',
+      'ng2-img-cropper': 'js/lib/ng2-img-cropper'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -55,6 +56,10 @@
         main: 'ng2-select.umd.js'
       },
       'ng2-bootstrap-modal': {
+        main: 'index.js',
+        defaultExtension: 'js'
+      },
+      'ng2-img-cropper': {
         main: 'index.js',
         defaultExtension: 'js'
       }

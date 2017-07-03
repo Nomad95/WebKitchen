@@ -48,6 +48,11 @@ import { RecaptchaModule } from 'ng2-recaptcha';
 import {CaptchaComponent} from "./captcha-test/captcha.component";
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import { AlertComponent } from './profile/myProfile/username-changed-alert.component';
+import {ImageCropperComponent} from 'ng2-img-cropper';
+import {CropperSettings} from 'ng2-img-cropper';
+import {Bounds} from 'ng2-img-cropper';
+import {UploadPhotoComponent} from './profile/uploadPhoto/upload-photo.component';
+import {ProfilePhotoAlertComponent} from './profile/uploadPhoto/profile-photo-not-changed-alert.component';
 
 
 import {AuthGuard} from './app.auth-guard.service';
@@ -105,7 +110,10 @@ declare let jQuery:Object;
         MessageBoxComponent,
         MessageBoxSentComponent,
         DetailsReceivedMessagesComponent,
-        DetailsSentMessagesComponent
+        DetailsSentMessagesComponent,
+        ImageCropperComponent,
+        UploadPhotoComponent,
+        ProfilePhotoAlertComponent
     ],
     imports: [BrowserModule,
               FormsModule,
@@ -119,7 +127,7 @@ declare let jQuery:Object;
               DatepickerModule.forRoot(),
               BootstrapModalModule,
               routing],
-    entryComponents: [AlertComponent],
+    entryComponents: [AlertComponent, ProfilePhotoAlertComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
         AuthGuard,

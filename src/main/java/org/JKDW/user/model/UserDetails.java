@@ -1,6 +1,6 @@
 package org.JKDW.user.model;
 
-import java.util.ArrayList;
+import java.sql.Blob;
 import java.util.Date;
 import java.util.List;
 
@@ -77,7 +77,7 @@ public class UserDetails {
 	private String description;
 
 	@Lob @Column( name = "photo" )
-	private byte[] photo;
+	private Blob photo;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "userDetails_cuisine", joinColumns = {
@@ -230,11 +230,11 @@ public class UserDetails {
 		this.description = description;
 	}
 
-	public byte[] getPhoto() {
+	public Blob getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(byte[] photo) {
+	public void setPhoto(Blob photo) {
 		this.photo = photo;
 	}
 
