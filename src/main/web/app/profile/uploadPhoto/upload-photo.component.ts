@@ -4,7 +4,6 @@ import {CropperSettings} from 'ng2-img-cropper';
 import {Bounds} from 'ng2-img-cropper';
 
 import { MyProfileService } from '../myProfile/myProfile.service';
-import { ProfilePhotoModel } from './profile-photo-model'
 import { DialogComponent, DialogService } from 'ng2-bootstrap-modal';
 import { ProfilePhotoAlertComponent } from './profile-photo-not-changed-alert.component';
 
@@ -235,7 +234,6 @@ export class UploadPhotoComponent extends Type implements OnChanges {
      //Cropper photo
     photo:any;
     cropperSettings:CropperSettings;
-    imagePathWithCroppingCoordinates: ProfilePhotoModel = new ProfilePhotoModel();
 
     private profilePhotoUrl = "";
 
@@ -273,12 +271,7 @@ export class UploadPhotoComponent extends Type implements OnChanges {
 
     }
 
-    cropped(bounds:Bounds) {
-        this.imagePathWithCroppingCoordinates.x = bounds.left;
-        this.imagePathWithCroppingCoordinates.y = bounds.top;
-        this.imagePathWithCroppingCoordinates.width = bounds.right-bounds.left;
-        this.imagePathWithCroppingCoordinates.height = bounds.bottom-bounds.top;
-      
+    cropped(bounds:Bounds) {      
         this.photoString = this.photo.image;
     }
 
@@ -297,9 +290,7 @@ export class UploadPhotoComponent extends Type implements OnChanges {
             that.cropper.setImage(image);
 
         };
-        this.imagePathWithCroppingCoordinates.filePath = image.src;
         myReader.readAsDataURL(file);
-        console.log(this.imagePathWithCroppingCoordinates);
     }
 
       checkIfTheUserHasProfilePhoto(nick:string){
@@ -348,6 +339,6 @@ export class UploadPhotoComponent extends Type implements OnChanges {
     }
 
     showPhotoNotChangedAlert() {
-        this.dialogService.addDialog(ProfilePhotoAlertComponent, {title:'Zdjęcie nie zostało zmienione', message:'Niestety nie udało się zmienić zdjęcia ;('});
+        this.dialogService.addDialog(ProfilePhotoAlertComponent, {title:'Zdjęcie nie zostało zmienione', message:'Niestety nie udało się zmienić zdjęcia ;('}, { closeByClickingOutside:true });
     }
 }

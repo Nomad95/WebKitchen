@@ -11,6 +11,7 @@ import {UserProfile} from '../model/userProfile.model';
 import { TAB_COMPONENTS  } from '../../tabs/Tabset';
 import { DialogComponent, DialogService } from 'ng2-bootstrap-modal';
 import { AlertComponent } from './username-changed-alert.component';
+import {CountriesLocalName} from "../../util/countries/countriesLocalName";
 
 @Component({
     selector: 'profile',
@@ -56,16 +57,13 @@ export class MyProfileComponent implements OnInit {
     //when username changed - modal confirm
     confirmResult:boolean = null;
 
-    //file upload - profile photo
-    private selectedFile: File;
-    /**
-     * This boolean indicates that photo extension is proper
-     */
-    private isProperPhoto = true;
-
-    private profilePhotoExists = false;
-    private profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile.jpg";
     private profilePhotoLoaded = false;
+    private profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile.jpg";
+
+    /**
+     * list of all countries for select type
+     */
+    countries = CountriesLocalName.countries;
 
     constructor(private myProfileService: MyProfileService,
                 private preferedCuisineService: PreferedCuisineService,
@@ -345,57 +343,6 @@ export class MyProfileComponent implements OnInit {
         this.getProfile();
         this.getAllCuisines();
         console.log(JSON.stringify(this.userProfile));
-    }
-
-    /**
-     * Uploads a file priovided in form
-     * @param formData
-     */
-    uploadProfilePhoto() {
-        //prevent errors when user dont provide a photo
-        if(this.selectedFile == null || this.selectedFile == undefined){
-            console.log('No photo data provided');
-            return;
-        }
-        this.myProfileService.uploadProfilePhoto(this.selectedFile,this.userProfile.userAccountDTO.nick)
-            .subscribe(data => {
-                    console.log("photo Added");
-                },
-                err => {
-                    console.log("error adding photo")
-                });
-    }
-
-    /**
-     * Sets private field "selectedFile" with file provided via form input
-     * Photo is relative static img path
-     * @param event event object from form
-     */
-    fileChangeType(event) {
-        //get file list from form input (by event)
-        let fileList:FileList = event.target.files;
-        if (fileList.length > 0) {
-            this.selectedFile = fileList[0];
-            //check extention
-            this.isProperPhoto = MyProfileComponent.checkFileExtension(this.selectedFile);
-            if (!this.isProperPhoto) {
-                console.log("Wrong file extension!");
-                return;
-            }
-        }
-    }
-
-     /**
-     * Checks wether file name has valid picture extension
-     * @param file file to check ext.
-     * @returns {boolean} true when valid
-     */
-    static checkFileExtension(file: File):boolean {
-        console.log("checking extention");
-        return !!(file.name.endsWith(".jpg") || file.name.endsWith(".JPG")
-        || file.name.endsWith(".jpeg") || file.name.endsWith(".JPEG")
-        || file.name.endsWith(".png") || file.name.endsWith(".PNG")
-        || file.name.endsWith(".bmp") || file.name.endsWith(".BMP"));
     }
 
     public myProfilePhotoChanged(date: boolean):void {
