@@ -25,7 +25,7 @@ public class FileUploadController {
     /**
      * we get project directory and add path to static\img path
      */
-    private static String UPLOADED_FOLDER = System.getProperty("user.dir") + "\\build\\generated-web-resources\\static\\img\\";
+    private static String UPLOADED_FOLDER = System.getProperty("user.dir") + "/build/generated-web-resources/static/img/";
 
     private boolean isDishPhoto = true;
     /**
@@ -50,7 +50,7 @@ public class FileUploadController {
         //try to write a file
         try {
             isDishPhoto = true;
-            saveUploadedFiles(Arrays.asList(uploadfile), "dish\\");//pass \\dish for dish photos
+            saveUploadedFiles(Arrays.asList(uploadfile), "dish/");//pass \\dish for dish photos
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (IllegalArgumentException e) {
@@ -124,7 +124,7 @@ public class FileUploadController {
         //try to write a file
         data = data.replaceFirst("^data:image/[^;]*;base64,?","");
         Base64.Decoder decoder = Base64.getDecoder();
-        saveUploadedPhoto(decoder.decode(data), nick+"\\profilePhoto\\");
+        saveUploadedPhoto(decoder.decode(data), nick+"/profilePhoto/");
 
 
         return new ResponseEntity<>("Successfully uploaded - profile photo", HttpStatus.OK);
@@ -172,11 +172,11 @@ public class FileUploadController {
 
     @RequestMapping(value = "/isProfilePhotoExists/{nick}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> checkIfProfilePhotoExists(@PathVariable("nick")String nick) {
-        Path path = Paths.get(UPLOADED_FOLDER + nick+"\\profilePhoto");
-        return new ResponseEntity<>(isFileExist(path.toString()),HttpStatus.OK);
+        Path path = Paths.get(UPLOADED_FOLDER + nick+"/profilePhoto");
+        return new ResponseEntity<>(fileExist(path.toString()),HttpStatus.OK);
     }
 
-    private Boolean isFileExist(String path){
+    private Boolean fileExist(String path){
 
             File file = new File(path);
             if(file.exists()) {
