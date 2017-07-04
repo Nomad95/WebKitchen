@@ -133,12 +133,12 @@
 										<tr>
 											<td>Email</td>
 											<td *ngIf="userProfile.userAccountDTO.email !== '' && userProfile.userAccountDTO.email !== null">{{ userProfile.userAccountDTO.email }}</td>
-											<td *ngIf="userProfile.userAccountDTO.email === '' || userProfile.userAccountDTO.email === ''"> - </td>
+											<td *ngIf="userProfile.userAccountDTO.email === '' || userProfile.userAccountDTO.email === null"> - </td>
 										</tr>
 										<tr>
 											<td>Tel</td>
 											<td *ngIf="userProfile.phoneNumber !== '' && userProfile.phoneNumber !== null">{{ userProfile.phoneNumber }}</td>
-											<td *ngIf="userProfile.phoneNumber === '' || userProfile.phoneNumber === ''"> - </td>
+											<td *ngIf="userProfile.phoneNumber === '' || userProfile.phoneNumber === null"> - </td>
 										</tr>
 										<tr>
 											<td>Preferowane kuchnie</td>
