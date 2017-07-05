@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
+import org.JKDW.security.TokenUtils;
 import org.JKDW.user.model.DTO.StringRequestBody;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 import org.JKDW.user.model.DTO.UserAccountDTO;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
@@ -43,6 +45,9 @@ public class UserAccountController {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
+
+	@Autowired
+	private TokenUtils tokenUtils;
 
 	/**
 	 *
@@ -210,4 +215,10 @@ public class UserAccountController {
 			e.printStackTrace();
 		}
 	}
+	@RequestMapping(value = "/myNick", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> getMyNick(HttpServletRequest request) {
+		String nick = userAccountService.getMyNickByToken(UserAccountService.getMyUsernameFromToken(request, this.tokenUtils));
+		return new ResponseEntity<>("{\"nick\": \"" + nick + "\"}", HttpStatus.OK);
+	}
+
 }

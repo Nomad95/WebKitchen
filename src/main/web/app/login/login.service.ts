@@ -128,6 +128,20 @@ export class LoginService{
             .catch(this.handleError);
 	}
 
+	getMyNick(): Observable<any>{
+		var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+		let token = currentToKey && currentToKey.token;
+
+		var headers = new Headers({
+			'content-type': 'application/json',
+			'X-Auth-token': token
+		});
+
+		return this.http.get("api/user/myNick", {headers: headers})
+            .map((res) => res.json())
+            .catch(this.handleError);
+	}
+
 	/*private handleError(error: any): Promise<any> {
 	 console.error('An error occurred!!!!!!!!!', error);
 	 return Promise.reject(error.message || error);

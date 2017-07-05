@@ -12,16 +12,17 @@ export class NavbarComponent implements OnInit {
 
   }
 
-  public username = '';w
+ private nick = '';
 
   ngOnInit(){
     //this.sharedService.getIsAdmin();
     this.loginService.isLogged();
+    this.getMyNick();
     //this.username = this.loginService.getUsername();
   }
 
-  getUsername():string {
-    return this.loginService.getUsername();
+  getMyNick():string{
+    return this.sharedService.getMyNick();
   }
 
   //just checks a token, refreshing variables

@@ -35,7 +35,6 @@ export class DetailsReceivedMessagesComponent implements OnInit{
         this.messageService
             .getReceivedMessageDetails(this.id)
             .subscribe( result =>{
-                    console.log(result.messageContents);
                     this.message = result;
                 }
             )

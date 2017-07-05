@@ -193,7 +193,6 @@ public class UserAccountServiceImpl implements UserAccountService {
         Boolean isAdmin = false;
         /* Pobiera z SecuirtyUser role w formacie [ROLE_TYP] */
         Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        System.out.println("W kontexcie jestem "+ authorities);
         for( SimpleGrantedAuthority element : authorities){
             if(element.toString().equals(ADMIN)) {
                 isAdmin = true;
@@ -306,6 +305,15 @@ public class UserAccountServiceImpl implements UserAccountService {
         foundUserAccount.setPassword(passwordEncoder.encode(userAccountPasswordDTO.getNewPassword()));
         userAccountRepository.save(foundUserAccount);
         return foundUserAccount;
+    }
+
+    @Override
+    @Transactional
+    public String getMyNickByToken(String username) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        String sql = "SELECT nick FROM USER_ACCOUNT WHERE USERNAME = ?";
+        String myNick = jdbcTemplate.queryForObject(sql, new Object[] { username }, String.class);
+        return myNick;
     }
 }
 

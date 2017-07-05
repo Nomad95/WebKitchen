@@ -77,6 +77,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/registration/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .antMatchers("/api/user/banned/account/*").permitAll()
+                .antMatchers("/stomp").permitAll()
                 .antMatchers("/calendar").authenticated()
                 .antMatchers("/user").authenticated()
                 //for frontend loading.
@@ -86,6 +87,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/img/**").permitAll()
                 .antMatchers("/systemjs.config.js").permitAll()
+                .antMatchers("/**/*.ttf").permitAll()
                 .antMatchers(HttpMethod.GET,"/app/**/*.js").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated()

@@ -9,9 +9,11 @@
 					class="fa fa-user fa-2x fa-sidebar"></i> <span class="nav-text">
 						Twój profil </span>
 			</a></li>
-			<li *ngIf="loginService.isLogged()" class="has-subnav"><a [routerLink]="['messagebox']"> <i
-					class="fa fa-envelope fa-2x fa-sidebar"></i> <span class="nav-text">
-						Wiadomości </span>
+			<li *ngIf="loginService.isLogged()" class="has-subnav"><a [routerLink]="['/messagebox']">
+				<i class="fa fa-envelope fa-2x fa-sidebar">
+					<span *ngIf="sharedService.getNumberOfUnreadMessages()>0" class="badge badge-error">{{sharedService.getNumberOfUnreadMessages()}}</span>
+				</i>
+				<span class="nav-text">Wiadomości</span>
 			</a></li>
 			<li *ngIf="loginService.isLogged()" class="has-subnav"><a [routerLink]="['/calendar']"> <i
 					class="fa fa-calendar fa-2x fa-sidebar"></i> <span class="nav-text">
@@ -28,12 +30,6 @@
 			<li *ngIf="sharedService.getIsAdmin();" class="has-subnav"><a [routerLink]="['/admin']">
                                 <i class="fa fa-user-secret fa-2x fa-sidebar"></i> <span class="nav-text">Panel Admina </span></a>
                        </li>
-			<li *ngIf="loginService.isLogged()" class="has-subnav"><a [routerLink]="['/messagebox']">
-				<i class="fa fa-envelope fa-2x fa-sidebar">
-					<span *ngIf="sharedService.getNumberOfUnreadMessages()>0" class="badge badge-error">{{sharedService.getNumberOfUnreadMessages()}}</span>
-				</i>
-				<span class="nav-text">Wiadomości</span>
-			</a></li>
 		</ul>
 		<ul class="logout">
         <li *ngIf="!loginService.isLogged()">

@@ -52,17 +52,16 @@ export class LoginComponent {
                         this.statusBan = result.status;
                         if (this.statusBan == "true") {
                             this.sharedService.setIsBanned(true);
-                            console.log("Sprawdzanie bana" + this.sharedService.getIsBanned());
                             this.getInfoAboutMyBan();
                             this.loginService.removeToken();
                         }
                         else if (this.statusBan == "false") {
                             this.sharedService.setIsBanned(false);
-                            console.log("Sprawdzanie bana" + this.sharedService.getIsBanned());
                         }
                     });
                     this.checkIsUserAnAdmin();
                     this.errorEncountered = false;
+                    this.getMyNick();
 
                     //forwards to main page
                     this.router.navigate(['/login/success']);
@@ -104,5 +103,12 @@ export class LoginComponent {
             err => console.log('Wystąpił błąd podczas pobierania informacji o banie')
         );
     }
+
+    getMyNick():void{
+        this.loginService.getMyNick().subscribe(result => {
+            this.sharedService.setMyNick(result.nick);
+        })
+    }
+
 
 }

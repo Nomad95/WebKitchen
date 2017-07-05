@@ -53,6 +53,8 @@ public interface UserAccountService {
 
 	UserAccount changePassword(UserAccountPasswordChangeDTO userAccountPasswordDTO);
 
+	String getMyNickByToken(String username);
+
 	static String getMyUsernameFromToken(HttpServletRequest request, TokenUtils tokenUtils){
 		String myUsernameFromToken;
 		String token;
