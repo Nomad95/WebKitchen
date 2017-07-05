@@ -34,6 +34,10 @@ export class LoginComponent {
     private statusBan : String;
     private role :String;
 
+    private countUnreadMessages = {
+        count:''
+    };
+
 
     /**
      * we do post on /auth and get a token
@@ -64,6 +68,7 @@ export class LoginComponent {
                     this.checkIsUserAnAdmin();
                     this.errorEncountered = false;
                     this.getMyNickAndConnectWithStomp();
+                    this.countMyUnreadMessages();
 
                     //forwards to main page
                     this.router.navigate(['/login/success']);
@@ -111,6 +116,16 @@ export class LoginComponent {
                 this.sharedService.setMyNick(result.nick);
                 this.stompService.connect('ws://localhost:8080/stomp', this.sharedService.getMyNick());
             }, err => console.log("You hasn't nick ??")
+        );
+    }
+
+    countMyUnreadMessages():void{
+        this.loginService.countMyUnreadMessages().subscribe(
+            result => {
+                this.countUnreadMessages = result;
+                this.sharedService.setNumberOfUnreadMessages(Number(this.countUnreadMessages.count));
+            },
+            err => console.log("An error occurred while retrieving count of unread message")
         );
     }
 
