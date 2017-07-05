@@ -57,14 +57,18 @@ export class AppComponent implements OnInit {
                 this.sharedService.setIsBanned(true);
                 this.getInfoAboutMyBan();
                 this.loginService.removeToken();
+                this.stompService.disconnectStomp();
             }
             else if (this.statusBan == "false") {
                 this.sharedService.setIsBanned(false);
             }
 
         });
-        if (this.sharedService.getIsBanned())
+        if (this.sharedService.getIsBanned()){
             this.loginService.removeToken();
+            this.stompService.disconnectStomp();
+        }
+
     }
 
     checkIsUserAnAdmin(): void {

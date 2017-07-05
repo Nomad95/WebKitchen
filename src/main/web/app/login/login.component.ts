@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
-import {SharedService} from "../shared.service"; //<==== this one
+import {SharedService} from "../shared.service";
+import {StompService} from "../websocket/stomp.service"; //<==== this one
 
 
 @Component({
@@ -13,7 +14,8 @@ export class LoginComponent {
     constructor(
         private loginService: LoginService,
         private router: Router,
-        private sharedService: SharedService) {}
+        private sharedService: SharedService,
+        private stompService: StompService) {}
 
     nazwa;//?
 
@@ -61,7 +63,7 @@ export class LoginComponent {
                     });
                     this.checkIsUserAnAdmin();
                     this.errorEncountered = false;
-                    this.getMyNick();
+                    this.getMyNickAndConnectWithStomp();
 
                     //forwards to main page
                     this.router.navigate(['/login/success']);
@@ -104,10 +106,12 @@ export class LoginComponent {
         );
     }
 
-    getMyNick():void{
-        this.loginService.getMyNick().subscribe(result => {
-            this.sharedService.setMyNick(result.nick);
-        })
+    getMyNickAndConnectWithStomp():void{
+        this.loginService.getMyNick().subscribe(result =>{
+                this.sharedService.setMyNick(result.nick);
+                this.stompService.connect('ws://localhost:8080/stomp', this.sharedService.getMyNick());
+            }, err => console.log("You hasn't nick ??")
+        );
     }
 
 

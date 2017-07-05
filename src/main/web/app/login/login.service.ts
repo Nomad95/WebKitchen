@@ -50,7 +50,7 @@ export class LoginService{
 	}
 
 	getInfoAboutMyBan(): Observable<any> {
-		return this.http.get('/api/user/banned/account/arek', {headers: this.headers})
+		return this.http.get('/api/user/banned/account/'+this.username, {headers: this.headers})
             .map(res => res.json())
             .catch(this.handleError);
 	}
@@ -141,6 +141,8 @@ export class LoginService{
             .map((res) => res.json())
             .catch(this.handleError);
 	}
+
+
 
 	/*private handleError(error: any): Promise<any> {
 	 console.error('An error occurred!!!!!!!!!', error);

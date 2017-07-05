@@ -27,10 +27,14 @@ export class StompService {
     }
 
     /**
-     * Method  when get a parametr to addres which is subsribing
+     * Method invoke when get a parametr to addres which is subsribing
      * @returns {Observable<any>}
      */
     public getObservable() : Observable<any> {
         return this._stompSubject.asObservable();
+    }
+
+    public disconnectStomp(): void{
+        this._stompClient.disconnect();
     }
 }
