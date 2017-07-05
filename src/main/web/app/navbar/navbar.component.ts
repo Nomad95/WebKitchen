@@ -2,13 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import { LoginService } from '../login/login.service';
 import { Router } from '@angular/router';
 import {SharedService} from "../shared.service";
+import {StompService} from "../websocket/stomp.service";
 
 @Component({
     selector: 'navbar',
     templateUrl: 'app/navbar/navbar.component.html'
 })
 export class NavbarComponent implements OnInit {
-  constructor(private loginService:LoginService, private router:Router, private sharedService: SharedService) {
+  constructor(private loginService:LoginService, private router:Router,
+              private sharedService: SharedService, private stompService: StompService) {
 
   }
 
@@ -33,6 +35,7 @@ export class NavbarComponent implements OnInit {
   //logs out and redirects to '/'
   logout(){
     this.loginService.removeToken();
+    this.stompService.disconnectStomp();
     this.router.navigate(['/']);
   }
 }
