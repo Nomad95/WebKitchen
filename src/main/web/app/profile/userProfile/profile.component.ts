@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private userProfile:UserProfile = new UserProfile();
 
     private profilePhotoLoaded = false;
-    private profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile.jpg";
+    private profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile.jpg#" + new Date().getTime();;
    
     constructor(private profileService: ProfileService, private _titleService: Title) { }
 
@@ -37,7 +37,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
                 this.profileService.setId(result.id); //pass id to profileService.id
                 this.getProfileDetails();
                 this.checkIfTheUserHasProfilePhoto(result.nick);
-                this._titleService.setTitle("Kuchnia po sąsiedzku - "+this.userProfile.userAccountDTO.username);
+                this._titleService.setTitle("Kuchnia po sąsiedzku - "+this.userProfile.userAccountDTO.nick);
             });
 
 

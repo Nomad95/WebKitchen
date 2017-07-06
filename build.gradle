@@ -83,6 +83,8 @@ dependencies {
 	compile("org.webjars:webjars-locator")
 	compile("org.webjars:sockjs-client:1.0.2")
 
+	//Lombok
+	compileOnly 'org.projectlombok:lombok:1.16.18'
 }
 
 def generatedWebResources = "${buildDir}/generated-web-resources"

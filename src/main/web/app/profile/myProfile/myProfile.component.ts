@@ -125,7 +125,7 @@ export class MyProfileComponent implements OnInit {
     }
 
     setUserProfilePhoto(){
-        this.profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile1.jpg";
+        this.profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile1.jpg#" + new Date().getTime();;
     }
 
     setDefaultProfilePhoto(){
