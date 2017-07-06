@@ -34,6 +34,7 @@ export class NavbarComponent implements OnInit {
 
   //logs out and redirects to '/'
   logout(){
+      this.sharedService.setIsAdmin(false);
     this.loginService.removeToken();
     this.stompService.disconnectStomp();
     this.router.navigate(['/']);
