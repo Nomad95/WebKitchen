@@ -4,11 +4,16 @@ import 'rxjs/add/operator/toPromise';
 import {Observable}    from 'rxjs/Observable';
 import 'app/rxjs-operators';
 import 'rxjs/Rx';
+import {Errors} from "../util/error/errors";
+import {ToasterService} from 'angular2-toaster';
+import {ToastConfigurerFactory} from "../util/toast/toast-configurer.factory";
+
 
 @Injectable()
 export class EventService {
     constructor(
-        private http: Http) {
+        private http: Http,
+        private toasterService: ToasterService) {
     }
 
     private token = '';
@@ -168,7 +173,7 @@ export class EventService {
      */
     uploadPhoto(file:File): Observable<any> {
         this.instantiateToken();
-        
+
         //create new observable; we use xhr instead of http
         return Observable.create(observer => {
             let formData:FormData = new FormData();
@@ -248,8 +253,59 @@ export class EventService {
         this.token = currentToKey && currentToKey.token;
     }
 
-    private handleError(error:any):Promise<any> {
-        console.error('An error occurred in EventService', error);
+    private handleError(error: any):Promise<any> {
+        let errorBody = JSON.parse(error._body);
+        this.printErrorNotification(errorBody.path, error);
+
         return Promise.reject(error.message || error);
+    }
+
+    private printErrorNotification(path, error){
+
+        if(error.status == Errors.HTTPSTATUS_UNAUTHORIZED ){
+            console.log("User is not authorized");
+            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Oops!","Wygląda na to że twoja sesja wygasła. Spróbuj zalogować się ponownie"));
+        }
+        else if (path.search("/api/user/details/events/") == 0 && error.status == Errors.HTTPSTATUS_NOT_FOUND){
+            console.log("Cant find the user!");
+            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd","Proszę spróbować jeszcze raz"));
+
+        }
+        else if (path.search("/api/user/details/address/") == 0 && error.status == Errors.HTTPSTATUS_NOT_FOUND){
+            console.log("Cant find the user!");
+            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd","Proszę spróbować jeszcze raz"));
+
+        }
+        else if (path.search("/api/event/ownerusername/") == 0 && error.status == Errors.HTTPSTATUS_NOT_FOUND){
+            console.log("Cant find the user!");
+            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd","Proszę spróbować jeszcze raz"));
+
+        }
+        else if (path.search("/api/event/userevents/refuse/") == 0 && error.status == Errors.HTTPSTATUS_NOT_FOUND){
+            console.log("Cant find the user!");
+            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd","Proszę spróbować jeszcze raz"));
+        }
+        else if (path == "/api/upload/photo/dish" && error.status == Errors.HTTPSTATUS_NOT_FOUND){
+            console.log("File wasn't selected!");
+            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Nie wybrałeś zdjęcia",""));
+        }
+        else if (path == "/api/upload/photo/dish" && error.status == Errors.HTTPSTATUS_INERNAL_SERVER_ERROR){
+            console.log("Invalid argument!");
+            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Dodanie zdjęcia się nie powiodło",""));
+        }
+        else if (path == "/api/upload/photo/dish" && error.status == Errors.HTTPSTATUS_BAD_REQUEST){
+            console.log("Bad request!");
+            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Dodanie zdjęcia się nie powiodło",""));
+        }
+        else if (path.search("/api/event/bind/") == 0 && error.status == Errors.HTTPSTATUS_INERNAL_SERVER_ERROR){
+            console.log("Cant bind user to event!");
+            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd","Proszę spróbować jeszcze raz"));
+        }
+        else if (error.status == Errors.HTTPSTATUS_NOT_FOUND){
+            console.log("Cant find!");
+        }
+        else if (error.status == Errors.HTTPSTATUS_INERNAL_SERVER_ERROR){
+            console.log("BE Error!");
+        }
     }
 }

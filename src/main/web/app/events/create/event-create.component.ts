@@ -4,10 +4,13 @@ import {EventService} from '../event.service';
 import {LoginService} from '../../login/login.service';
 import {UtilMethods} from '../../util/util-methods.service';
 import {IMyDpOptions, IMyDateModel} from 'mydatepicker';
+import {ToasterContainerComponent, ToasterService, ToasterConfig} from 'angular2-toaster';
 
 import { EventType1 } from '../model/eventType1';
 import { EventType2 } from "../model/eventType2";
 import {DatePickerValues} from "../../util/datepicker/date-picker-values.model";
+
+import {ToastConfigurerFactory} from "../../util/toast/toast-configurer.factory";
 
 
 
@@ -15,13 +18,15 @@ import {DatePickerValues} from "../../util/datepicker/date-picker-values.model";
 @Component({
     selector: 'event-create',
     templateUrl: 'app/events/create/event-create.component.html',
-    providers: [EventService, UtilMethods]
+    providers: [EventService, UtilMethods],
+    directives: [ToasterContainerComponent]
 })
 export class EventCreateComponent implements OnInit {
     constructor(private router: Router,
                 private eventService: EventService,
                 private loginService: LoginService,
-                private utilMethods: UtilMethods) {
+                private utilMethods: UtilMethods,
+                private toasterService: ToasterService) {
     }
 
     ngOnInit() {
@@ -136,6 +141,11 @@ export class EventCreateComponent implements OnInit {
     }
 
     /**
+     * Configure toaster notifications
+     */
+    public toasterConfig = ToastConfigurerFactory.basicToastConfiguration();
+
+    /**
      * When user picks date save it to the model
      */
     onDateChanged(event: IMyDateModel) {
@@ -208,6 +218,7 @@ export class EventCreateComponent implements OnInit {
                     this.isEventCreated = true;
                     //assign current user to new event
                     this.assignUserToEvent(data.id);
+                    this.toasterService.pop(ToastConfigurerFactory.successSimpleMessage("","Wydarzenie zostało stworzone"));
                 },
                 err => {
                     console.log('error adding event!');
@@ -234,7 +245,6 @@ export class EventCreateComponent implements OnInit {
         this.eventService.addUserIdToAcceptedList(eventId,userId)
             .subscribe( data => {
                 console.log('accepted id: '+userId);
-
             });
     }
 

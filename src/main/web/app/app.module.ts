@@ -12,6 +12,7 @@ import { RecaptchaModule } from 'ng2-recaptcha';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToasterModule } from 'angular2-toaster';
 
+
 import { routing, appRouterProviders } from './app.routing';
 import { AppComponent } from './app.component';
 import { HelloComponent } from './hello/hello.component';
@@ -19,8 +20,8 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { RegistrationComponent } from './registration/registration.component';
-import { ChangePasswordComponent } from './profile/changePassword/change-password.component';
 import { LoginComponent } from './login/login.component';
+import { ChangePasswordComponent } from './profile/changePassword/change-password.component';
 import { MyProfileComponent } from './profile/myProfile/myProfile.component';
 import { ProfileComponent } from './profile/userProfile/profile.component';
 import { Tabset } from './tabs/Tabset';
@@ -57,6 +58,7 @@ import {CropperSettings} from 'ng2-img-cropper';
 import {Bounds} from 'ng2-img-cropper';
 import {UploadPhotoComponent} from './profile/uploadPhoto/upload-photo.component';
 import {ProfilePhotoAlertComponent} from './profile/uploadPhoto/profile-photo-not-changed-alert.component';
+
 
 import {AuthGuard} from './app.auth-guard.service';
 import {LoginBanned} from "./login/login-banned-user.component";
@@ -133,7 +135,6 @@ declare let jQuery:Object;
         DatepickerModule.forRoot(),
         BootstrapModalModule,
         routing],
-    entryComponents: [AlertComponent, ProfilePhotoAlertComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
         AuthGuard,

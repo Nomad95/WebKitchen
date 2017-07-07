@@ -67,25 +67,32 @@ gulp.task('libcopy', function() {
         './node_modules/@ngui/datetime-picker/dist/datetime-picker.umd.js',
         './node_modules/ng2-recaptcha/ng2-recaptcha.js',
 		'./node_modules/angular2-modal/bundle/angular2-modal.js',
+        './node_modules/angular2-modal/bundle/angular2-modal.js',
         './node_modules/sockjs-client/dist/sockjs.min.js',
         './node_modules/stompjs/lib/stomp.min.js',
     ])
         .pipe(gulp.dest(staticDir + 'js/lib'));
 
-        gulp.src([
+    gulp.src([
             './node_modules/ng2-recaptcha/recaptcha/*.js'
         ])
         .pipe(gulp.dest(staticDir + 'js/lib/recaptcha'));
 
-        gulp.src([
+    gulp.src([
+            './node_modules/angular2-toaster/bundles/angular2-toaster.umd.js'
+        ])
+        .pipe(gulp.dest(staticDir + 'js/lib/angular2-toaster/bundles'));
+
+    gulp.src([
             './node_modules/ng2-img-cropper/**/*.js'
         ])
         .pipe(gulp.dest(staticDir + 'js/lib/ng2-img-cropper'));
 
-        gulp.src(['./node_modules/tether/dist/css/tether.css'
-        ])
-        .pipe(gulp.dest(staticDir + 'css/lib'));
 
+    gulp.src(['./node_modules/tether/dist/css/tether.css'
+        // './node_modules/bootstrap/dist/css/bootstrap.css'
+    ])
+        .pipe(gulp.dest(staticDir + 'css/lib'));
 
     // copy font-awesome
     gulp.src(['./node_modules/font-awesome/css/font-awesome.css'])
@@ -93,6 +100,12 @@ gulp.task('libcopy', function() {
     gulp.src(['./node_modules/font-awesome/fonts/*'])
         .pipe(gulp.dest(staticDir + 'css/lib/font-awesome/fonts'));
 });
+
+//copy angular2-toaster css
+gulp.src(['./node_modules/angular2-toaster/toaster.css'
+    ])
+    .pipe(gulp.dest(staticDir + 'css/lib'));
+
 
 // html/config copy
 gulp.task('htmlcopy', function() {

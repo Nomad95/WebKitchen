@@ -1,4 +1,5 @@
 <div class="container">
+    <toaster-container [toasterconfig]="toasterConfig"></toaster-container>
     <div class="row">
         <div class="col-md-12">
             <div class="well">
@@ -233,9 +234,9 @@
                                             <h4 class="modal-title" id="myModalLabelType1">Potwierdź dane
                                                 wydarzenia</h4>
                                         </div>
-                                        <div class="modal-body lead-small indent-text list-unstyled" style="word-break: break-all !important;">
+                                        <div class="modal-body lead-small indent-text" style="word-break: break-all !important;">
                                             <span>Zostanie stworzone następujące wydarzenie:</span>
-                                            <ul>
+                                            <ul class="list-unstyled">
                                                 <li><strong>Tytuł wydarzenia: </strong> {{newEventType2.title}}</li>
                                                 <li><strong>Godzina: </strong> {{newEventType2.time}}</li>
                                                 <li><strong>Data: </strong> {{newEventType2.date}}</li>
@@ -493,7 +494,7 @@
                                         </div>
                                         <div class="modal-body lead-small indent-text" style="word-break: break-all !important;">
                                             <span>Zostanie stworzone następujące wydarzenie:</span>
-                                            <ul>
+                                            <ul class="list-unstyled">
                                                 <li><strong>Tytuł wydarzenia: </strong> {{newEventType2.title}}</li>
                                                 <li><strong>Godzina: </strong> {{newEventType2.time}}</li>
                                                 <li><strong>Data: </strong> {{newEventType2.date}}</li>
