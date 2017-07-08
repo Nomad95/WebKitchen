@@ -29,8 +29,7 @@ export class EventService {
 
         return this.http.get('/api/event/general/all', {headers: headers})
             .map(res => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * @param id id of event
@@ -42,8 +41,7 @@ export class EventService {
 
         return this.http.get('/api/event/' + id, {headers: headers})
             .map(res => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * gets all events which user participates in
@@ -56,8 +54,7 @@ export class EventService {
 
         return this.http.get('/api/user/details/events/'+userId,{headers: headers})
             .map( res => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * Finds users events and participants
@@ -69,8 +66,7 @@ export class EventService {
 
         return this.http.get('/api/event/userevents/'+id, {headers: headers})
             .map(res => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * Gets user address information (city, street, street nr, house nr)
@@ -82,8 +78,7 @@ export class EventService {
 
         return this.http.get('/api/user/details/address/'+userId, {headers: headers})
             .map(res => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * finds evnt owner username
@@ -94,8 +89,7 @@ export class EventService {
 
         return this.http.get('/api/event/ownerusername/'+eventId, {headers: headers})
             .map(res => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * Checks if user has filled required fields in profile to create new event
@@ -107,8 +101,7 @@ export class EventService {
 
         return this.http.get('/api/user/details/eventcheck/cancreate/'+userId, {headers: headers})
             .map((res) => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * checks if user is arleady bound to this event
@@ -121,8 +114,7 @@ export class EventService {
 
         return this.http.get('/api/event/check/' + this.username + '/' + id, {headers: headers})
             .map((res) => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
 
     /**
@@ -135,8 +127,7 @@ export class EventService {
 
         return this.http.get('/api/user/details/eventcheck/canjoin/'+userId, {headers: headers})
             .map((res) => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * Adds id to event accepted list
@@ -150,8 +141,7 @@ export class EventService {
 
         return this.http.post('/api/event/userevents/'+eventId+'/accept/'+userId,null,{headers: headers})
             .map( res => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * Creates new Event
@@ -163,8 +153,7 @@ export class EventService {
 
         return this.http.post('/api/event/create', JSON.stringify(data), {headers: headers})
             .map((res) => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * Uploads a dish photo -> store in assets
@@ -205,22 +194,22 @@ export class EventService {
 
         return this.http.put('/api/event/userevents/refuse/'+eventId+'/'+userId,null,{headers: headers})
             .map( res => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * Assigns logged user to Event
      * @param id
-     * @returns {Promise<R>|any|Promise<any|T>|Promise<any>|Promise<T>}
      * //TODO: username
      */
     assignUserToEvent(id:number) {
+        //this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd","Proszę spróbować jeszcze raz"));
+
         this.instantiateUsernameAndToken();
         var headers = this.createHeadersWithContentAndToken(this.token);
 
         return this.http.get('/api/event/bind/' + this.username + '/' + id, {headers: headers})
-            .map(() => null)
-            .catch(this.handleError);
+            .map( () => null)
+            .catch(err => this.handleError(err));
     }
 
 
@@ -256,34 +245,30 @@ export class EventService {
     private handleError(error: any):Promise<any> {
         let errorBody = JSON.parse(error._body);
         this.printErrorNotification(errorBody.path, error);
+        console.log('error has occured in event service',error);
 
         return Promise.reject(error.message || error);
     }
 
-    private printErrorNotification(path, error){
-
+    private printErrorNotification(path: string, error: any){
         if(error.status == Errors.HTTPSTATUS_UNAUTHORIZED ){
             console.log("User is not authorized");
             this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Oops!","Wygląda na to że twoja sesja wygasła. Spróbuj zalogować się ponownie"));
         }
         else if (path.search("/api/user/details/events/") == 0 && error.status == Errors.HTTPSTATUS_NOT_FOUND){
             console.log("Cant find the user!");
-            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd","Proszę spróbować jeszcze raz"));
-
+            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd",""));
         }
         else if (path.search("/api/user/details/address/") == 0 && error.status == Errors.HTTPSTATUS_NOT_FOUND){
             console.log("Cant find the user!");
-            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd","Proszę spróbować jeszcze raz"));
-
         }
         else if (path.search("/api/event/ownerusername/") == 0 && error.status == Errors.HTTPSTATUS_NOT_FOUND){
             console.log("Cant find the user!");
-            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd","Proszę spróbować jeszcze raz"));
-
+            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd",""));
         }
         else if (path.search("/api/event/userevents/refuse/") == 0 && error.status == Errors.HTTPSTATUS_NOT_FOUND){
             console.log("Cant find the user!");
-            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd","Proszę spróbować jeszcze raz"));
+            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd",""));
         }
         else if (path == "/api/upload/photo/dish" && error.status == Errors.HTTPSTATUS_NOT_FOUND){
             console.log("File wasn't selected!");
@@ -299,13 +284,14 @@ export class EventService {
         }
         else if (path.search("/api/event/bind/") == 0 && error.status == Errors.HTTPSTATUS_INERNAL_SERVER_ERROR){
             console.log("Cant bind user to event!");
-            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd","Proszę spróbować jeszcze raz"));
+            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd",""));
         }
         else if (error.status == Errors.HTTPSTATUS_NOT_FOUND){
-            console.log("Cant find!");
+            console.log("Data not found!");
         }
         else if (error.status == Errors.HTTPSTATUS_INERNAL_SERVER_ERROR){
-            console.log("BE Error!");
+            console.log("Server eror!");
         }
+
     }
 }

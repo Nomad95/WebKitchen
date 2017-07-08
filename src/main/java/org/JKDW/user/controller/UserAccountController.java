@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.JKDW.mail.event.OnRegistrationCompleteEvent;
 import org.JKDW.security.TokenUtils;
 import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
 import org.JKDW.user.model.DTO.StringRequestBody;
@@ -26,11 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 
@@ -46,6 +43,8 @@ public class UserAccountController {
 	 */
 	private static String UPLOADED_FOLDER = System.getProperty("user.dir") + "\\build\\generated-web-resources\\static\\img\\";
 
+	@Autowired
+	private ApplicationEventPublisher eventPublisher;
 
 	@Autowired
 	private UserAccountService userAccountService;
@@ -84,7 +83,7 @@ public class UserAccountController {
 	 * we use @valid annotation to validate passed object
 	 */
 	@RequestMapping(value="/create",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserAccount> createUserAccount(@RequestBody @Valid UserAccountCreateDTO userAccount) {
+	public ResponseEntity<UserAccount> createUserAccount(@RequestBody @Valid UserAccountCreateDTO userAccount, WebRequest request) {
 		UserAccount createdUserAccount = userAccountService.createUserAccount(userAccount);
 		//create details and link it with userAccount
 		UserDetails userDetails = new UserDetails();

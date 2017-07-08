@@ -1,10 +1,13 @@
 import {Injectable}    from '@angular/core';
-import {Headers, Http, Response}    from '@angular/http';
+import {Headers, Http}    from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { Observable }	from 'rxjs/Observable';
 import 'app/rxjs-operators';
 import 'rxjs/Rx';
 import {SharedService} from "../shared.service";
+import {ToasterService} from 'angular2-toaster';
+import {ToastConfigurerFactory} from "../util/toast/toast-configurer.factory";
+import {Errors} from "../util/error/errors";
 
 @Injectable()
 export class LoginService{
@@ -20,7 +23,10 @@ export class LoginService{
 		'content-type' : 'application/json'});
 	private headersLoggedUser = null;
 
-	constructor(private http:Http, private sharedService:SharedService) {
+	constructor(private http:Http,
+				private sharedService:SharedService,
+				private toasterService: ToasterService) {
+
 		var currentToKey = JSON.parse(localStorage.getItem('toKey'));
 		this.token = currentToKey && currentToKey.token;
 		this.username = currentToKey && currentToKey.username;
@@ -46,13 +52,13 @@ export class LoginService{
 					return false;
 				}
 			})
-            .catch(this.handleError);
+			.catch(err => this.handleError(err));
 	}
 
 	getInfoAboutMyBan(): Observable<any> {
 		return this.http.get('/api/user/banned/account/'+this.username, {headers: this.headers})
             .map(res => res.json())
-            .catch(this.handleError);
+			.catch(err => this.handleError(err));
 	}
 
 	getIdByUsername(): Observable<number>{
@@ -67,7 +73,7 @@ export class LoginService{
 
 		return this.http.get("api/user/account/"+username+"/getid", {headers: headers})
             .map((res) => res.json())
-            .catch(this.handleError);
+			.catch(err => this.handleError(err));
 	}
 
 	getUsername(): string {
@@ -95,7 +101,8 @@ export class LoginService{
 
 	checkIsUserBanned(): Observable<any>{
 		return this.http.get('/api/user/checkIsBanned/'+this.getUsername(),{headers :this.headers})
-            .map(res => res.json());
+            .map(res => res.json())
+			.catch(err => this.handleError(err));
 	}
 	/**
 	 * Finds user id by username
@@ -104,17 +111,18 @@ export class LoginService{
 
 	checkVariableIsBanned(): Observable<any>{
 		return this.http.get('/api/user/checkIsBanned/'+this.getUsername(),{headers :this.headers})
-            .map(res => res.json());
+            .map(res => res.json())
+			.catch(err => this.handleError(err));
 	}
 
 	checkIsUserAnAdmin(): Observable<any>{
 		this.headersLoggedUser = new Headers({
 			'content-type' : 'application/json',
 			'X-Auth-token' : this.token
-		})
+		});
 		return this.http.get('/api/user/getMyRole',{headers :this.headersLoggedUser})
             .map(res => res.json())
-            .catch(this.handleError);
+			.catch(err => this.handleError(err));
 	}
 
 	/**
@@ -123,7 +131,7 @@ export class LoginService{
 	checkIfUserIsEnabled(username: string): Observable<boolean>{
 		return this.http.get('api/user/registration/enable/'+username)
 			.map(res => res.json())
-			.catch(this.handleError);
+			.catch(err => this.handleError(err));
 	}
 
 	countMyUnreadMessages(){
@@ -134,7 +142,7 @@ export class LoginService{
 		this.url = "/api/message/myMessages/received/quantity/unread";
 		return this.http.get(this.url,{headers :this.headersLoggedUser})
             .map(res => res.json())
-            .catch(this.handleError);
+			.catch(err => this.handleError(err));
 	}
 
 	getMyNick(): Observable<any>{
@@ -148,17 +156,34 @@ export class LoginService{
 
 		return this.http.get("api/user/myNick", {headers: headers})
             .map((res) => res.json())
-            .catch(this.handleError);
+			.catch(err => this.handleError(err));
 	}
 
+	private handleError(error: any):Promise<any> {
+			let errorBody = JSON.parse(error._body);
+		this.printErrorNotification(errorBody.path, error);
+		console.log('error has occured in login service',error);
 
+		return Promise.reject(error.message || error);
+	}
 
-	/*private handleError(error: any): Promise<any> {
-	 console.error('An error occurred!!!!!!!!!', error);
-	 return Promise.reject(error.message || error);
-	 }*/
-	private handleError(error:any):Observable<any> {
-		console.error('An error in login service occurred!', error);
-		return Observable.throw(error.statusText);
+	private printErrorNotification(path: string, error: any){
+		//jak macie jakies errory do pokazania to takjak tu scieżka + response status
+		//nie pokazujmy za dużo errorów na raz 
+		if(error.status == Errors.HTTPSTATUS_UNAUTHORIZED ){
+			console.log("User is not authorized");
+			this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Oops!","Wygląda na to że twoja sesja wygasła. Spróbuj zalogować się ponownie"));
+		}
+		else if (path == "/auth" && error.status == Errors.HTTPSTATUS_BAD_REQUEST){
+			console.log("Bad request!");
+			this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Logowanie się nie powiodło",""));
+		}
+		else if (error.status == Errors.HTTPSTATUS_NOT_FOUND){
+			console.log("Data not found!");
+		}
+		else if (error.status == Errors.HTTPSTATUS_INERNAL_SERVER_ERROR){
+			console.log("Server eror!");
+		}
+
 	}
 }

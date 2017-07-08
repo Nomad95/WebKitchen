@@ -4,7 +4,7 @@ import {EventService} from '../event.service';
 import {LoginService} from '../../login/login.service';
 import {UtilMethods} from '../../util/util-methods.service';
 import {IMyDpOptions, IMyDateModel} from 'mydatepicker';
-import {ToasterContainerComponent, ToasterService, ToasterConfig} from 'angular2-toaster';
+import {ToasterContainerComponent, ToasterService} from 'angular2-toaster';
 
 import { EventType1 } from '../model/eventType1';
 import { EventType2 } from "../model/eventType2";

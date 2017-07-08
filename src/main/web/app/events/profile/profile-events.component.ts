@@ -1,11 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {EventService} from '../event.service';
 import {LoginService} from '../../login/login.service';
+import {ToasterContainerComponent} from 'angular2-toaster';
+import {ToastConfigurerFactory} from "../../util/toast/toast-configurer.factory";
 
 @Component({
     selector: 'profile-events',
     templateUrl: 'app/events/profile/profile-events.component.html',
-    providers: [EventService, LoginService]
+    providers: [EventService, LoginService],
+    directives: [ToasterContainerComponent]
 })
 export class ProfileEventsComponent implements OnInit {
     constructor(
@@ -21,6 +24,9 @@ export class ProfileEventsComponent implements OnInit {
     private userParticipatedEvents: any[] = [];
     //can user create event? -> is profile filled?
     private canCreateEvent: boolean = false;
+
+    //configure toaster container
+    private toasterConfig = ToastConfigurerFactory.basicToastConfiguration();
 
     ngOnInit() {
         this.getUserEvents();

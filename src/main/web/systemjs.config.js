@@ -35,7 +35,7 @@
       '@angular/animations': 'js/lib/@angular/animations/bundles/animations.umd.min.js',
       '@angular/animations/browser':'js/lib/@angular/animations/bundles/animations-browser.umd.js',
       '@angular/platform-browser/animations': 'js/lib/@angular/platform-browser/bundles/platform-browser-animations.umd.js',
-      'angular2-toaster': 'js/lib/angular2-toaster/bundles/angular2-toaster.umd.js'
+      'angular2-toaster': 'js/lib/angular2-toaster/bundles/angular2-toaster.umd.js',
       'ng2-bootstrap-modal': 'app/modal',
       'ng2-img-cropper': 'js/lib/ng2-img-cropper',
       'sockjs-client':'js/lib/sockjs.min.js',

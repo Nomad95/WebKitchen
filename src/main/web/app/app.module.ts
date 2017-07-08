@@ -50,7 +50,6 @@ import {MessageBoxComponent} from "./messages/messagebox/messagebox.component";
 import {LoginService} from "./login/login.service";
 import {ConfirmRegistrationComponent} from "./registration/confirmation/confirm.registration.component";
 import { RecaptchaModule } from 'ng2-recaptcha';
-import {CaptchaComponent} from "./captcha-test/captcha.component";
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import { AlertComponent } from './profile/myProfile/username-changed-alert.component';
 import {ImageCropperComponent} from 'ng2-img-cropper';
@@ -110,6 +109,7 @@ declare let jQuery:Object;
         PolishDatePipe,
         ShorterTimePipe,
         SendingMessageComponent,
+        ChangePasswordComponent,
         ReceivedMessagesComponent,
         SentMessagesComponent,
         MessageBoxComponent,
@@ -128,7 +128,6 @@ declare let jQuery:Object;
         HttpModule,
         SelectModule,
         MyDatePickerModule,
-        ChangePasswordComponent,
         ToasterModule,
         RecaptchaModule.forRoot(),
         AlertModule.forRoot(),

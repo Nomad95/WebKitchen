@@ -1,19 +1,26 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {EventService} from "../event.service";
 import {Router} from '@angular/router';
-
+import {ToastConfigurerFactory} from "../../util/toast/toast-configurer.factory";
+import {ToasterContainerComponent, ToasterService} from 'angular2-toaster';
 
 @Component({
     selector: 'user-created-events',
     templateUrl: 'app/events/profile/user-created-events.component.html',
-    providers: [EventService]
+    providers: [EventService],
+    directives: [ToasterContainerComponent]
 })
 export class UserCreatedEventsComponent implements OnInit {
-    constructor(private eventService: EventService, private router: Router) {
+    constructor(private eventService: EventService,
+                private router: Router,
+                private toasterService: ToasterService) {
     }
 
     //event from parent
     @Input() private event: any;
+
+    private toasterConfig = ToastConfigurerFactory.basicToastConfiguration();
+
 
     ngOnInit() {
     }
@@ -36,6 +43,8 @@ export class UserCreatedEventsComponent implements OnInit {
             .subscribe( data => {
                 console.log('accepted id: '+userId);
                 this.event.acceptedIds.push(userId);
+            }, err => {
+                this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("","Nie mogę zaakceptować użytkownika"))
             });
     }
 
@@ -68,6 +77,8 @@ export class UserCreatedEventsComponent implements OnInit {
             .subscribe( data => {
                 console.log(JSON.stringify(data));
                 this.event.people_remaining++;
+            }, err => {
+                this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("","Nie mogę usunąć użytkownika"))
             });
     }
 }

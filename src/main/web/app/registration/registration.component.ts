@@ -3,12 +3,15 @@ import {Router} from '@angular/router';
 import { RegistrationService } from './registration.service';
 import {UtilMethods} from "../util/util-methods.service";
 import {CountriesLocalName} from "../util/countries/countriesLocalName";
+import {ToasterContainerComponent} from 'angular2-toaster';
+import {ToastConfigurerFactory} from "../util/toast/toast-configurer.factory";
 
 @Component({
     selector: 'registration',
     templateUrl: 'app/registration/registration.component.html',
     styleUrls: ['css/hello.css'],
-    providers: [RegistrationService, UtilMethods]
+    providers: [RegistrationService, UtilMethods],
+    directives: [ToasterContainerComponent]
 })
 export class RegistrationComponent {
     constructor(
@@ -17,6 +20,10 @@ export class RegistrationComponent {
         private utilMethods: UtilMethods) {
     }
 
+    //configure toaster container
+    private toasterConfig = ToastConfigurerFactory.basicToastConfiguration();
+
+    //TODO: Model
     userAccountToAdd = {
       username: '',
       password: '',
@@ -55,7 +62,7 @@ export class RegistrationComponent {
      */
     createUserAccount(data): void{
         this.validationResult = this.finalDataValidation(data);
-        if (!this.validationResult) 
+        if (!this.validationResult)
             return;
         if(!this.isCaptchaVerified)
             return;

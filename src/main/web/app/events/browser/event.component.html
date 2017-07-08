@@ -1,6 +1,7 @@
+<toaster-container [toasterconfig]="toasterConfig"></toaster-container>
 <div class="well">
     <div class="row">
-        <div class="col-md-12" style="word-break: break-all !important;">
+        <div class="col-md-12">
             <!--<table style="width: 100%">
                 <tr>
                     <th style="font-size: 1.8em; color: black; "
@@ -9,7 +10,7 @@
                 </tr>
             </table>-->
             <div class="row">
-                <div class="col-md-8 col-sm-12 text-left" style="font-size: 1.8em; color: black; "
+                <div class="col-md-8 col-sm-12 text-left gridfix" style="font-size: 1.4em; color: black; "
                      >{{ event.title }}
                 </div>
                 <div class="col-md-4 col-sm-12 text-right" style="font-size: 1.0em; font-weight: 200; color: black;"
@@ -19,11 +20,11 @@
         </div>
     </div>
     <br/>
-    <div class="row" style="word-break: break-all !important;">
+    <div class="row" >
         <div class="col-md-12" >
             <ul class="list-unstyled lead-small">
                 <li><strong>Stworzony przez:</strong> {{event.ownerUsername}}</li>
-                <li><strong>Nazwa:</strong> {{event.dish_name}}</li>
+                <li class="gridfix"><strong>Nazwa:</strong> {{event.dish_name}}</li>
                 <li><strong>Data:</strong> {{event.date | date | polishDate}} {{event.time | shorterTime}}</li>
                 <li><strong>Rodzaj:</strong> {{event.dish_kind}}</li>
                 <li><strong>Liczba osób:</strong> {{event.people_quantity}}</li>

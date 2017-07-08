@@ -4,17 +4,22 @@ import {EventService} from '../event.service';
 import {LoginService} from "../../login/login.service";
 import {Location} from '@angular/common';
 import {DetailedEvent} from "../model/detailedEvent";
+import {ToasterContainerComponent, ToasterService} from 'angular2-toaster';
+import {ToastConfigurerFactory} from "../../util/toast/toast-configurer.factory";
+
 
 @Component({
     selector: 'event-detailed',
     templateUrl: 'app/events/detailed/event-details.component.html',
-    providers: [EventService]
+    providers: [EventService],
+    directives: [ToasterContainerComponent]
 })
 export class EventDetailsComponent implements OnInit {
     constructor(private router:ActivatedRoute,
                 private eventService:EventService,
                 private loginService: LoginService,
-                private location: Location) {}
+                private location: Location,
+                private toasterService: ToasterService) {}
     
     private event = new DetailedEvent();
 
@@ -33,6 +38,11 @@ export class EventDetailsComponent implements OnInit {
 
     //is user an event owner?
     private isOwner = false;
+
+    /**
+     * Configure toaster notifications
+     */
+    public toasterConfig = ToastConfigurerFactory.basicToastConfiguration();
 
     ngOnInit() {
         //gets event
@@ -59,6 +69,9 @@ export class EventDetailsComponent implements OnInit {
                 this.checkFreeSpace();
                 this.getUserIdByUsername();
                 this.getEventOwnerUsername(this.event.id);
+            },
+            err => {
+                this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Oops!","Nie udało się załadować wydarzenia"));
             });
     }
 

@@ -1,9 +1,12 @@
 import {Component, Input } from '@angular/core';
 import {Router} from '@angular/router';
+import {ToasterContainerComponent} from 'angular2-toaster';
+import {ToastConfigurerFactory} from "../../util/toast/toast-configurer.factory";
 
 @Component({
     selector: 'user-participate-events',
-    templateUrl: 'app/events/profile/user-participate-events.component.html'
+    templateUrl: 'app/events/profile/user-participate-events.component.html',
+    directives: [ToasterContainerComponent]
 })
 export class UserParticipateEventsComponent  {
     constructor(private router: Router) {
@@ -12,7 +15,10 @@ export class UserParticipateEventsComponent  {
     @Input() private events: any;
     
     @Input() private userId: number = -1;
-    
+
+    private toasterConfig = ToastConfigurerFactory.basicToastConfiguration();
+
+
     /**
      * navigates user to event details
      * @param eventId

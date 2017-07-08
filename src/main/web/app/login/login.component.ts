@@ -3,10 +3,13 @@ import { LoginService } from './login.service';
 import { Router } from '@angular/router';
 import {SharedService} from "../shared.service"; //<==== this one
 import {StompService} from "../websocket/stomp.service"; //<==== this one
+import {ToasterContainerComponent} from 'angular2-toaster';
+import {ToastConfigurerFactory} from "../util/toast/toast-configurer.factory";
 
 @Component({
     selector: 'login',
-    templateUrl: 'app/login/login.component.html'
+    templateUrl: 'app/login/login.component.html',
+    directives: [ToasterContainerComponent]
 })
 export class LoginComponent {
 
@@ -17,6 +20,8 @@ export class LoginComponent {
         private stompService: StompService) {}
 
     nazwa;//?
+
+    private toasterConfig = ToastConfigurerFactory.basicToastConfiguration();
 
     private myBan = {
         dateEndOfBan: '',
@@ -122,7 +127,7 @@ export class LoginComponent {
                 }]);
 
             },
-            err => console.log('Wystąpił błąd podczas pobierania informacji o banie')
+            err => console.log('Wystąpił błąd podczas pobierania informacji o banie');
         );
     }
 

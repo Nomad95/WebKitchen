@@ -1,29 +1,36 @@
 import {Component, OnInit} from '@angular/core';
 import {EventService} from '../event.service';
 import {LoginService} from "../../login/login.service";
+import {ToasterContainerComponent, ToasterService} from 'angular2-toaster';
+import {ToastConfigurerFactory} from "../../util/toast/toast-configurer.factory";
 
 @Component({
     selector: 'event-list',
     templateUrl: 'app/events/browser/event-list.component.html',
-    providers: [EventService]
+    providers: [EventService],
+    directives: [ToasterContainerComponent]
 })
 export class EventListComponent implements OnInit {
     constructor(
         private eventService: EventService,
-        private loginService: LoginService) {
+        private loginService: LoginService,
+        private toasterService: ToasterService) {
     }
 
     //list of all events
     private events: any[];
-    
+
     //id of current user
     private userId = -1;
 
     //check if user can create event or he hasn't filled required profile fields
     private canCreateEvent = false;
-    
+
     //disables some view before loading up events
     private viewLoaded = false;
+    
+    //configure toaster
+    private toasterConfig = ToastConfigurerFactory.basicToastConfiguration();
 
     ngOnInit() {
         this.getEvents();
