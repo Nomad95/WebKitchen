@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import 'app/rxjs-operators';
 import 'rxjs/Rx';
 import {Observable}    from 'rxjs/Observable';
+import {TokenUtils} from "../../login/token-utils";
 
 @Injectable()
 export class ProfileService {
@@ -21,7 +22,7 @@ export class ProfileService {
     
     getProfile():Observable<any> {
         //We get token from local storage
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        var currentToKey = JSON.parse(TokenUtils.getStoredToken());
         let token = currentToKey && currentToKey.token;
         
         //create appropriate
@@ -56,7 +57,7 @@ export class ProfileService {
 
     getProfileDetails():Observable<any> {
         //We get token from local storage
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'))
+        var currentToKey = JSON.parse(TokenUtils.getStoredToken())
         let token = currentToKey && currentToKey.token;
 
         //create appropriate
@@ -72,7 +73,7 @@ export class ProfileService {
 
     isProfilePhotoExists(nick: string):Observable<any> {
         //We get token from local storage
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'))
+        var currentToKey = JSON.parse(TokenUtils.getStoredToken())
         let token = currentToKey && currentToKey.token;
 
         //create appropriate

@@ -7,13 +7,16 @@ import 'rxjs/Rx';
 import {Errors} from "../util/error/errors";
 import {ToasterService} from 'angular2-toaster';
 import {ToastConfigurerFactory} from "../util/toast/toast-configurer.factory";
+import {TokenUtils} from "../login/token-utils";
+import {LoginService} from "../login/login.service";
 
 
 @Injectable()
 export class EventService {
     constructor(
         private http: Http,
-        private toasterService: ToasterService) {
+        private toasterService: ToasterService,
+        private loginService: LoginService) {
     }
 
     private token = '';
@@ -226,19 +229,19 @@ export class EventService {
     }
 
     /**
-     * reads token from local storage and extracts username and token value
+     * reads token from local/session storage and extracts username and token value
      */
     instantiateUsernameAndToken(){
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        var currentToKey = JSON.parse(TokenUtils.getStoredToken());
         this.token = currentToKey && currentToKey.token;
         this.username = currentToKey && currentToKey.username;
     }
 
     /**
-     * reads token from local storage and extracts  token value
+     * reads token from local/session storage and extracts  token value
      */
     instantiateToken(){
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        var currentToKey = JSON.parse(TokenUtils.getStoredToken());
         this.token = currentToKey && currentToKey.token;
     }
 
@@ -254,6 +257,7 @@ export class EventService {
         if(error.status == Errors.HTTPSTATUS_UNAUTHORIZED ){
             console.log("User is not authorized");
             this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Oops!","Wygląda na to że twoja sesja wygasła. Spróbuj zalogować się ponownie"));
+            this.loginService.checkIfTokenIsValid();
         }
         else if (path.search("/api/user/details/events/") == 0 && error.status == Errors.HTTPSTATUS_NOT_FOUND){
             console.log("Cant find the user!");
@@ -292,6 +296,5 @@ export class EventService {
         else if (error.status == Errors.HTTPSTATUS_INERNAL_SERVER_ERROR){
             console.log("Server eror!");
         }
-
     }
 }

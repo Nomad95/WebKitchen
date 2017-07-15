@@ -27,6 +27,13 @@
                             Podaj Hasło.
                         </div>
                     </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"
+                                   name="shouldBeRemembered"
+                                   [(ngModel)]="shouldBeRemembered"> Zapamiętaj mnie
+                        </label>
+                    </div>
                     <div *ngIf="errorEncountered" class="alert alert-danger" role="alert">
                         Błędne dane.
                     </div>

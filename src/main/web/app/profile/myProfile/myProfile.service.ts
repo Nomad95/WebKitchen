@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
 import 'app/rxjs-operators';
 import 'rxjs/Rx';
 import {Observable}    from 'rxjs/Observable';
+import {TokenUtils} from "../../login/token-utils";
 
 @Injectable()
 export class MyProfileService {
@@ -28,7 +29,7 @@ export class MyProfileService {
 
     getProfile():Observable<any> {
         //We get token from local storage
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        var currentToKey = JSON.parse(TokenUtils.getStoredToken());
         let token = currentToKey && currentToKey.token;
 
 
@@ -50,7 +51,7 @@ export class MyProfileService {
 
     getProfileDetails():Observable<any> {
         //We get token from local storage
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'))
+        var currentToKey = JSON.parse(TokenUtils.getStoredToken())
         let token = currentToKey && currentToKey.token;
 
         //create appropriate
@@ -66,7 +67,7 @@ export class MyProfileService {
 
     /* Update profile data from edit profile Form*/
     updateProfile(data):Observable<any> {
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        var currentToKey = JSON.parse(TokenUtils.getStoredToken());
         let token = currentToKey && currentToKey.token;
 
         //get username from the token
@@ -118,7 +119,7 @@ export class MyProfileService {
      * 
      */
     changePassword(userProfileChangePasswordDTO):Observable<any>{
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        var currentToKey = JSON.parse(TokenUtils.getStoredToken());
         let token = currentToKey && currentToKey.token;
  
         //create appropriate
@@ -136,7 +137,7 @@ export class MyProfileService {
      *  @param nick - User account nick
      */
     uploadProfilePhoto(data, nick:string): Observable<any> {
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        var currentToKey = JSON.parse(TokenUtils.getStoredToken());
         let token = currentToKey && currentToKey.token;
 
         //create appropriate
@@ -152,7 +153,7 @@ export class MyProfileService {
 
     isProfilePhotoExists(nick: string):Observable<any> {
         //We get token from local storage
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'))
+        var currentToKey = JSON.parse(TokenUtils.getStoredToken())
         let token = currentToKey && currentToKey.token;
 
         //create appropriate
@@ -168,7 +169,7 @@ export class MyProfileService {
     
 
     getLoggedUsernameFromToken(){
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        var currentToKey = JSON.parse(TokenUtils.getStoredToken());
 
         //return username from the token
         return currentToKey && currentToKey.username;
@@ -191,7 +192,7 @@ export class MyProfileService {
 
     /* removeToken aka Logout */
     removeToken(): void{
-        localStorage.removeItem('toKey');
+        TokenUtils.removeStoredTokens();
         this.router.navigate(['/login']);
     }
 }

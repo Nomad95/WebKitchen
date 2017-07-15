@@ -4,10 +4,13 @@ import org.JKDW.security.AppConstant;
 import org.JKDW.security.TokenUtils;
 import org.JKDW.security.model.AuthenticationRequest;
 import org.JKDW.security.model.AuthenticationResponse;
+import org.JKDW.security.model.JavaWebTokenBody;
 import org.JKDW.security.model.SpringSecurityUser;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,10 +19,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -86,6 +86,23 @@ public class AuthenticationController  {
         } else {
             return ResponseEntity.badRequest().body(null);
         }
+    }
+
+    /**
+     * Cecks if token has expired
+     * @return true if token has expired false if not
+     */
+    @RequestMapping(value = "checkExpiry/{username}",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> isTokenExpired(
+            @RequestBody JavaWebTokenBody javaWebTokenBody,
+            @PathVariable(value = "username") String username){
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        if (tokenUtils.validateToken(javaWebTokenBody.getTokenValue(),userDetails))
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        else return new ResponseEntity<>(false, HttpStatus.OK);
     }
 
 }

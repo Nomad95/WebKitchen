@@ -8,12 +8,14 @@ import { UserAccount } from './user-account';
 import {ToasterService} from 'angular2-toaster';
 import {ToastConfigurerFactory} from "../util/toast/toast-configurer.factory";
 import {Errors} from "../util/error/errors";
+import {LoginService} from "../login/login.service";
 
 @Injectable()
 export class RegistrationService{
 	constructor(
 		private http: Http,
-		private toasterService: ToasterService) { }
+		private toasterService: ToasterService,
+		private loginService: LoginService) { }
 
 	private headers = new Headers({
           'accept': 'application/json',
@@ -108,6 +110,7 @@ export class RegistrationService{
 		if(error.status == Errors.HTTPSTATUS_UNAUTHORIZED ){
 			console.log("User is not authorized");
 			this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Oops!","Wygląda na to że twoja sesja wygasła. Spróbuj zalogować się ponownie"));
+			this.loginService.checkIfTokenIsValid();
 		}
 		else if (path.search("/api/user/registration/confirm") == 0 && error.status == Errors.HTTPSTATUS_BAD_REQUEST){
 			console.log("Cant Confirm registration: Bad request");//TODO: nie ma w htmlu

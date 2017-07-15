@@ -38,6 +38,9 @@ export class LoginComponent {
     private statusBan : String;
     private role :String;
     private isAccountEnabled = true;
+    
+    //user selects if he wants to be allways logged
+    private shouldBeRemembered: boolean;
 
     private countUnreadMessages = {
         count:''
@@ -56,7 +59,7 @@ export class LoginComponent {
         this.loginService.checkIfUserIsEnabled(credentials.username).subscribe(data => {
             if(data === true){
                 this.loginService
-                    .getToken(credentials)
+                    .getToken(credentials,this.shouldBeRemembered)
                     .subscribe(result => {
                         if (result === true) {
                             this.credentials = {
@@ -127,7 +130,7 @@ export class LoginComponent {
                 }]);
 
             },
-            err => console.log('Wystąpił błąd podczas pobierania informacji o banie');
+            err => console.log('Wystąpił błąd podczas pobierania informacji o banie')
         );
     }
 
