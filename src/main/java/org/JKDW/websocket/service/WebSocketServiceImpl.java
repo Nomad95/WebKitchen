@@ -15,7 +15,7 @@ public class WebSocketServiceImpl implements WebSocketService {
     /**
      * We send a message with about type of notification
      * @param nick
-     * @param notification can has form: "newMessage" , "notification", "ban"
+     * @param notification can has form: "newMessage" , "newNotification", "ban"
      */
     @Override
     @Scheduled(fixedDelay = 5000)

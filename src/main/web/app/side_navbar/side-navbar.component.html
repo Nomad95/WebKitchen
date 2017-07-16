@@ -15,6 +15,13 @@
 				</i>
 				<span class="nav-text">Wiadomości</span>
 			</a></li>
+			<li *ngIf="loginService.isLogged()" class="has-subnav"><a [routerLink]="['/notifications', 0]">
+				<i class="fa fa-bell fa-2x fa-sidebar">
+					<span *ngIf="sharedService.getNumberOfUnreadNotifications()>0" class="badge badge-error">{{sharedService.getNumberOfUnreadNotifications()}}</span>
+				</i>
+				<span class="nav-text">Powiadomienia</span>
+			</a></li>
+
 			<li *ngIf="loginService.isLogged()" class="has-subnav"><a [routerLink]="['/calendar']"> <i
 					class="fa fa-calendar fa-2x fa-sidebar"></i> <span class="nav-text">
 						Kalendarz </span>

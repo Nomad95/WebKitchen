@@ -160,3 +160,11 @@
 .has-subnav .badge-error:hover {
     background-color: #953b39;
 }
+
+.notification-details .notification-checkbox {
+    float: left;
+    margin-right: 10px;
+}
+.notification-details .notification-body{
+    float: inherit;
+}

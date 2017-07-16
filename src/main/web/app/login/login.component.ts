@@ -45,6 +45,9 @@ export class LoginComponent {
     private countUnreadMessages = {
         count:''
     };
+    private countUnreadNotifications = {
+        count:''
+    };
 
     /**
      * First, we check if user account is enabled(user has clicked on activation link), if not print error.
@@ -86,6 +89,7 @@ export class LoginComponent {
                             this.isAccountEnabled = true;
                             this.getMyNickAndConnectWithStomp();
                             this.countMyUnreadMessages();
+                            this.countMyUnreadNotifications();
 
                             //forwards to success page
                             this.router.navigate(['/login/success']);
@@ -102,7 +106,6 @@ export class LoginComponent {
                 this.isAccountEnabled = false;
             }
         });
-
     }
 
 
@@ -152,4 +155,13 @@ export class LoginComponent {
         );
     }
 
+    countMyUnreadNotifications():void{
+        this.loginService.countMyUnreadNotifications().subscribe(
+            result => {
+                this.countUnreadNotifications = result;
+                this.sharedService.setNumberOfUnreadNotifications(Number(this.countUnreadNotifications.count));
+            },
+            err => console.log("An error occurred while retrieving count of unread notifications")
+        );
+    }
 }

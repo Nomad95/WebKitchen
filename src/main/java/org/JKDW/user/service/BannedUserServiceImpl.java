@@ -21,10 +21,6 @@ public class BannedUserServiceImpl implements BannedUserService{
     @Autowired
     private UserAccountRepository userAccountRepository;
 
-    @Autowired
-    private WebSocketService webSocketService;
-
-
     @Override
     public BannedUser createBanForUser(BannedUser bannedUser, Long idUserForBan) throws NoResultException,IllegalArgumentException {
         UserAccount userAccountForBan = userAccountRepository.findOne(idUserForBan);
@@ -35,8 +31,6 @@ public class BannedUserServiceImpl implements BannedUserService{
         bannedUser.setUserAccount(userAccountForBan);
         userAccountForBan.setIsBanned(true);
         bannedUserRepository.save(bannedUser);
-
-        this.webSocketService.sendNotificationToUser(userAccountForBan.getNick(), new Shout("ban"));
 
         return bannedUser;
     }

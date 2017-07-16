@@ -1,0 +1,59 @@
+<div class="notification-menu">
+    <a (click)="deleteSelectedMessages()" [routerLink]="['/messagebox', 0 ]" class="btn btn-default">
+        <i class="fa fa-minus" aria-hidden="true"></i> Usuń zaznaczone
+    </a>
+    <a (click)="getMyNotificationsByPage(0);" class="btn btn-default">
+        <i class="fa fa-refresh" aria-hidden="true"></i> Odśwież
+    </a>
+</div>
+
+<div class="notification-details">
+    <h3>Twoje powiadomienia</h3>
+    <div *ngFor="let notification of notifications">
+        <div class="well" *ngIf="!notification.wasRead" style="background-color: #95ED95; border: 2px solid #FF6600;">
+            <div class="notification-checkbox" style="font-weight: bold">
+                <input type="checkbox"
+                       name="notification" [(ngModel)]="notification.checked" value="notificastion.id">
+            </div>
+            <div class="notification-body">
+                <div class="notification-date" style="font-weight: bold">
+                    {{notification.dateOfSend | date | polishDate}}
+                    {{notification.dateOfSend | date:'HH:mm:ss'}}
+                </div>
+                <div class="notification-content" (click)="decreaseNumberOfUnreadNotifications();"
+                     style="font-weight: bold; ">
+                    {{notification.content}}
+                </div>
+            </div>
+
+        </div>
+        <div class="well" *ngIf="notification.wasRead" >
+            <div class="notification-checkbox">
+                <input type="checkbox"
+                       name="notification" [(ngModel)]="notification.checked" value="notification.id">
+            </div>
+            <div class="notification-body">
+                <div class="notification-date">
+                    {{notification.dateOfSend | date | polishDate}}
+                    {{notification.dateOfSend | date:'HH:mm:ss'}}
+                </div>
+                <div class="notification-content">
+                    {{notification.content}}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<ul class="pagination">
+    <ng-container *ngFor="let page of indexesOfPage">
+        <li *ngIf="page == currentPage+1" class="active">
+            <a class="btn">{{page}}</a>
+        </li>
+        <li *ngIf="page != currentPage+1">
+            <a [routerLink]="['/notifications', page-1 ]"
+               class="btn">{{page}}</a>
+        </li>
+    </ng-container>
+
+</ul>

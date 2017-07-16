@@ -3,6 +3,8 @@ package org.JKDW.user.controller;
 
 import org.JKDW.user.model.BannedUser;
 import org.JKDW.user.service.BannedUserService;
+import org.JKDW.websocket.model.Shout;
+import org.JKDW.websocket.service.WebSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,7 +17,10 @@ import org.springframework.web.bind.annotation.*;
 public class BannedUserController {
 
     @Autowired
-    BannedUserService bannedUserService;
+    private BannedUserService bannedUserService;
+
+    @Autowired
+    private WebSocketService webSocketService;
 
     @RequestMapping(
             value = "/create/{idUserForBan}", method = RequestMethod.POST,
@@ -25,6 +30,7 @@ public class BannedUserController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<BannedUser> createBanForUser(@RequestBody BannedUser bannedUser,@PathVariable("idUserForBan") Long id) {
         BannedUser createdBanForUser = bannedUserService.createBanForUser(bannedUser, id);
+        webSocketService.sendNotificationToUser(bannedUser.getUserAccount().getNick(), new Shout("ban"));
         return new ResponseEntity<>(createdBanForUser, HttpStatus.CREATED);
     }
 
