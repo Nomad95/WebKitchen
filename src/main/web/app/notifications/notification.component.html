@@ -1,8 +1,8 @@
 <div class="notification-menu">
-    <a (click)="deleteSelectedMessages()" [routerLink]="['/messagebox', 0 ]" class="btn btn-default">
+    <a (click)="deleteSelectedNotificatins()" class="btn btn-default">
         <i class="fa fa-minus" aria-hidden="true"></i> Usuń zaznaczone
     </a>
-    <a (click)="getMyNotificationsByPage(0);" class="btn btn-default">
+    <a (click)="reloadPage();" class="btn btn-default">
         <i class="fa fa-refresh" aria-hidden="true"></i> Odśwież
     </a>
 </div>
@@ -20,7 +20,7 @@
                     {{notification.dateOfSend | date | polishDate}}
                     {{notification.dateOfSend | date:'HH:mm:ss'}}
                 </div>
-                <div class="notification-content" (click)="decreaseNumberOfUnreadNotifications();"
+                <div class="notification-content"
                      style="font-weight: bold; ">
                     {{notification.content}}
                 </div>

@@ -14,8 +14,6 @@ public interface NotificationService {
 
     Page<Notification> getMyAllNotificationsByPage(String recipient_username, Pageable pageable);
 
-    Notification getMyNotificationById(Long id)throws NoResultException;
-
     void deleteMyNotification(Long idNotification, String usernameFromToken )throws NoResultException;
 
     int countNumberOfUnreadNotifications(String usernameFromToken);

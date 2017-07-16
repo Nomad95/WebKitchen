@@ -37,16 +37,6 @@ public class NotificationController {
         return new ResponseEntity<>(myReceivedNotifications, HttpStatus.OK);
     }
 
-
-    @RequestMapping(value = "/myNotifications/{idNotification}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Notification> getNotificationById(@PathVariable("idNotification") Long idNotification, HttpServletRequest request) {
-        Notification notification = notificationService.getMyNotificationById(idNotification);
-        if (UserAccountService.getMyUsernameFromToken(request, this.tokenUtils).equals(notification.getRecipient().getUsername()))
-            return new ResponseEntity<>(notification, HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-    }
-
     @RequestMapping(value = "/myNotifications/{idNotification}", method = RequestMethod.DELETE)
     public ResponseEntity deleteNotification(@PathVariable("idNotification") Long idNotification,
                                                 HttpServletRequest request) {

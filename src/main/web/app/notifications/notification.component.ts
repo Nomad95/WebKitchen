@@ -48,6 +48,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
                 for(let note of this.pageWithNotifications.content)
                    this.notifications.push(note);
                 this.generateTabForPagination(this.pageWithNotifications.totalPages);
+                this.countMyUnreadNotifications();
             })
     }
 
@@ -55,10 +56,6 @@ export class NotificationComponent implements OnInit, OnDestroy {
     generateTabForPagination(numberOfPage) {
         for (var i = 0; i < numberOfPage; i++)
             this.indexesOfPage.push(i+1);
-    }
-
-    decreaseNumberOfUnreadNotifications(): void {
-        this.sharedService.setNumberOfUnreadNotifications(this.sharedService.getNumberOfUnreadNotifications() - 1)
     }
 
     getIndexOfPageAndGetMyNotifications():void{
@@ -85,7 +82,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
             .map(opt => opt.id);
     }
 
-    deleteSelectedMessages():void{
+    deleteSelectedNotificatins():void{
         this.getSelectedOptions();
 
         var countNotifications =  this.notificationsToDelete.length;

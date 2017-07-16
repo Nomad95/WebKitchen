@@ -54,21 +54,14 @@ public class NotificationServiceImpl implements NotificationService {
         if(myNotifications == null)
             throw new NoResultException("This user hasn't any notification");
 
+        // check is that notifications from page are read
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        myNotifications.forEach(notification -> {
+            if(!notification.getWasRead())
+                this.setNotificationToRead(jdbcTemplate, notification.getId());
+        });
+
         return  myNotifications;
-    }
-
-    @Override
-    public Notification getMyNotificationById(Long id) throws NoResultException {
-        Notification notification = notificationRepository.findOne(id);
-        if(notification == null)
-            throw new NoResultException("This notification doesn't exist or is not yours");
-        else if(!notification.getWasRead()){
-            JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-            setNotificationToRead(jdbcTemplate, id);
-            notification.setWasRead(true);
-        }
-
-        return notification;
     }
 
     @Override
@@ -94,9 +87,8 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Transactional
-    public void setNotificationToRead(JdbcTemplate jdbcTemplate, Long idUser) {
+    public void setNotificationToRead(JdbcTemplate jdbcTemplate, Long idNotification) {
         jdbcTemplate.update(
-                "update notification set was_read = TRUE where id = ?", idUser);
+                "update notification set was_read = TRUE where id = ?", idNotification);
     }
-
 }
