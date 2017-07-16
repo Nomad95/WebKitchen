@@ -11,8 +11,11 @@ import org.JKDW.security.TokenUtils;
 import org.JKDW.user.model.DTO.StringRequestBody;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 import org.JKDW.user.model.DTO.UserAccountDTO;
-import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
 import org.JKDW.user.model.UserAccount;
+import org.JKDW.user.model.VerificationToken;
+import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
+
+
 
 /*
  *
@@ -51,9 +54,17 @@ public interface UserAccountService {
 
 	Boolean checkIfNickIsTaken(String nick);
 
+	void createVerificationToken(UserAccount user, String token);
+
+	VerificationToken getVerificationToken(String VerificationToken);
+
+	UserAccount getUserByVerificationToken(String verificationToken);
+
 	UserAccount changePassword(UserAccountPasswordChangeDTO userAccountPasswordDTO);
 
 	String getMyNickByToken(String username);
+
+	UserAccount getUserAccountByUsername(String username);
 
 	static String getMyUsernameFromToken(HttpServletRequest request, TokenUtils tokenUtils){
 		String myUsernameFromToken;

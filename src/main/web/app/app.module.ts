@@ -8,6 +8,10 @@ import {JQ_TOKEN} from './events/j-query.service';
 import { MyDatePickerModule } from 'mydatepicker';
 import { SelectModule } from "ng2-select";
 import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
+import { RecaptchaModule } from 'ng2-recaptcha';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToasterModule } from 'angular2-toaster';
+
 
 import { routing, appRouterProviders } from './app.routing';
 import { AppComponent } from './app.component';
@@ -17,8 +21,8 @@ import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
-import { MyProfileComponent } from './profile/myProfile/myProfile.component';
 import { ChangePasswordComponent } from './profile/changePassword/change-password.component';
+import { MyProfileComponent } from './profile/myProfile/myProfile.component';
 import { ProfileComponent } from './profile/userProfile/profile.component';
 import { Tabset } from './tabs/Tabset';
 import { Tab } from './tabs/Tab';
@@ -44,8 +48,8 @@ import {SentMessagesComponent} from "./messages/sent/sent-messages.component";
 import {MessageBoxSentComponent} from "./messages/messagebox/messagebox-sent.component";
 import {MessageBoxComponent} from "./messages/messagebox/messagebox.component";
 import {LoginService} from "./login/login.service";
+import {ConfirmRegistrationComponent} from "./registration/confirmation/confirm.registration.component";
 import { RecaptchaModule } from 'ng2-recaptcha';
-import {CaptchaComponent} from "./captcha-test/captcha.component";
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import { AlertComponent } from './profile/myProfile/username-changed-alert.component';
 import {ImageCropperComponent} from 'ng2-img-cropper';
@@ -55,14 +59,13 @@ import {UploadPhotoComponent} from './profile/uploadPhoto/upload-photo.component
 import {ProfilePhotoAlertComponent} from './profile/uploadPhoto/profile-photo-not-changed-alert.component';
 
 
-
 import {AuthGuard} from './app.auth-guard.service';
 import {LoginBanned} from "./login/login-banned-user.component";
 import {SharedService} from "./shared.service";
+import { ToasterService } from 'angular2-toaster';
 
 import {PolishDatePipe} from "./util/pipes/polish.date.pipe";
 import {ShorterTimePipe} from "./util/pipes/shorter.time.pipe";
-
 
 declare let jQuery:Object;
 
@@ -73,10 +76,8 @@ declare let jQuery:Object;
         HomeComponent,
         UserComponent,
         RegistrationComponent,
-        CaptchaComponent,
         LoginComponent,
         ProfileComponent,
-        AlertComponent,
         NavbarComponent,
         EventListComponent,
         Tabset,
@@ -90,10 +91,10 @@ declare let jQuery:Object;
         UserParticipateEventsComponent,
         ProfileEventsComponent,
         UserComponent,
+        ConfirmRegistrationComponent,
         RegistrationComponent,
         LoginComponent,
         MyProfileComponent,
-        ChangePasswordComponent,
         NavbarComponent,
         EventListComponent,
         EventGeneralComponent,
@@ -102,11 +103,13 @@ declare let jQuery:Object;
         RegistrationSuccess,
         LoginSuccess,
         LoginBanned,
+        AlertComponent,
         AdminComponent,
         AdminPanelUEComponent,
         PolishDatePipe,
         ShorterTimePipe,
         SendingMessageComponent,
+        ChangePasswordComponent,
         ReceivedMessagesComponent,
         SentMessagesComponent,
         MessageBoxComponent,
@@ -118,24 +121,26 @@ declare let jQuery:Object;
         ProfilePhotoAlertComponent
     ],
     imports: [BrowserModule,
-              FormsModule,
-              ReactiveFormsModule,
-              NguiDatetimePickerModule,
-              HttpModule,
-              SelectModule,
-              MyDatePickerModule,
-              RecaptchaModule.forRoot(),
-              AlertModule.forRoot(),
-              DatepickerModule.forRoot(),
-              BootstrapModalModule,
-              routing],
-    entryComponents: [AlertComponent, ProfilePhotoAlertComponent],
+        FormsModule,
+        ReactiveFormsModule,
+        NguiDatetimePickerModule,
+        BrowserAnimationsModule,
+        HttpModule,
+        SelectModule,
+        MyDatePickerModule,
+        ToasterModule,
+        RecaptchaModule.forRoot(),
+        AlertModule.forRoot(),
+        DatepickerModule.forRoot(),
+        BootstrapModalModule,
+        routing],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
         AuthGuard,
         SharedService,
         appRouterProviders,
         LoginService,
+        ToasterService,
         [{provide: APP_BASE_HREF, useValue: '/'}],
         [{provide: LocationStrategy, useClass: HashLocationStrategy}],
         [{provide: JQ_TOKEN, useValue: jQuery}]

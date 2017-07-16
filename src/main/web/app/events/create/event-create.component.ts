@@ -4,10 +4,13 @@ import {EventService} from '../event.service';
 import {LoginService} from '../../login/login.service';
 import {UtilMethods} from '../../util/util-methods.service';
 import {IMyDpOptions, IMyDateModel} from 'mydatepicker';
+import {ToasterContainerComponent, ToasterService} from 'angular2-toaster';
 
 import { EventType1 } from '../model/eventType1';
 import { EventType2 } from "../model/eventType2";
 import {DatePickerValues} from "../../util/datepicker/date-picker-values.model";
+
+import {ToastConfigurerFactory} from "../../util/toast/toast-configurer.factory";
 
 
 
@@ -15,19 +18,22 @@ import {DatePickerValues} from "../../util/datepicker/date-picker-values.model";
 @Component({
     selector: 'event-create',
     templateUrl: 'app/events/create/event-create.component.html',
-    providers: [EventService, UtilMethods]
+    providers: [EventService, UtilMethods],
+    directives: [ToasterContainerComponent]
 })
 export class EventCreateComponent implements OnInit {
     constructor(private router: Router,
                 private eventService: EventService,
                 private loginService: LoginService,
-                private utilMethods: UtilMethods) {
+                private utilMethods: UtilMethods,
+                private toasterService: ToasterService) {
     }
 
     ngOnInit() {
         //gets id then address and check if can create event
         //more info in method beneath
         this.findUserId();
+        this.initializeDatePickerOptions();
     }
 
     /**
@@ -64,6 +70,8 @@ export class EventCreateComponent implements OnInit {
      */
     private isEventCreated: boolean = false;
 
+    private MAX_FILE_SIZE = 1040000;
+
     private selectedFile: File;
 
     /**
@@ -77,9 +85,25 @@ export class EventCreateComponent implements OnInit {
     private isPhotoUploaded = false;
 
     /**
+     * Show alert when photo size exceeds 1 MB
+     */
+    private isPhotoSizeTooBig = false;
+
+    /**
      * indicates whether user provided time from popup sliders, otherwise it can produce errors
      */
     private isTimeValid = true;
+
+    /**
+     * has user typed number in range 2-25? (quant of ppl)
+     */
+    private isParticipantsQuantityProper = true;
+
+    /**
+     * has user typed number in range 0-25 (quant of prod)
+     * @type {boolean}
+     */
+    private isQuantityOfProductsProper = true;
 
     /**
      * path to photo
@@ -112,8 +136,14 @@ export class EventCreateComponent implements OnInit {
      * Intializes datepicker variables
      */
     initializeDatePickerOptions(): void{
-        this.datePicker.initializeDatePicker();
+        this.datePicker.initializeDatePickerForEvents();
+        this.datePicker.addDisableUntil();
     }
+
+    /**
+     * Configure toaster notifications
+     */
+    public toasterConfig = ToastConfigurerFactory.basicToastConfiguration();
 
     /**
      * When user picks date save it to the model
@@ -188,6 +218,7 @@ export class EventCreateComponent implements OnInit {
                     this.isEventCreated = true;
                     //assign current user to new event
                     this.assignUserToEvent(data.id);
+                    this.toasterService.pop(ToastConfigurerFactory.successSimpleMessage("","Wydarzenie zostało stworzone"));
                 },
                 err => {
                     console.log('error adding event!');
@@ -208,13 +239,12 @@ export class EventCreateComponent implements OnInit {
     }
 
     /**
-     * Instantly accepts owner participation 
+     * Instantly accepts owner participation
      */
     acceptUser(eventId: number, userId: number){
         this.eventService.addUserIdToAcceptedList(eventId,userId)
             .subscribe( data => {
                 console.log('accepted id: '+userId);
-
             });
     }
 
@@ -239,6 +269,17 @@ export class EventCreateComponent implements OnInit {
         let fileList:FileList = event.target.files;
         if (fileList.length > 0) {
             this.selectedFile = fileList[0];
+            //check file size (max 10 MB)
+            console.log(this.selectedFile.size);
+            if(this.selectedFile.size > this.MAX_FILE_SIZE){
+                console.log("Photos size is too big");
+                //prevents showing photo in modal and previous photo path to persist
+                this.pathToPhotoPreview = '';
+                this.newEventType1.photo='';
+                //show alert
+                this.isPhotoSizeTooBig = true;
+                return;
+            }
             //check extention
             this.isProperPhoto = EventCreateComponent.checkFileExtension(this.selectedFile);
             if (!this.isProperPhoto) {
@@ -249,6 +290,7 @@ export class EventCreateComponent implements OnInit {
             this.newEventType1.photo = "/img/dish/" + this.selectedFile.name;
             this.pathToPhotoPreview = this.newEventType1.photo;
             this.uploadPhoto(this.selectedFile);
+            this.isPhotoSizeTooBig = false;
         }
     }
 
@@ -262,6 +304,16 @@ export class EventCreateComponent implements OnInit {
         let fileList:FileList = event.target.files;
         if (fileList.length > 0) {
             this.selectedFile = fileList[0];
+            //check file size (max 10 MB)
+            console.log(this.selectedFile.size);
+            if(this.selectedFile.size > this.MAX_FILE_SIZE){
+                console.log("Photos size is too big");
+                //prevents showing photo in modal and previous photo path to persist
+                this.pathToPhotoPreview = '';
+                this.newEventType2.photo='';
+                this.isPhotoSizeTooBig = true;
+                return;
+            }
             //check extention
             this.isProperPhoto = EventCreateComponent.checkFileExtension(this.selectedFile);
             if (!this.isProperPhoto) {//if extension is not valid
@@ -272,6 +324,7 @@ export class EventCreateComponent implements OnInit {
             this.newEventType2.photo = "/img/dish/" + this.selectedFile.name;
             this.pathToPhotoPreview = this.newEventType2.photo;
             this.uploadPhoto(this.selectedFile);
+            this.isPhotoSizeTooBig = false;
         }
     }
 
@@ -301,6 +354,7 @@ export class EventCreateComponent implements OnInit {
     showPhotoInModal() {
         if(this.pathToPhotoPreview !== '')
             this.isPhotoUploaded = true;
+        else this.isPhotoUploaded = false;
     }
 
     /**
@@ -358,6 +412,20 @@ export class EventCreateComponent implements OnInit {
         if(this.hasProvidedFlatNumber(addressObj.flatNumber))
             resultString = resultString + '/' +addressObj.flatNumber;
         return resultString;
+    }
+
+    /**
+     * Performs a number input range validation
+     */
+    validateParticipantsQuantity(value: number){
+        this.isParticipantsQuantityProper = !(value < 2 || value > 25);
+    }
+
+    /**
+     * performs a number input range validation of quantity of products to bring
+     */
+    validateQuantityOfProducts(value: number){
+        this.isQuantityOfProductsProper = !(value < 0 || value > 25);
     }
 
     /**

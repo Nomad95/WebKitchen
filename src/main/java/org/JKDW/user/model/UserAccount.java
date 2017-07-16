@@ -55,6 +55,9 @@ public class UserAccount {
 	@Column(name = "is_banned")
 	private Boolean isBanned;
 
+	@Column(name = "is_enabled")
+	private boolean isEnabled;
+
 	public UserAccount(){
 	}
 
@@ -70,6 +73,7 @@ public class UserAccount {
 	@PrePersist
 	protected void onCreate() {
 		createdAt = new Date();
+		isEnabled = false;
 	}
 
 	public Date getCreatedAt() {
@@ -86,6 +90,14 @@ public class UserAccount {
 
 	public void setLastLogged(Date lastLogged) {
 		this.lastLogged = lastLogged;
+	}
+
+	public boolean isEnabled() {
+		return isEnabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.isEnabled = enabled;
 	}
 
 	public Boolean getFilled() {

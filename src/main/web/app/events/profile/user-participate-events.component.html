@@ -1,8 +1,9 @@
-<div class="well">
+<toaster-container [toasterconfig]="toasterConfig"></toaster-container>
+<div class="well-kitchen">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" >
             <div class="table-responsive">
-                <table class="table" *ngIf="events.length > 0">
+                <table class="table" *ngIf="events.length > 0" >
                     <thead >
                     <th class="text-center">Tytuł</th>
                     <th class="text-center">Nazwa posiłku</th>
@@ -16,8 +17,8 @@
                     <tr *ngFor="let event of events"
                          class="text-center" [class.success]="event.accepted">
                         <ng-container *ngIf="event.ownerId != userId">
-                            <td>{{event.title}}</td>
-                            <td>{{event.dish_name}}</td>
+                            <td style="word-wrap: break-word;">{{event.title}}</td>
+                            <td style="word-wrap: break-word;">{{event.dish_name}}</td>
                             <td>{{convertToEventKind(event.type)}}</td>
                             <td>{{event.date | date | polishDate}}</td>
                             <td>{{event.time | shorterTime}}</td>
@@ -26,7 +27,7 @@
                                 <i class="fa fa-times" aria-hidden="true" *ngIf="!event.accepted"></i>
                             </td>
                             <td>
-                                <button class="btn btn-default"
+                                <button class="btn btn-kitchen-default"
                                 (click)="goToEventDetails(event.id)">
                                     <i class="fa fa-arrow-right" aria-hidden="true"></i>
                                 </button>

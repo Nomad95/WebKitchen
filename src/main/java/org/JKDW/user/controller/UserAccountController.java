@@ -1,32 +1,35 @@
 package org.JKDW.user.controller;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
+import org.JKDW.mail.event.OnRegistrationCompleteEvent;
 import org.JKDW.security.TokenUtils;
+import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
 import org.JKDW.user.model.DTO.StringRequestBody;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 import org.JKDW.user.model.DTO.UserAccountDTO;
-import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.model.UserDetails;
+import org.JKDW.user.model.VerificationToken;
+import org.springframework.context.ApplicationEventPublisher;
+
 import org.JKDW.user.service.UserAccountService;
 import org.JKDW.user.service.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -39,6 +42,9 @@ public class UserAccountController {
 	 * we get project directory and add path to static\img path
 	 */
 	private static String UPLOADED_FOLDER = System.getProperty("user.dir") + "\\build\\generated-web-resources\\static\\img\\";
+
+	@Autowired
+	private ApplicationEventPublisher eventPublisher;
 
 	@Autowired
 	private UserAccountService userAccountService;
@@ -77,13 +83,23 @@ public class UserAccountController {
 	 * we use @valid annotation to validate passed object
 	 */
 	@RequestMapping(value="/create",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserAccount> createUserAccount(@RequestBody @Valid UserAccountCreateDTO userAccount) {
+	public ResponseEntity<UserAccount> createUserAccount(@RequestBody @Valid UserAccountCreateDTO userAccount, WebRequest request) {
 		UserAccount createdUserAccount = userAccountService.createUserAccount(userAccount);
 		//create details and link it with userAccount
 		UserDetails userDetails = new UserDetails();
 		userDetails.setUserAccount(createdUserAccount);
 		userDetailsService.createUserDetails(userDetails);
 		prepareUserDirectories(createdUserAccount.getNick()+"\\profilePhoto\\");
+
+		//publish event to create email validation token
+		try {
+			String appUrl = request.getContextPath();
+			eventPublisher.publishEvent(new OnRegistrationCompleteEvent
+					(createdUserAccount, request.getLocale(), appUrl));
+		} catch (Exception me) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
 		return new ResponseEntity<>(createdUserAccount,HttpStatus.CREATED);
 	}
 
@@ -118,7 +134,7 @@ public class UserAccountController {
 	 * Finds id of user provided with username
 	 * @param username username of user
 	 * @return id of user
-     */
+	 */
 	@RequestMapping(value="/account/{username}/getid", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Long> getUserIdWithUsername(@PathVariable("username") String username){
 		Long idOfUsersUsername = userAccountService.findIdOfUsersUsername(username);
@@ -127,8 +143,8 @@ public class UserAccountController {
 
 	@RequestMapping(value = "/checkIsBanned/{username}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> checkIsUserBanned(@PathVariable("username") String username) {
-        Boolean status = userAccountService.checkIsUserBanned(username);
-        String stringStatus ="{\"status\": \""+ Boolean.toString(status) +"\"}";
+		Boolean status = userAccountService.checkIsUserBanned(username);
+		String stringStatus ="{\"status\": \""+ Boolean.toString(status) +"\"}";
 		return new ResponseEntity<>(stringStatus, HttpStatus.OK);
 	}
 
@@ -158,7 +174,7 @@ public class UserAccountController {
 
 	/**
 	 * See service for more info
-     */
+	 */
 	@RequestMapping( value="/registration/taken/username/{username}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> checkIfUsernameIsTaken(@PathVariable("username")String username){
 		Boolean bool = userAccountService.checkIfUsernameIsTaken(username);
@@ -183,6 +199,7 @@ public class UserAccountController {
 		Boolean bool = userAccountService.checkIfNickIsTaken(nick);
 		return new ResponseEntity<>(bool, HttpStatus.OK);
 	}
+
 
 	/**
 	 *
@@ -219,6 +236,47 @@ public class UserAccountController {
 	public ResponseEntity<String> getMyNick(HttpServletRequest request) {
 		String nick = userAccountService.getMyNickByToken(UserAccountService.getMyUsernameFromToken(request, this.tokenUtils));
 		return new ResponseEntity<>("{\"nick\": \"" + nick + "\"}", HttpStatus.OK);
+	}
+
+	/**
+	 * Method executes when user clicks on activation link.
+	 * If token is valid change his account to 'Enabled"
+	 * @return true if token was valid.
+	 */
+	@RequestMapping(value = "/registration/confirm", method = RequestMethod.GET)
+	public ResponseEntity<Boolean> confirmRegistration(@RequestParam("token") String token) {
+
+		VerificationToken verificationToken = userAccountService.getVerificationToken(token);
+		//token not provided
+		if (verificationToken == null)
+			return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
+
+		UserAccount userAccount = verificationToken.getUserAccount();
+		//Calendar cal = Calendar.getInstance();
+		//token expired //TODO: zaimplementowac to ( narazie odpuszczam)
+		/*if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0)
+			return new ResponseEntity<>(false,HttpStatus.PRECONDITION_FAILED);*/
+
+		userAccount.setEnabled(true);
+		userAccountService.updateUserAccount(userAccount);
+		return new ResponseEntity<>(true,HttpStatus.OK);
+	}
+
+	/**
+	 * Checks if user is enabled or not.
+	 * Returns true if user isn't registered in database
+	 * @param username
+	 * @return true if passed the check or isnt egistered
+	 */
+	@RequestMapping(value = "registration/enable/{username}", method = RequestMethod.GET)
+	public ResponseEntity<Boolean> checkIfUserIsEnabled(@PathVariable("username") String username) {
+		UserAccount userAccount = userAccountService.getUserAccountByUsername(username);
+		//if user is not found we do not check if account enabled and allow to proces data further
+		if (userAccount == null)
+			return new ResponseEntity<>(true,HttpStatus.OK);
+		if	(userAccount.isEnabled())
+			return new ResponseEntity<>(true,HttpStatus.OK);
+		else return new ResponseEntity<>(false,HttpStatus.OK);
 	}
 
 }

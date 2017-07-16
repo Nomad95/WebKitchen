@@ -4,6 +4,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
+import {TokenUtils} from "../login/token-utils";
 
 @Injectable()
 export class UserService {
@@ -13,7 +14,7 @@ export class UserService {
 
     getTest() {
         //We get token from local storage
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        var currentToKey = JSON.parse(TokenUtils.getStoredToken());
     	let token = currentToKey && currentToKey.token;
 
         //create appropriate

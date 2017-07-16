@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map';
 import {Observable}    from 'rxjs/Observable';
 
 import {Cuisine} from '../profile/model/cuisine.model';
+import {TokenUtils} from "../login/token-utils";
 
 @Injectable()
 export class CuisinesService {
@@ -13,7 +14,7 @@ export class CuisinesService {
     
     getAllCuisines(){
         //We get token from local storage
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        var currentToKey = JSON.parse(TokenUtils.getStoredToken());
         let token = currentToKey && currentToKey.token;
         
 

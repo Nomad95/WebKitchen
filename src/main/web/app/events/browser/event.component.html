@@ -1,25 +1,39 @@
-<div class="well">
+<toaster-container [toasterconfig]="toasterConfig"></toaster-container>
+<div class="well-kitchen">
     <div class="row">
         <div class="col-md-12">
-            <table style="width: 100%">
+            <!--<table style="width: 100%">
                 <tr>
-                    <th style="font-size: 1.8em; color: black; word-wrap: break-word;"
+                    <th style="font-size: 1.8em; color: black; "
                         class="text-left">{{ event.title }}</th>
-                    <th style="font-size: 1.0em; color: black" class="text-right">{{ eventType }}</th>
+                    <th </th>
                 </tr>
-            </table>
+            </table>-->
+            <div class="row">
+                <div class="col-md-8 col-sm-12 text-left gridfix" style="font-size: 1.4em; color: black; "
+                     >{{ event.title }}
+                </div>
+                <div class="col-md-4 col-sm-12 text-right" style="font-size: 1.0em; font-weight: 200; color: black;"
+                >{{ eventType }}
+                </div>
+            </div>
         </div>
     </div>
+    <hr />
     <br/>
-    <ul class="list-unstyled">
-        <li>Stworzony przez: {{event.ownerUsername}}</li>
-        <li>Nazwa: {{event.dish_name}}</li>
-        <li>Data: {{event.date | date | polishDate}} {{event.time | shorterTime}}</li>
-        <li>Rodzaj: {{event.dish_kind}}</li>
-        <li>Liczba osób: {{event.people_quantity}}</li>
-        <li>Wolne miejsca: {{event.people_remaining}}</li>
-    </ul>
-    <!--TODO: co tu jeszcze dodac?-->
-    <!--after the comma pass an event id to route-->
-    <button class="btn btn-primary" [routerLink]="['/events',event.id]">Zobacz</button>
+    <div class="row" >
+        <div class="col-md-12" >
+            <ul class="list-unstyled lead-small">
+                <li><strong>Stworzony przez:</strong> {{event.ownerUsername}}</li>
+                <li class="gridfix"><strong>Nazwa:</strong> {{event.dish_name}}</li>
+                <li><strong>Data:</strong> {{event.date | date | polishDate}} {{event.time | shorterTime}}</li>
+                <li><strong>Rodzaj:</strong> {{event.dish_kind}}</li>
+                <li><strong>Liczba osób:</strong> {{event.people_quantity}}</li>
+                <li><strong>Wolne miejsca:</strong> {{event.people_remaining}}</li>
+            </ul>
+            <!--TODO: co tu jeszcze dodac?-->
+            <!--after the comma pass an event id to route-->
+            <button class="btn btn-kitchen-primary" [routerLink]="['/events',event.id]">Zobacz</button>
+        </div>
+    </div>
 </div>

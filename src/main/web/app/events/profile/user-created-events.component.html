@@ -1,27 +1,28 @@
-<div class="well">
-    <div class="row">
-        <div class="col-md-5 col-sm-12 col-xs-12">
+<toaster-container [toasterconfig]="toasterConfig"></toaster-container>
+<div class="well-kitchen">
+    <div class="row" >
+        <div class="col-md-5 col-sm-12 col-xs-12" style="word-break: break-all !important;">
             <h2 style="word-wrap: break-word;">{{event.title}}</h2>
             <table class="table">
                 <tbody>
                 <tr>
-                    <td class="text-right">Nazwa posiłku: </td>
+                    <td style="word-break: normal !important;" class="text-right">Nazwa posiłku: </td>
                     <td>{{event.dish_name}}</td>
                 </tr>
                 <tr>
-                    <td class="text-right">Data rozpoczęcia: </td>
+                    <td style="word-break: normal !important;" class="text-right">Data rozpoczęcia: </td>
                     <td>{{event.date | date | polishDate}}</td>
                 </tr>
                 <tr>
-                    <td class="text-right">Rodzaj: </td>
+                    <td style="word-break: normal !important;" class="text-right">Rodzaj: </td>
                     <td>{{event.dish_kind}}</td>
                 </tr>
                 <tr>
-                    <td class="text-right">Ilość uczestników: </td>
+                    <td style="word-break: normal !important;" class="text-right">Ilość uczestników: </td>
                     <td>{{event.people_quantity}}</td>
                 </tr>
                 <tr>
-                    <td class="text-right">Wolnych miejsc: </td>
+                    <td style="word-break: normal !important;" class="text-right">Wolnych miejsc: </td>
                     <td>{{event.people_remaining}}</td>
                 </tr>
                 </tbody>
@@ -82,7 +83,7 @@
     </div>
     <div class="row">
         <div class="col-md-3 col-sm-12 col-xs-12">
-            <button class="btn btn-primary" [routerLink]="['/events',event.id]">Zobacz wydarzenie</button>
+            <button class="btn btn-kitchen-primary" [routerLink]="['/events',event.id]">Zobacz wydarzenie</button>
         </div>
     </div>
 </div>

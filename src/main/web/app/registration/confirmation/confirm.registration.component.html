@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="row">
+        <div class=" col-md-12">
+            <div class="jumbotron">
+                <h4
+                        class="text-center"
+                        style="word-wrap: break-word;"
+                        *ngIf="!dataLoaded">
+                    Ładowanie...
+                </h4>
+                <div *ngIf="dataLoaded">
+                    <div *ngIf="!isAccepted" class="text-center">
+                        Niestety wystąpił błąd podczas aktywacji konta.
+                    </div>
+                    <div *ngIf="isAccepted" class="text-center">
+                        <h4>Twoje konto zostało zaakceptowane.</h4>
+                        <p class="text-center"><a class="btn btn-primary btn-lg"
+                                                  style="white-space: normal;" role="button"
+                                                  [routerLink]="['/login']">Zaloguj się</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

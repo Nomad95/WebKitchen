@@ -80,7 +80,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/stomp").permitAll()
                 .antMatchers("/calendar").authenticated()
                 .antMatchers("/user").authenticated()
-                //for frontend loading.
+                //for frontend loading.\
+                .antMatchers(HttpMethod.GET,"/traceur").permitAll()
                 .antMatchers("/**/*.html").permitAll()
                 .antMatchers("/globals").permitAll()
                 .antMatchers("/css/**").permitAll()

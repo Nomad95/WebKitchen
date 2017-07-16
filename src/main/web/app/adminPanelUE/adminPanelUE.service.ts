@@ -5,6 +5,7 @@ import {Observable}    from 'rxjs/Observable';
 import 'app/rxjs-operators';
 import 'rxjs/Rx';
 import {UserAccount} from '../registration/user-account';
+import {TokenUtils} from "../login/token-utils";
 
 @Injectable()
 export class AdminPanelUEService {
@@ -14,7 +15,7 @@ export class AdminPanelUEService {
     private name;
 
     constructor(private http: Http) {
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        var currentToKey = JSON.parse(TokenUtils.getStoredToken());
         let token = currentToKey && currentToKey.token;
         let username = currentToKey && currentToKey.username;
 
@@ -28,7 +29,7 @@ export class AdminPanelUEService {
     }
 
     authorization() {
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        var currentToKey = JSON.parse(TokenUtils.getStoredToken());
         let token = currentToKey && currentToKey.token;
 
 

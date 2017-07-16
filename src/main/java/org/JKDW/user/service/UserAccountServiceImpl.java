@@ -16,10 +16,12 @@ import org.JKDW.user.model.BannedUser;
 import org.JKDW.user.model.DTO.StringRequestBody;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 import org.JKDW.user.model.DTO.UserAccountDTO;
-import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
 import org.JKDW.user.model.UserAccount;
+import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
 import org.JKDW.user.repository.BannedUserRepository;
+import org.JKDW.user.model.VerificationToken;
 import org.JKDW.user.repository.UserAccountRepository;
+import org.JKDW.user.repository.VerificationTokenRepository;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,9 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Autowired
     private BannedUserRepository bannedUserRepository;
+
+    @Autowired
+    private VerificationTokenRepository tokenRepository;
 
 
     /**
@@ -172,9 +177,9 @@ public class UserAccountServiceImpl implements UserAccountService {
         });
 
         if (userAccount.getIsBanned())
-           return checkThatBanIsFinished(userAccount, jdbcTemplate);
+            return checkThatBanIsFinished(userAccount, jdbcTemplate);
         else
-           return userAccount.getIsBanned();
+            return userAccount.getIsBanned();
     }
 
     /** Checking if user has ban. Method invoked at every action logged user. **/
@@ -193,12 +198,13 @@ public class UserAccountServiceImpl implements UserAccountService {
         Boolean isAdmin = false;
         /* Pobiera z SecuirtyUser role w formacie [ROLE_TYP] */
         Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        System.out.println("W kontexcie jestem "+ authorities);
         for( SimpleGrantedAuthority element : authorities){
             if(element.toString().equals(ADMIN)) {
                 isAdmin = true;
             }
         }
-       return isAdmin;
+        return isAdmin;
     }
 
     public void deleteBanFromUserAfterTime(UserAccount user) {
@@ -249,19 +255,19 @@ public class UserAccountServiceImpl implements UserAccountService {
                 status, idUser);
     }
 
-	/**
-	 * Finds users Id with provided username
-	 * @param username of userAccount
-	 * @return id of user
+    /**
+     * Finds users Id with provided username
+     * @param username of userAccount
+     * @return id of user
      */
-	@Override
+    @Override
     @Transactional
-	public Long findIdOfUsersUsername(String username) {
-		UserAccount userAccount = loadUserByUsername(username);
-		if(userAccount == null)
-			return -1L;
-		return userAccount.getId();
-	}
+    public Long findIdOfUsersUsername(String username) {
+        UserAccount userAccount = loadUserByUsername(username);
+        if(userAccount == null)
+            return -1L;
+        return userAccount.getId();
+    }
 
     @Override
     public  List<Map<String, Object>> getAllNicks() {
@@ -299,6 +305,28 @@ public class UserAccountServiceImpl implements UserAccountService {
         return byNick != null;
     }
 
+    /**
+     * Creates verification token for provided user
+     * @param user
+     * @param token
+     */
+    @Override
+    public void createVerificationToken(UserAccount user, String token) {
+        VerificationToken myToken = new VerificationToken(token, user);
+        tokenRepository.save(myToken);
+    }
+
+    @Override
+    public VerificationToken getVerificationToken(String VerificationToken) {
+        return tokenRepository.findByToken(VerificationToken);
+    }
+
+    @Override
+    public UserAccount getUserByVerificationToken(String verificationToken) {
+        UserAccount userAccount = tokenRepository.findByToken(verificationToken).getUserAccount();
+        return userAccount;
+    }
+
     public UserAccount changePassword(UserAccountPasswordChangeDTO userAccountPasswordDTO) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         UserAccount foundUserAccount = userAccountRepository.findOne(userAccountPasswordDTO.getId());
@@ -314,6 +342,11 @@ public class UserAccountServiceImpl implements UserAccountService {
         String sql = "SELECT nick FROM USER_ACCOUNT WHERE USERNAME = ?";
         String myNick = jdbcTemplate.queryForObject(sql, new Object[] { username }, String.class);
         return myNick;
+    }
+
+    @Override
+    public UserAccount getUserAccountByUsername(String username) {
+        return userAccountRepository.findByUsername(username);
     }
 }
 

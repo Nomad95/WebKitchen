@@ -4,11 +4,19 @@ import 'rxjs/add/operator/toPromise';
 import {Observable}    from 'rxjs/Observable';
 import 'app/rxjs-operators';
 import 'rxjs/Rx';
+import {Errors} from "../util/error/errors";
+import {ToasterService} from 'angular2-toaster';
+import {ToastConfigurerFactory} from "../util/toast/toast-configurer.factory";
+import {TokenUtils} from "../login/token-utils";
+import {LoginService} from "../login/login.service";
+
 
 @Injectable()
 export class EventService {
     constructor(
-        private http: Http) {
+        private http: Http,
+        private toasterService: ToasterService,
+        private loginService: LoginService) {
     }
 
     private token = '';
@@ -24,8 +32,7 @@ export class EventService {
 
         return this.http.get('/api/event/general/all', {headers: headers})
             .map(res => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * @param id id of event
@@ -37,8 +44,7 @@ export class EventService {
 
         return this.http.get('/api/event/' + id, {headers: headers})
             .map(res => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * gets all events which user participates in
@@ -51,8 +57,7 @@ export class EventService {
 
         return this.http.get('/api/user/details/events/'+userId,{headers: headers})
             .map( res => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * Finds users events and participants
@@ -64,8 +69,7 @@ export class EventService {
 
         return this.http.get('/api/event/userevents/'+id, {headers: headers})
             .map(res => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * Gets user address information (city, street, street nr, house nr)
@@ -77,8 +81,7 @@ export class EventService {
 
         return this.http.get('/api/user/details/address/'+userId, {headers: headers})
             .map(res => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * finds evnt owner username
@@ -89,8 +92,7 @@ export class EventService {
 
         return this.http.get('/api/event/ownerusername/'+eventId, {headers: headers})
             .map(res => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * Checks if user has filled required fields in profile to create new event
@@ -102,8 +104,7 @@ export class EventService {
 
         return this.http.get('/api/user/details/eventcheck/cancreate/'+userId, {headers: headers})
             .map((res) => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * checks if user is arleady bound to this event
@@ -116,8 +117,7 @@ export class EventService {
 
         return this.http.get('/api/event/check/' + this.username + '/' + id, {headers: headers})
             .map((res) => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
 
     /**
@@ -130,8 +130,7 @@ export class EventService {
 
         return this.http.get('/api/user/details/eventcheck/canjoin/'+userId, {headers: headers})
             .map((res) => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * Adds id to event accepted list
@@ -145,8 +144,7 @@ export class EventService {
 
         return this.http.post('/api/event/userevents/'+eventId+'/accept/'+userId,null,{headers: headers})
             .map( res => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * Creates new Event
@@ -158,8 +156,7 @@ export class EventService {
 
         return this.http.post('/api/event/create', JSON.stringify(data), {headers: headers})
             .map((res) => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * Uploads a dish photo -> store in assets
@@ -200,22 +197,22 @@ export class EventService {
 
         return this.http.put('/api/event/userevents/refuse/'+eventId+'/'+userId,null,{headers: headers})
             .map( res => res.json())
-            .catch(this.handleError);
-    }
+            .catch(err => this.handleError(err));    }
 
     /**
      * Assigns logged user to Event
      * @param id
-     * @returns {Promise<R>|any|Promise<any|T>|Promise<any>|Promise<T>}
      * //TODO: username
      */
     assignUserToEvent(id:number) {
+        //this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd","Proszę spróbować jeszcze raz"));
+
         this.instantiateUsernameAndToken();
         var headers = this.createHeadersWithContentAndToken(this.token);
 
         return this.http.get('/api/event/bind/' + this.username + '/' + id, {headers: headers})
-            .map(() => null)
-            .catch(this.handleError);
+            .map( () => null)
+            .catch(err => this.handleError(err));
     }
 
 
@@ -232,24 +229,72 @@ export class EventService {
     }
 
     /**
-     * reads token from local storage and extracts username and token value
+     * reads token from local/session storage and extracts username and token value
      */
     instantiateUsernameAndToken(){
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        var currentToKey = JSON.parse(TokenUtils.getStoredToken());
         this.token = currentToKey && currentToKey.token;
         this.username = currentToKey && currentToKey.username;
     }
 
     /**
-     * reads token from local storage and extracts  token value
+     * reads token from local/session storage and extracts  token value
      */
     instantiateToken(){
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        var currentToKey = JSON.parse(TokenUtils.getStoredToken());
         this.token = currentToKey && currentToKey.token;
     }
 
-    private handleError(error:any):Promise<any> {
-        console.error('An error occurred in EventService', error);
+    private handleError(error: any):Promise<any> {
+        let errorBody = JSON.parse(error._body);
+        this.printErrorNotification(errorBody.path, error);
+        console.log('error has occured in event service',error);
+
         return Promise.reject(error.message || error);
+    }
+
+    private printErrorNotification(path: string, error: any){
+        if(error.status == Errors.HTTPSTATUS_UNAUTHORIZED ){
+            console.log("User is not authorized");
+            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Oops!","Wygląda na to że twoja sesja wygasła. Spróbuj zalogować się ponownie"));
+            this.loginService.checkIfTokenIsValid();
+        }
+        else if (path.search("/api/user/details/events/") == 0 && error.status == Errors.HTTPSTATUS_NOT_FOUND){
+            console.log("Cant find the user!");
+            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd",""));
+        }
+        else if (path.search("/api/user/details/address/") == 0 && error.status == Errors.HTTPSTATUS_NOT_FOUND){
+            console.log("Cant find the user!");
+        }
+        else if (path.search("/api/event/ownerusername/") == 0 && error.status == Errors.HTTPSTATUS_NOT_FOUND){
+            console.log("Cant find the user!");
+            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd",""));
+        }
+        else if (path.search("/api/event/userevents/refuse/") == 0 && error.status == Errors.HTTPSTATUS_NOT_FOUND){
+            console.log("Cant find the user!");
+            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd",""));
+        }
+        else if (path == "/api/upload/photo/dish" && error.status == Errors.HTTPSTATUS_NOT_FOUND){
+            console.log("File wasn't selected!");
+            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Nie wybrałeś zdjęcia",""));
+        }
+        else if (path == "/api/upload/photo/dish" && error.status == Errors.HTTPSTATUS_INERNAL_SERVER_ERROR){
+            console.log("Invalid argument!");
+            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Dodanie zdjęcia się nie powiodło",""));
+        }
+        else if (path == "/api/upload/photo/dish" && error.status == Errors.HTTPSTATUS_BAD_REQUEST){
+            console.log("Bad request!");
+            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Dodanie zdjęcia się nie powiodło",""));
+        }
+        else if (path.search("/api/event/bind/") == 0 && error.status == Errors.HTTPSTATUS_INERNAL_SERVER_ERROR){
+            console.log("Cant bind user to event!");
+            this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd",""));
+        }
+        else if (error.status == Errors.HTTPSTATUS_NOT_FOUND){
+            console.log("Data not found!");
+        }
+        else if (error.status == Errors.HTTPSTATUS_INERNAL_SERVER_ERROR){
+            console.log("Server eror!");
+        }
     }
 }

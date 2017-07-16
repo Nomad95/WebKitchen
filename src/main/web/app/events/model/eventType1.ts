@@ -19,7 +19,7 @@ export class EventType1{
         this.type = 1;
         this.time = '';
         this.photo = '';
-        this.people_quantity = 0;
+        this.people_quantity = 2;
         this.dish_name = '';
         this.dish_kind = 0;
         this.description = '';

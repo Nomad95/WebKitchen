@@ -1,7 +1,8 @@
 <div class="container">
+    <toaster-container [toasterconfig]="toasterConfig"></toaster-container>
     <div class="row">
         <div class="col-md-12">
-            <div class="well">
+            <div class="well-kitchen">
                 <div class="row">
                     <div class="col-md-9 col-md-offset-1">
                         <form #eventCreateForm="ngForm" novalidate><!-- we disable browser walidation -->
@@ -143,14 +144,16 @@
                                     <input #peoplequantt1="ngModel"
                                            type="number"
                                            required
-                                           min="1"
+                                           min="2"
                                            max="25"
+                                           placeholder="2"
                                            class="form-control"
+                                           (blur)="validateParticipantsQuantity(newEventType1.people_quantity)"
                                            [(ngModel)]="newEventType1.people_quantity"
                                            name="newEventType1.people_quantity">
-                                    <div *ngIf="peoplequantt1.invalid && peoplequantt1.touched"
-                                         class="alert alert-danger" role="alert">
-                                        Liczba osób powinna zawierać się w przedziale 1-25.
+                                    <div *ngIf="!isParticipantsQuantityProper"
+                                         class="alert alert-danger" role="alert"> <!--liczba do uzgodnienia-->
+                                        Liczba osób powinna zawierać się w przedziale 2-25.
                                     </div>
                                 </div>
 
@@ -203,55 +206,60 @@
                                          role="alert">
                                         Zdjęcie jest niepoprawne.
                                     </div>
+                                    <div *ngIf="isPhotoSizeTooBig" class="alert alert-danger"
+                                         role="alert">
+                                        Rozmiar zdjęcia jest za duży (max. 1 MB)
+                                    </div>
                                 </div>
 
                                 <div class="col-md-2">
-                                    <button type="button" class="btn btn-default"
+                                    <button type="button" class="btn btn-kitchen-primary"
                                             data-toggle="modal" data-target="#myModalType1"
                                             (click)="showPhotoInModal()"
-                                            [disabled]="!eventCreateForm.valid || !isProperPhoto || !isTimeValid">Stwórz wydarzenie
+                                            [disabled]="!eventCreateForm.valid || !isProperPhoto
+                                             || !isTimeValid || !isParticipantsQuantityProper">Stwórz wydarzenie
                                     </button> <!--[disabled] -> makes button not accessable before validated-->
                                 </div>
 
                             </div>
 
                             <!-- modal start -->
-                            <div class="modal fade" id="myModalType1" tabindex="-1" role="dialog"
+                            <div class="modal fade modal-kitchen" id="myModalType1" tabindex="-1" role="dialog"
                                  aria-labelledby="myModalLabel">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
-                                        <div class="modal-header">
+                                        <div class="modal-kitchen-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span></button>
                                             <h4 class="modal-title" id="myModalLabelType1">Potwierdź dane
                                                 wydarzenia</h4>
                                         </div>
-                                        <div class="modal-body">
+                                        <div class="modal-body lead-small indent-text" style="word-break: break-all !important;">
                                             <span>Zostanie stworzone następujące wydarzenie:</span>
-                                            <ul>
-                                                <li>Tytuł wydarzenia: {{newEventType1.title}}</li>
-                                                <li>Godzina: {{newEventType1.time}}</li>
-                                                <li>Data: {{newEventType1.date}}</li>
-                                                <li>Adres: {{newEventType1.address}}</li>
-                                                <li>Nazwa posiłku: {{newEventType1.dish_name}}</li>
-                                                <li>Rodzaj posiłku: {{newEventType1.dish_kind}}</li>
-                                                <li>Ilość osób: {{newEventType1.people_quantity}}</li>
-                                                <li>Dodatkowe informacje o posiłku: {{newEventType1.additional_info}}
+                                            <ul class="list-unstyled">
+                                                <li><strong>Tytuł wydarzenia: </strong> {{newEventType1.title}}</li>
+                                                <li><strong>Godzina: </strong> {{newEventType1.time}}</li>
+                                                <li><strong>Data: </strong> {{newEventType1.date}}</li>
+                                                <li><strong>Adres: </strong> {{newEventType1.address}}</li>
+                                                <li><strong>Nazwa posiłku: </strong> {{newEventType1.dish_name}}</li>
+                                                <li><strong>Rodzaj posiłku: </strong> {{newEventType1.dish_kind}}</li>
+                                                <li><strong>Ilość osób: </strong> {{newEventType1.people_quantity}}</li>
+                                                <li><strong>Dodatkowe informacje o posiłku: </strong> {{newEventType1.additional_info}}
                                                 </li>
-                                                <li>Opis: {{newEventType1.description}}</li>
+                                                <li><strong>Opis: </strong> {{newEventType1.description}}</li>
                                             </ul>
                                             <img *ngIf="isPhotoUploaded" [src]="pathToPhotoPreview" class="img-responsive">
                                         </div>
                                         <div class="modal-footer">
-                                            <button *ngIf="!isEventCreated" type="button" class="btn btn-default"
+                                            <button *ngIf="!isEventCreated" type="button" class="btn btn-kitchen-default"
                                                     data-dismiss="modal">Powrót
                                             </button>
-                                            <button *ngIf="!isEventCreated" type="button" class="btn btn-primary"
+                                            <button *ngIf="!isEventCreated" type="button" class="btn btn-kitchen-primary"
                                                     (click)="createNewEvent(newEventType1)"
                                                     data-loading-text="Sprawdzanie..." id="saveEventButton"
                                                     autocomplete="off">Zapisz
                                             </button>
-                                            <button *ngIf="isEventCreated" type="button" class="btn btn-default"
+                                            <button *ngIf="isEventCreated" type="button" class="btn btn-kitchen-default"
                                                     data-dismiss="modal" [routerLink]="['/events']">OK!
                                             </button>
                                         </div>
@@ -378,14 +386,16 @@
                                     <input #peoplequantt2="ngModel"
                                            type="number"
                                            required
-                                           min="1"
+                                           min="2"
                                            max="25"
+                                           placeholder="2"
+                                           (blur)="validateParticipantsQuantity(newEventType2.people_quantity)"
                                            class="form-control"
                                            [(ngModel)]="newEventType2.people_quantity"
                                            name="newEventType2.people_quantity">
-                                    <div *ngIf="peoplequantt2.invalid && peoplequantt2.touched"
+                                    <div *ngIf="!isParticipantsQuantityProper"
                                          class="alert alert-danger" role="alert">
-                                        Liczba osób powinna zawierać się w przedziale 1-25.
+                                        Liczba osób powinna zawierać się w przedziale 2-25.
                                     </div>
                                 </div>
 
@@ -402,10 +412,11 @@
                                            type="number"
                                            class="form-control"
                                            [(ngModel)]="newEventType2.quantity_of_products"
+                                           (blur)="validateQuantityOfProducts(newEventType2.quantity_of_products)"
                                            name="newEventType2.quantity_of_products">
-                                    <div *ngIf="minitemst2.invalid && minitemst2.touched" class="alert alert-danger"
+                                    <div *ngIf="!isQuantityOfProductsProper" class="alert alert-danger"
                                          role="alert">
-                                        Liczba produktów nie może być pusta.
+                                        Liczba produktów musi zawierać się w przedziale 0-25.
                                     </div><!-- co jak moze ktos nie chce aby ktos cos kupowal? -->
                                 </div>
                                 <div class="form-group"
@@ -452,13 +463,19 @@
                                          role="alert">
                                         Zdjęcie jest niepoprawne.
                                     </div>
+                                    <div *ngIf="isPhotoSizeTooBig" class="alert alert-danger"
+                                         role="alert">
+                                        Rozmiar zdjęcia jest za duży (max. 1 MB)
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-2">
-                                        <button type="submit" class="btn btn-default"
+                                        <button type="submit" class="btn btn-kitchen-primary"
                                                 data-toggle="modal" data-target="#myModalType2"
                                                 (click)="showPhotoInModal()"
-                                                [disabled]="!eventCreateForm.valid || !isProperPhoto ||!isTimeValid">Stwórz wydarzenie
+                                                [disabled]="!eventCreateForm.valid || !isProperPhoto
+                                                 ||!isTimeValid || !isParticipantsQuantityProper
+                                                 || !isQuantityOfProductsProper">Stwórz wydarzenie
                                         </button>
                                     </div>
                                 </div>
@@ -475,41 +492,41 @@
                                             <h4 class="modal-title" id="myModalLabelType2">Potwierdź dane
                                                 wydarzenia</h4>
                                         </div>
-                                        <div class="modal-body">
+                                        <div class="modal-body lead-small indent-text" style="word-break: break-all !important;">
                                             <span>Zostanie stworzone następujące wydarzenie:</span>
-                                            <ul>
-                                                <li>Tytuł wydarzenia: {{newEventType2.title}}</li>
-                                                <li>Godzina: {{newEventType2.time}}</li>
-                                                <li>Data: {{newEventType2.date}}</li>
-                                                <li>Adres: {{newEventType2.address}}</li>
-                                                <li>Nazwa posiłku: {{newEventType2.dish_name}}</li>
-                                                <li>Rodzaj posiłku: {{newEventType2.dish_kind}}</li>
-                                                <li>Ilość osób: {{newEventType2.people_quantity}}</li>
-                                                <li>Lista potrzebnych zakupów:
+                                            <ul class="list-unstyled">
+                                                <li><strong>Tytuł wydarzenia: </strong> {{newEventType2.title}}</li>
+                                                <li><strong>Godzina: </strong> {{newEventType2.time}}</li>
+                                                <li><strong>Data: </strong> {{newEventType2.date}}</li>
+                                                <li><strong>Adres: </strong> {{newEventType2.address}}</li>
+                                                <li><strong>Nazwa posiłku: </strong> {{newEventType2.dish_name}}</li>
+                                                <li><strong>Rodzaj posiłku: </strong> {{newEventType2.dish_kind}}</li>
+                                                <li><strong>Ilość osób: </strong> {{newEventType2.people_quantity}}</li>
+                                                <li><strong>Lista potrzebnych zakupów: </strong>
                                                     <span *ngFor="let item of tempShoppingListList">{{item}} </span>
                                                 </li>
-                                                <li>Lista posiadanych zakupów:
+                                                <li><strong>Lista posiadanych zakupów: </strong>
                                                     <span *ngFor="let item of tempProductsListList">{{item}} </span>
                                                 </li>
-                                                <li>Minimalna liczba produktów przyniesionych przez uczestnika:
+                                                <li><strong>Minimalna liczba produktów przyniesionych przez uczestnika: </strong>
                                                     {{newEventType2.quantity_of_products}}
                                                 </li>
-                                                <li>Dodatkowe informacje o posiłku: {{newEventType2.additional_info}}
+                                                <li><strong>Dodatkowe informacje o posiłku: </strong> {{newEventType2.additional_info}}
                                                 </li>
-                                                <li>Opis: {{newEventType2.description}}</li>
+                                                <li><strong>Opis: </strong> {{newEventType2.description}}</li>
                                             </ul>
                                             <img *ngIf="isPhotoUploaded" [src]="pathToPhotoPreview" class="img-responsive">
                                         </div>
                                         <div class="modal-footer">
-                                            <button *ngIf="!isEventCreated" type="button" class="btn btn-default"
+                                            <button *ngIf="!isEventCreated" type="button" class="btn btn-kitchen-default"
                                                     data-dismiss="modal">Powrót
                                             </button>
-                                            <button *ngIf="!isEventCreated" type="button" class="btn btn-primary"
+                                            <button *ngIf="!isEventCreated" type="button" class="btn btn-kitchen-primary"
                                                     (click)="createNewEvent(newEventType2)"
                                                     data-loading-text="Sprawdzanie..." id="saveEventButtonType2"
                                                     autocomplete="off">Zapisz
                                             </button>
-                                            <button *ngIf="isEventCreated" type="button" class="btn btn-default"
+                                            <button *ngIf="isEventCreated" type="button" class="btn btn-kitchen-default"
                                                     data-dismiss="modal" [routerLink]="['/events']">OK!
                                             </button>
                                         </div>

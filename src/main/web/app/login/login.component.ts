@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
-import {SharedService} from "../shared.service";
+import {SharedService} from "../shared.service"; //<==== this one
 import {StompService} from "../websocket/stomp.service"; //<==== this one
-
+import {ToasterContainerComponent} from 'angular2-toaster';
+import {ToastConfigurerFactory} from "../util/toast/toast-configurer.factory";
 
 @Component({
     selector: 'login',
-    templateUrl: 'app/login/login.component.html'
+    templateUrl: 'app/login/login.component.html',
+    directives: [ToasterContainerComponent]
 })
 export class LoginComponent {
 
@@ -18,6 +20,8 @@ export class LoginComponent {
         private stompService: StompService) {}
 
     nazwa;//?
+
+    private toasterConfig = ToastConfigurerFactory.basicToastConfiguration();
 
     private myBan = {
         dateEndOfBan: '',
@@ -33,53 +37,72 @@ export class LoginComponent {
     errorEncountered = false;
     private statusBan : String;
     private role :String;
+    private isAccountEnabled = true;
+    
+    //user selects if he wants to be allways logged
+    private shouldBeRemembered: boolean;
 
     private countUnreadMessages = {
         count:''
     };
 
-
     /**
+     * First, we check if user account is enabled(user has clicked on activation link), if not print error.
+     * If account is enabled then
      * we do post on /auth and get a token
      * token is preserved in browser local storage
      * then if login has been positive we check role of user and
      * is not an banned account
      */
     logins(credentials):void {
-        this.loginService
-            .getToken(credentials)
-            .subscribe(result => {
-                if (result === true) {
-                    this.credentials = {
-                        username: '',
-                        password: ''
-                    };
-                    this.loginService.checkIsUserBanned().subscribe(result => {
-                        this.statusBan = result.status;
-                        if (this.statusBan == "true") {
-                            this.sharedService.setIsBanned(true);
-                            this.getInfoAboutMyBan();
-                            this.loginService.removeToken();
+        //check if account is enabled
+        this.loginService.checkIfUserIsEnabled(credentials.username).subscribe(data => {
+            if(data === true){
+                this.loginService
+                    .getToken(credentials,this.shouldBeRemembered)
+                    .subscribe(result => {
+                        if (result === true) {
+                            this.credentials = {
+                                username: '',
+                                password: ''
+                            };
+
+                            this.loginService.checkIsUserBanned().subscribe(result => {
+                                this.statusBan = result.status;
+                                if (this.statusBan == "true") {
+                                    this.sharedService.setIsBanned(true);
+                                    console.log("Sprawdzanie bana" + this.sharedService.getIsBanned());
+                                    this.getInfoAboutMyBan();
+                                    this.loginService.removeToken();
+                                }
+                                else if (this.statusBan == "false") {
+                                    this.sharedService.setIsBanned(false);
+                                    console.log("Sprawdzanie bana" + this.sharedService.getIsBanned());
+                                }
+                            });
+
+                            this.checkIsUserAnAdmin();
+                            this.errorEncountered = false;
+                            this.isAccountEnabled = true;
+                            this.getMyNickAndConnectWithStomp();
+                            this.countMyUnreadMessages();
+
+                            //forwards to success page
+                            this.router.navigate(['/login/success']);
+                        } else {
+                            this.errorEncountered = true;
                         }
-                        else if (this.statusBan == "false") {
-                            this.sharedService.setIsBanned(false);
-                        }
+
+                        this.loginService.isLogged();
+                    }, error => {
+                        this.errorEncountered = true;
                     });
-                    this.checkIsUserAnAdmin();
-                    this.errorEncountered = false;
-                    this.getMyNickAndConnectWithStomp();
-                    this.countMyUnreadMessages();
+            }
+            else {
+                this.isAccountEnabled = false;
+            }
+        });
 
-                    //forwards to main page
-                    this.router.navigate(['/login/success']);
-                } else {
-                    this.errorEncountered = true;
-                }
-
-                this.loginService.isLogged();
-            }, error => {
-                this.errorEncountered = true;
-            });
     }
 
 
@@ -128,6 +151,5 @@ export class LoginComponent {
             err => console.log("An error occurred while retrieving count of unread message")
         );
     }
-
 
 }

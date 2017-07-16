@@ -1,33 +1,37 @@
+<toaster-container [toasterconfig]="toasterConfig"></toaster-container>
 <div class="container-fluid">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <div class="well">
+            <div class="col-md-12" style="word-break: break-all !important;">
+                <div class="well-kitchen">
                     <div class="row">
-                        <div class="col-md-12">
-                            <table style="width: 100%">
-                                <tr>
-                                    <th style="font-size: 1.8em; color: black" class="text-left">{{ event.title }}</th>
-                                    <th style="font-size: 1.0em; color: black" class="text-right">{{ eventType }}</th>
-                                </tr>
-                            </table>
+                        <div class="col-md-12" >
+                            <div class="row">
+                                <div class="col-md-8 col-sm-12 text-left" style="font-size: 1.8em; color: black; "
+                                >{{ event.title }}
+                                </div>
+                                <div class="col-md-4 col-sm-12 text-right" style="font-size: 1.0em; color: black;"
+                                >{{ eventType }}
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <hr />
                     <br/>
-                    <ul class="list-unstyled">
-                        <li>Stworzony przez: {{event.ownerUsername}}</li>
-                        <li>Data: {{event.date | date | polishDate}} {{event.time | shorterTime}}</li>
-                        <li>Adres: {{event.address}}</li>
-                        <li>Nazwa: {{event.dish_name}}</li>
-                        <li>Rodzaj: {{event.dish_kind}}</li>
-                        <li>Dodatkowe informacje: {{event.additional_info}}</li>
-                        <li>Liczba osób: {{event.people_quantity}}</li>
-                        <li>Wolne miejsca: {{event.people_remaining}}</li>
-                        <li>Opis: {{event.description}}</li>
-                        <li *ngIf="event.type == 2">Minimalna liczba przyniesionych produktów:
+                    <ul class="list-unstyled lead-small indent-text">
+                        <li><strong>Stworzony przez:</strong> {{event.ownerUsername}}</li>
+                        <li><strong>Data:</strong> {{event.date | date | polishDate}} {{event.time | shorterTime}}</li>
+                        <li><strong>Adres:</strong> {{event.address}}</li>
+                        <li><strong>Nazwa:</strong> {{event.dish_name}}</li>
+                        <li><strong>Rodzaj:</strong> {{event.dish_kind}}</li>
+                        <li><strong>Dodatkowe informacje:</strong> {{event.additional_info}}</li>
+                        <li><strong>Liczba osób:</strong> {{event.people_quantity}}</li>
+                        <li><strong>Wolne miejsca:</strong> {{event.people_remaining}}</li>
+                        <li><strong>Opis:</strong> {{event.description}}</li>
+                        <li *ngIf="event.type == 2"><strong>Minimalna liczba przyniesionych produktów:</strong>
                             {{event.quantity_of_products}}
                         </li>
-                        <li *ngIf="event.type == 2">Produkty do zakupu: {{event.shopping_list}}</li>
+                        <li *ngIf="event.type == 2"><strong>Produkty do zakupu:</strong> {{event.shopping_list}}</li>
 
                     </ul>
                     <div *ngIf="hasJoined && !isOwner" class="alert alert-info " role="alert">
@@ -42,16 +46,17 @@
                     <div *ngIf="isFull" class="alert alert-danger " role="alert">
                         Brak miejsc.
                     </div>
-                    <button *ngIf="!hasJoined && !isFull && canJoin && !isOwner" class="btn btn-primary" (click)="assignUserToEvent()"
+                    <hr />
+                    <button *ngIf="!hasJoined && !isFull && canJoin && !isOwner" class="btn btn-kitchen-primary" (click)="assignUserToEvent()"
                             type="button" id="join" data-loading-text="Sprawdzanie..."
                             autocomplete="off">Dołącz!
                     </button><!--TODO: bootstrap.css ładnie-->
-                    <button class="btn btn-primary"
+                    <button class="btn btn-kitchen-primary"
                             (click)="goBack()"
                             type="button" id="return"
                             autocomplete="off">Powrót
                     </button>
-                    <button *ngIf="hasJoined && !isOwner" class="btn btn-primary"
+                    <button *ngIf="hasJoined && !isOwner" class="btn btn-kitchen-primary"
                             (click)="resignFromEvent()"
                             type="button">Zrezygnuj
                     </button>
