@@ -6,6 +6,7 @@ export class SharedService {
     private isAdmin: boolean = false;
     private hasNewMessage: boolean;
     private numberOfUnreadMessages: number;
+    private numberOfUnreadNotifications: number;
     private myNick;
 
     public getIsBanned():boolean {
@@ -37,6 +38,14 @@ export class SharedService {
 
     public setNumberOfUnreadMessages(_numberOfUnreadMessages:number) {
         this.numberOfUnreadMessages = _numberOfUnreadMessages;
+    }
+
+    public getNumberOfUnreadNotifications():number {
+        return this.numberOfUnreadNotifications;
+    }
+
+    public setNumberOfUnreadNotifications(_numberOfUnreadNotifications:number) {
+        this.numberOfUnreadNotifications = _numberOfUnreadNotifications;
     }
 
     public getMyNick():string {

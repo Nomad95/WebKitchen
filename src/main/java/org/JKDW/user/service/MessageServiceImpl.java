@@ -5,8 +5,6 @@ import org.JKDW.user.model.Message;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.repository.MessageRepository;
 import org.JKDW.user.repository.UserAccountRepository;
-import org.JKDW.websocket.service.WebSocketService;
-import org.JKDW.websocket.model.Shout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -29,9 +27,6 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     private DataSource dataSource;
 
-    @Autowired
-    private WebSocketService webSocketService;
-
 
     @Override
     public Message sendMessage(Message message, String sender_username, String recipient_nick) throws NoResultException {
@@ -52,7 +47,6 @@ public class MessageServiceImpl implements MessageService {
 
         messageRepository.save(message);
 
-        webSocketService.sendNotificationToUser(recipient_nick, new Shout("newMessage"));
         return message;
     }
 
@@ -79,6 +73,7 @@ public class MessageServiceImpl implements MessageService {
         if(!message.getWasRead()){
             JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
             this.setMessageToRead(jdbcTemplate, id);
+            message.setWasRead(true);
         }
         return message;
     }
@@ -101,6 +96,8 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public Message getSentMessageById(Long id) throws NoResultException {
         Message message = messageRepository.findOne(id);
+        if(message == null)
+            throw new NoResultException("This message doesn't exist");
         return message;
     }
 

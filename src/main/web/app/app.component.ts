@@ -23,6 +23,10 @@ export class AppComponent implements OnInit {
     private countUnreadMessages = {
         count:''
     };
+
+    private countUnreadNotifications = {
+        count:''
+    };
     public serverResponse: string;
 
     constructor(private loginService: LoginService,
@@ -38,13 +42,15 @@ export class AppComponent implements OnInit {
             this.checkIsUserAnAdmin();
             this.ifUserHasBannedLogOut();
             this.countMyUnreadMessages();
+            this.countMyUnreadNotifications();
             this.stompService.getObservable().subscribe(payload => {
                 this.serverResponse = payload.message;
                 if (this.serverResponse === "newMessage")
                     this.countMyUnreadMessages();
                 else if (this.serverResponse === "ban")
                     this.ifUserHasBannedLogOut();
-
+                else if (this.serverResponse == "newNotification")
+                    this.countMyUnreadNotifications();
             });
         }
 
@@ -111,5 +117,16 @@ export class AppComponent implements OnInit {
         }, err => console.log("You hasn't nick ??")
         );
     }
+
+    countMyUnreadNotifications():void{
+        this.loginService.countMyUnreadNotifications().subscribe(
+            result => {
+                this.countUnreadNotifications = result;
+                this.sharedService.setNumberOfUnreadNotifications(Number(this.countUnreadNotifications.count));
+            },
+            err => console.log("An error occurred while retrieving count of unread notifications")
+        );
+    }
+
 
 }

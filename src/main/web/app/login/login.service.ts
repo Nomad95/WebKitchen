@@ -164,8 +164,20 @@ export class LoginService{
 			.catch(err => this.handleError(err));
 	}
 
+	countMyUnreadNotifications(){
+		this.headersLoggedUser = new Headers({
+			'content-type' : 'application/json',
+			'X-Auth-token' : this.token
+		});
+		this.url = "/api/notification/myNotifications/quantity/unread";
+		return this.http.get(this.url,{headers :this.headersLoggedUser})
+            .map(res => res.json())
+            .catch(this.handleError);
+	}
+
+
 	private handleError(error: any):Promise<any> {
-			let errorBody = JSON.parse(error._body);
+		let errorBody = JSON.parse(error._body);
 		this.printErrorNotification(errorBody.path, error);
 		console.log('error has occured in login service',error);
 
@@ -200,10 +212,9 @@ export class LoginService{
 		});
 
 		this.http.post("auth/validateToken/"+username,{tokenValue: token},{headers :this.headers})
-			.map(res => res.json())
-			.catch(err => this.handleError(err));
+            .map(res => res.json())
+            .catch(err => this.handleError(err));
 	}
-
 	/**
 	 * Checks if token has expired
 	 */
@@ -211,14 +222,14 @@ export class LoginService{
 		var currentToKey = JSON.parse(TokenUtils.getStoredToken());
 		let username = currentToKey && currentToKey.username;
 		let token = currentToKey && currentToKey.token;
-		
+
 		this.validateToken(token,username)
-			.subscribe( data => {
-					if(data == true){
-						TokenUtils.removeStoredTokens();
-						this.router.navigate(['/']);
-					} else
-						console.log("token valid");
-				});
+            .subscribe( data => {
+				if(data == true){
+					TokenUtils.removeStoredTokens();
+					this.router.navigate(['/']);
+				} else
+					console.log("token valid");
+			});
 	}
 }

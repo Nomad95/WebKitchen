@@ -26,6 +26,7 @@ import {MessageBoxSentComponent} from "./messages/messagebox/messagebox-sent.com
 import {DetailsReceivedMessagesComponent} from "./messages/details/details-received-message.component";
 import {DetailsSentMessagesComponent} from "./messages/details/details-sent-message.component";
 import {MessageBoxComponent} from "./messages/messagebox/messagebox.component";
+import {NotificationComponent} from "./notifications/notification.component";
 
 /* TODO: Układać to ładnie i po kolei*/
 const appRoutes: Routes = [
@@ -54,7 +55,7 @@ const appRoutes: Routes = [
     {path: "messagebox/sent/:indexFirstMsg", component: MessageBoxSentComponent, canActivate: [AuthGuard]},
     {path: "messagebox/received/details/:id", component: DetailsReceivedMessagesComponent, canActivate:[AuthGuard]},
     {path: "messagebox/sent/details/:id", component: DetailsSentMessagesComponent, canActivate:[AuthGuard]},
-
+    {path: "notifications/:page", component: NotificationComponent , canActivate: [AuthGuard]},
 ];
 
 export const appRouterProviders = [AuthGuard, LoginService];
