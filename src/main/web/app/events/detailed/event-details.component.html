@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12" style="word-break: break-all !important;">
-                <div class="well">
+                <div class="well-kitchen">
                     <div class="row">
                         <div class="col-md-12" >
                             <div class="row">
@@ -16,6 +16,7 @@
                             </div>
                         </div>
                     </div>
+                    <hr />
                     <br/>
                     <ul class="list-unstyled lead-small indent-text">
                         <li><strong>Stworzony przez:</strong> {{event.ownerUsername}}</li>
@@ -45,16 +46,17 @@
                     <div *ngIf="isFull" class="alert alert-danger " role="alert">
                         Brak miejsc.
                     </div>
-                    <button *ngIf="!hasJoined && !isFull && canJoin && !isOwner" class="btn btn-primary" (click)="assignUserToEvent()"
+                    <hr />
+                    <button *ngIf="!hasJoined && !isFull && canJoin && !isOwner" class="btn btn-kitchen-primary" (click)="assignUserToEvent()"
                             type="button" id="join" data-loading-text="Sprawdzanie..."
                             autocomplete="off">Dołącz!
                     </button><!--TODO: bootstrap.css ładnie-->
-                    <button class="btn btn-primary"
+                    <button class="btn btn-kitchen-primary"
                             (click)="goBack()"
                             type="button" id="return"
                             autocomplete="off">Powrót
                     </button>
-                    <button *ngIf="hasJoined && !isOwner" class="btn btn-primary"
+                    <button *ngIf="hasJoined && !isOwner" class="btn btn-kitchen-primary"
                             (click)="resignFromEvent()"
                             type="button">Zrezygnuj
                     </button>

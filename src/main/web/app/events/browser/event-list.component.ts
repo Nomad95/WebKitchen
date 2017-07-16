@@ -28,7 +28,7 @@ export class EventListComponent implements OnInit {
 
     //disables some view before loading up events
     private viewLoaded = false;
-    
+
     //configure toaster
     private toasterConfig = ToastConfigurerFactory.basicToastConfiguration();
 

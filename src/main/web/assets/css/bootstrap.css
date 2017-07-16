@@ -5534,6 +5534,7 @@ a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
 .alert-success {
 	color: #3c763d;
 	background-color: #dff0d8;
+	border-radius: 1px;
 	border-color: #d6e9c6;
 }
 
@@ -5548,6 +5549,7 @@ a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
 .alert-info {
 	color: #31708f;
 	background-color: #d9edf7;
+	border-radius: 1px;
 	border-color: #bce8f1;
 }
 
@@ -5562,6 +5564,7 @@ a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
 .alert-warning {
 	color: #8a6d3b;
 	background-color: #fcf8e3;
+	border-radius: 1px;
 	border-color: #faebcc;
 }
 
@@ -5575,6 +5578,7 @@ a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
 
 .alert-danger {
 	color: #a94442;
+	border-radius: 1px;
 	background-color: #f2dede;
 	border-color: #ebccd1;
 }
@@ -6417,18 +6421,44 @@ button.list-group-item-danger.active:focus {
 	padding-bottom: 75%;
 }
 
-
+/* elementy kiczenowe zamiast bootstrapa  by igor */
 .well-kitchen {
 	min-height: 20px;
 	padding: 19px;
 	margin-bottom: 20px;
-	background-color: #ffebe5;
-	border: 2px solid #212324;
-	border-radius: 4px;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
-	color: #080808;
+	background-color: #f5f5f5;
+	border: 1px solid #e3e3e3;
+	background:#FFF;
+	border-radius: 0px;
+	-webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+  -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
 }
+
+.btn-kitchen-primary{
+  border: none;
+	border-radius: 4px;
+  background-color: #FF6600; /*#fc5d44;*/
+	color: #FFFFFF;
+  opacity: 1;
+}
+
+.btn-kitchen-default{
+	border: 1px solid #FF6600;
+	color: #FF6600;
+	border-radius: 4px;
+  background-color: #FFFFFF; /*#fc5d44;*/
+  opacity: 1;
+}
+
+.btn-kitchen{
+  border: none;
+	border-radius: 4px;
+	color: #FFFFFF;
+  opacity: 1;
+}
+
+/* koniec elementow */
 
 .well {
 	min-height: 20px;
@@ -6500,6 +6530,17 @@ button.close {
 	outline: 0;
 }
 
+.modal-kitchen{
+	border-radius: 20px;
+}
+
+.modal-kitchen .modal-kitchen-header{
+	background-color: #FF6600;
+	color: #ffffff;
+	padding: 15px;
+	border-bottom: 1px solid #e5e5e5;
+}
+
 .modal.fade .modal-dialog {
 	-webkit-transition: -webkit-transform .3s ease-out;
 	-o-transition: -o-transform .3s ease-out;
@@ -6564,6 +6605,7 @@ button.close {
 .modal-header {
 	padding: 15px;
 	border-bottom: 1px solid #e5e5e5;
+	background-color: #FF6600;
 }
 
 .modal-header .close {
