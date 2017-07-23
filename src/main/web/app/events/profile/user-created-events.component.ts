@@ -3,23 +3,30 @@ import {EventService} from "../event.service";
 import {Router} from '@angular/router';
 import {ToastConfigurerFactory} from "../../util/toast/toast-configurer.factory";
 import {ToasterContainerComponent, ToasterService} from 'angular2-toaster';
+import {MessageModel} from "../../messages/model/MessageModel";
+import {MessageService} from "../../messages/message.service";
 
 @Component({
     selector: 'user-created-events',
     templateUrl: 'app/events/profile/user-created-events.component.html',
-    providers: [EventService],
+    providers: [EventService,MessageService],
     directives: [ToasterContainerComponent]
 })
 export class UserCreatedEventsComponent implements OnInit {
     constructor(private eventService: EventService,
                 private router: Router,
-                private toasterService: ToasterService) {
+                private toasterService: ToasterService,
+                private messageService: MessageService) {
     }
 
     //event from parent
     @Input() private event: any;
 
     private toasterConfig = ToastConfigurerFactory.basicToastConfiguration();
+
+    private acceptMessage: string = '';
+
+    private declineMessage: string = '';
 
 
     ngOnInit() {
@@ -37,8 +44,10 @@ export class UserCreatedEventsComponent implements OnInit {
     /**
      * Adds users id to event accepted users list
      * @param userId users id
+     * button pass accept or accept with message
      */
     acceptUser(userId: number){
+        console.log("rejecting user: "+userId);
         this.eventService.addUserIdToAcceptedList(this.event.id,userId)
             .subscribe( data => {
                 console.log('accepted id: '+userId);
@@ -56,7 +65,53 @@ export class UserCreatedEventsComponent implements OnInit {
         this.router.navigate(['/profile/',username]);
     }
 
+    //button send accept
+    acceptUserAndSendMessage(user){
+        console.log("accepting user with mess: "+user);
+        this.acceptUser(user.id);
+        let message = new MessageModel('Akceptacja uczestnictwa',new Date(),this.acceptMessage);
+        this.messageService.sendMessage(message,user.nick)
+            .subscribe( res => {
+                console.log(res);
+                this.acceptMessage = '';
+            }, err => {
+                console.log(err);
+            });
+        this.messageService.sendNotification('Zaakceptowano twoje uczestnictwo',user.nick)
+            .subscribe( res => {
+                console.log(res);
+                this.acceptMessage = '';
+            }, err => {
+                console.log(err);
+            });
+    }
+
+    //button send decline
+    declineUserAndSendMessage(user){
+        console.log("rejecting user w mess: "+user);
+        this.rejectTheRequest(user);
+        let message = new MessageModel('Odrzucenie uczestnictwa',new Date(),this.declineMessage);
+        this.messageService.sendMessage(message,user.nick)
+            .subscribe( res => {
+                console.log(res);
+                this.declineMessage = '';
+            }, err => {
+                console.log(err);
+            });
+        this.messageService.sendNotification('Odrzucono twoje uczestnictwo w wydarzeniu',user.nick)
+            .subscribe( res => {
+                console.log(res);
+                this.declineMessage = '';
+            }, err => {
+                console.log(err);
+            });
+    }
+
+    /**
+     * invoked when pressed button pass decline or decline with message
+     */
     rejectTheRequest(user){
+        console.log("rejecting user: "+user);
         //remove id from acceptedIds
         var index = this.event.acceptedIds.indexOf(user.id);
         if (index > -1) {

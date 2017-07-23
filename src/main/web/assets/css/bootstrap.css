@@ -6451,6 +6451,14 @@ button.list-group-item-danger.active:focus {
   opacity: 1;
 }
 
+.btn-kitchen-black-transp{
+	border: 1px solid #000000;
+	color: #000000;
+	border-radius: 4px;
+	background: none; /*#fc5d44;*/
+	opacity: 1;
+}
+
 .btn-kitchen{
   border: none;
 	border-radius: 4px;

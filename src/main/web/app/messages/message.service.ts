@@ -23,12 +23,18 @@ export class MessageService {
             'content-type': 'application/json',
             'X-Auth-token': token
         });
-
     }
 
     sendMessage(message,recipient_username ): Observable<any>{
         this.url = '/api/message/send/'+recipient_username;
         return this.http.post(this.url,JSON.stringify(message),{headers :this.headers})
+            .map(res => res.json())
+            .catch(this.handleError);//TODO: costam errory wysylanie do siebie
+    }
+
+    sendNotification(notificationMessage, recipient_username ): Observable<any>{
+        this.url = '/api/notification/send/'+recipient_username;
+        return this.http.post(this.url,{contentOfNotification : notificationMessage},{headers :this.headers})
             .map(res => res.json())
             .catch(this.handleError);
     }

@@ -3,6 +3,7 @@ package org.JKDW.user.controller;
 import org.JKDW.security.TokenUtils;
 import org.JKDW.user.model.Message;
 import org.JKDW.user.service.MessageService;
+import org.JKDW.user.service.NotificationService;
 import org.JKDW.user.service.UserAccountService;
 import org.JKDW.websocket.model.Shout;
 import org.JKDW.websocket.service.WebSocketService;
@@ -14,21 +15,23 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/message")
 public class MessageController {
 
-    @Autowired
-    private MessageService messageService;
+    private final @NotNull MessageService messageService;
+    private final @NotNull TokenUtils tokenUtils;
+    private final @NotNull WebSocketService webSocketService;
 
     @Autowired
-    private TokenUtils tokenUtils;
-
-    @Autowired
-    private WebSocketService webSocketService;
+    public MessageController(MessageService messageService, TokenUtils tokenUtils, WebSocketService webSocketService, NotificationService notificationService) {
+        this.messageService = messageService;
+        this.tokenUtils = tokenUtils;
+        this.webSocketService = webSocketService;
+    }
 
     @RequestMapping(
             value = "/send/{recipient_nick}", method = RequestMethod.POST,
@@ -47,6 +50,7 @@ public class MessageController {
         }
 
     }
+
 
     @RequestMapping(value = "/myMessages/received", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Message>> getAllOfMyReceivedMessage(HttpServletRequest request) {

@@ -7,16 +7,15 @@ import org.JKDW.user.model.DTO.EventGeneralDTO;
 import org.JKDW.user.model.Event;
 import org.JKDW.user.service.EventService;
 import org.JKDW.user.service.UserDetailsService;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.apache.commons.lang3.ArrayUtils;
 
 import javax.naming.SizeLimitExceededException;
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -90,7 +89,7 @@ public class EventController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Event> createEvent(@RequestBody @Valid Event event) {
+    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
         Event createdEvent = eventService.createEvent(event);
         return new ResponseEntity<>(createdEvent, HttpStatus.CREATED);
     }
@@ -105,7 +104,7 @@ public class EventController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Event> updateEvent(@RequestBody @Valid Event event) {
+    public ResponseEntity<Event> updateEvent(@RequestBody Event event) {
         Event updatedEvent = eventService.updateEvent(event);
         return new ResponseEntity<>(updatedEvent, HttpStatus.OK);
     }

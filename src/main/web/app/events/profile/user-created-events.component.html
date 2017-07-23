@@ -43,7 +43,7 @@
                         <th class="text-center">Odrzuć</th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let user of event.participantsDetails" class="text-center"
+                        <tr *ngFor="let user of event.participantsDetails; let i = index;" class="text-center"
                             [class.success]="checkIfUserIsOnAAcceptedList(user.id)">
                             <td>{{user.username}}</td>
                             <td>{{user.nick}}</td>
@@ -56,24 +56,78 @@
                                 <i class="fa fa-times" aria-hidden="true" *ngIf="!event.isVerified"></i>
                             </td>
                             <td >
-                                <i (click)="goToProfile(user.username)" class="fa fa-arrow-right" aria-hidden="true"></i>
+                                <button class="btn-kitchen-black-transp btn-block" (click)="goToProfile(user.username)">
+                                    <i  class="fa fa-arrow-right" aria-hidden="true"></i>
+                                </button>
                             </td>
-                            <td><i class="fa fa-plus"
-                                   aria-hidden="true"
-                                   (click)="acceptUser(user.id)"
-                                   *ngIf="!checkIfUserIsOnAAcceptedList(user.id)"></i>
-                                <i class="fa fa-check"
-                                   aria-hidden="true"
-                                   *ngIf="checkIfUserIsOnAAcceptedList(user.id)"></i></td>
+                            <td>
+                                <button class="btn-kitchen-black-transp btn-block"
+                                        data-toggle="modal"
+                                        [attr.data-target]="'#'+'acceptRequestModal-'+event.id+'-'+i"
+                                        *ngIf="!checkIfUserIsOnAAcceptedList(user.id)">
+                                    <i class="fa fa-plus"
+                                       aria-hidden="true">
+                                    </i>
+                                </button>
+                                <!-- Modal -->
+                                <div class="modal fade" [id]="'acceptRequestModal-'+event.id+'-'+i" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabelAccept">Wyślij dodatkową wiadomość</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <textarea class="form-control" rows="5" id="messageAccept" [(ngModel)]="acceptMessage"></textarea>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-kitchen-default" data-dismiss="modal">Zamknij</button>
+                                                <button type="button" class="btn btn-kitchen-default" data-dismiss="modal" (click)="acceptUser(user.id)">Pomiń</button>
+                                                <button type="button" class="btn btn-kitchen-primary" data-dismiss="modal" (click)="acceptUserAndSendMessage(user)">Wyślij</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Modal end-->
+                                <button class="btn-kitchen-black-transp btn-block" *ngIf="checkIfUserIsOnAAcceptedList(user.id)">
+                                    <i class="fa fa-check"
+                                       aria-hidden="true">
+                                    </i>
+                                </button>
+                            </td>
                             <td >
-                                <!--if user is an owner of this event he cannot be removed //todo: cos tu zle-->
-                                <i *ngIf="user.id != event.ownerId"
-                                   (click)="rejectTheRequest(user)"
-                                   class="fa fa-times"
-                                   aria-hidden="true"></i>
-                                <i *ngIf="user.id == event.ownerId"
-                                   class="fa fa-star"
-                                   aria-hidden="true"></i>
+                                <!--if user is an owner of this event he cannot be removed -->
+                                <button class="btn-kitchen-black-transp btn-block"
+                                        data-toggle="modal"
+                                        [attr.data-target]="'#'+'declineRequestModal-'+event.id+'-'+i"
+                                        *ngIf="user.id != event.ownerId">
+                                    <i class="fa fa-times"
+                                       aria-hidden="true"></i>
+                                </button>
+                                <!-- Modal -->
+                                <div class="modal fade" [id]="'declineRequestModal-'+event.id+'-'+i" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabelDecline">Wyślij dodatkową wiadomość</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <textarea class="form-control" rows="5" id="messageDecline" [(ngModel)]="declineMessage"></textarea>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-kitchen-default" data-dismiss="modal">Zamknij</button>
+                                                <button type="button" class="btn btn-kitchen-default" data-dismiss="modal" (click)="rejectTheRequest(user)">Pomiń</button>
+                                                <button type="button" class="btn btn-kitchen-primary" data-dismiss="modal" (click)="declineUserAndSendMessage(user)">Wyślij</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Modal end-->
+                                <button class="btn-kitchen-black-transp btn-block" *ngIf="user.id == event.ownerId">
+                                    <i class="fa fa-star"
+                                       aria-hidden="true"></i>
+                                </button>
                             </td>
                         </tr>
                     </tbody>
