@@ -12,7 +12,6 @@ import org.JKDW.user.repository.UserAccountRepository;
 import org.JKDW.user.repository.UserDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.naming.SizeLimitExceededException;
 import javax.persistence.NoResultException;
@@ -126,7 +125,8 @@ public class EventServiceImpl implements EventService {
                 foundEvent.getPeople_quantity(),
                 foundEvent.getPeople_remaining(),
                 foundUserAccount.getId().intValue(),
-                foundUserAccount.getUsername()
+                foundUserAccount.getUsername(),
+                foundUserAccount.getNick()
         );
     }
 
@@ -150,7 +150,8 @@ public class EventServiceImpl implements EventService {
                     event.getPeople_quantity(),
                     event.getPeople_remaining(),
                     foundUserAccount.getId().intValue(),
-                    foundUserAccount.getUsername()
+                    foundUserAccount.getUsername(),
+                    foundUserAccount.getNick()
             ));
         }
         return eventsDetails;
@@ -468,7 +469,8 @@ public class EventServiceImpl implements EventService {
                 foundEvent.getPeople_quantity(),
                 foundEvent.getPeople_remaining(),
                 foundUserAccount.getId().intValue(),
-                foundUserAccount.getUsername()
+                foundUserAccount.getUsername(),
+                foundUserAccount.getNick()
         );
     }
 }

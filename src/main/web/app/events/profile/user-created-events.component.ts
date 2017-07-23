@@ -5,6 +5,7 @@ import {ToastConfigurerFactory} from "../../util/toast/toast-configurer.factory"
 import {ToasterContainerComponent, ToasterService} from 'angular2-toaster';
 import {MessageModel} from "../../messages/model/MessageModel";
 import {MessageService} from "../../messages/message.service";
+import {Messages} from "../../util/messages";
 
 @Component({
     selector: 'user-created-events',
@@ -69,7 +70,7 @@ export class UserCreatedEventsComponent implements OnInit {
     acceptUserAndSendMessage(user){
         console.log("accepting user with mess: "+user);
         this.acceptUser(user.id);
-        let message = new MessageModel('Akceptacja uczestnictwa',new Date(),this.acceptMessage);
+        let message = new MessageModel(Messages.MESSAGE_PART_ACCEPTED,new Date(),this.acceptMessage);
         this.messageService.sendMessage(message,user.nick)
             .subscribe( res => {
                 console.log(res);
@@ -77,7 +78,7 @@ export class UserCreatedEventsComponent implements OnInit {
             }, err => {
                 console.log(err);
             });
-        this.messageService.sendNotification('Zaakceptowano twoje uczestnictwo',user.nick)
+        this.messageService.sendNotification(Messages.NOTIF_PART_ACCEPTED,user.nick)
             .subscribe( res => {
                 console.log(res);
                 this.acceptMessage = '';
@@ -90,7 +91,7 @@ export class UserCreatedEventsComponent implements OnInit {
     declineUserAndSendMessage(user){
         console.log("rejecting user w mess: "+user);
         this.rejectTheRequest(user);
-        let message = new MessageModel('Odrzucenie uczestnictwa',new Date(),this.declineMessage);
+        let message = new MessageModel(Messages.MESSAGE_PART_DECLINED,new Date(),this.declineMessage);
         this.messageService.sendMessage(message,user.nick)
             .subscribe( res => {
                 console.log(res);
@@ -98,7 +99,7 @@ export class UserCreatedEventsComponent implements OnInit {
             }, err => {
                 console.log(err);
             });
-        this.messageService.sendNotification('Odrzucono twoje uczestnictwo w wydarzeniu',user.nick)
+        this.messageService.sendNotification(Messages.NOTIF_PART_DECLINED,user.nick)
             .subscribe( res => {
                 console.log(res);
                 this.declineMessage = '';

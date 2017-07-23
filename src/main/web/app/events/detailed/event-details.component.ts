@@ -6,12 +6,15 @@ import {Location} from '@angular/common';
 import {DetailedEvent} from "../model/detailedEvent";
 import {ToasterContainerComponent, ToasterService} from 'angular2-toaster';
 import {ToastConfigurerFactory} from "../../util/toast/toast-configurer.factory";
+import {MessageService} from "../../messages/message.service";
+import {TokenUtils} from "../../login/token-utils";
+import {Messages} from "../../util/messages";
 
 
 @Component({
     selector: 'event-detailed',
     templateUrl: 'app/events/detailed/event-details.component.html',
-    providers: [EventService],
+    providers: [EventService, MessageService],
     directives: [ToasterContainerComponent]
 })
 export class EventDetailsComponent implements OnInit {
@@ -19,8 +22,9 @@ export class EventDetailsComponent implements OnInit {
                 private eventService:EventService,
                 private loginService: LoginService,
                 private location: Location,
-                private toasterService: ToasterService) {}
-    
+                private toasterService: ToasterService,
+                private messageService: MessageService) {}
+
     private event = new DetailedEvent();
 
     private userId: number = -1;
@@ -86,6 +90,7 @@ export class EventDetailsComponent implements OnInit {
                     $btn.button('reset');
                     this.event.people_remaining--;
                     this.hasJoined = true;
+                    this.sendNotification(this.event.ownerNick);
                 }
             );
     }
@@ -177,11 +182,28 @@ export class EventDetailsComponent implements OnInit {
     goBack(){
         this.location.back();
     }
-    
+
     /**
      * finds if user is owner of this event
      */
     isUserAnOwner(eventOwnerId,userId): boolean{
         return eventOwnerId == userId;
+    }
+
+    /**
+     * Notify owner about will of participation
+     */
+    sendNotification(nick){
+        let currentToKey = JSON.parse(TokenUtils.getStoredToken());
+        let username = currentToKey && currentToKey.username;
+        this.messageService
+            .sendNotification(
+                'Użytkownik '+username+Messages.NOTIF_USER_WILL_OF_PART+this.event.id,
+                nick)
+            .subscribe( res => {
+                console.log(res);
+            }, err => {
+                console.log(err);
+            });
     }
 }

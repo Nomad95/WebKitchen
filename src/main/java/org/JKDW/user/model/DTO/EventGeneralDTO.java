@@ -29,10 +29,12 @@ public class EventGeneralDTO {
 
     private String ownerUsername;
 
+    private String ownerNick;
+
     public EventGeneralDTO(long id, byte type, String title, Time time,
                            Date date, DishKindEnum dish_kind, String dish_name,
                            byte people_quantity, int people_remaining,
-                           int ownerId,String ownerUsername ) {
+                           int ownerId,String ownerUsername,String ownerNick ) {
         this.id = id;
         this.type = type;
         this.title = title;
@@ -44,6 +46,15 @@ public class EventGeneralDTO {
         this.people_remaining = people_remaining;
         this.ownerId = ownerId;
         this.ownerUsername = ownerUsername;
+        this.ownerNick = ownerNick;
+    }
+
+    public String getOwnerNick() {
+        return ownerNick;
+    }
+
+    public void setOwnerNick(String ownerNick) {
+        this.ownerNick = ownerNick;
     }
 
     public int getOwnerId() {

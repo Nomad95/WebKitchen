@@ -19,6 +19,7 @@ export class DetailedEvent{
     accounts: any[];
     people_remaining: number;
     ownerUsername: string;
+    ownerNick: string;
 
 
     constructor() {
@@ -42,5 +43,6 @@ export class DetailedEvent{
         this.accounts = [];
         this.people_remaining = -1;
         this.ownerUsername = '';
+        this.ownerNick = '';
     }
 }

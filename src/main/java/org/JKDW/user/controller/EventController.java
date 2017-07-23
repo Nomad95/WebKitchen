@@ -2,10 +2,14 @@ package org.JKDW.user.controller;
 
 import com.google.gson.Gson;
 import javassist.NotFoundException;
+import lombok.NonNull;
 import org.JKDW.user.model.DTO.EventForOwnerDTO;
 import org.JKDW.user.model.DTO.EventGeneralDTO;
+import org.JKDW.user.model.DTO.EventWithOwnerDTO;
 import org.JKDW.user.model.Event;
+import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.service.EventService;
+import org.JKDW.user.service.UserAccountService;
 import org.JKDW.user.service.UserDetailsService;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +26,16 @@ import java.util.List;
 @RequestMapping("/api/event")
 public class EventController {
 
-    @Autowired
-    private EventService eventService;
+    private final @NonNull EventService eventService;
+    private final @NonNull UserDetailsService userDetailsService;
+    private final @NonNull UserAccountService userAccountService;
 
     @Autowired
-    private UserDetailsService userDetailsService;
-
+    public EventController(EventService eventService, UserDetailsService userDetailsService, UserAccountService userAccountService) {
+        this.eventService = eventService;
+        this.userDetailsService = userDetailsService;
+        this.userAccountService = userAccountService;
+    }
 
     /**
      * @return all events
@@ -63,9 +71,11 @@ public class EventController {
      * @return one event found by specified id
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Event> getOneEvent(@PathVariable("id") Long id) {
+    public ResponseEntity<EventWithOwnerDTO> getOneEvent(@PathVariable("id") Long id) {
         Event event = eventService.getEventById(id);
-        return new ResponseEntity<>(event, HttpStatus.OK);
+        UserAccount userAccount = userAccountService.getUserAccountById(event.getOwnerId());
+        EventWithOwnerDTO eventWithOwnerDTO = new EventWithOwnerDTO(event, userAccount);
+        return new ResponseEntity<>(eventWithOwnerDTO, HttpStatus.OK);
     }
 
     /**
