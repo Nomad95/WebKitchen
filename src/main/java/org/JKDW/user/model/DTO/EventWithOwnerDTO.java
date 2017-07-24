@@ -33,6 +33,7 @@ public class EventWithOwnerDTO {
     private Integer people_remaining;
     private String ownerUsername;
     private String ownerNick;
+    private String ownerEmail;
 
     public EventWithOwnerDTO(Event event, UserAccount userAccount){
         this.id = event.getId();
@@ -55,5 +56,6 @@ public class EventWithOwnerDTO {
         this.people_remaining = event.getPeople_remaining();
         this.ownerUsername = userAccount.getUsername();
         this.ownerNick = userAccount.getNick();
+        this.ownerEmail = userAccount.getEmail();
     }
 }

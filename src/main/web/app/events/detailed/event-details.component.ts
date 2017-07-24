@@ -9,12 +9,15 @@ import {ToastConfigurerFactory} from "../../util/toast/toast-configurer.factory"
 import {MessageService} from "../../messages/message.service";
 import {TokenUtils} from "../../login/token-utils";
 import {Messages} from "../../util/messages";
+import {MailService} from "../../mail/mail.service";
+import {UtilMethods} from "../../util/util-methods.service";
+import {MyProfileService} from "../../profile/myProfile/myProfile.service";
 
 
 @Component({
     selector: 'event-detailed',
     templateUrl: 'app/events/detailed/event-details.component.html',
-    providers: [EventService, MessageService],
+    providers: [EventService, MessageService, MailService, MyProfileService],
     directives: [ToasterContainerComponent]
 })
 export class EventDetailsComponent implements OnInit {
@@ -23,7 +26,9 @@ export class EventDetailsComponent implements OnInit {
                 private loginService: LoginService,
                 private location: Location,
                 private toasterService: ToasterService,
-                private messageService: MessageService) {}
+                private messageService: MessageService,
+                private mailService: MailService,
+                private myProfileService: MyProfileService) {}
 
     private event = new DetailedEvent();
 
@@ -43,6 +48,8 @@ export class EventDetailsComponent implements OnInit {
     //is user an event owner?
     private isOwner = false;
 
+    private userAccountDetails = null;
+
     /**
      * Configure toaster notifications
      */
@@ -55,6 +62,7 @@ export class EventDetailsComponent implements OnInit {
         this.getDetailedEvent();
         //checks user if he has already joined this event
         this.checkUser();
+        this.getCurrentUserDetails();
     }
 
 
@@ -143,6 +151,16 @@ export class EventDetailsComponent implements OnInit {
     }
 
     /**
+     * Gets information from UserAccount entity
+     */
+    getCurrentUserDetails(){
+        this.myProfileService.getProfile()
+            .subscribe( res => {
+                this.userAccountDetails = res;
+                console.log(res);}, err => console.log(err));
+    }
+
+    /**
      * Gets event owner username by providing event id
      */
     getEventOwnerUsername(eventId: number){
@@ -196,14 +214,18 @@ export class EventDetailsComponent implements OnInit {
     sendNotification(nick){
         let currentToKey = JSON.parse(TokenUtils.getStoredToken());
         let username = currentToKey && currentToKey.username;
-        this.messageService
-            .sendNotification(
-                'Użytkownik '+username+Messages.NOTIF_USER_WILL_OF_PART+this.event.id,
-                nick)
+        //notify owner in application
+        this.messageService.sendNotification(
+                'Użytkownik '+username+Messages.NOTIF_USER_WILL_OF_PART + this.event.title, nick)
             .subscribe( res => {
                 console.log(res);
             }, err => {
                 console.log(err);
             });
+        console.log(this.event);
+        //send email with link
+        this.mailService
+            .sendMail(UtilMethods.generateMailOfParticipationWillWithLink(this.event.ownerEmail,this.event.title,this.userAccountDetails.nick))
+            .subscribe( res => console.log(res),err => console.log(err));
     }
 }

@@ -49,7 +49,6 @@ import {MessageBoxSentComponent} from "./messages/messagebox/messagebox-sent.com
 import {MessageBoxComponent} from "./messages/messagebox/messagebox.component";
 import {LoginService} from "./login/login.service";
 import {ConfirmRegistrationComponent} from "./registration/confirmation/confirm.registration.component";
-import { RecaptchaModule } from 'ng2-recaptcha';
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import { AlertComponent } from './profile/myProfile/username-changed-alert.component';
 import {ImageCropperComponent} from 'ng2-img-cropper';

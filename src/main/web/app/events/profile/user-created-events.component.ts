@@ -70,7 +70,7 @@ export class UserCreatedEventsComponent implements OnInit {
     acceptUserAndSendMessage(user){
         console.log("accepting user with mess: "+user);
         this.acceptUser(user.id);
-        let message = new MessageModel(Messages.MESSAGE_PART_ACCEPTED,new Date(),this.acceptMessage);
+        let message = new MessageModel(Messages.MESSAGE_PART_ACCEPTED + this.event.title,new Date(),this.acceptMessage);
         this.messageService.sendMessage(message,user.nick)
             .subscribe( res => {
                 console.log(res);
@@ -78,7 +78,7 @@ export class UserCreatedEventsComponent implements OnInit {
             }, err => {
                 console.log(err);
             });
-        this.messageService.sendNotification(Messages.NOTIF_PART_ACCEPTED,user.nick)
+        this.messageService.sendNotification(Messages.NOTIF_PART_ACCEPTED + this.event.title,user.nick)
             .subscribe( res => {
                 console.log(res);
                 this.acceptMessage = '';
@@ -91,7 +91,7 @@ export class UserCreatedEventsComponent implements OnInit {
     declineUserAndSendMessage(user){
         console.log("rejecting user w mess: "+user);
         this.rejectTheRequest(user);
-        let message = new MessageModel(Messages.MESSAGE_PART_DECLINED,new Date(),this.declineMessage);
+        let message = new MessageModel(Messages.MESSAGE_PART_DECLINED + this.event.title,new Date(),this.declineMessage);
         this.messageService.sendMessage(message,user.nick)
             .subscribe( res => {
                 console.log(res);
@@ -99,7 +99,7 @@ export class UserCreatedEventsComponent implements OnInit {
             }, err => {
                 console.log(err);
             });
-        this.messageService.sendNotification(Messages.NOTIF_PART_DECLINED,user.nick)
+        this.messageService.sendNotification(Messages.NOTIF_PART_DECLINED + this.event.title,user.nick)
             .subscribe( res => {
                 console.log(res);
                 this.declineMessage = '';

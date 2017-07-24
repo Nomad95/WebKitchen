@@ -29,7 +29,7 @@ export class MessageService {
         this.url = '/api/message/send/'+recipient_username;
         return this.http.post(this.url,JSON.stringify(message),{headers :this.headers})
             .map(res => res.json())
-            .catch(this.handleError);//TODO: costam errory wysylanie do siebie
+            .catch(this.handleError);
     }
 
     sendNotification(notificationMessage, recipient_username ): Observable<any>{

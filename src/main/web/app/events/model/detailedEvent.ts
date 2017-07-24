@@ -20,6 +20,7 @@ export class DetailedEvent{
     people_remaining: number;
     ownerUsername: string;
     ownerNick: string;
+    ownerEmail: string;
 
 
     constructor() {
@@ -44,5 +45,6 @@ export class DetailedEvent{
         this.people_remaining = -1;
         this.ownerUsername = '';
         this.ownerNick = '';
+        this.ownerEmail = '';
     }
 }
