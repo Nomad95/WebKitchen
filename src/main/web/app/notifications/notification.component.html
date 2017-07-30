@@ -50,7 +50,7 @@
         <li *ngIf="page == currentPage+1" class="active">
             <a class="btn">{{page}}</a>
         </li>
-        <li *ngIf="page != currentPage+1">
+        <li *ngIf="page != curre ntPage+1">
             <a [routerLink]="['/notifications', page-1 ]"
                class="btn">{{page}}</a>
         </li>

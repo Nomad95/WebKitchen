@@ -4,6 +4,7 @@ import 'rxjs/add/operator/toPromise';
 import {Observable}    from 'rxjs/Observable';
 import 'app/rxjs-operators';
 import 'rxjs/Rx';
+import {TokenUtils} from "../login/token-utils";
 
 @Injectable()
 export class NotificationService {
@@ -12,7 +13,7 @@ export class NotificationService {
     private url;
 
     constructor(private http: Http) {
-        var currentToKey = JSON.parse(localStorage.getItem('toKey'));
+        var currentToKey = JSON.parse(TokenUtils.getStoredToken());
         let token = currentToKey && currentToKey.token;
         let username = currentToKey && currentToKey.username;
 
@@ -26,7 +27,7 @@ export class NotificationService {
     }
 
     getMyNotifications(numberOfPage:number): Observable<any> {
-        this.url = 'http://localhost:8080/api/notification/myNotifications?page='+numberOfPage+'&size=10';
+        this.url = '/api/notification/myNotifications?page='+numberOfPage+'&size=10';
         return this.http.get(this.url, {headers: this.headers})
             .map(res => res.json())
             .catch(this.handleError);
