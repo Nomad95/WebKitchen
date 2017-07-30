@@ -65,7 +65,7 @@
 /* Set gray background color and 100% height */
 .sidenav {
     background-color: #f1f1f1;
-    height: 30%;
+   /* height: 30%;*/
 }
 
 /* On small screens, set height to 'auto' for sidenav and grid */
@@ -132,8 +132,10 @@
     margin-bottom: 3%;
     margin-right: 10px;
 }
-.container-fluid .message-menu{
-    margin-right: 30%;
+
+.container-fluid .message-menu {
+    text-align: left;
+    margin-bottom: 2%;
 }
 
 .has-subnav .badge {

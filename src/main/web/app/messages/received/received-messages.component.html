@@ -1,16 +1,16 @@
 <section>
     <div class="message-menu">
-        <a class="btn btn-default" data-toggle="modal" data-target="#new-message">
+        <a class="btn btn-kitchen-default-b" data-toggle="modal" data-target="#new-message">
             <i class="fa fa-plus" aria-hidden="true"></i> Nowa
         </a>
-        <a (click)="deleteSelectedMessages()" [routerLink]="['/messagebox', 0 ]" class="btn btn-default" >
+        <a (click)="deleteSelectedMessages()" [routerLink]="['/messagebox', 0 ]" class="btn btn-kitchen-default-b" >
             <i class="fa fa-minus" aria-hidden="true"></i> Usuń zaznaczone
         </a>
-        <a (click)="reloadPage();" class="btn btn-default" >
+        <a (click)="reloadPage();" class="btn btn-kitchen-default-b" >
             <i class="fa fa-refresh" aria-hidden="true"></i> Odśwież
         </a>
     </div>
-    <div class="well">
+    <div class="well-kitchen">
         <div class="message-details">
             <h3>Wiadomości odebrane</h3>
             <div class="table-responsive">

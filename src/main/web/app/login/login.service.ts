@@ -187,7 +187,7 @@ export class LoginService{
 	private printErrorNotification(path: string, error: any){
 		//jak macie jakies errory do pokazania to takjak tu scieżka + response status
 		//nie pokazujmy za dużo errorów na raz
-		if(error.status == Errors.HTTPSTATUS_UNAUTHORIZED ){
+		if(path != "/auth" && error.status == Errors.HTTPSTATUS_UNAUTHORIZED ){
 			console.log("User is not authorized");
 			this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Oops!","Wygląda na to że twoja sesja wygasła. Spróbuj zalogować się ponownie"));
 

@@ -1,14 +1,14 @@
 <section>
     <div class="container-fluid">
         <div class="row content">
-            <div class="col-sm-2 sidenav">
+            <div class="col-md-2 sidenav">
                 <h4>Wiadomości </h4>
                 <ul class="nav nav-pills nav-stacked">
-                    <li class="active"><a routerLink="/messagebox/0">Odebrane</a></li>
+                    <li class="active-kitchen"><a routerLink="/messagebox/0">Odebrane</a></li>
                     <li><a routerLink="/messagebox/sent" >Wysłane</a></li>
                 </ul><br>
             </div>
-            <div class="col-sm-9">
+            <div class="col-md-10">
                 <div class="tab-content">
                     <div class="tab-pane active">
                         <received-messages [indexFirstMsgOnSite]="indexFirstMsgOnSite"></received-messages>
@@ -28,7 +28,7 @@
                     <sending-message></sending-message>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Powrót</button>
+                    <button type="button" class="btn btn-kitchen-default" data-dismiss="modal">Powrót</button>
                 </div>
             </div>
 
