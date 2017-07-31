@@ -1,14 +1,28 @@
-import {Component, OnInit} from "@angular/core";
+import {Component} from "@angular/core";
 import {SupportService} from "./support.service";
+import {FormGroup} from "@angular/forms";
 
 @Component({
     selector: 'support',
-   // templateUrl: 'app/notifications/notification.component.html',
+    templateUrl: 'app/support/support.component.html',
     providers: [SupportService]
 })
-export class SupportComponent implements OnInit  {
+export class SupportComponent {
 
+    private messageToSend = {
+        title: '',
+        messageContents: ''
+    };
 
-    ngOnInit(): void {
+    constructor(private supportService: SupportService){}
+
+    sendMsgFromSupport(message, form: FormGroup):void{
+        this.supportService
+            .sendMessageFromSupport(message)
+            .subscribe(newMsg => {
+                this.messageToSend;
+                form.reset();
+            }, error2 => console.log("błąd"));
     }
+
 }

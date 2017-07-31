@@ -27,6 +27,7 @@ import {DetailsReceivedMessagesComponent} from "./messages/details/details-recei
 import {DetailsSentMessagesComponent} from "./messages/details/details-sent-message.component";
 import {MessageBoxComponent} from "./messages/messagebox/messagebox.component";
 import {NotificationComponent} from "./notifications/notification.component";
+import {SupportComponent} from "./support/support.component";
 
 /* TODO: Układać to ładnie i po kolei*/
 const appRoutes: Routes = [
@@ -56,6 +57,7 @@ const appRoutes: Routes = [
     {path: "messagebox/received/details/:id", component: DetailsReceivedMessagesComponent, canActivate:[AuthGuard]},
     {path: "messagebox/sent/details/:id", component: DetailsSentMessagesComponent, canActivate:[AuthGuard]},
     {path: "notifications/:page", component: NotificationComponent , canActivate: [AuthGuard]},
+    {path: "support", component: SupportComponent , canActivate: [AuthGuard]}
 ];
 
 export const appRouterProviders = [AuthGuard, LoginService];

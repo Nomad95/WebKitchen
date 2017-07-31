@@ -170,3 +170,12 @@
 .notification-details .notification-body{
     float: inherit;
 }
+
+
+.support-main #title {
+    width: 400px;
+}
+
+.support-main #message-contents {
+    width: 90%;
+}

@@ -49,7 +49,7 @@ public class MailController {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<Boolean> sendEmailFromUser(@RequestBody MailDTO mailDTO,
                                                       HttpServletRequest request){
-        mailService.sendSimpleMessageFromUser(UserAccountService.getMyUsernameFromToken(request, tokenUtils ),mailDTO.getEmail(),mailDTO.getTitle(),mailDTO.getContent());
+        mailService.sendSimpleMessageFromUser(UserAccountService.getMyUsernameFromToken(request, tokenUtils ),"borucharek666@gmail.com",mailDTO.getTitle(),mailDTO.getContent());
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 }
