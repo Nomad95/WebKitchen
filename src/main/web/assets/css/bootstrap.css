@@ -6480,6 +6480,10 @@ button.list-group-item-danger.active:focus {
 	margin-right: 10px;
 }
 
+.non-resizable{
+	resize: none;
+}
+
 /* koniec elementow */
 
 .well {
@@ -7711,7 +7715,7 @@ label.control-label {
 	background-color: rgb(255, 102, 0);
 	width: 190px;
 	border: 0px solid;
-	border-radius: 0px;
+	border-radius: 4px;
 	transition: all ease 0.3s;
 	margin: 5px;
 	float: left;

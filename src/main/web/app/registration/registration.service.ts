@@ -35,7 +35,6 @@ export class RegistrationService{
 			.catch(err => this.handleError(err));
 	}
 
-
 	/* Niech te metody nrazie tu beda te wszystkie */
 	getUsersAccounts(): Observable<UserAccount[]>{
 		return this.http.get('/api/user/all')
@@ -115,6 +114,11 @@ export class RegistrationService{
 		else if (path.search("/api/user/registration/confirm") == 0 && error.status == Errors.HTTPSTATUS_BAD_REQUEST){
 			console.log("Cant Confirm registration: Bad request");//TODO: nie ma w htmlu
 			this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd",""));
+		}
+		else if (path == "/api/mail/send" && error.status == Errors.HTTPSTATUS_INERNAL_SERVER_ERROR){
+			console.log("Problem with sending a verification email");
+			this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Rejestracja nie powiodła się",
+				"Skontakuj się z nami lub spróbuj jeszcze raz"));
 		}
 		else if (path.search("/api/user/account") == 0 && error.status == Errors.HTTPSTATUS_INERNAL_SERVER_ERROR){
 			console.log("Cant get User Account!");

@@ -1,41 +1,40 @@
 package org.JKDW.user.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.JKDW.mail.event.OnRegistrationCompleteEvent;
 import org.JKDW.security.TokenUtils;
-import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
 import org.JKDW.user.model.DTO.StringRequestBody;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
 import org.JKDW.user.model.DTO.UserAccountDTO;
+import org.JKDW.user.model.DTO.UserAccountPasswordChangeDTO;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.model.UserDetails;
 import org.JKDW.user.model.VerificationToken;
-import org.springframework.context.ApplicationEventPublisher;
-
+import org.JKDW.user.repository.VerificationTokenRepository;
 import org.JKDW.user.service.UserAccountService;
 import org.JKDW.user.service.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/user")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserAccountController {
 
 	/**
@@ -43,17 +42,11 @@ public class UserAccountController {
 	 */
 	private static String UPLOADED_FOLDER = System.getProperty("user.dir") + "\\build\\generated-web-resources\\static\\img\\";
 
-	@Autowired
-	private ApplicationEventPublisher eventPublisher;
-
-	@Autowired
-	private UserAccountService userAccountService;
-
-	@Autowired
-	private UserDetailsService userDetailsService;
-
-	@Autowired
-	private TokenUtils tokenUtils;
+	private final @NonNull ApplicationEventPublisher eventPublisher;
+	private final @NonNull UserAccountService userAccountService;
+	private final @NonNull UserDetailsService userDetailsService;
+	private final @NonNull TokenUtils tokenUtils;
+	private final @NonNull VerificationTokenRepository verificationTokenRepository;
 
 	/**
 	 *
@@ -84,6 +77,7 @@ public class UserAccountController {
 	 */
 	@RequestMapping(value="/create",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserAccount> createUserAccount(@RequestBody @Valid UserAccountCreateDTO userAccount, WebRequest request) {
+
 		UserAccount createdUserAccount = userAccountService.createUserAccount(userAccount);
 		//create details and link it with userAccount
 		UserDetails userDetails = new UserDetails();
@@ -97,6 +91,8 @@ public class UserAccountController {
 			eventPublisher.publishEvent(new OnRegistrationCompleteEvent
 					(createdUserAccount, request.getLocale(), appUrl));
 		} catch (Exception me) {
+			//TODO: get vaerification token dao and remove token
+			userAccountService.deleteUserAccount(createdUserAccount.getId());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
@@ -117,9 +113,17 @@ public class UserAccountController {
 	/**
 	 * @param id - id of deleting account
 	 */
-	@RequestMapping(value="/{id}",method = RequestMethod.DELETE)
+	@RequestMapping(value="/{id}",method = RequestMethod.DELETE)//TODO: find out why cascade eager dont work
 	public ResponseEntity deleteUserAccount(@PathVariable("id") Long id){
-		userAccountService.deleteUserAccount(id);
+		//remove verification token
+		VerificationToken token = verificationTokenRepository.findByUserAccount(userAccountService.getUserAccountById(id));
+		verificationTokenRepository.delete(token.getId());
+
+		//remove associated details
+		UserDetails details = userDetailsService.getUserDetailsByUserAccountId(id);
+		userDetailsService.deleteUserDetails(details.getId());
+
+		//delete account
 		return new ResponseEntity(HttpStatus.OK);
 	}
 

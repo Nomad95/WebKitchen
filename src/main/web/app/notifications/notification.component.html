@@ -10,7 +10,7 @@
 <div class="notification-details">
     <h3>Twoje powiadomienia</h3>
     <div *ngFor="let notification of notifications">
-        <div class="well" *ngIf="!notification.wasRead" style="background-color: #95ED95; border: 2px solid #FF6600;">
+        <div class="well-kitchen" *ngIf="!notification.wasRead" style="background-color: #95ED95; border: 2px solid #FF6600;">
             <div class="notification-checkbox" style="font-weight: bold">
                 <input type="checkbox"
                        name="notification" [(ngModel)]="notification.checked" value="notificastion.id">
@@ -27,7 +27,7 @@
             </div>
 
         </div>
-        <div class="well" *ngIf="notification.wasRead" >
+        <div class="well-kitchen" *ngIf="notification.wasRead" >
             <div class="notification-checkbox">
                 <input type="checkbox"
                        name="notification" [(ngModel)]="notification.checked" value="notification.id">

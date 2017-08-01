@@ -1,28 +1,16 @@
 package org.JKDW.user.model;
 
-import java.sql.Blob;
-import java.util.Date;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.JKDW.user.model.DTO.UserAccountDTO;
 import org.JKDW.user.model.DTO.UserDetailsUpdateDTO;
 import org.hibernate.validator.constraints.Range;
+
+import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.sql.Blob;
+import java.util.Date;
+import java.util.List;
 
 /**
  * We have to use Integer class instead of int
@@ -95,8 +83,6 @@ public class UserDetails {
 	@ManyToMany
 	@JsonIgnore//prevents infinite loops i.e. when we get details about user
 	private List<Event> events;
-
-//	private UserAccountDTO userAccountDTO;
 
 	public UserDetails(){}
 
