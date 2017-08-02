@@ -2,14 +2,16 @@ package org.JKDW.user.service;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.JKDW.user.model.converter.RatingOfTheHostDtoToEntityConverter;
+import org.JKDW.user.model.rating.converter.RatingOfTheHostDtoToEntityConverter;
 import org.JKDW.user.model.rating.RatingOfTheHost;
 import org.JKDW.user.model.rating.RatingOfTheHostDTO;
 import org.JKDW.user.repository.RatingOfTheHostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class RatingOfTheHostServiceImpl implements RatingOfTheHostService{
 
@@ -22,7 +24,7 @@ public class RatingOfTheHostServiceImpl implements RatingOfTheHostService{
     }
 
     @Override
-    public List<RatingOfTheHost> getAllOfTheHosts() {
+    public List<RatingOfTheHost> getAllRatingsOfTheHosts() {
         return ratingOfTheHostRepository.findAll();
     }
 }

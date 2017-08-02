@@ -1,4 +1,4 @@
-package org.JKDW.user.model.converter;
+package org.JKDW.user.model.rating.converter;
 
 import org.JKDW.user.model.rating.RatingOfTheHost;
 import org.JKDW.user.model.rating.RatingOfTheHostDTO;

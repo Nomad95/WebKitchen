@@ -32,7 +32,7 @@ public class RatingOfTheHostController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<RatingOfTheHost>> getAllRatingsOfTheHosts(){
-        List<RatingOfTheHost> allRatingsOfTheHost = ratingOfTheHostService.getAllOfTheHosts();
+        List<RatingOfTheHost> allRatingsOfTheHost = ratingOfTheHostService.getAllRatingsOfTheHosts();
         return new ResponseEntity<>(allRatingsOfTheHost,HttpStatus.OK);
     }
 }

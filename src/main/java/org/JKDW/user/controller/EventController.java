@@ -271,4 +271,18 @@ public class EventController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    /**
+     * checks if event has already happened
+     * @param evntid
+     * @return Boolean
+     */
+    @RequestMapping(value = "/check/{evntid}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> checkIfUserIsBound(@PathVariable("evntid") Long evntid) {
+        if (eventService.checkIfEventHasAlreadyHappened(evntid))
+            return new ResponseEntity<>(new Boolean("true"), HttpStatus.OK);
+        return new ResponseEntity<>(new Boolean("false"), HttpStatus.OK);
+    }
 }

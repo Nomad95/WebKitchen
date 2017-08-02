@@ -32,7 +32,14 @@
                                     <i class="fa fa-arrow-right" aria-hidden="true"></i>
                                 </button>
                             </td>
+                            
                         </ng-container>
+                        <td *ngIf="!isEventHasAlreadyHappened(event.id)">
+                            <button class="btn btn-kitchen-default" 
+                                 >
+                                    Oceń
+                                </button>
+                                </td>
                     </tbody>
                 </table>
             </div>

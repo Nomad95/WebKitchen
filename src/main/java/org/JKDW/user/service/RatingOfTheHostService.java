@@ -9,5 +9,5 @@ public interface RatingOfTheHostService {
 
     RatingOfTheHost createRatingOfTheHost(RatingOfTheHostDTO ratingOfTheHostDTO);
 
-    List<RatingOfTheHost> getAllOfTheHosts();
+    List<RatingOfTheHost> getAllRatingsOfTheHosts();
 }

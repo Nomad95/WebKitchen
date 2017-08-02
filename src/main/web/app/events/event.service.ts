@@ -215,6 +215,22 @@ export class EventService {
             .catch(err => this.handleError(err));
     }
 
+    /**
+     * checks if event has already happened
+     * @param eventId
+     */
+    isEventHasAlreadyHappened(eventId: number): Observable<boolean> {
+       
+        this.instantiateToken();
+        
+        var headers = this.createHeadersWithContentAndToken(this.token);
+
+        //and passing them in the request
+        return this.http.get('/api/event/check/'+ eventId,{headers :headers})
+            .map((res) => res.json())
+            .catch(err => this.handleError(err));   
+    }
+
 
     /**
      * Creates headers object with content-type appJson and token
