@@ -2,7 +2,7 @@ package org.JKDW.user.controller;
 
 
 import org.JKDW.user.model.rating.RatingOfTheHost;
-import org.JKDW.user.model.rating.RatingOfTheHostDTO;
+import org.JKDW.user.model.rating.DTO.RatingOfTheHostDTO;
 import org.JKDW.user.service.RatingOfTheHostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

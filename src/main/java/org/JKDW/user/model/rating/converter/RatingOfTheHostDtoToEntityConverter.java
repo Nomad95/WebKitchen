@@ -1,7 +1,7 @@
 package org.JKDW.user.model.rating.converter;
 
 import org.JKDW.user.model.rating.RatingOfTheHost;
-import org.JKDW.user.model.rating.RatingOfTheHostDTO;
+import org.JKDW.user.model.rating.DTO.RatingOfTheHostDTO;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 

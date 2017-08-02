@@ -1,4 +1,4 @@
-package org.JKDW.user.model.rating;
+package org.JKDW.user.model.rating.DTO;
 
 import lombok.Data;
 import org.JKDW.user.model.UserAccount;

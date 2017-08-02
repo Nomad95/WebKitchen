@@ -4,7 +4,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.JKDW.user.model.rating.converter.RatingOfTheHostDtoToEntityConverter;
 import org.JKDW.user.model.rating.RatingOfTheHost;
-import org.JKDW.user.model.rating.RatingOfTheHostDTO;
+import org.JKDW.user.model.rating.DTO.RatingOfTheHostDTO;
 import org.JKDW.user.repository.RatingOfTheHostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

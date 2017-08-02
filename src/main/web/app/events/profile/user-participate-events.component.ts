@@ -47,6 +47,7 @@ export class UserParticipateEventsComponent  {
      */
      isEventHasAlreadyHappened(eventId:number){
         this.eventService.isEventHasAlreadyHappened(eventId).subscribe(result => {
+            console.log("happened: "+result);
             return result;
         })
     }
