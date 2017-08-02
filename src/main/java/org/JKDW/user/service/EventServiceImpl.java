@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 
 import javax.naming.SizeLimitExceededException;
 import javax.persistence.NoResultException;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.*;
 
 @Service
@@ -379,6 +382,7 @@ public class EventServiceImpl implements EventService {
         return ownerAccount.getUsername();
     }
 
+
     /**
      * Removes event ref from user details. Used in rejectUserParticipationRequest
      */
@@ -472,5 +476,16 @@ public class EventServiceImpl implements EventService {
                 foundUserAccount.getUsername(),
                 foundUserAccount.getNick()
         );
+    }
+
+    @Override
+    public boolean checkIfEventHasAlreadyHappened(Long evntid) {
+        Event foundedEvent = eventRepository.findOne(evntid);
+        ZonedDateTime eventDateTime = ZonedDateTime.ofInstant(foundedEvent.getDate().toInstant(), ZoneId.systemDefault());
+        eventDateTime = eventDateTime
+                .plusHours(foundedEvent.getTime().toLocalTime().getHour()-1)
+                .plusMinutes(foundedEvent.getTime().toLocalTime().getMinute());
+
+        return eventDateTime.isBefore(ZonedDateTime.now());
     }
 }

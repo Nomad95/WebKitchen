@@ -1,5 +1,6 @@
 package org.JKDW.config;
 
+import org.JKDW.user.model.rating.RatingOfTheHost;
 import org.JKDW.user.model.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +22,8 @@ public class GeneralConfig {
         LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
         localSessionFactoryBean.setDataSource(dataSource);
         localSessionFactoryBean.setAnnotatedClasses(
-               UserAccount.class
+               UserAccount.class,
+                RatingOfTheHost.class
         );
 
         /** Porperties dla mysql. Wszystekie są zawarte w application.properties ale niech narazie bd bo nie wiem czy

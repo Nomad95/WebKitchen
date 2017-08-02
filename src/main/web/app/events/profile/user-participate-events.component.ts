@@ -2,6 +2,7 @@ import {Component, Input } from '@angular/core';
 import {Router} from '@angular/router';
 import {ToasterContainerComponent} from 'angular2-toaster';
 import {ToastConfigurerFactory} from "../../util/toast/toast-configurer.factory";
+import {EventService} from "../event.service";
 
 @Component({
     selector: 'user-participate-events',
@@ -9,7 +10,7 @@ import {ToastConfigurerFactory} from "../../util/toast/toast-configurer.factory"
     directives: [ToasterContainerComponent]
 })
 export class UserParticipateEventsComponent  {
-    constructor(private router: Router) {
+    constructor(private router: Router, private eventService: EventService) {
     }
 
     @Input() private events: any;
@@ -37,5 +38,17 @@ export class UserParticipateEventsComponent  {
             case 1: return "Dołącz do uczty";
             case 2: return "Wspólne gotowanie";
         }
+    }
+
+    /**
+     * checks if event has already happened
+     * @param eventId
+     * @returns boolean
+     */
+     isEventHasAlreadyHappened(eventId:number){
+        this.eventService.isEventHasAlreadyHappened(eventId).subscribe(result => {
+            console.log("happened: "+result);
+            return result;
+        })
     }
 }

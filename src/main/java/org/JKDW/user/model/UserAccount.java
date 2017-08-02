@@ -2,10 +2,12 @@ package org.JKDW.user.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
+import org.JKDW.user.model.rating.RatingOfTheHost;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "user_account")
 public class UserAccount {
