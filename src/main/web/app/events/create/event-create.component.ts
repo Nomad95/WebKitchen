@@ -218,8 +218,7 @@ export class EventCreateComponent implements OnInit {
                     this.isEventCreated = true;
                     //assign current user to new event
                     this.assignUserToEvent(data.id);
-                    this.toasterService.pop(ToastConfigurerFactory.successSimpleMessage("","Wydarzenie zostało stworzone"));
-                },
+\                },
                 err => {
                     console.log('error adding event!');
                     $btn1.button('reset');

@@ -16,6 +16,7 @@
     <hr>
     <div class="well-kitchen">
         <form #supportForm="ngForm">
+            <toaster-container [toasterconfig]="toasterConfig"></toaster-container>
             <div class="form-group">
                 <label for="title">Temat: </label>
                 <input #title="ngModel"
@@ -38,7 +39,7 @@
                         [(ngModel)]="messageToSend.content"
                 ></textarea>
             </div>
-            <button type="submit" class="btn btn-kitchen-default"
+            <button id="supportSubmit" type="submit" class="btn btn-kitchen-default"
                     (click)="sendMsgFromSupport(messageToSend,supportForm);">
                 Wyślij
             </button>
