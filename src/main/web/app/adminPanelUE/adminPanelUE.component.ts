@@ -26,6 +26,7 @@ export class AdminPanelUEComponent implements OnInit, OnDestroy {
     private searchingEventExist = true;
     private searchingUserDelete = false;
     private searchingEventDelete = false;
+    private userHasBeenBanned = false;
     private userAccountToSearch = {
         username: ''
     }
@@ -129,7 +130,13 @@ export class AdminPanelUEComponent implements OnInit, OnDestroy {
         data.dateEndOfBan += 'T00:00:00';
 
         this.adminPanelUEService.createBanForUser(data, this.userAccount.id)
-            .subscribe(newBan => this.banToAdd);
+            .subscribe(newBan => {
+                this.banToAdd;
+                this.userHasBeenBanned = true;
+            },
+                error2 => {
+                this.userHasBeenBanned = false;
+                } );
 
     }
 
