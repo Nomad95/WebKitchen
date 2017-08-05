@@ -37,6 +37,9 @@
 			<li *ngIf="sharedService.getIsAdmin();" class="has-subnav"><a [routerLink]="['/admin']">
                                 <i class="fa fa-user-secret fa-2x fa-sidebar"></i> <span class="nav-text">Panel Admina </span></a>
                        </li>
+			<li *ngIf="loginService.isLogged()" class="has-subnav"><a [routerLink]="['/support']"> <i
+					class="fa fa-life-ring fa-2x fa-sidebar"></i> <span class="nav-text"> Support</span>
+			</a></li>
 		</ul>
 		<ul class="logout">
         <li *ngIf="!loginService.isLogged()">
