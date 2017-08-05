@@ -78,6 +78,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .antMatchers("/api/user/banned/account/*").permitAll()
                 .antMatchers("/stomp").permitAll()
+                .antMatchers("/api/mail/support/send").permitAll()
                 .antMatchers("/calendar").authenticated()
                 .antMatchers("/user").authenticated()
                 //for frontend loading.\

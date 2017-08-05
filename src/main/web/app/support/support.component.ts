@@ -1,28 +1,30 @@
 import {Component} from "@angular/core";
-import {SupportService} from "./support.service";
 import {FormGroup} from "@angular/forms";
+import {MailService} from "../mail/mail.service";
 
 @Component({
     selector: 'support',
     templateUrl: 'app/support/support.component.html',
-    providers: [SupportService]
+    providers: [MailService]
 })
 export class SupportComponent {
 
     private messageToSend = {
         title: '',
-        messageContents: ''
+        content: ''
     };
 
-    constructor(private supportService: SupportService){}
+    constructor(private mailService: MailService){}
 
     sendMsgFromSupport(message, form: FormGroup):void{
-        this.supportService
+        console.log(this.messageToSend);
+        this.mailService
             .sendMessageFromSupport(message)
             .subscribe(newMsg => {
                 this.messageToSend;
+                console.log("Wsio!!!");
                 form.reset();
-            }, error2 => console.log("błąd"));
+            }, error2 => console.log("Błąd poczas wysyłania maila"));
     }
 
 }

@@ -172,8 +172,14 @@
 }
 
 
+.support-main{
+    width: 90%;
+    margin: 0 auto;
+
+}
 .support-main #title {
     width: 400px;
+
 }
 
 .support-main #message-contents {

@@ -1,37 +1,49 @@
 <div class="support-main">
-    <h3>SUPPORT</h3>
-    W tym miejscu możesz skontaktować się z nami w przypadku jakichkolwiek pytań, jeśli wystąpił jakiś problem z aplikacją lub jeśli
-    masz jakieś pomysły dotyczący aplikacji. Wiadomość zostanie wysłana bezpośrednio do nas
-    i do naszego działu IT.
-    <hr>
-    <form #supportForm="ngForm">
-        <div class="form-group">
-            <label for="title">Temat: </label>
-            <input #title="ngModel"
-                   type="text"
-                   class="form-control"
-                   name="messageToSend.title"
-                   id="title"
-                   placeholder="Temat wiadomości"
-                   [(ngModel)] = "messageToSend.title"
-            >
-        </div>
-        <div class="form-group">
-            <label for="message-contents">Treść: </label>
-            <textarea
-                    #contents="ngModel"
-                    class="form-control"
-                    rows="5"
-                    name="messageToSend.messageContents"
-                    id="message-contents"
-                    placeholder="Treść wiadomości"
-                    [(ngModel)] = "messageToSend.messageContents"
-            ></textarea>
-        </div>
-        <button type="submit" class="btn btn-default"
-                (click)="sendMsgFromSupport(messageToSend,supportForm);">
-            Wyślij
-        </button>
+    <div class="support-info" style="text-align: center">
+        <h3>SUPPORT</h3>
+        W tym miejscu możesz skontaktować się z nami w przypadku jakichkolwiek pytań, jeśli wystąpił jakiś problem z
+        aplikacją lub jeśli
+        masz jakieś pomysły dotyczący aplikacji. Wiadomość zostanie wysłana bezpośrednio do nas
+        i do naszego działu IT.
         <br>
-    </form>
+        <br>
+        Tytuł prosimy rozpocząć jednym z wyrażeń opisanych poniżej w zależności od typu wiadomości:<br>
+        [Pytanie] - jeśli masz pytanie do nas<br>
+        [Błąd] - jeśli chcesz zgłosić błąd<br>
+        [Inne] - jeśli wyżej wymienione opcje nie pasują<br>
+    </div>
+
+    <hr>
+    <div class="well-kitchen">
+        <form #supportForm="ngForm">
+            <div class="form-group">
+                <label for="title">Temat: </label>
+                <input #title="ngModel"
+                       class="form-control"
+                       name="messageToSend.title"
+                       id="title"
+                       placeholder="Temat wiadomości"
+                       [(ngModel)]="messageToSend.title"
+                >
+            </div>
+            <div class="form-group">
+                <label for="content">Treść: </label>
+                <textarea
+                        #contents="ngModel"
+                        class="form-control"
+                        rows="5"
+                        name="messageToSend.messageContents"
+                        id="content"
+                        placeholder="Treść wiadomości"
+                        [(ngModel)]="messageToSend.content"
+                ></textarea>
+            </div>
+            <button type="submit" class="btn btn-kitchen-default"
+                    (click)="sendMsgFromSupport(messageToSend,supportForm);">
+                Wyślij
+            </button>
+            <br>
+        </form>
+    </div>
+
 </div>
