@@ -57,6 +57,8 @@ import {Bounds} from 'ng2-img-cropper';
 import {UploadPhotoComponent} from './profile/uploadPhoto/upload-photo.component';
 import {ProfilePhotoAlertComponent} from './profile/uploadPhoto/profile-photo-not-changed-alert.component';
 import {NotificationComponent} from "./notifications/notification.component";
+import {SupportComponent} from "./support/support.component";
+
 
 import {AuthGuard} from './app.auth-guard.service';
 import {LoginBanned} from "./login/login-banned-user.component";
@@ -118,7 +120,8 @@ declare let jQuery:Object;
         ImageCropperComponent,
         UploadPhotoComponent,
         ProfilePhotoAlertComponent,
-        NotificationComponent
+        NotificationComponent,
+        SupportComponent
     ],
     imports: [BrowserModule,
         FormsModule,

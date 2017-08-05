@@ -102,6 +102,9 @@
                                     <button (click)="createBanForUser(banToAdd);" type="button" class="btn btn-primary">
                                         Zablokuj
                                     </button>
+                                    <div *ngIf="userHasBeenBanned" class="alert alert-success" role="alert">
+                                        Pomyślnie zbanowano użytkownika
+                                    </div>
                                 </div>
                             </div>
                         </div>

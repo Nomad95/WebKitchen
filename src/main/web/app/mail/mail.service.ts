@@ -26,6 +26,14 @@ export class MailService {
             .catch(err => this.handleError(err));
     }
 
+    sendMessageFromSupport(mailModel): Observable<boolean>{
+        let token = this.instantiateToken();
+        let headers = this.createHeadersWithContentAndToken(token);
+        return this.http.post('/api/mail/support/send',JSON.stringify(mailModel),{headers:headers})
+            .map(res => res.json())
+            .catch(this.handleError);
+    }
+
     instantiateToken(): string{
         let currentToKey = JSON.parse(TokenUtils.getStoredToken());
         return currentToKey && currentToKey.token;
