@@ -1,24 +1,33 @@
-import {Component, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {ToasterContainerComponent} from 'angular2-toaster';
 import {ToastConfigurerFactory} from "../../util/toast/toast-configurer.factory";
 import {EventService} from "../event.service";
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
     selector: 'user-participate-events',
     templateUrl: 'app/events/profile/user-participate-events.component.html',
     directives: [ToasterContainerComponent]
 })
-export class UserParticipateEventsComponent  {
+export class UserParticipateEventsComponent implements OnInit{
     constructor(private router: Router, private eventService: EventService) {
     }
 
     @Input() private events: any;
-    
+
     @Input() private userId: number = -1;
 
     private toasterConfig = ToastConfigurerFactory.basicToastConfiguration();
 
+    ngOnInit(): void {
+        if(this.events){
+            for (let event of this.events){
+                event.hasEnded = this.isEventHasAlreadyHappened(event.id);
+                console.log(event.hasEnded);
+            }
+        }
+    }
 
     /**
      * navigates user to event details
