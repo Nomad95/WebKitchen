@@ -291,6 +291,12 @@ export class EventCreateComponent implements OnInit {
             this.uploadPhoto(this.selectedFile);
             this.isPhotoSizeTooBig = false;
         }
+        else {
+            this.newEventType1.photo = '';
+            this.pathToPhotoPreview = '';
+            this.selectedFile = null;
+            this.isPhotoSizeTooBig = false;
+        }
     }
 
     /**
@@ -323,6 +329,12 @@ export class EventCreateComponent implements OnInit {
             this.newEventType2.photo = "/img/dish/" + this.selectedFile.name;
             this.pathToPhotoPreview = this.newEventType2.photo;
             this.uploadPhoto(this.selectedFile);
+            this.isPhotoSizeTooBig = false;
+        }
+        else {
+            this.newEventType1.photo = '';
+            this.pathToPhotoPreview = '';
+            this.selectedFile = null;
             this.isPhotoSizeTooBig = false;
         }
     }
