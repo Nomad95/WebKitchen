@@ -46,7 +46,7 @@ export class MessageService {
     }
 
     getMyReceivedMessages(): Observable<any> {
-            this.url = 'a';
+            this.url = 'api/message/myMessages/received';
         return this.http.get(this.url, {headers: this.headers})
             .map(res => res.json())
             .catch(this.handleError);
@@ -56,7 +56,6 @@ export class MessageService {
         this.url = '/api/message/myMessages/sent';
         return this.http.get(this.url, {headers: this.headers})
             .map(res => res.json())
-            .catch(this.handleError);
 
     }
     getReceivedMessageDetails(id): Observable<any> {
