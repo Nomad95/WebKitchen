@@ -46,4 +46,6 @@ public interface EventService {
     String getEventOwnerUsername(Long eventId) throws NotFoundException;
 
     boolean checkIfEventHasAlreadyHappened(Long evntid);
+
+    List<Event> getEventMatchingToExpression(String address);
 }

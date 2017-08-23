@@ -498,4 +498,10 @@ public class EventServiceImpl implements EventService {
 
         return eventDateTime.isBefore(ZonedDateTime.now());
     }
+
+    @Override
+    public List<Event> getEventMatchingToExpression(String address) {
+        List<Event> events = eventRepository.findByAddressContaining(address);
+        return events;
+    }
 }

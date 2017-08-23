@@ -298,4 +298,20 @@ public class EventController {
             return new ResponseEntity<>(new Boolean("true"), HttpStatus.OK);
         return new ResponseEntity<>(new Boolean("false"), HttpStatus.OK);
     }
+
+    /**
+     * checks if event has already happened
+     * @param address
+     * @return Boolean
+     */
+    @RequestMapping(value = "/events/{address}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Event>> getAllMatchingEvents(@PathVariable("address") String address) {
+       List<Event> events = eventService.getEventMatchingToExpression(address);
+       if(events != null)
+           return new ResponseEntity<>(events, HttpStatus.OK);
+       else
+           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }
