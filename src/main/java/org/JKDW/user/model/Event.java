@@ -1,24 +1,22 @@
 package org.JKDW.user.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.JKDW.user.model.rating.RatingOfTheHost;
 import org.hibernate.annotations.Type;
-
-import java.sql.Time;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+import java.sql.Time;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity(name = "event")
 public class Event {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     /**

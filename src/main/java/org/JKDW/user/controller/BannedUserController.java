@@ -38,6 +38,7 @@ public class BannedUserController {
      * ale zostawiam ją bo może się przyda w przyszłości
      **/
     @RequestMapping(value = "/{idUserWithBan}", method = RequestMethod.DELETE)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity deleteBanForUser(@PathVariable("idUserWithBan") Long idUserWihBan) {
         bannedUserService.deleteBanForUser(idUserWihBan);
         return new ResponseEntity(HttpStatus.OK);

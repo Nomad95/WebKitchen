@@ -257,6 +257,7 @@
                                             <button *ngIf="!isEventCreated" type="button" class="btn btn-kitchen-primary"
                                                     (click)="createNewEvent(newEventType1)"
                                                     data-loading-text="Sprawdzanie..." id="saveEventButton"
+                                                    [disabled]="isEventBeingCreated"
                                                     autocomplete="off">Zapisz
                                             </button>
                                             <button *ngIf="isEventCreated" type="button" class="btn btn-kitchen-default"
@@ -524,6 +525,7 @@
                                             <button *ngIf="!isEventCreated" type="button" class="btn btn-kitchen-primary"
                                                     (click)="createNewEvent(newEventType2)"
                                                     data-loading-text="Sprawdzanie..." id="saveEventButtonType2"
+                                                    [disabled]="isEventBeingCreated"
                                                     autocomplete="off">Zapisz
                                             </button>
                                             <button *ngIf="isEventCreated" type="button" class="btn btn-kitchen-default"

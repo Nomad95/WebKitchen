@@ -70,6 +70,12 @@ export class EventCreateComponent implements OnInit {
      */
     private isEventCreated: boolean = false;
 
+    /**
+     * disables save button when data is writing to the server
+     * @type {boolean}
+     */
+    private isEventBeingCreated: boolean = false;
+
     private MAX_FILE_SIZE = 1040000;
 
     private selectedFile: File;
@@ -195,34 +201,35 @@ export class EventCreateComponent implements OnInit {
         console.log(data.time);
 
         //button loading toggle
-        var $btn1 = $('#saveEventButton').button('loading');
-        var $btn2 = $('#saveEventButtonType2').button('loading');
+        this.isEventBeingCreated = true;
 
         //perform file upload TODO: a co jak zdjecie bedzie dobre a event zly? albo odwrotnie??
         this.uploadPhoto(this.selectedFile);
 
         //make post to create an event
-        this.tryCreateEvent(data,$btn1,$btn2);
+        this.tryCreateEvent(data);
     }
 
     /**
      * make POST and create event
      */
-    tryCreateEvent(data, $btn1, $btn2){
+    tryCreateEvent(data){
         this.eventService.createEvent(data)
             .subscribe(
                 data => {
                     console.log('Added event!');
-                    $btn1.button('reset');
-                    $btn2.button('reset');
+                    //$btn1.button('reset');
+                    //$btn2.button('reset');
+                    this.isEventBeingCreated = false;
                     this.isEventCreated = true;
                     //assign current user to new event
                     this.assignUserToEvent(data.id);
-\                },
+                },
                 err => {
                     console.log('error adding event!');
-                    $btn1.button('reset');
-                    $btn2.button('reset');
+                    //$btn1.button('reset');
+                    //$btn2.button('reset');
+                    this.isEventBeingCreated = false;
                 });
     }
 

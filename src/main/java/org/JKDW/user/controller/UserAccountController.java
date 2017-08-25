@@ -19,6 +19,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
@@ -52,6 +53,7 @@ public class UserAccountController {
 	 *
 	 * @return all user accounts
 	 */
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping( value="/all",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<UserAccount>> getUserAccounts(){
 		List<UserAccount> userAccounts = userAccountService.getAllUserAccounts();
@@ -113,7 +115,8 @@ public class UserAccountController {
 	/**
 	 * @param id - id of deleting account
 	 */
-	@RequestMapping(value="/{id}",method = RequestMethod.DELETE)//TODO: find out why cascade eager dont work
+	@RequestMapping(value="/{id}",method = RequestMethod.DELETE)//TODO: a co jak kazdy moze sobie kogos usunac??
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity deleteUserAccount(@PathVariable("id") Long id){
 		//remove verification token
 		VerificationToken token = verificationTokenRepository.findByUserAccount(userAccountService.getUserAccountById(id));

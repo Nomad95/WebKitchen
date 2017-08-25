@@ -20,6 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.naming.SizeLimitExceededException;
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -50,10 +51,22 @@ public class EventController {
      *
      * @return all general details of all events
      */
-    @RequestMapping(value = "/general/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<EventGeneralDTO>> getEventsDetails() {
-        List<EventGeneralDTO> events = eventService.getAllEventsGeneral();
+    @RequestMapping(
+            value = "/general/all",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            params = { "page", "size" })
+    public ResponseEntity<List<EventGeneralDTO>> getEventsDetails(
+            @PathParam("page") int page,
+            @PathParam("size") int size) {
+        List<EventGeneralDTO> events = eventService.getAllEventsGeneral(page,size);
         return new ResponseEntity<>(events, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/general/count", params = { "page", "size" })
+    public ResponseEntity<Integer> getPageCount(@PathParam("page") int page, @PathParam("size") int size){
+        Integer totalPages = eventService.getTotalPages(page, size);
+        return new ResponseEntity<Integer>(totalPages,HttpStatus.OK);
     }
 
     /**

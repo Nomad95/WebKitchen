@@ -48,6 +48,9 @@ export class EventDetailsComponent implements OnInit {
     //is user an event owner?
     private isOwner = false;
 
+    //disable button when data is loading
+    private isAssigningLoading: boolean = false;
+
     private userAccountDetails = null;
 
     /**
@@ -91,11 +94,11 @@ export class EventDetailsComponent implements OnInit {
      * tries to assign user to this event
      */
     assignUserToEvent(): any {
-        var $btn = $('#myButton').button('loading');
+        this.isAssigningLoading = true;
         this.eventService.assignUserToEvent(+this.router.snapshot.params['id'])
             .subscribe((data) => {
                     //when succeded we reset the button and hide it with hasJoined
-                    $btn.button('reset');
+                    this.isAssigningLoading = false;
                     this.event.people_remaining--;
                     this.hasJoined = true;
                     this.sendNotification(this.event.ownerNick);

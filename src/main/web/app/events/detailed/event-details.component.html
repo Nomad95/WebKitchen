@@ -49,6 +49,7 @@
                     <hr />
                     <button *ngIf="!hasJoined && !isFull && canJoin && !isOwner" class="btn btn-kitchen-primary" (click)="assignUserToEvent()"
                             type="button" id="join" data-loading-text="Sprawdzanie..."
+                            [disabled]="isAssigningLoading"
                             autocomplete="off">Dołącz!
                     </button><!--TODO: bootstrap.css ładnie-->
                     <button class="btn btn-kitchen-primary"

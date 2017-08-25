@@ -8,7 +8,6 @@ import org.JKDW.user.model.Event;
 import javax.naming.SizeLimitExceededException;
 import javax.persistence.NoResultException;
 import java.util.List;
-import java.util.Set;
 
 public interface EventService {
 
@@ -28,7 +27,9 @@ public interface EventService {
 
     EventGeneralDTO getEventDetailsByTitle(String title) throws NoResultException;
 
-    List<EventGeneralDTO> getAllEventsGeneral();
+    List<EventGeneralDTO> getAllEventsGeneral(int page, int size);
+
+    Integer getTotalPages(int page, int size);
 
     void bindEventWithUser(String username, Long evntId) throws SizeLimitExceededException;
 

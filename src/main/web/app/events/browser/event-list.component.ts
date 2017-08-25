@@ -23,6 +23,10 @@ export class EventListComponent implements OnInit {
     //id of current user
     private userId = -1;
 
+    //pagination variables
+    private currentPage = 0;
+    private totalPages = [];
+
     //check if user can create event or he hasn't filled required profile fields
     private canCreateEvent = false;
 
@@ -42,7 +46,13 @@ export class EventListComponent implements OnInit {
      * gets all events
      */
     getEvents():any {
-        this.eventService.getGeneralEvents()
+        this.eventService.getTotalPages(this.currentPage,10)
+            .subscribe(data => {
+                this.totalPages = Array(data).fill().map((x,i)=>i);
+                console.log("pages: "+data);
+            });
+
+        this.eventService.getGeneralEvents(this.currentPage,10)
             .subscribe(data => {
                 this.events = data;
                 console.log("events loaded!");
@@ -58,6 +68,31 @@ export class EventListComponent implements OnInit {
                 this.userId = data;
                 this.checkIfUserCanCreateEvent(this.userId);
             });
+    }
+
+    /**
+     * Fetches new page data from server
+     * @param page
+     */
+    getNewPages(page){
+        if(page != this.currentPage){
+            this.currentPage = page;
+            this.getEvents();
+        }
+    }
+
+    getPreviousPage(){
+        if(this.currentPage != 0){
+            this.currentPage--;
+            this.getEvents();
+        }
+    }
+
+    getNextPage(){
+        if(this.currentPage <= this.totalPages.length){
+            this.currentPage++;
+            this.getEvents();
+        }
     }
 
     /**

@@ -10,14 +10,14 @@ import java.util.Date;
 public @Data class  RatingOfTheHost {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private double rating;
     private String comment;
     private Date dateAdded;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private UserAccount author;
 
 }

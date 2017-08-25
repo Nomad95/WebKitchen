@@ -21,7 +21,7 @@ import java.util.List;
 public class UserDetails {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long Id;
 
 	@Pattern(regexp="^$|[A-Za-ząćęłńóśźżĄŚĆĘŁŹŻÓ]{3,25}")

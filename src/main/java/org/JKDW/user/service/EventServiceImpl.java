@@ -11,11 +11,13 @@ import org.JKDW.user.repository.EventRepository;
 import org.JKDW.user.repository.UserAccountRepository;
 import org.JKDW.user.repository.UserDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.naming.SizeLimitExceededException;
 import javax.persistence.NoResultException;
-import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -133,12 +135,19 @@ public class EventServiceImpl implements EventService {
         );
     }
 
+    @Override
+    public Integer getTotalPages(int page, int size) {
+        return eventRepository.findAll(new PageRequest(page, size)).getTotalPages();
+    }
+
     /**
      * @return returns general details of all events
      */
     @Override
-    public List<EventGeneralDTO> getAllEventsGeneral() {
-        List<Event> allEvents = eventRepository.findAll();
+    public List<EventGeneralDTO> getAllEventsGeneral(int page, int size) {
+        Page<Event> events = eventRepository
+                .findAll(new PageRequest(page, size, new Sort(Sort.Direction.ASC, "date")));
+        List<Event> allEvents = events.getContent();
         List<EventGeneralDTO> eventsDetails = new ArrayList<>();
         for (Event event : allEvents) {
             UserAccount foundUserAccount = userAccountRepository.findOne(event.getOwnerId());
@@ -363,7 +372,6 @@ public class EventServiceImpl implements EventService {
         Event savedUserEvent = eventRepository.save(foundEvent);
         userDetailsRepository.save(foundUserDetails);
 
-        //TODO: send message to user about refuse
 
         return savedUserEvent;
     }

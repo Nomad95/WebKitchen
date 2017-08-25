@@ -26,13 +26,22 @@ export class EventService {
      *
      * Returns json with general informations of events
      */
-    getGeneralEvents():Observable<any[]> {
+    getGeneralEvents(page, size):Observable<any[]> {
         this.instantiateToken();
         var headers = this.createHeadersWithContentAndToken(this.token);
 
-        return this.http.get('/api/event/general/all', {headers: headers})
+        return this.http.get('/api/event/general/all?page='+page+'&size='+size, {headers: headers})
             .map(res => res.json())
             .catch(err => this.handleError(err));    }
+
+    getTotalPages(page,size): Observable<any> {
+        this.instantiateToken();
+        let headers = this.createHeadersWithContentAndToken(this.token);
+
+        return this.http.get('/api/event/general/count?page='+page+'&size='+size, {headers: headers})
+            .map(res => res.json())
+            .catch(err => this.handleError(err));
+    }
 
     /**
      * @param id id of event
@@ -220,15 +229,15 @@ export class EventService {
      * @param eventId
      */
     isEventHasAlreadyHappened(eventId: number): Observable<boolean> {
-       
+
         this.instantiateToken();
-        
+
         var headers = this.createHeadersWithContentAndToken(this.token);
 
         //and passing them in the request
         return this.http.get('/api/event/check/'+ eventId,{headers :headers})
             .map((res) => res.json())
-            .catch(err => this.handleError(err));   
+            .catch(err => this.handleError(err));
     }
 
 

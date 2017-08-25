@@ -30,6 +30,27 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="pagination text-center">
+                            <li>
+                                <a aria-label="Poprzednia" (click)="getPreviousPage()">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <ng-container *ngFor="let page of totalPages">
+                                <li [ngClass]="{'active': page==currentPage}">
+                                    <a class="btn" (click)="getNewPages(page)">{{page+1}}</a>
+                                </li>
+                            </ng-container>
+                            <li>
+                                <a aria-label="Nastepna" (click)="getNextPage()">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
