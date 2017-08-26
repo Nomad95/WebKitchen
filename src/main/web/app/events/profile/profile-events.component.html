@@ -27,6 +27,11 @@
                 <h1>Wydarzenia w których bierzesz udział</h1>
                     <user-participate-events [events]="userParticipatedEvents"
                     [userId]="userId">Ładowanie...</user-participate-events>
+                <hr/>
+                <h1>Zakończone wydarzenia w których brałeś udział</h1>
+                <ended-events [events]="endedEvents">
+                    Ładowanie
+                </ended-events>
             </div>
         </div>
     </div>

@@ -1,6 +1,5 @@
 package org.JKDW.user.model;
 
-import org.JKDW.user.model.rating.RatingOfTheHost;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -142,12 +141,6 @@ public class Event {
      */
     @Column(nullable = true)
     private int people_remaining;
-
-    /**
-     * all ratings in the event
-     */
-    @OneToMany
-    private List<RatingOfTheHost> eventRatings;
 
     /**
      * method initializes people_remaining before INSERT

@@ -20,6 +20,8 @@ export class ProfileEventsComponent implements OnInit {
     private userId = -1;
     //user created events
     private userEvents: any[] = [];
+    //events that ended and can be rated
+    private endedEvents: any[] = [];
     //user events in which he participates
     private userParticipatedEvents: any[] = [];
     //can user create event? -> is profile filled?
@@ -66,10 +68,19 @@ export class ProfileEventsComponent implements OnInit {
                 this.eventService.getUserEventsWhichHeParticipates(this.userId).subscribe( events => {
                     this.userParticipatedEvents = events;
                     this.canUserCreateEvent(this.userId);
-                    console.log("events: "+ this.userParticipatedEvents);
+
+                    //TODO: pass ended events to another array
+                    if(this.userParticipatedEvents){
+                        for (let event of this.userParticipatedEvents){
+                            if(event.hasEnded){
+                                this.endedEvents.push(event);
+                            }
+                        }
+                    }
+
                 });
             });
     }
-    
-    
+
+
 }

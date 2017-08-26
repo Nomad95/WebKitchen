@@ -58,6 +58,7 @@ import {UploadPhotoComponent} from './profile/uploadPhoto/upload-photo.component
 import {ProfilePhotoAlertComponent} from './profile/uploadPhoto/profile-photo-not-changed-alert.component';
 import {NotificationComponent} from "./notifications/notification.component";
 import {SupportComponent} from "./support/support.component";
+import {EndedEventsComponent} from "./events/profile/ended-events.component";
 
 
 import {AuthGuard} from './app.auth-guard.service';
@@ -99,6 +100,7 @@ declare let jQuery:Object;
         NavbarComponent,
         EventListComponent,
         EventGeneralComponent,
+        EndedEventsComponent,
         SideNavbarComponent,
         EventDetailsComponent,
         RegistrationSuccess,

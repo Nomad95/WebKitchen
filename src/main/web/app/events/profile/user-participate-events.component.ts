@@ -3,7 +3,6 @@ import {Router} from '@angular/router';
 import {ToasterContainerComponent} from 'angular2-toaster';
 import {ToastConfigurerFactory} from "../../util/toast/toast-configurer.factory";
 import {EventService} from "../event.service";
-import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
     selector: 'user-participate-events',
