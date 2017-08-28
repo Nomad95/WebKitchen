@@ -21,6 +21,10 @@ export class EndedEventsComponent implements OnInit{
 
     }
 
+    goToEventDetails(eventId: number){
+        this.router.navigate(['/events', eventId]);
+    }
+
     /**
      * converts event type (number) to apropriate string
      * @param eventKind
@@ -31,6 +35,14 @@ export class EndedEventsComponent implements OnInit{
             case 1: return "Dołącz do uczty";
             case 2: return "Wspólne gotowanie";
         }
+    }
+
+    //TODO: moze nie potrzeba eventId?
+    goToRatingSite(eventId: number, userId: number, ownerId: number){
+        console.log("transit to rating site");
+        this.router.navigate(['/events/rating', eventId],{
+            queryParams: {eventId: eventId, authorId: userId, ownerId: ownerId}
+        });
     }
 }
 

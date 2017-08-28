@@ -34,6 +34,7 @@ public class EventWithOwnerDTO {
     private String ownerUsername;
     private String ownerNick;
     private String ownerEmail;
+    private boolean hasEnded;
 
     public EventWithOwnerDTO(Event event, UserAccount userAccount){
         this.id = event.getId();
@@ -57,5 +58,7 @@ public class EventWithOwnerDTO {
         this.ownerUsername = userAccount.getUsername();
         this.ownerNick = userAccount.getNick();
         this.ownerEmail = userAccount.getEmail();
+        Date now = new Date();
+        this.hasEnded = now.after(date);
     }
 }

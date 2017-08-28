@@ -1,0 +1,78 @@
+<toaster-container [toasterconfig]="toasterConfig"></toaster-container>
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" style="word-break: break-all !important;">
+                <div class="well-kitchen">
+                    <div class="row">
+                        <div class="col-md-12 " >
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 text-center" style="font-size: 1.8em; color: black; "
+                                >{{ event.title }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <br/>
+
+                    <div class="row">
+                        <div class="col-md-12" *ngIf="hasNotRatedYet">
+                            Oceń! {{rating | json}}
+
+                            <form #addRatingForm="ngForm" (submit)="addRating()" novalidate>
+                                <div class="form-group">
+
+                                    <label for="rating">Ocena</label>
+                                    <select class="form-control" [(ngModel)]="rating.rating"
+                                            name="rating" id="rating">
+                                        <option [value]="1">1</option>
+                                        <option [value]="2">2</option>
+                                        <option [value]="3">3</option>
+                                        <option [value]="4">4</option>
+                                        <option [value]="5">5</option>
+                                        <option [value]="6">6</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <button type="submit" class="btn btn-kitchen-primary">Oceń!</button>
+                                </div>
+                            </form >
+                        </div>
+                        <div class="col-md-12" *ngIf="!hasNotRatedYet">
+                            <div>
+                                <h2>Twoja ocena:</h2>
+                                <br/>
+                                <h2>{{rating.rating}}</h2>
+                                <br />
+                            </div>
+                            <div class="col-md-12" *ngFor="let comment of rating.comments">
+                                <div>
+                                    <h4>{{comment.user.nickname}}</h4>
+                                    <span>{{comment.text}}</span>
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <form #addRatingForm="ngForm" (submit)="addComment()" novalidate>
+                                    <div class="form-group">
+
+                                        <label for="comment">Dodaj komentarz</label>
+                                        <textarea class="form-control non-resizable"
+                                                  rows="5" id="comment" name="comment"
+                                                  [(ngModel)]="commentToAdd"></textarea>
+
+                                    </div>
+                                    <div>
+                                        <button type="submit" class="btn btn-kitchen-primary">Dodaj</button>
+                                    </div>
+                                </form >
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

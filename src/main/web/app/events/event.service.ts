@@ -9,6 +9,8 @@ import {ToasterService} from 'angular2-toaster';
 import {ToastConfigurerFactory} from "../util/toast/toast-configurer.factory";
 import {TokenUtils} from "../login/token-utils";
 import {LoginService} from "../login/login.service";
+import {EventRating} from "./model/eventRating";
+import {CommentDTO} from "./model/commentDto";
 
 
 @Injectable()
@@ -115,6 +117,24 @@ export class EventService {
             .map((res) => res.json())
             .catch(err => this.handleError(err));    }
 
+    getRating(eventid, userid, ownerid): Observable<EventRating>{
+        this.instantiateToken();
+        let headers = this.createHeadersWithContentAndToken(this.token);
+
+        return this.http.get('/api/rating?eventId='+eventid+'&userId='+userid+'&ownerId='+ownerid, {headers: headers})
+            .map((res) => res.json())
+            .catch(err => this.handleError(err));
+    }
+
+    addRating(rating: EventRating){
+        this.instantiateToken();
+        let headers = this.createHeadersWithContentAndToken(this.token);
+
+        return this.http.post('/api/rating/create', rating, {headers: headers})
+            .map((res) => res.json())
+            .catch(err => this.handleError(err));
+    }
+
     /**
      * checks if user is arleady bound to this event
      * @param id
@@ -154,6 +174,18 @@ export class EventService {
         return this.http.post('/api/event/userevents/'+eventId+'/accept/'+userId,null,{headers: headers})
             .map( res => res.json())
             .catch(err => this.handleError(err));    }
+
+    /**
+     * Adds comment to provided rating
+     */
+    addCommentToRating(ratingId: number,commentDto: CommentDTO): Observable<EventRating>{
+        this.instantiateToken();
+        let headers = this.createHeadersWithContentAndToken(this.token);
+
+        return this.http.post('/api/rating/comment/'+ratingId,commentDto,{headers: headers})
+            .map( res => res.json())
+            .catch(err => this.handleError(err));
+    }
 
     /**
      * Creates new Event

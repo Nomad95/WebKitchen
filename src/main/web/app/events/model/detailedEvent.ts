@@ -21,6 +21,7 @@ export class DetailedEvent{
     ownerUsername: string;
     ownerNick: string;
     ownerEmail: string;
+    hasEnded: boolean;
 
 
     constructor() {

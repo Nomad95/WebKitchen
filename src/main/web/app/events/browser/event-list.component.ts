@@ -89,7 +89,7 @@ export class EventListComponent implements OnInit {
     }
 
     getNextPage(){
-        if(this.currentPage != (this.totalPages.length-2) ){
+        if(this.currentPage != (this.totalPages.length-1) ){
             this.currentPage++;
             this.getEvents();
         }

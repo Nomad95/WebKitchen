@@ -28,6 +28,7 @@ import {DetailsSentMessagesComponent} from "./messages/details/details-sent-mess
 import {MessageBoxComponent} from "./messages/messagebox/messagebox.component";
 import {NotificationComponent} from "./notifications/notification.component";
 import {SupportComponent} from "./support/support.component";
+import {EventRatingComponent} from "./events/ratings/event-rating.component";
 
 /* TODO: Układać to ładnie i po kolei*/
 const appRoutes: Routes = [
@@ -48,6 +49,7 @@ const appRoutes: Routes = [
     {path: 'events', component: EventListComponent, canActivate: [AuthGuard]},
     {path: 'events/:id', component: EventDetailsComponent, canActivate: [AuthGuard]},
     {path: 'events/create/new', component: EventCreateComponent, canActivate: [AuthGuard]},
+    {path: 'events/rating/:id', component: EventRatingComponent, canActivate: [AuthGuard]},
     {path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
     {path: "admin/panelUE", component: AdminPanelUEComponent, canActivate: [AuthGuard]},
     {path: "messagebox", component: MessageBoxComponent, canActivate: [AuthGuard]},

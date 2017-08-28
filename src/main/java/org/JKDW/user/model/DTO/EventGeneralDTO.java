@@ -31,10 +31,14 @@ public class EventGeneralDTO {
 
     private String ownerNick;
 
+    private long[] acceptedIds;
+
+    private boolean hasEnded;
+
     public EventGeneralDTO(long id, byte type, String title, Time time,
                            Date date, DishKindEnum dish_kind, String dish_name,
                            byte people_quantity, int people_remaining,
-                           int ownerId,String ownerUsername,String ownerNick ) {
+                           int ownerId,String ownerUsername,String ownerNick, long[] acceptedIds ) {
         this.id = id;
         this.type = type;
         this.title = title;
@@ -47,6 +51,25 @@ public class EventGeneralDTO {
         this.ownerId = ownerId;
         this.ownerUsername = ownerUsername;
         this.ownerNick = ownerNick;
+        this.acceptedIds = acceptedIds;
+        Date now = new Date();
+        this.hasEnded = now.after(date);
+    }
+
+    public boolean isHasEnded() {
+        return hasEnded;
+    }
+
+    public void setHasEnded(boolean hasEnded) {
+        this.hasEnded = hasEnded;
+    }
+
+    public long[] getAcceptedIds() {
+        return acceptedIds;
+    }
+
+    public void setAcceptedIds(long[] acceptedIds) {
+        this.acceptedIds = acceptedIds;
     }
 
     public String getOwnerNick() {

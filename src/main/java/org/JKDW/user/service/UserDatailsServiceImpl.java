@@ -1,24 +1,22 @@
 package org.JKDW.user.service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.persistence.NoResultException;
-
 import javassist.NotFoundException;
+import org.JKDW.user.model.DTO.UserAccountDTO;
 import org.JKDW.user.model.DTO.UserDetailsAddressDTO;
+import org.JKDW.user.model.DTO.UserDetailsUpdateDTO;
 import org.JKDW.user.model.DTO.UsersParticipationEventDTO;
 import org.JKDW.user.model.Event;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.model.UserDetails;
-import org.JKDW.user.model.DTO.UserAccountDTO;
-import org.JKDW.user.model.DTO.UserDetailsUpdateDTO;
 import org.JKDW.user.repository.UserAccountRepository;
 import org.JKDW.user.repository.UserDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.NoResultException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -180,7 +178,7 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 	 * @param userId user account id
 	 * @return list of events
 	 * @throws NotFoundException when user couldn't be found
-     */
+	 */
 	@Override
 	public List<UsersParticipationEventDTO> getAllUserEventsInWhichHeParticipates(Long userId) throws NotFoundException {
 		//find user
@@ -202,7 +200,8 @@ public class UserDatailsServiceImpl implements UserDetailsService {
 					e.getTime(),
 					e.getDate(),
 					e.getAcceptedIds().contains(userId),
-					e.getOwnerId()
+					e.getOwnerId(),
+					userId
 					))
 		);
 		return eventsDTO;

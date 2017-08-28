@@ -81,6 +81,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/mail/support/send").permitAll()
                 .antMatchers("/calendar").authenticated()
                 .antMatchers("/user").authenticated()
+                .antMatchers(
+                        HttpMethod.GET,
+                        "/v2/api-docs",
+                        "/configuration/",
+                        "/swagger-resources/**",
+                        "/configuration/security",
+                        "/swagger-ui.html",
+                        "/webjars/**").permitAll()
                 //for frontend loading.\
                 .antMatchers(HttpMethod.GET,"/traceur").permitAll()
                 .antMatchers("/**/*.html").permitAll()

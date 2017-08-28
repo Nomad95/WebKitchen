@@ -59,24 +59,22 @@ export class ProfileEventsComponent implements OnInit {
     }
 
     /**
-     * gets user id and then all events which user participates in
+     * gets user id and then all events which user participates in.
+     * if event has ended pass to ended events array
      */
     private getUserEventsWhichHeParticipatesIn(){
         this.loginService.getIdByUsername()
             .subscribe( data => {
                 this.userId = data;
                 this.eventService.getUserEventsWhichHeParticipates(this.userId).subscribe( events => {
-                    this.userParticipatedEvents = events;
-                    this.canUserCreateEvent(this.userId);
-
-                    //TODO: pass ended events to another array
-                    if(this.userParticipatedEvents){
-                        for (let event of this.userParticipatedEvents){
-                            if(event.hasEnded){
-                                this.endedEvents.push(event);
-                            }
+                    for (let event of events){
+                        if(event.hasEnded && event.accepted){
+                            this.endedEvents.push(event);
+                        } else {
+                            this.userParticipatedEvents.push(event);
                         }
                     }
+                    this.canUserCreateEvent(this.userId);
 
                 });
             });

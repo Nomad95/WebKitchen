@@ -59,7 +59,7 @@ import {ProfilePhotoAlertComponent} from './profile/uploadPhoto/profile-photo-no
 import {NotificationComponent} from "./notifications/notification.component";
 import {SupportComponent} from "./support/support.component";
 import {EndedEventsComponent} from "./events/profile/ended-events.component";
-
+import {EventRatingComponent} from "./events/ratings/event-rating.component";
 
 import {AuthGuard} from './app.auth-guard.service';
 import {LoginBanned} from "./login/login-banned-user.component";
@@ -101,6 +101,7 @@ declare let jQuery:Object;
         EventListComponent,
         EventGeneralComponent,
         EndedEventsComponent,
+        EventRatingComponent,
         SideNavbarComponent,
         EventDetailsComponent,
         RegistrationSuccess,

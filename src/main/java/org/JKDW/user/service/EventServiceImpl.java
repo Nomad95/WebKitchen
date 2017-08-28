@@ -131,7 +131,8 @@ public class EventServiceImpl implements EventService {
                 foundEvent.getPeople_remaining(),
                 foundUserAccount.getId().intValue(),
                 foundUserAccount.getUsername(),
-                foundUserAccount.getNick()
+                foundUserAccount.getNick(),
+                foundEvent.getAcceptedIds().stream().mapToLong(l -> l).toArray()
         );
     }
 
@@ -163,7 +164,8 @@ public class EventServiceImpl implements EventService {
                     event.getPeople_remaining(),
                     foundUserAccount.getId().intValue(),
                     foundUserAccount.getUsername(),
-                    foundUserAccount.getNick()
+                    foundUserAccount.getNick(),
+                    event.getAcceptedIds().stream().mapToLong(l -> l).toArray()
             ));
         }
         return eventsDetails;
@@ -463,7 +465,6 @@ public class EventServiceImpl implements EventService {
      * is used to admin panel. I don't know
      * @throws NoResultException
      */
-
     @Override
     public EventGeneralDTO getEventDetailsByTitle(String title) throws NoResultException {
         Event foundEvent = eventRepository.findDetailsEventByTitle(title);
@@ -482,7 +483,8 @@ public class EventServiceImpl implements EventService {
                 foundEvent.getPeople_remaining(),
                 foundUserAccount.getId().intValue(),
                 foundUserAccount.getUsername(),
-                foundUserAccount.getNick()
+                foundUserAccount.getNick(),
+                foundEvent.getAcceptedIds().stream().mapToLong(l -> l).toArray()
         );
     }
 

@@ -1,35 +1,56 @@
 package org.JKDW.user.controller;
 
 
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.JKDW.user.model.comment.conventer.CommentConverter;
+import org.JKDW.user.model.comment.dto.RatingCommentDTO;
 import org.JKDW.user.model.rating.DTO.RatingOfTheHostDTO;
 import org.JKDW.user.model.rating.RatingOfTheHost;
+import org.JKDW.user.model.rating.converter.RatingOfTheHostDtoToEntityConverter;
 import org.JKDW.user.service.RatingOfTheHostService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/api/rating")
+@RequiredArgsConstructor
+@Slf4j
 public class RatingOfTheHostController {
 
-    @Autowired
-    private RatingOfTheHostService ratingOfTheHostService;
+    private final @NonNull RatingOfTheHostService ratingOfTheHostService;
+    private final @NonNull RatingOfTheHostDtoToEntityConverter converter;
+    private final @NonNull CommentConverter commentConverter;
 
     @PostMapping(value = "/create")
-    public ResponseEntity<RatingOfTheHost> createUserAccount(@RequestBody RatingOfTheHostDTO ratingOfTheHostDTO) {
-        RatingOfTheHost createdRatingOfTheHost = ratingOfTheHostService.createRatingOfTheHost(ratingOfTheHostDTO);
-        if (createdRatingOfTheHost == null)
-            return new ResponseEntity<>(createdRatingOfTheHost, HttpStatus.INTERNAL_SERVER_ERROR);
-        return new ResponseEntity<>(createdRatingOfTheHost, HttpStatus.CREATED);
+    @ResponseBody
+    public RatingOfTheHostDTO createRating(@RequestBody RatingOfTheHostDTO ratingOfTheHostDTO) {
+        RatingOfTheHost ratingOfTheHost = ratingOfTheHostService
+                .createRatingOfTheHost(converter.convertDtoToEntity(ratingOfTheHostDTO));
+        return converter.convertEntityToDto(ratingOfTheHost);
     }
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<RatingOfTheHost>> getAllRatingsOfTheHosts(){
-        List<RatingOfTheHost> allRatingsOfTheHost = ratingOfTheHostService.getAllRatingsOfTheHosts();
-        return new ResponseEntity<>(allRatingsOfTheHost,HttpStatus.OK);
+    @GetMapping(params = {"userId", "ownerId", "eventId"})
+    @ResponseBody
+    public RatingOfTheHostDTO getRating(
+            @PathParam("eventId") Long eventId,
+            @PathParam("userId") Long userId,
+            @PathParam("ownerId") Long ownerId){
+        RatingOfTheHost rating = ratingOfTheHostService.getRating(eventId, userId, ownerId);
+        if(rating != null)
+            return converter.convertEntityToDto(rating);
+
+        return null;
+    }
+
+    @PostMapping(value = "/comment/{ratingId}")
+    @ResponseBody
+    public RatingOfTheHostDTO addComment(@PathVariable Long ratingId, @RequestBody RatingCommentDTO ratingCommentDTO){
+        RatingOfTheHost rating = ratingOfTheHostService.getRatingById(ratingId);
+        rating.getComments().add(commentConverter.convertDtoToEntity(ratingCommentDTO));
+        RatingOfTheHost ratingOfTheHost = ratingOfTheHostService.createRatingOfTheHost(rating);
+        return converter.convertEntityToDto(ratingOfTheHost);
     }
 }

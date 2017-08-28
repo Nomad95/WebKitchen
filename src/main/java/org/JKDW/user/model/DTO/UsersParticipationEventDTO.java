@@ -23,7 +23,13 @@ public class UsersParticipationEventDTO {
 
     private boolean hasEnded;
 
-    public UsersParticipationEventDTO(Long id, String title, String dish_name, byte type, Time time, Date date, boolean isAccepted, Long ownerId) {
+    //id of user quering this data
+    private Long userId;
+
+    public UsersParticipationEventDTO(
+            Long id, String title, String dish_name,
+            byte type, Time time, Date date, boolean isAccepted,
+            Long ownerId,Long userId) {
         this.id = id;
         this.title = title;
         this.dish_name = dish_name;
@@ -32,8 +38,17 @@ public class UsersParticipationEventDTO {
         this.date = date;
         this.isAccepted = isAccepted;
         this.ownerId = ownerId;
-        Date today = new Date();
-        hasEnded = date.after(today);
+        Date now = new Date();
+        this.hasEnded = now.after(date);
+        this.userId = userId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public boolean isHasEnded() {

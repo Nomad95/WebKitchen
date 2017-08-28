@@ -1,13 +1,15 @@
 package org.JKDW.user.model.rating;
 
+import com.google.common.collect.Lists;
 import lombok.Data;
 import org.JKDW.user.model.Event;
 import org.JKDW.user.model.UserAccount;
+import org.JKDW.user.model.comment.RatingComment;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,12 +20,6 @@ public class RatingOfTheHost {
     private Long id;
 
     private Integer rating;
-
-    @Size(max = 5000)
-    private String comment;
-
-    @Size(max = 5000)
-    private String responseComment;
 
     private Date createdDate;
 
@@ -38,6 +34,9 @@ public class RatingOfTheHost {
     @NotNull
     @ManyToOne
     private UserAccount host;
+
+    @OneToMany(mappedBy = "rating",cascade = CascadeType.ALL)
+    private List<RatingComment> comments = Lists.newArrayList();
 
     @PrePersist
     private void setCreatedDateAudit(){
