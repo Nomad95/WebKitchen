@@ -68,6 +68,8 @@ import { ToasterService } from 'angular2-toaster';
 
 import {PolishDatePipe} from "./util/pipes/polish.date.pipe";
 import {ShorterTimePipe} from "./util/pipes/shorter.time.pipe";
+import {MainSearchComponent} from "./search/main-search/main-search.component";
+import {SearchedEventsComponent} from "./search/searched-events/searched-events.component";
 
 declare let jQuery:Object;
 
@@ -124,7 +126,9 @@ declare let jQuery:Object;
         UploadPhotoComponent,
         ProfilePhotoAlertComponent,
         NotificationComponent,
-        SupportComponent
+        SupportComponent,
+        MainSearchComponent,
+        SearchedEventsComponent
     ],
     imports: [BrowserModule,
         FormsModule,

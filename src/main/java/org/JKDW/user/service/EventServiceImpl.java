@@ -1,10 +1,12 @@
 package org.JKDW.user.service;
 
 import javassist.NotFoundException;
+import org.JKDW.user.converter.EventGeneralConverter;
 import org.JKDW.user.model.DTO.EventForOwnerDTO;
 import org.JKDW.user.model.DTO.EventGeneralDTO;
 import org.JKDW.user.model.DTO.UserAccountForEventOwnerDTO;
 import org.JKDW.user.model.Event;
+import org.JKDW.user.model.SearchCriteriaEvents;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.model.UserDetails;
 import org.JKDW.user.repository.EventRepository;
@@ -14,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 
 import javax.naming.SizeLimitExceededException;
@@ -21,9 +26,13 @@ import javax.persistence.NoResultException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class EventServiceImpl implements EventService {
+    public static byte BYTE_ZERO = (byte)0;
+    public static byte BYTE_JEDEN = (byte)1;
+    public static byte BYTE_DWA = (byte)2;
 
     @Autowired
     private EventRepository eventRepository;
@@ -374,6 +383,7 @@ public class EventServiceImpl implements EventService {
         Event savedUserEvent = eventRepository.save(foundEvent);
         userDetailsRepository.save(foundUserDetails);
 
+        //TODO: send message to user about refuse
 
         return savedUserEvent;
     }
@@ -465,6 +475,7 @@ public class EventServiceImpl implements EventService {
      * is used to admin panel. I don't know
      * @throws NoResultException
      */
+
     @Override
     public EventGeneralDTO getEventDetailsByTitle(String title) throws NoResultException {
         Event foundEvent = eventRepository.findDetailsEventByTitle(title);
@@ -500,8 +511,91 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> getEventMatchingToExpression(String address) {
-        List<Event> events = eventRepository.findByAddressContaining(address);
-        return events;
+    public Page<EventGeneralDTO> getEventsByTitleWithLowerCases(SearchCriteriaEvents search, Pageable pageable){
+          Page<Event> pageEvent = eventRepository.findByTitleWithLowerCase(search.getTitle(), pageable);
+          int totalElements = (int) pageEvent.getTotalElements();
+          if(pageEvent == null)
+              throw new NoResultException("Event details couldnt be found.");
+          List<EventGeneralDTO> eventGeneralDTOS = new ArrayList<>();
+          pageEvent.getContent().forEach(event -> {
+              UserAccount foundUserAccount = userAccountRepository.findOne(event.getOwnerId());
+              EventGeneralDTO eventGeneralDTO = new EventGeneralDTO(
+                      event.getId(),
+                      event.getType(),
+                      event.getTitle(),
+                      event.getTime(),
+                      event.getDate(),
+                      event.getDish_kind(),
+                      event.getDish_name(),
+                      event.getPeople_quantity(),
+                      event.getPeople_remaining(),
+                      foundUserAccount.getId().intValue(),
+                      foundUserAccount.getUsername(),
+                      foundUserAccount.getNick(),
+                      event.getAcceptedIds().stream().mapToLong(l -> l).toArray());
+              eventGeneralDTOS.add(eventGeneralDTO);
+          });
+
+         return new PageImpl<EventGeneralDTO>(eventGeneralDTOS, pageable, totalElements);
+    }
+
+    @Override
+    public Page<EventGeneralDTO> getEventsMatchingToAllExpressions(SearchCriteriaEvents search, Pageable pageable) {
+        Date dateNull = new Date(0);
+        String address = search.getAddress();
+        String title = search.getTitle();
+        Date date = search.getDate();
+        String type = search.getTypeEvent();
+
+        if(address != null){
+            address = address.toLowerCase();
+        }
+        else address = "";
+        System.out.println("Data"+ date);
+        if(date == null){
+            date = new Date(0);
+        }
+
+        if(title == "")
+            title = null;
+
+
+        byte byteType = BYTE_ZERO;
+        if(type != null){
+            switch (type){
+                case "uczta dla innych":
+                    byteType = BYTE_JEDEN;
+                    break;
+                case "wspólne gotowanie":
+                    byteType = BYTE_DWA;
+                    break;
+                default:
+                    byteType = BYTE_ZERO;
+                    break;
+            }
+        }
+
+        Page<Event> pageEvent = eventRepository.findByTitleAddressTypeOrDate(title, address, byteType, BYTE_ZERO, BYTE_JEDEN, BYTE_DWA, date, dateNull, pageable);
+        int totalElements = (int) pageEvent.getTotalElements();
+        List<EventGeneralDTO> eventGeneralDTOS = new ArrayList<>();
+        pageEvent.forEach(event -> {
+            UserAccount foundUserAccount = userAccountRepository.findOne(event.getOwnerId());
+            EventGeneralDTO eventGeneralDTO = new EventGeneralDTO(
+                    event.getId(),
+                    event.getType(),
+                    event.getTitle(),
+                    event.getTime(),
+                    event.getDate(),
+                    event.getDish_kind(),
+                    event.getDish_name(),
+                    event.getPeople_quantity(),
+                    event.getPeople_remaining(),
+                    foundUserAccount.getId().intValue(),
+                    foundUserAccount.getUsername(),
+                    foundUserAccount.getNick(),
+                    event.getAcceptedIds().stream().mapToLong(l -> l).toArray());
+            eventGeneralDTOS.add(eventGeneralDTO);
+        });
+        return new PageImpl<EventGeneralDTO>(eventGeneralDTOS, pageable, totalElements);
     }
 }

@@ -1,5 +1,5 @@
 import {Notification} from "./notification";
-export interface Page{
+export interface PageNotifications{
     content: Array<Notification>;
     totalPages: number;
     totalElements: number;

@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="row">
+        <div class="search">
+            <input #title="ngModel"
+                   class="form-control input-sm"
+                   name="model.title"
+                   id="title"
+                   placeholder="Nazwa wydarzenia"
+                   [(ngModel)]="model.title"/>
+            <button [routerLink]="['/searched/events', model.title ]" type="submit" class="btn btn-kitchen-primary btn-sm">Wyszukaj</button>
+        </div>
+    </div>
+</div>
