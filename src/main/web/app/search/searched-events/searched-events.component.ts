@@ -63,7 +63,7 @@ export class SearchedEventsComponent implements OnInit, OnDestroy{
 
     searchEventByTitle(eventTitle, numberOfPage):void{
         this.events = [];
-        this.searchService.searchOnlyByTitle(eventTitle,numberOfPage, 2)
+        this.searchService.searchOnlyByTitle(eventTitle,numberOfPage, 10)
             .subscribe(result =>{
                 this.pageWithEvents = result;
                 for(let event of this.pageWithEvents.content){
@@ -77,7 +77,7 @@ export class SearchedEventsComponent implements OnInit, OnDestroy{
     searchEventByCriteria(criteria, numberOfPage:number):void{
         this.events = [];
         this.sharedService.mapToAnotherComponent(this.criteria);
-        this.searchService.searchEventByCriteria(criteria, numberOfPage, 2)
+        this.searchService.searchEventByCriteria(criteria, numberOfPage, 10)
             .subscribe( result => {
                 this.pageWithEvents = result;
                 for(let event of this.pageWithEvents.content){
