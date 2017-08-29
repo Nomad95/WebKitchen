@@ -1,7 +1,6 @@
 package org.JKDW.user.service;
 
 import javassist.NotFoundException;
-import org.JKDW.user.converter.EventGeneralConverter;
 import org.JKDW.user.model.DTO.EventForOwnerDTO;
 import org.JKDW.user.model.DTO.EventGeneralDTO;
 import org.JKDW.user.model.DTO.UserAccountForEventOwnerDTO;
