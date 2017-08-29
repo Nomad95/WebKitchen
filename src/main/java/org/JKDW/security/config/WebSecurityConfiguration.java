@@ -78,7 +78,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .antMatchers("/api/user/banned/account/*").permitAll()
                 .antMatchers("/stomp").permitAll()
-                .antMatchers("/api/mail/support/send").permitAll()
                 .antMatchers("/calendar").authenticated()
                 .antMatchers("/user").authenticated()
                 .antMatchers(
@@ -89,6 +88,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/configuration/security",
                         "/swagger-ui.html",
                         "/webjars/**").permitAll()
+                .antMatchers("/api/search/main").permitAll()
+                .antMatchers("/api/search/advanced").permitAll()
                 //for frontend loading.\
                 .antMatchers(HttpMethod.GET,"/traceur").permitAll()
                 .antMatchers("/**/*.html").permitAll()

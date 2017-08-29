@@ -1,6 +1,7 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {ToasterContainerComponent, ToasterService} from 'angular2-toaster';
 import {ToastConfigurerFactory} from "../../util/toast/toast-configurer.factory";
+import {LoginService} from "../../login/login.service";
 
 //TODO: dodaj te klasy ;) pousuwaj zbędne service
 @Component({
@@ -9,7 +10,7 @@ import {ToastConfigurerFactory} from "../../util/toast/toast-configurer.factory"
     directives: [ToasterContainerComponent]
 })
 export class EventGeneralComponent implements OnInit {
-    constructor() {
+    constructor(private loginService: LoginService) {
     }
 
     //event from all event list component

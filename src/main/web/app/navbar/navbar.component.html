@@ -16,9 +16,11 @@
                         class="fa fa-user-plus fa-navbar"
                         aria-hidden="true"></i>
                     Zarejestruj </a></li>
-                <li *ngIf="!loginService.isLogged()"><a [routerLink]="['/login']"><i class="fa fa-sign-in fa-navbar"
-                                                                                     aria-hidden="true"></i> Zaloguj
+                <li *ngIf="!loginService.isLogged()"><a [routerLink]="['/login']"><i class="fa fa-sign-in fa-navbar" aria-hidden="true"></i> Zaloguj
                 </a></li>
+                <li *ngIf="loginService.isLogged()">
+                    <main-search></main-search>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right" style="padding-right: 15px">
                 <li class="dropdown" *ngIf="loginService.isLogged()">

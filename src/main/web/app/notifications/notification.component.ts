@@ -1,6 +1,6 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
+    import {Component, OnDestroy, OnInit} from "@angular/core";
 import {NotificationService} from "./notification.service";
-import {Page} from "./model/page";
+import {PageNotifications} from "./model/pageNotifications";
 import {SharedService} from "../shared.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {LoginService} from "../login/login.service";
@@ -12,7 +12,7 @@ import {LoginService} from "../login/login.service";
 })
 export class NotificationComponent implements OnInit, OnDestroy {
 
-    private pageWithNotifications: Page;
+    private pageWithNotifications: PageNotifications;
     private notifications;
     private indexesOfPage;
     private notificationsToDelete;

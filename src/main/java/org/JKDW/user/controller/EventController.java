@@ -7,6 +7,7 @@ import org.JKDW.user.model.DTO.EventForOwnerDTO;
 import org.JKDW.user.model.DTO.EventGeneralDTO;
 import org.JKDW.user.model.DTO.EventWithOwnerDTO;
 import org.JKDW.user.model.Event;
+import org.JKDW.user.model.SearchCriteriaEvents;
 import org.JKDW.user.model.UserAccount;
 import org.JKDW.user.service.EventService;
 import org.JKDW.user.service.UserAccountService;
@@ -109,8 +110,8 @@ public class EventController {
      */
     @RequestMapping(
             value = "/create", method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE
+                consumes = MediaType.APPLICATION_JSON_VALUE,
+                produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<Event> createEvent(@RequestBody Event event) {
         Event createdEvent = eventService.createEvent(event);
@@ -298,4 +299,5 @@ public class EventController {
             return new ResponseEntity<>(new Boolean("true"), HttpStatus.OK);
         return new ResponseEntity<>(new Boolean("false"), HttpStatus.OK);
     }
+
 }

@@ -30,7 +30,7 @@ export class MailService {
         let token = this.instantiateToken();
         let headers = this.createHeadersWithContentAndToken(token);
         return this.http.post('/api/mail/support/send',JSON.stringify(mailModel),{headers:headers})
-            .map(res => res.json())
+            .map((res: Response) => res.json())
             .catch(this.handleError);
     }
 

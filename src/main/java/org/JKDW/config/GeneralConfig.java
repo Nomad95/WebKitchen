@@ -21,6 +21,9 @@ public class GeneralConfig {
     @Autowired
     DataSource dataSource;
 
+    @Autowired
+
+
     @Bean(name = "sessionFactory")
     public LocalSessionFactoryBean hibernate5SessionFactoryBean(){
         LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();

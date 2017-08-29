@@ -4,9 +4,13 @@ import javassist.NotFoundException;
 import org.JKDW.user.model.DTO.EventForOwnerDTO;
 import org.JKDW.user.model.DTO.EventGeneralDTO;
 import org.JKDW.user.model.Event;
+import org.JKDW.user.model.SearchCriteriaEvents;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import javax.naming.SizeLimitExceededException;
 import javax.persistence.NoResultException;
+import java.util.Date;
 import java.util.List;
 
 public interface EventService {
@@ -46,4 +50,8 @@ public interface EventService {
     String getEventOwnerUsername(Long eventId) throws NotFoundException;
 
     boolean checkIfEventHasAlreadyHappened(Long evntid);
+
+    Page<EventGeneralDTO> getEventsByTitleWithLowerCases(SearchCriteriaEvents search, Pageable pageable);
+
+    Page<EventGeneralDTO> getEventsMatchingToAllExpressions(SearchCriteriaEvents search, Pageable pageable);
 }
