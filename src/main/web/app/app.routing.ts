@@ -61,10 +61,9 @@ const appRoutes: Routes = [
     {path: "messagebox/sent/details/:id", component: DetailsSentMessagesComponent, canActivate:[AuthGuard]},
     {path: "notifications/:page", component: NotificationComponent , canActivate: [AuthGuard]},
     {path: "support", component: SupportComponent , canActivate: [AuthGuard]},
-    {path: "searched/events", component: SearchedEventsComponent, canActivate: [AuthGuard]},
-    {path: "searched/events/:title", component: SearchedEventsComponent, canActivate: [AuthGuard]}
+    {path: "searched/events", component: SearchedEventsComponent}
+    {path: "searched/events/:searchType/:title", component: SearchedEventsComponent},
 ];
-
 export const appRouterProviders = [AuthGuard, LoginService];
 
 export const routing: ModuleWithProviders =

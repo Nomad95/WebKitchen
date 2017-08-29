@@ -7,7 +7,7 @@
                    id="title"
                    placeholder="Nazwa wydarzenia"
                    [(ngModel)]="model.title"/>
-            <button [routerLink]="['/searched/events', model.title ]" type="submit" class="btn btn-kitchen-primary btn-sm">Wyszukaj</button>
+            <button [routerLink]="['/searched/events', {searchType: this.main, title: model.title} ]" type="submit" class="btn btn-kitchen-primary btn-sm">Wyszukaj</button>
         </div>
     </div>
 </div>

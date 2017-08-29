@@ -1,24 +1,23 @@
-import {Component, OnInit} from '@angular/core';
-import {EventService} from '../../events/event.service';
+import {Component, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {ToasterContainerComponent, ToasterService} from 'angular2-toaster';
 import {SearchService} from "../search.service";
 import {DetailedEvent} from "../../events/model/detailedEvent";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PageEvents} from "../pageEvents";
-import {DatePickerValues} from "../../util/datepicker/date-picker-values.model";
-import {IMyDateModel} from "mydatepicker";
+import {SharedService} from "../../shared.service";
 @Component({
     selector: 'searched-events',
     templateUrl: 'app/search/searched-events/searched-events.component.html',
     providers: [SearchService],
     directives: [ToasterContainerComponent]
 })
-export class SearchedEventsComponent implements OnInit {
+export class SearchedEventsComponent implements OnInit, OnDestroy{
 
     private pageWithEvents: PageEvents;
     private events: Array<DetailedEvent> = [];
-    private routeParametr: any;
+    private titleFromRouter: any;
     private sub:any;
+    private searchType:any;
 
     // dependence to pagination
     private isMainSearch: boolean = true;
@@ -27,10 +26,6 @@ export class SearchedEventsComponent implements OnInit {
     private currentPage = 0;
     private numbersOfPage = [];
 
-    private objectWithDate = {
-        date:''
-    };
-
     private criteria ={
         title: '',
         address:'',
@@ -38,26 +33,19 @@ export class SearchedEventsComponent implements OnInit {
         typeEvent: ''
     };
 
-    /**
-     * Needed for proper date picker input type
-     * @type {DatePickerValues}
-     */
-    private datePicker = new DatePickerValues();
-
-    /**
-     * Intializes datepicker variables
-     */
-    initializeDatePickerOptions(): void{
-        this.datePicker.initializeDatePickerForEvents();
-        this.datePicker.addDisableUntil();
-    }
+    private criteriaReset ={
+        title: '',
+        address:'',
+        date: '',
+        typeEvent: ''
+    };
 
     constructor(private searchService: SearchService,
-                private route: ActivatedRoute){}
+                private route: ActivatedRoute,
+                private sharedService: SharedService){}
 
     ngOnInit(): void {
-        this.initializeDatePickerOptions();
-        this.getTitleEventsFromUrlAndSearchEventsByTitle(0);
+        this.getTypeSearchFromUrlAndSearch(0)
     }
 
     generatePages():void{
@@ -71,8 +59,6 @@ export class SearchedEventsComponent implements OnInit {
                 this.numbersOfPage.push(i);
             }
         }
-
-
     }
 
     searchEventByTitle(eventTitle, numberOfPage):void{
@@ -90,6 +76,7 @@ export class SearchedEventsComponent implements OnInit {
 
     searchEventByCriteria(criteria, numberOfPage:number):void{
         this.events = [];
+        this.sharedService.mapToAnotherComponent(this.criteria);
         this.searchService.searchEventByCriteria(criteria, numberOfPage, 2)
             .subscribe( result => {
                 this.pageWithEvents = result;
@@ -104,25 +91,28 @@ export class SearchedEventsComponent implements OnInit {
 
 
     getTitleEventsFromUrlAndSearchEventsByTitle(numberOfPage):void{
-        this.sub = this.route.params.subscribe(params => {
-            this.routeParametr = params['title'];
 
-            if(this.isMainSearch && !(this.routeParametr == null || this.routeParametr == "")){
-                this.criteria.title = this.routeParametr;
+        this.sub = this.route.params.subscribe(params => {
+            this.titleFromRouter = params['title'];
+
+            if(!(this.titleFromRouter == null || this.titleFromRouter == "")){
+                this.criteria.title = this.titleFromRouter;
                 this.searchEventByTitle(this.criteria, numberOfPage);
+                console.log("Działa !!!");
             }
+
         });
     }
 
-    onDateChanged(event: IMyDateModel) {
-        if(event.formatted !== '') {
-            this.criteria.date = event.formatted;
-        } else if(this.objectWithDate.date !== '') {
-            this.criteria.date = this.objectWithDate.date;
-        }
-        else {
-            this.criteria.date = '';
-        }
+    getTypeSearchFromUrlAndSearch(numberOfPage):void{
+        this.sub = this.route.params.subscribe(params => {
+            this.searchType = params['searchType'];
+            if(this.searchType === "main"){
+                this.getTitleEventsFromUrlAndSearchEventsByTitle(numberOfPage);
+            } else if(this.searchType ==="advanced"){
+                this.searchEventByCriteria(this.criteria, this.currentPage);
+            }
+        })
     }
 
 /**
@@ -159,5 +149,9 @@ export class SearchedEventsComponent implements OnInit {
         }
     }
 
+
+    ngOnDestroy(): void {
+
+    }
 
 }

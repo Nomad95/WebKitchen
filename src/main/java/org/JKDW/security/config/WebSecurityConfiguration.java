@@ -88,6 +88,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/configuration/security",
                         "/swagger-ui.html",
                         "/webjars/**").permitAll()
+                .antMatchers("/api/search/main").permitAll()
+                .antMatchers("/api/search/advanced").permitAll()
                 //for frontend loading.\
                 .antMatchers(HttpMethod.GET,"/traceur").permitAll()
                 .antMatchers("/**/*.html").permitAll()

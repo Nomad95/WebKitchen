@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {SearchModel} from "./search/search-model";
 
 @Injectable()
 export class SharedService {
@@ -8,6 +9,13 @@ export class SharedService {
     private numberOfUnreadMessages: number;
     private numberOfUnreadNotifications: number;
     private myNick;
+    public criteria ={
+        title: '',
+        address:'',
+        date: '',
+        typeEvent: ''
+    };
+
 
     public getIsBanned():boolean {
         return this.isBanned;
@@ -54,5 +62,19 @@ export class SharedService {
 
     public setMyNick(_myNick:string) {
         this.myNick = _myNick;
+    }
+
+    public mapToSharedService(data:SearchModel){
+        this.criteria.title = data.title
+        this.criteria.address = data.address;
+        this.criteria.date = data.date;
+        this.criteria.typeEvent = data.typeEvent;
+    }
+
+    public mapToAnotherComponent(data:SearchModel){
+        data.title = this.criteria.title;
+        data.address = this.criteria.address;
+        data.date = this.criteria.date;
+        data.typeEvent = this.criteria.typeEvent;
     }
 }

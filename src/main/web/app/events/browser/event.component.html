@@ -33,7 +33,12 @@
             </ul>
             <!--TODO: co tu jeszcze dodac?-->
             <!--after the comma pass an event id to route-->
-            <button class="btn btn-kitchen-primary" [routerLink]="['/events',event.id]">Zobacz</button>
+            <div *ngIf="loginService.isLogged()">
+                <button class="btn btn-kitchen-primary" [routerLink]="['/events',event.id]">Zobacz</button>
+            </div>
+            <div *ngIf="!loginService.isLogged()">
+                <button class="btn btn-kitchen-primary" [routerLink]="['/registration']"> Zarejestruj się aby dołączyć</button>
+            </div>
         </div>
     </div>
 </div>

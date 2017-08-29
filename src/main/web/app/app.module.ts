@@ -70,6 +70,7 @@ import {PolishDatePipe} from "./util/pipes/polish.date.pipe";
 import {ShorterTimePipe} from "./util/pipes/shorter.time.pipe";
 import {MainSearchComponent} from "./search/main-search/main-search.component";
 import {SearchedEventsComponent} from "./search/searched-events/searched-events.component";
+import {AdvancedSearchComponent} from "./search/advanced-search/advanced-search.component";
 
 declare let jQuery:Object;
 
@@ -128,6 +129,7 @@ declare let jQuery:Object;
         NotificationComponent,
         SupportComponent,
         MainSearchComponent,
+        AdvancedSearchComponent,
         SearchedEventsComponent
     ],
     imports: [BrowserModule,
