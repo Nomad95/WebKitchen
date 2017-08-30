@@ -79,7 +79,6 @@ export class EventDetailsComponent implements OnInit {
         this.eventService.getDetailedEvent(+this.router.snapshot.params['id'])
             .subscribe(data => {
                 this.event = data;
-                console.log(JSON.stringify(data));
                 this.switchTypeToNames();
                 this.checkFreeSpace();
                 this.getUserIdByUsername();
@@ -111,11 +110,9 @@ export class EventDetailsComponent implements OnInit {
      * Sets hasJoined variable
      */
     checkUser():any {
-        console.log('checking user');
         this.eventService.checkUser(+this.router.snapshot.params['id'])
             .subscribe((data) => {
                 this.hasJoined = data;
-                console.log('data passed: ' + data);
             });
     }
 
@@ -149,7 +146,6 @@ export class EventDetailsComponent implements OnInit {
             .subscribe( data => {
                 this.userId = data;
                 this.checkIfUserCanJoinEvent(this.userId);
-                console.log("fetched user id: "+data);
             })
     }
 
@@ -160,7 +156,7 @@ export class EventDetailsComponent implements OnInit {
         this.myProfileService.getProfile()
             .subscribe( res => {
                 this.userAccountDetails = res;
-                console.log(res);}, err => console.log(err));
+                }, err => {});
     }
 
     /**
@@ -180,8 +176,6 @@ export class EventDetailsComponent implements OnInit {
             .subscribe( data => {
                 this.canJoin = data;
                 this.isOwner = this.isUserAnOwner(this.event.ownerId,this.userId);
-                console.log('can join?: ' + data);
-                console.log('is owner?: ' + this.isOwner);
             });
     }
 
@@ -221,14 +215,11 @@ export class EventDetailsComponent implements OnInit {
         this.messageService.sendNotification(
                 'Użytkownik '+username+Messages.NOTIF_USER_WILL_OF_PART + this.event.title, nick)
             .subscribe( res => {
-                console.log(res);
             }, err => {
-                console.log(err);
             });
-        console.log(this.event);
         //send email with link
         this.mailService
             .sendMail(UtilMethods.generateMailOfParticipationWillWithLink(this.event.ownerEmail,this.event.title,this.userAccountDetails.nick))
-            .subscribe( res => console.log(res),err => console.log(err));
+            .subscribe( res => {},err => {});
     }
 }

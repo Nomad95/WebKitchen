@@ -37,7 +37,6 @@ export class MyProfileService {
 
         //get username from the token
         let username = currentToKey && currentToKey.username;
-        console.log(username);
 
 
         //and passing them in the request
@@ -75,7 +74,6 @@ export class MyProfileService {
             'accept': 'application/json',
             'content-type' : 'application/json',
             'X-Auth-token' : token});
-        console.log(JSON.stringify(data));
 
         if(data.userAccountDTO.username.toString() == tokenUsername.toString()){
             this.usernameChanged = false;
@@ -100,11 +98,9 @@ export class MyProfileService {
                 let token = res.json() && res.json().token;
                 if (token) {
                     // return true if password correct
-                    console.log("true, old password correct!");
                     return true;
                 } else {
                     // return false if password incorrect
-                    console.log("false, old password incorrect!");
                     return false;
                 }
             })

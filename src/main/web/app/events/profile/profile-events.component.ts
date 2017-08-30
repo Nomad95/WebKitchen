@@ -53,7 +53,6 @@ export class ProfileEventsComponent implements OnInit {
                 this.userId = data;
                 this.eventService.getUserEventsAndParticipants(data).subscribe( events => {
                     this.userEvents = events;
-                    console.log("events: "+ this.userEvents);
                 });
             });
     }

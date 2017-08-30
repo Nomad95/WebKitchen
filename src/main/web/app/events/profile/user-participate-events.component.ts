@@ -23,7 +23,6 @@ export class UserParticipateEventsComponent implements OnInit{
         if(this.events){
             for (let event of this.events){
                 event.hasEnded = this.isEventHasAlreadyHappened(event.id);
-                console.log(event.hasEnded);
             }
         }
     }
@@ -55,7 +54,6 @@ export class UserParticipateEventsComponent implements OnInit{
      */
      isEventHasAlreadyHappened(eventId:number){
         this.eventService.isEventHasAlreadyHappened(eventId).subscribe(result => {
-            console.log("happened: "+result);
             return result;
         })
     }

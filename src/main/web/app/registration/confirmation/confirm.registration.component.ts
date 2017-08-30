@@ -24,7 +24,6 @@ export class ConfirmRegistrationComponent implements OnInit{
         this.activatedRoute.queryParams
             .subscribe((params: Params) => {
                 let token = params['token'];
-                console.log(token);
                 this.confirmRegistration(token);
         });
     }

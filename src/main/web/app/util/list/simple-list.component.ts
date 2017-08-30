@@ -59,7 +59,6 @@ export class SimpleListComponent {
     addItem() {
         //if not specified do not show and also trim whitespaces
         this.currentItem = this.currentItem.replace(/\s\s+/g, '');
-        console.log('string id now \''+this.currentItem+'\'');
         this.currentItem = this.utilMethods.stringToUpperCase(this.currentItem);
         //check if item contains comma
         if (this.currentItem.indexOf(',') > -1){

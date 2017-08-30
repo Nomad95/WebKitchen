@@ -42,7 +42,7 @@ export class ReceivedMessagesComponent implements OnInit{
                     }
                     this.genereteTabForPagination(Object.keys(this.receivedMessages).length);
                 },
-                err => console.log("Nie ma żadnych odebranych wiadomości")
+                err => {}
             );
     }
 
@@ -110,7 +110,7 @@ export class ReceivedMessagesComponent implements OnInit{
                 this.countUnreadMessages = result;
                 this.sharedService.setNumberOfUnreadMessages(Number(this.countUnreadMessages.count));
             },
-            err => console.log("An error occurred while retrieving count of unread message")
+            err => {}
         );
     }
     reloadPage():void{

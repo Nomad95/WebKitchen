@@ -49,19 +49,16 @@ export class MailService {
     private handleError(error: any):Promise<any> {
         let errorBody = JSON.parse(error._body);
         this.printErrorNotification(errorBody.path, error);
-        console.log('error has occured in event service',error);
 
         return Promise.reject(error.message || error);
     }
 
     private printErrorNotification(path: string, error: any){
         if(error.status == Errors.HTTPSTATUS_UNAUTHORIZED ){
-            console.log("User is not authorized");
             this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Oops!","Wygląda na to że twoja sesja wygasła. Spróbuj zalogować się ponownie"));
             this.loginService.checkIfTokenIsValid();
         }
         else if (path.search("/api/mail/send") == 0){
-            console.log("Cant find the user!");
         }
     }
 }

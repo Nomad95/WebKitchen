@@ -19,8 +19,6 @@ export class AdminService {
         let token = currentToKey && currentToKey.token;
         let username = currentToKey && currentToKey.username;
 
-        console.log(username);
-
         //create appropriate
         this.headers = new Headers({
             'content-type': 'application/json',

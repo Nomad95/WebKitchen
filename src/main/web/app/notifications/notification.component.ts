@@ -71,7 +71,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
                 this.countUnreadNotifications = result;
                 this.sharedService.setNumberOfUnreadNotifications(Number(this.countUnreadNotifications.count));
             },
-            err => console.log("An error occurred while retrieving count of unread notifications")
+            err =>{}
         );
     }
 

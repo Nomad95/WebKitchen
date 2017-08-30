@@ -95,7 +95,7 @@ export class AppComponent implements OnInit {
                 this.myBan = result;
                 this.router.navigate(['/login/banned/',{date: this.myBan.dateEndOfBan, time: this.myBan.timeEndOfBan}]);
             },
-            err => console.log('An error occurred while retrieving the ban information')
+            err => {}
         );
 
     }
@@ -105,7 +105,7 @@ export class AppComponent implements OnInit {
                 this.countUnreadMessages = result;
                 this.sharedService.setNumberOfUnreadMessages(Number(this.countUnreadMessages.count));
             },
-            err => console.log("An error occurred while retrieving count of unread message")
+            err => {}
         );
     }
 
@@ -113,7 +113,7 @@ export class AppComponent implements OnInit {
         this.loginService.getMyNick().subscribe(result =>{
             this.sharedService.setMyNick(result.nick);
             this.stompService.connect('ws://localhost:8080/stomp', this.sharedService.getMyNick());
-        }, err => console.log("You hasn't nick ??")
+        }, err => {}
         );
     }
 
@@ -123,7 +123,7 @@ export class AppComponent implements OnInit {
                 this.countUnreadNotifications = result;
                 this.sharedService.setNumberOfUnreadNotifications(Number(this.countUnreadNotifications.count));
             },
-            err => console.log("An error occurred while retrieving count of unread notifications")
+            err => {}
         );
     }
 

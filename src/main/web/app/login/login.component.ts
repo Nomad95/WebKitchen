@@ -74,13 +74,11 @@ export class LoginComponent {
                                 this.statusBan = result.status;
                                 if (this.statusBan == "true") {
                                     this.sharedService.setIsBanned(true);
-                                    console.log("Sprawdzanie bana" + this.sharedService.getIsBanned());
                                     this.getInfoAboutMyBan();
                                     this.loginService.removeToken();
                                 }
                                 else if (this.statusBan == "false") {
                                     this.sharedService.setIsBanned(false);
-                                    console.log("Sprawdzanie bana" + this.sharedService.getIsBanned());
                                 }
                             });
 
@@ -126,14 +124,13 @@ export class LoginComponent {
         this.loginService.getInfoAboutMyBan().subscribe(
             result => {
                 this.myBan = result;
-                console.log("Data: " + this.myBan.dateEndOfBan + " godzina: " + this.myBan.timeEndOfBan);
                 this.router.navigate(['/login/banned/', {
                     date: this.myBan.dateEndOfBan,
                     time: this.myBan.timeEndOfBan
                 }]);
 
             },
-            err => console.log('Wystąpił błąd podczas pobierania informacji o banie')
+            err => {}
         );
     }
 
@@ -141,7 +138,7 @@ export class LoginComponent {
         this.loginService.getMyNick().subscribe(result =>{
                 this.sharedService.setMyNick(result.nick);
                 this.stompService.connect('ws://localhost:8080/stomp', this.sharedService.getMyNick());
-            }, err => console.log("You hasn't nick ??")
+            }, err => {}
         );
     }
 
@@ -151,7 +148,7 @@ export class LoginComponent {
                 this.countUnreadMessages = result;
                 this.sharedService.setNumberOfUnreadMessages(Number(this.countUnreadMessages.count));
             },
-            err => console.log("An error occurred while retrieving count of unread message")
+            err => {}
         );
     }
 
@@ -161,7 +158,7 @@ export class LoginComponent {
                 this.countUnreadNotifications = result;
                 this.sharedService.setNumberOfUnreadNotifications(Number(this.countUnreadNotifications.count));
             },
-            err => console.log("An error occurred while retrieving count of unread notifications")
+            err => {
         );
     }
 }

@@ -173,8 +173,6 @@ export class EventCreateComponent implements OnInit {
     handleRecievedShoppingList(data:string[]):void {
         this.newEventType2.shopping_list = '' + data;
         this.tempShoppingListList = data;
-        console.log("recieved: " + data);
-        console.log("made String: " + this.newEventType2.shopping_list);
     }
 
     /**
@@ -185,8 +183,6 @@ export class EventCreateComponent implements OnInit {
     handleRecievedProductsList(data:string[]):void {
         this.newEventType2.products_list = '' + data;
         this.tempProductsListList = data;
-        console.log("recieved: " + data);
-        console.log("made String: " + this.newEventType2.products_list);
     }
 
 
@@ -198,7 +194,6 @@ export class EventCreateComponent implements OnInit {
     createNewEvent(data):void {
         //parse date object to proper sql time
         data.time = data.time.toLocaleTimeString();
-        console.log(data.time);
 
         //button loading toggle
         this.isEventBeingCreated = true;
@@ -217,18 +212,13 @@ export class EventCreateComponent implements OnInit {
         this.eventService.createEvent(data)
             .subscribe(
                 data => {
-                    console.log('Added event!');
-                    //$btn1.button('reset');
-                    //$btn2.button('reset');
+
                     this.isEventBeingCreated = false;
                     this.isEventCreated = true;
                     //assign current user to new event
                     this.assignUserToEvent(data.id);
                 },
                 err => {
-                    console.log('error adding event!');
-                    //$btn1.button('reset');
-                    //$btn2.button('reset');
                     this.isEventBeingCreated = false;
                 });
     }
@@ -239,7 +229,6 @@ export class EventCreateComponent implements OnInit {
     assignUserToEvent(eventId: number){
         this.eventService.assignUserToEvent(eventId)
             .subscribe((data) => {
-                console.log("added owner to new event");
                 this.acceptUser(eventId,this.userId);
             });
     }
@@ -250,7 +239,6 @@ export class EventCreateComponent implements OnInit {
     acceptUser(eventId: number, userId: number){
         this.eventService.addUserIdToAcceptedList(eventId,userId)
             .subscribe( data => {
-                console.log('accepted id: '+userId);
             });
     }
 
@@ -259,7 +247,6 @@ export class EventCreateComponent implements OnInit {
      */
     checkIfTimeIsCorrect(time: any){
         if(typeof time != "object") {
-            console.log("zly typ czasu");
             this.isTimeValid = false;
         }
         else this.isTimeValid = true;
@@ -276,9 +263,7 @@ export class EventCreateComponent implements OnInit {
         if (fileList.length > 0) {
             this.selectedFile = fileList[0];
             //check file size (max 10 MB)
-            console.log(this.selectedFile.size);
             if(this.selectedFile.size > this.MAX_FILE_SIZE){
-                console.log("Photos size is too big");
                 //prevents showing photo in modal and previous photo path to persist
                 this.pathToPhotoPreview = '';
                 this.newEventType1.photo='';
@@ -289,7 +274,6 @@ export class EventCreateComponent implements OnInit {
             //check extention
             this.isProperPhoto = EventCreateComponent.checkFileExtension(this.selectedFile);
             if (!this.isProperPhoto) {
-                console.log("Wrong file extension!");
                 return;
             }
             //path to img (saved in DB)
@@ -317,9 +301,7 @@ export class EventCreateComponent implements OnInit {
         if (fileList.length > 0) {
             this.selectedFile = fileList[0];
             //check file size (max 10 MB)
-            console.log(this.selectedFile.size);
             if(this.selectedFile.size > this.MAX_FILE_SIZE){
-                console.log("Photos size is too big");
                 //prevents showing photo in modal and previous photo path to persist
                 this.pathToPhotoPreview = '';
                 this.newEventType2.photo='';
@@ -329,7 +311,6 @@ export class EventCreateComponent implements OnInit {
             //check extention
             this.isProperPhoto = EventCreateComponent.checkFileExtension(this.selectedFile);
             if (!this.isProperPhoto) {//if extension is not valid
-                console.log("Wrong file extension!");
                 return;
             }
             //path to img (saved in DB)
@@ -353,15 +334,12 @@ export class EventCreateComponent implements OnInit {
     uploadPhoto(formData) {
         //prevent errors when user dont provide a photo
         if(formData == null || formData == undefined){
-            console.log('No photo data provided');
             return;
         }
         this.eventService.uploadPhoto(formData)
             .subscribe(data => {
-                    console.log("photo Added");
                 },
                 err => {
-                    console.log("error adding photo")
                 });
     }
 
@@ -381,7 +359,6 @@ export class EventCreateComponent implements OnInit {
      * @returns {boolean} true when valid
      */
     static checkFileExtension(file: File):boolean {
-        console.log("checking extention");
         return !!(file.name.endsWith(".jpg") || file.name.endsWith(".JPG")
         || file.name.endsWith(".jpeg") || file.name.endsWith(".JPEG")
         || file.name.endsWith(".png") || file.name.endsWith(".PNG")
@@ -395,7 +372,6 @@ export class EventCreateComponent implements OnInit {
     checkIfUserCanCreateEvent(userId: number){
         this.eventService.checkIfUserCanCreateEvent(userId)
             .subscribe((data) => {
-                console.log("can create? : " + data);
                 if(!data)//if not redirect him
                     this.router.navigate(['/events']);
             })
@@ -467,7 +443,6 @@ export class EventCreateComponent implements OnInit {
                 this.userId = data;
                 this.checkIfUserCanCreateEvent(this.userId);
                 this.getUsersAddressInformation(this.userId);
-                console.log("fetched user id: "+data);
             })
     }
 

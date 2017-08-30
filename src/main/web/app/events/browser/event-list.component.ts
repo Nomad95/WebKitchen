@@ -49,13 +49,11 @@ export class EventListComponent implements OnInit {
         this.eventService.getTotalPages(this.currentPage,10)
             .subscribe(data => {
                 this.totalPages = Array(data).fill().map((x,i)=>i);
-                console.log("pages: "+data);
             });
 
         this.eventService.getGeneralEvents(this.currentPage,10)
             .subscribe(data => {
                 this.events = data;
-                console.log("events loaded!");
             })
     }
 
@@ -103,7 +101,6 @@ export class EventListComponent implements OnInit {
             .subscribe((data) => {
                 this.canCreateEvent = data;
                 this.viewLoaded = true;
-                console.log("can create? : " + this.canCreateEvent);
             })
     }
 }

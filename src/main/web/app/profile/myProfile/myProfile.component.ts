@@ -139,7 +139,6 @@ export class MyProfileComponent implements OnInit {
                 this.userProfile = result;
                 this.swappingOfReceivedDataToTheExpectedFormat();
                 this.isDataAvailable=true;
-                console.log("getUserProfile - USERPROFILE: "+JSON.stringify(this.userProfile));
             });
     }
 
@@ -169,7 +168,6 @@ export class MyProfileComponent implements OnInit {
                 { year: this.birthDate.getFullYear(), month: (this.birthDate.getMonth()+1), day: this.birthDate.getDate() }
             };
             this.selectedBirthDateNormal = this.birthDate.getFullYear()+"-"+(this.birthDate.getMonth()+1)+"-"+this.birthDate.getDate();
-            console.log("selectedBirthDateNormal: "+this.selectedBirthDateNormal);
 
             this.selectedBirthDateTextNormal = this.selectedBirthDateNormal;
         }
@@ -290,7 +288,6 @@ export class MyProfileComponent implements OnInit {
         if(this.userProfile.userAccountDTO.email) this.profileCompletion+=1;
 
         this.precentageFilled = this.getPercentageFilled();
-        console.log(this.getPercentageFilledString());
     }
     getPercentageFilledString(): String{
         return this.precentageFilled.toString();
@@ -316,19 +313,16 @@ export class MyProfileComponent implements OnInit {
         else {
             this.selectedBirthDateTextNormal = '';
         }
-        console.log(this.selectedBirthDateNormal);
 
     }
 
     public selected(value:any):void {
         this.preferedCuisineService.addPreferedCuisineToCuisinesArray(value.text);
         this.userProfile.preferredCuisine=this.preferedCuisineService.getPreferedCuisines();
-        console.log('Selected value is: ', value.text);
     }
 
     public removed(value:any):void {
         this.preferedCuisineService.deletePreferedCuisineFromCuisinesArray(value.text);
-        console.log('Removed value is: ', value);
     }
 
     public refreshValue(value:any):void {
@@ -341,7 +335,6 @@ export class MyProfileComponent implements OnInit {
     restoreProfile(): void{
         this.getProfile();
         this.getAllCuisines();
-        console.log(JSON.stringify(this.userProfile));
     }
 
     public myProfilePhotoChanged(date: boolean):void {

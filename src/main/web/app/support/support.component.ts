@@ -32,7 +32,6 @@ export class SupportComponent {
                         this.toasterService.pop(ToastConfigurerFactory.successSimpleMessage("","Wiadomość została wysłana !"));
                         form.reset();
                     }, error2 =>{
-                        console.log("Błąd poczas wysyłania maila");
                         this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("", "Wiadomość nie wysłana. Spróbuj ponownie."))
                     }
                 );

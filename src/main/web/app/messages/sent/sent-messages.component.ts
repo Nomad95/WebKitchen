@@ -31,7 +31,7 @@ export class SentMessagesComponent implements OnInit {
                     this.sentMessages = result;
                     this.genereteTabForPagination(Object.keys(this.sentMessages).length);
                 },
-                err => console.log("Nie ma żadnych odebranych wiadomości")
+                err => {}
             );
     }
 

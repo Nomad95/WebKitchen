@@ -39,7 +39,6 @@ export class EndedEventsComponent implements OnInit{
 
     //TODO: moze nie potrzeba eventId?
     goToRatingSite(eventId: number, userId: number, ownerId: number){
-        console.log("transit to rating site");
         this.router.navigate(['/events/rating', eventId],{
             queryParams: {eventId: eventId, authorId: userId, ownerId: ownerId}
         });

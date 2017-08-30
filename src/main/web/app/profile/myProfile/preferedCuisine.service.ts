@@ -7,25 +7,21 @@ export class PreferedCuisineService {
     private preferedCuisines: Array<Cuisine> = [];
     public originalPreferedCuisines: Array<Cuisine> = [];
     public cuisines:Array<Cuisine> = [];
-    
+
     setPreferedCuisines(preferedCuisines: Array<Cuisine>){
-        this.preferedCuisines=preferedCuisines; 
-        //console.log("pref: "+JSON.stringify(this.preferedCuisines));
+        this.preferedCuisines=preferedCuisines;
         let pref = Object.assign({}, this.preferedCuisines);
-        this.originalPreferedCuisines=pref; 
+        this.originalPreferedCuisines=pref;
         for (let cuisine of this.preferedCuisines) {
-            console.log("cuisine to remove: "+JSON.stringify(cuisine));
              this.deleteCuisineFromCuisinesArray(cuisine.name);
-            
-        } 
-        console.log("originalpref: "+JSON.stringify(this.originalPreferedCuisines));
+
+        }
     }
 
     restorePreferedCuisines(){
         let pref = Object.assign({}, this.originalPreferedCuisines);
         this.preferedCuisines=pref;
         for (let cuisine of this.preferedCuisines) {
-            console.log("cuisine to remove: "+JSON.stringify(cuisine));
             this.deleteCuisineFromCuisinesArray(cuisine.name);
 
         }
@@ -48,7 +44,7 @@ export class PreferedCuisineService {
     getOriginalPreferedCuisines() {
         return this.originalPreferedCuisines;
     }
-    
+
     deletePreferedCuisineFromCuisinesArray(name: string) {
         for (let preferredCuisine of this.preferedCuisines){
             if(preferredCuisine.name == name){
@@ -57,24 +53,23 @@ export class PreferedCuisineService {
                 if (index !== -1) {
                     this.preferedCuisines.splice(index, 1);
                 } //Note: If you don't check the return of indexOf() for -1, this will remove the last item from array when msg wasn't found!
-                break;        
+                break;
             }
         }
     }
-    
+
     setCuisines(cuisines:Array<Cuisine>){
         this.cuisines=cuisines;
     }
-    
+
     getCuisines(){
         return this.cuisines;
     }
-    
+
     addCuisineToArray(cuisine: Cuisine){
         this.cuisines.push(cuisine);
-        console.log("zzzzzzadd: "+JSON.stringify(this.cuisines));
     }
-    
+
     deleteCuisineFromCuisinesArray(name: string){
         for (let cuisine of this.cuisines){
             if(cuisine.name == name){
@@ -82,9 +77,8 @@ export class PreferedCuisineService {
                 if (index !== -1) {
                     this.cuisines.splice(index, 1);
                 }//Note: If you don't check the return of indexOf() for -1, this will remove the last item from array when msg wasn't found!
-                console.log("ilosc: "+ this.cuisines.length);
                 break;
-                
+
             }
         }
     }

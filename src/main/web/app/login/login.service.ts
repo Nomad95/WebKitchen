@@ -177,7 +177,6 @@ export class LoginService{
 	private handleError(error: any):Promise<any> {
 		let errorBody = JSON.parse(error._body);
 		this.printErrorNotification(errorBody.path, error);
-		console.log('error has occured in login service',error);
 
 		return Promise.reject(error.message || error);
 	}
@@ -186,21 +185,17 @@ export class LoginService{
 		//jak macie jakies errory do pokazania to takjak tu scieżka + response status
 		//nie pokazujmy za dużo errorów na raz
 		if(path != "/auth" && error.status == Errors.HTTPSTATUS_UNAUTHORIZED ){
-			console.log("User is not authorized");
 			this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Oops!","Wygląda na to że twoja sesja wygasła. Spróbuj zalogować się ponownie"));
 
 			//Wait couple of seconds after printing a notification, then check token expiry
 			this.checkIfTokenIsValid();
 		}
 		else if (path == "/auth" && error.status == Errors.HTTPSTATUS_BAD_REQUEST){
-			console.log("Bad request!");
 			this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Logowanie się nie powiodło",""));
 		}
 		else if (error.status == Errors.HTTPSTATUS_NOT_FOUND){
-			console.log("Data not found!");
 		}
 		else if (error.status == Errors.HTTPSTATUS_INERNAL_SERVER_ERROR){
-			console.log("Server eror!");
 		}
 	}
 
@@ -226,8 +221,8 @@ export class LoginService{
 				if(data == true){
 					TokenUtils.removeStoredTokens();
 					this.router.navigate(['/']);
-				} else
-					console.log("token valid");
+				} else{}
+
 			});
 	}
 }

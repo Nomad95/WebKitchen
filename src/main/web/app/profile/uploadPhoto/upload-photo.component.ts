@@ -286,7 +286,6 @@ export class UploadPhotoComponent extends Type implements OnChanges {
         var that = this;
         myReader.onloadend = function (loadEvent:any) {
             image.src = loadEvent.target.result;
-                        console.log(loadEvent.target.result);
             that.cropper.setImage(image);
 
         };
@@ -318,18 +317,15 @@ export class UploadPhotoComponent extends Type implements OnChanges {
 
         //prevent errors when user dont provide a photo
         if(this.photoString == null || this.photoString == ''){
-            console.log('No photo data provided');
             this.showPhotoNotChangedAlert();
             return;
         }
 
         this.myProfileService.uploadProfilePhoto(this.photoString.replace("\"",""),this.nick)
             .subscribe(data => {
-                    console.log("photo Added");
                     this.profilePhotoChanged(true);
                 },
                 err => {
-                    console.log("error adding photo")
                     this.showPhotoNotChangedAlert();
      });
     }

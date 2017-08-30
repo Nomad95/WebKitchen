@@ -33,8 +33,8 @@ export class UserComponent implements OnInit, OnDestroy {
                     this.messages = data;
                     this.users = data;
                 },
-                (err) => console.log(err),
-                () => console.log('hello service test complete')
+                (err) => {},
+                () => {}
         );
     }
 

@@ -305,53 +305,41 @@ export class EventService {
     private handleError(error: any):Promise<any> {
         let errorBody = JSON.parse(error._body);
         this.printErrorNotification(errorBody.path, error);
-        console.log('error has occured in event service',error);
 
         return Promise.reject(error.message || error);
     }
 
     private printErrorNotification(path: string, error: any){
         if(error.status == Errors.HTTPSTATUS_UNAUTHORIZED ){
-            console.log("User is not authorized");
             this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Oops!","Wygląda na to że twoja sesja wygasła. Spróbuj zalogować się ponownie"));
             this.loginService.checkIfTokenIsValid();
         }
         else if (path.search("/api/user/details/events/") == 0 && error.status == Errors.HTTPSTATUS_NOT_FOUND){
-            console.log("Cant find the user!");
             this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd",""));
         }
         else if (path.search("/api/user/details/address/") == 0 && error.status == Errors.HTTPSTATUS_NOT_FOUND){
-            console.log("Cant find the user!");
         }
         else if (path.search("/api/event/ownerusername/") == 0 && error.status == Errors.HTTPSTATUS_NOT_FOUND){
-            console.log("Cant find the user!");
             this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd",""));
         }
         else if (path.search("/api/event/userevents/refuse/") == 0 && error.status == Errors.HTTPSTATUS_NOT_FOUND){
-            console.log("Cant find the user!");
             this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd",""));
         }
         else if (path == "/api/upload/photo/dish" && error.status == Errors.HTTPSTATUS_NOT_FOUND){
-            console.log("File wasn't selected!");
             this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Nie wybrałeś zdjęcia",""));
         }
         else if (path == "/api/upload/photo/dish" && error.status == Errors.HTTPSTATUS_INERNAL_SERVER_ERROR){
-            console.log("Invalid argument!");
             this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Dodanie zdjęcia się nie powiodło",""));
         }
         else if (path == "/api/upload/photo/dish" && error.status == Errors.HTTPSTATUS_BAD_REQUEST){
-            console.log("Bad request!");
             this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Dodanie zdjęcia się nie powiodło",""));
         }
         else if (path.search("/api/event/bind/") == 0 && error.status == Errors.HTTPSTATUS_INERNAL_SERVER_ERROR){
-            console.log("Cant bind user to event!");
             this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd",""));
         }
         else if (error.status == Errors.HTTPSTATUS_NOT_FOUND){
-            console.log("Data not found!");
         }
         else if (error.status == Errors.HTTPSTATUS_INERNAL_SERVER_ERROR){
-            console.log("Server eror!");
         }
     }
 }
