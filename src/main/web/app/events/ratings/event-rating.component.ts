@@ -8,13 +8,12 @@ import {ToastConfigurerFactory} from "../../util/toast/toast-configurer.factory"
 import {DetailedEvent} from "../model/detailedEvent";
 import {EventRating} from "../model/eventRating";
 import {CommentDTO} from "../model/commentDto";
-import {RatingModule, Rating} from "ngx-rating";
 
 @Component({
     selector: 'event-rating',
     templateUrl: 'app/events/ratings/event-rating.component.html',
     providers: [EventService],
-    directives: [ToasterContainerComponent,Rating]
+    directives: [ToasterContainerComponent]
 })
 export class EventRatingComponent implements OnInit {
     constructor(private route:ActivatedRoute,
