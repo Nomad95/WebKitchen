@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-12" style="word-break: break-all !important;">
                 <div class="well-kitchen">
-                    <div class="row">
+                    <div class="row lead">
                         <div class="col-md-12 " >
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 text-center" style="font-size: 1.8em; color: black; "
@@ -17,22 +17,16 @@
                     <br/>
 
                     <div class="row">
-                        <div class="col-md-12" *ngIf="hasNotRatedYet">
-                            Oceń! {{rating | json}}
+
+                        <div class="col-md-12 text-center" *ngIf="hasNotRatedYet">
+                            <h4 class="col-md-12">Oceń!</h4>
 
                             <form #addRatingForm="ngForm" (submit)="addRating()" novalidate>
                                 <div class="form-group">
 
-                                    <label for="rating">Ocena</label>
-                                    <select class="form-control" [(ngModel)]="rating.rating"
-                                            name="rating" id="rating">
-                                        <option [value]="1">1</option>
-                                        <option [value]="2">2</option>
-                                        <option [value]="3">3</option>
-                                        <option [value]="4">4</option>
-                                        <option [value]="5">5</option>
-                                        <option [value]="6">6</option>
-                                    </select>
+                                    <rating [(ngModel)]="rating.rating" [max]="6"
+                                            [readonly]="false" stateOn="fa fa-star fa-4x fa-rating"
+                                            stateOff="fa fa-star-o fa-4x fa-rating" name="rating" id="rating"></rating>
                                 </div>
                                 <div>
                                     <button type="submit" class="btn btn-kitchen-primary">Oceń!</button>
@@ -40,18 +34,20 @@
                             </form >
                         </div>
                         <div class="col-md-12" *ngIf="!hasNotRatedYet">
-                            <div>
+                            <div class="text-center">
                                 <h2>Twoja ocena:</h2>
                                 <br/>
-                                <h2>{{rating.rating}}</h2>
+                                <rating [(ngModel)]="rating.rating" [max]="6"
+                                        [readonly]="true" stateOn="fa fa-star fa-4x fa-rating"
+                                        stateOff="fa fa-star-o fa-4x fa-rating" name="ratingStatic" id="ratingStatic"></rating>
                                 <br />
                             </div>
                             <div class="col-md-12" *ngFor="let comment of rating.comments">
-                                <div>
-                                    <h4>{{comment.user.nickname}}</h4>
-                                    <span>{{comment.text}}</span>
-                                    <hr />
+                                <div class="row">
+                                    <div class="col-md-6 text-left"><strong>{{comment.user.nickname}}</strong></div>
+                                    <div class="col-md-12 text-left">{{comment.text}}</div>
                                 </div>
+                                <hr />
                             </div>
                             <div class="col-md-12">
                                 <form #addRatingForm="ngForm" (submit)="addComment()" novalidate>

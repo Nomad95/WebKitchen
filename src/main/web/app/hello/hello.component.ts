@@ -9,7 +9,6 @@ interface MessageJson {
 @Component({
     selector: 'test',
     templateUrl: 'app/hello/hello.component.html',
-    styleUrls: ['css/hello.css'],
     providers: [HelloService]
 })
 export class HelloComponent implements OnInit, OnDestroy {

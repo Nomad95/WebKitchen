@@ -10,7 +10,7 @@ export class EventRating{
 
     constructor() {
         this.id= null;
-        this.rating = null;
+        this.rating = 0;
         this.event = {
             id: -1
         };

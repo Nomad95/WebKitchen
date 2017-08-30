@@ -13,7 +13,6 @@ interface MessageJson {
 @Component({
     selector: 'user',
     templateUrl: 'app/user/user.component.html',
-    styleUrls: ['css/hello.css'],
     providers: [UserService]
 })
 export class UserComponent implements OnInit, OnDestroy {

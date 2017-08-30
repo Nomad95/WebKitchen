@@ -59,7 +59,6 @@ gulp.task('libcopy', function() {
     // copy bootstrap dependencies
     gulp.src(['./node_modules/jquery/dist/jquery.js',
         './node_modules/tether/dist/js/tether.js',
-        //'./node_modules/bootstrap/dist/js/bootstrap.js',
         './node_modules/moment/moment.js',
         './node_modules/ng2-bootstrap/bundles/ngx-bootstrap.umd.js',
         './node_modules/ng2-select/bundles/ng2-select.umd.js',
@@ -67,7 +66,6 @@ gulp.task('libcopy', function() {
         './node_modules/@ngui/datetime-picker/dist/datetime-picker.umd.js',
         './node_modules/ng2-recaptcha/ng2-recaptcha.js',
 		'./node_modules/angular2-modal/bundle/angular2-modal.js',
-        './node_modules/angular2-modal/bundle/angular2-modal.js',
         './node_modules/sockjs-client/dist/sockjs.min.js',
         './node_modules/stompjs/lib/stomp.min.js'
     ])

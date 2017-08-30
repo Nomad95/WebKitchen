@@ -8,7 +8,6 @@ import {StompService} from "./websocket/stomp.service";
 @Component({
     selector: 'kuchnia-po-sasiedzku',
     templateUrl: 'app/app.component.html',
-    styleUrls: ['css/app.css'],
     encapsulation: ViewEncapsulation.None,
     providers: [LoginService,StompService]
 })

@@ -5,7 +5,6 @@ import {AdminService} from './admin.service';
 @Component({
     selector: 'admin',
     templateUrl: 'app/admin/admin.component.html',
-    styleUrls: ['css/app.css'],
     providers: [AdminService]
 })
 export class AdminComponent implements OnInit, OnDestroy {

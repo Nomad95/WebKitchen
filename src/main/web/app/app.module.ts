@@ -3,7 +3,7 @@ import {LocationStrategy, PathLocationStrategy, HashLocationStrategy, APP_BASE_H
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { AlertModule, DatepickerModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { AlertModule, DatepickerModule, RatingModule } from 'ng2-bootstrap/ng2-bootstrap';
 import {JQ_TOKEN} from './events/j-query.service';
 import { MyDatePickerModule } from 'mydatepicker';
 import { SelectModule } from "ng2-select";
@@ -11,7 +11,6 @@ import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 import { RecaptchaModule } from 'ng2-recaptcha';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToasterModule } from 'angular2-toaster';
-
 
 import { routing, appRouterProviders } from './app.routing';
 import { AppComponent } from './app.component';
@@ -139,6 +138,7 @@ declare let jQuery:Object;
         BrowserAnimationsModule,
         HttpModule,
         SelectModule,
+        RatingModule.forRoot(),
         MyDatePickerModule,
         ToasterModule,
         RecaptchaModule.forRoot(),

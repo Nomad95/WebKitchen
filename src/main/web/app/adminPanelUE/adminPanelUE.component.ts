@@ -11,7 +11,6 @@ import {Response} from "@angular/http";
 @Component({
     selector: 'adminPanelUE',
     templateUrl: 'app/adminPanelUE/adminPanelUE.component.html',
-    styleUrls: ['css/app.css'],
     providers: [AdminPanelUEService]
 })
 export class AdminPanelUEComponent implements OnInit, OnDestroy {

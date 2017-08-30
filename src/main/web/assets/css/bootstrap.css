@@ -6484,6 +6484,10 @@ button.list-group-item-danger.active:focus {
 	resize: none;
 }
 
+.fa-rating{
+	color: #ffd700 !important;
+}
+
 /* koniec elementow */
 
 .well {

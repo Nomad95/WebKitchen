@@ -9,7 +9,6 @@ import {ToastConfigurerFactory} from "../util/toast/toast-configurer.factory";
 @Component({
     selector: 'registration',
     templateUrl: 'app/registration/registration.component.html',
-    styleUrls: ['css/hello.css'],
     providers: [RegistrationService, UtilMethods],
     directives: [ToasterContainerComponent]
 })

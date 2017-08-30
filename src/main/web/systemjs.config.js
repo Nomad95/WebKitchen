@@ -39,7 +39,8 @@
       'ng2-bootstrap-modal': 'app/modal',
       'ng2-img-cropper': 'js/lib/ng2-img-cropper',
       'sockjs-client':'js/lib/sockjs.min.js',
-      'stompjs':'js/lib/stomp.min.js'
+      'stompjs':'js/lib/stomp.min.js',
+      'ngx-rating': 'js/lib/ngx-rating'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -67,6 +68,10 @@
         defaultExtension: 'js'
       },
       'ng2-img-cropper': {
+        main: 'index.js',
+        defaultExtension: 'js'
+      },
+      'ngx-rating': {
         main: 'index.js',
         defaultExtension: 'js'
       }
