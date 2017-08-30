@@ -4,7 +4,6 @@ import 'rxjs/add/operator/toPromise';
 import { Observable }	from 'rxjs/Observable';
 import 'app/rxjs-operators';
 import 'rxjs/Rx';
-import {SharedService} from "../shared.service";
 import {ToasterService} from 'angular2-toaster';
 import {ToastConfigurerFactory} from "../util/toast/toast-configurer.factory";
 import {Errors} from "../util/error/errors";
@@ -27,7 +26,6 @@ export class LoginService{
 	private headersLoggedUser = null;
 
 	constructor(private http:Http,
-				private sharedService:SharedService,
 				private router: Router,
 				private toasterService: ToasterService) {
 

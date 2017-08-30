@@ -4,7 +4,7 @@ import {CropperSettings} from 'ng2-img-cropper';
 import {Bounds} from 'ng2-img-cropper';
 
 import { MyProfileService } from '../myProfile/myProfile.service';
-import { DialogComponent, DialogService } from 'ng2-bootstrap-modal';
+import { DialogService } from 'ng2-bootstrap-modal';
 import { ProfilePhotoAlertComponent } from './profile-photo-not-changed-alert.component';
 
 @Component({
@@ -271,7 +271,7 @@ export class UploadPhotoComponent extends Type implements OnChanges {
 
     }
 
-    cropped(bounds:Bounds) {      
+    cropped(bounds:Bounds) {
         this.photoString = this.photo.image;
     }
 
@@ -284,7 +284,7 @@ export class UploadPhotoComponent extends Type implements OnChanges {
         var file = $event.target.files[0];
         var myReader:FileReader = new FileReader();
         var that = this;
-        myReader.onloadend = function (loadEvent:any) {            
+        myReader.onloadend = function (loadEvent:any) {
             image.src = loadEvent.target.result;
                         console.log(loadEvent.target.result);
             that.cropper.setImage(image);
@@ -315,11 +315,11 @@ export class UploadPhotoComponent extends Type implements OnChanges {
      * @param formData
      */
     uploadProfilePhoto() {
-         
+
         //prevent errors when user dont provide a photo
         if(this.photoString == null || this.photoString == ''){
             console.log('No photo data provided');
-            this.showPhotoNotChangedAlert(); 
+            this.showPhotoNotChangedAlert();
             return;
         }
 
@@ -330,12 +330,12 @@ export class UploadPhotoComponent extends Type implements OnChanges {
                 },
                 err => {
                     console.log("error adding photo")
-                    this.showPhotoNotChangedAlert();     
+                    this.showPhotoNotChangedAlert();
      });
     }
 
     public profilePhotoChanged(date: boolean): void {
-        this.onProfilePhotoChanged.emit(date);        
+        this.onProfilePhotoChanged.emit(date);
     }
 
     showPhotoNotChangedAlert() {

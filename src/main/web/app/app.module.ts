@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AlertModule, DatepickerModule, RatingModule } from 'ng2-bootstrap/ng2-bootstrap';
-import {JQ_TOKEN} from './events/j-query.service';
 import { MyDatePickerModule } from 'mydatepicker';
 import { SelectModule } from "ng2-select";
 import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
@@ -14,8 +13,6 @@ import { ToasterModule } from 'angular2-toaster';
 
 import { routing, appRouterProviders } from './app.routing';
 import { AppComponent } from './app.component';
-import { HelloComponent } from './hello/hello.component';
-import { CalendarComponent } from './calendar/calendar.component';
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { RegistrationComponent } from './registration/registration.component';
@@ -46,37 +43,31 @@ import {ReceivedMessagesComponent} from "./messages/received/received-messages.c
 import {SentMessagesComponent} from "./messages/sent/sent-messages.component";
 import {MessageBoxSentComponent} from "./messages/messagebox/messagebox-sent.component";
 import {MessageBoxComponent} from "./messages/messagebox/messagebox.component";
-import {LoginService} from "./login/login.service";
 import {ConfirmRegistrationComponent} from "./registration/confirmation/confirm.registration.component";
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import { AlertComponent } from './profile/myProfile/username-changed-alert.component';
 import {ImageCropperComponent} from 'ng2-img-cropper';
-import {CropperSettings} from 'ng2-img-cropper';
-import {Bounds} from 'ng2-img-cropper';
 import {UploadPhotoComponent} from './profile/uploadPhoto/upload-photo.component';
 import {ProfilePhotoAlertComponent} from './profile/uploadPhoto/profile-photo-not-changed-alert.component';
 import {NotificationComponent} from "./notifications/notification.component";
 import {SupportComponent} from "./support/support.component";
 import {EndedEventsComponent} from "./events/profile/ended-events.component";
 import {EventRatingComponent} from "./events/ratings/event-rating.component";
-
-import {AuthGuard} from './app.auth-guard.service';
+import {MainSearchComponent} from "./search/main-search/main-search.component";
+import {SearchedEventsComponent} from "./search/searched-events/searched-events.component";
+import {AdvancedSearchComponent} from "./search/advanced-search/advanced-search.component";
 import {LoginBanned} from "./login/login-banned-user.component";
+
+import {LoginService} from "./login/login.service";
 import {SharedService} from "./shared.service";
 import { ToasterService } from 'angular2-toaster';
 
 import {PolishDatePipe} from "./util/pipes/polish.date.pipe";
 import {ShorterTimePipe} from "./util/pipes/shorter.time.pipe";
-import {MainSearchComponent} from "./search/main-search/main-search.component";
-import {SearchedEventsComponent} from "./search/searched-events/searched-events.component";
-import {AdvancedSearchComponent} from "./search/advanced-search/advanced-search.component";
 
-declare let jQuery:Object;
-
+import {AuthGuard} from './app.auth-guard.service';
 @NgModule({
     declarations: [AppComponent,
-        HelloComponent,
-        CalendarComponent,
         HomeComponent,
         UserComponent,
         RegistrationComponent,
@@ -86,8 +77,6 @@ declare let jQuery:Object;
         EventListComponent,
         Tabset,
         Tab,
-        HelloComponent,
-        CalendarComponent,
         SimpleListComponent,
         HomeComponent,
         EventCreateComponent,
@@ -154,8 +143,7 @@ declare let jQuery:Object;
         LoginService,
         ToasterService,
         [{provide: APP_BASE_HREF, useValue: '/'}],
-        [{provide: LocationStrategy, useClass: HashLocationStrategy}],
-        [{provide: JQ_TOKEN, useValue: jQuery}]
+        [{provide: LocationStrategy, useClass: HashLocationStrategy}]
     ],
     bootstrap: [AppComponent]
 })

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import {  ActivatedRoute, Params } from '@angular/router';
 import { RegistrationService } from '../registration.service';
 
 @Component({
@@ -15,10 +15,10 @@ export class ConfirmRegistrationComponent implements OnInit{
 
     //dont show message before data is loaded
     private dataLoaded = false;
-    
+
     //checks is uder is enabled or not
     private isAccepted = false;
-    
+
     ngOnInit() {
         //extract params from URI
         this.activatedRoute.queryParams

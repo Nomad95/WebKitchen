@@ -1,5 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-//import { LoginService } from './profile.service';
+import {Component, OnInit} from '@angular/core';
 import {AdminService} from './admin.service';
 
 @Component({
@@ -7,12 +6,9 @@ import {AdminService} from './admin.service';
     templateUrl: 'app/admin/admin.component.html',
     providers: [AdminService]
 })
-export class AdminComponent implements OnInit, OnDestroy {
-
-
+export class AdminComponent implements OnInit {
     constructor(private profileService: AdminService) {
     }
-
 
     private userProfile = {
         username: '',
@@ -21,14 +17,13 @@ export class AdminComponent implements OnInit, OnDestroy {
         nick: '',
         isFilled: '',
         isVerified: ''
-    }
+    };
 
     // private userProfile2: string;
     // on-init, get profile information
     ngOnInit() {
         this.getProfile();
     }
-
 
     /**
      * we do post on /auth and get a token
@@ -49,8 +44,4 @@ export class AdminComponent implements OnInit, OnDestroy {
         // this.userProfile2 = new String (this.userProfile);
     }
 
-    // on-destroy
-    ngOnDestroy() {
-
-    }
 }

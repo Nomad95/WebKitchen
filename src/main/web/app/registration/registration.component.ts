@@ -74,7 +74,6 @@ export class RegistrationComponent {
      * @param response string from captcha component
      */
     resolved(response: string){
-        console.log('resolved');
         this.registrationService.verifyCaptcha(response)
             .subscribe( res => this.isCaptchaVerified = res);
     }
@@ -188,7 +187,6 @@ export class RegistrationComponent {
      * Checks if Nick is taken
      */
     checkIfNickIsTaken(){
-        console.log(this.userAccountToAdd.nick);
         this.registrationService.checkIfNickIsTaken(this.userAccountToAdd.nick)
             .subscribe( res => {
                 this.isNickTaken = res;

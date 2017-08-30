@@ -61,26 +61,21 @@ export class SearchService{
     public handleError(error: any):Promise<any> {
         let errorBody = JSON.parse(error._body);
         this.printErrorNotification(errorBody.path, error);
-        console.log('error has occured in event service',error);
 
         return Promise.reject(error.message || error);
     }
 
     public printErrorNotification(path: string, error: any){
         if(error.status == Errors.HTTPSTATUS_UNAUTHORIZED ){
-            console.log("User is not authorized");
             this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Oops!","Wygląda na to że twoja sesja wygasła. Spróbuj zalogować się ponownie"));
             this.loginService.checkIfTokenIsValid();
         }
         else if (path.search("/api/search/main") == 0 && error.status == Errors.HTTPSTATUS_NOT_FOUND){
-            console.log("Cant find the event!");
             this.toasterService.pop(ToastConfigurerFactory.errorSimpleMessage("Wystąpił nieoczekiwany błąd",""));
         }
         else if (error.status == Errors.HTTPSTATUS_NOT_FOUND){
-            console.log("Data not found!");
         }
         else if (error.status == Errors.HTTPSTATUS_INERNAL_SERVER_ERROR){
-            console.log("Server error!");
         }
     }
 

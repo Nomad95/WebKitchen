@@ -1,8 +1,6 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { HelloComponent } from './hello/hello.component';
-import { CalendarComponent } from './calendar/calendar.component';
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { RegistrationComponent } from './registration/registration.component';
@@ -34,7 +32,6 @@ import {SearchedEventsComponent} from "./search/searched-events/searched-events.
 /* TODO: Układać to ładnie i po kolei*/
 const appRoutes: Routes = [
     {path: '', component: HomeComponent},
-    {path: 'hello', component: HelloComponent},
     {path: 'user', component: UserComponent},
     {path: 'registration', component: RegistrationComponent},
     {path: 'registration/success', component: RegistrationSuccess},
@@ -43,7 +40,6 @@ const appRoutes: Routes = [
     {path: 'login/success', component: LoginSuccess},
     {path: 'login/banned', component: LoginBanned},
     {path: 'login/banned/:date/:time', component: LoginBanned},
-    {path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard]},
     {path: 'profile/myprofile', component: MyProfileComponent, canActivate: [AuthGuard]},
     {path: 'profile/myprofile/events', component: ProfileEventsComponent, canActivate: [AuthGuard]},
     {path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuard]},
@@ -61,7 +57,7 @@ const appRoutes: Routes = [
     {path: "messagebox/sent/details/:id", component: DetailsSentMessagesComponent, canActivate:[AuthGuard]},
     {path: "notifications/:page", component: NotificationComponent , canActivate: [AuthGuard]},
     {path: "support", component: SupportComponent , canActivate: [AuthGuard]},
-    {path: "searched/events", component: SearchedEventsComponent}
+    {path: "searched/events", component: SearchedEventsComponent},
     {path: "searched/events/:searchType/:title", component: SearchedEventsComponent},
 ];
 export const appRouterProviders = [AuthGuard, LoginService];

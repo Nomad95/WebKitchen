@@ -60,7 +60,6 @@ export class EventRatingComponent implements OnInit {
         )
             .subscribe(data => {
                 this.rating = data;
-                console.log(this.rating);
                 this.hasNotRatedYet = false;
             }, err => {
                this.hasNotRatedYet = true;
@@ -74,11 +73,9 @@ export class EventRatingComponent implements OnInit {
         this.rating.host.id = this.route.snapshot.queryParams['ownerId'];
 
         this.eventService.addRating(this.rating).subscribe( data=>{
-            console.log('OK' + data);
             this.getRating();
             this.hasNotRatedYet = false;
         }, err => {
-            console.log('lipka ' + err);
         })
     }
 
@@ -93,7 +90,6 @@ export class EventRatingComponent implements OnInit {
                 this.rating = data;
                 this.commentToAdd = '';
             }, err => {
-                console.log("error: "+err);
             })
     }
 

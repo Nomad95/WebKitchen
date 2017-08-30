@@ -1,4 +1,4 @@
-import {ActivatedRoute, Route, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MessageService} from "../message.service";
 import {Component, OnInit} from "@angular/core";
 @Component({

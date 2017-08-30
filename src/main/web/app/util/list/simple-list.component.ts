@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {UtilMethods} from "../util-methods.service";
 
 
@@ -16,7 +16,7 @@ import {UtilMethods} from "../util-methods.service";
               }`],
     providers: [UtilMethods]
 })
-export class SimpleListComponent implements OnInit {
+export class SimpleListComponent {
     constructor(private utilMethods: UtilMethods) {
     }
 
@@ -52,9 +52,6 @@ export class SimpleListComponent implements OnInit {
      * quantity of product
      */
     private quantity = 0;
-
-    ngOnInit() {
-    }
 
     /**
      * adds item to list and emits an event with list

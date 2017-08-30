@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {Router} from '@angular/router';
 
 /**
  * shows a message when we successfully log in
@@ -10,6 +9,6 @@ import {Router} from '@angular/router';
 })
 export class LoginSuccess {
 
-    constructor(private router:Router) {
+    constructor() {
     }
 }

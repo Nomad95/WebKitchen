@@ -1,7 +1,6 @@
-import { Component, OnInit, OnDestroy, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {Title} from "@angular/platform-browser";
 import { ProfileService } from './profile.service';
-import { TAB_COMPONENTS  } from '../../tabs/Tabset';
 import {UserProfile} from '../model/userProfile.model';
 
 
@@ -11,16 +10,16 @@ import {UserProfile} from '../model/userProfile.model';
     styleUrls: ['css/tabs.css'],
     providers: [ProfileService]
 })
-export class ProfileComponent implements OnInit, OnDestroy {
+export class ProfileComponent implements OnInit{
     private isDataAvailable: boolean = false;
     private precentageFilled: any = 0;
     private profileCompletion: number;
-   
+
     private userProfile:UserProfile = new UserProfile();
 
     private profilePhotoLoaded = false;
     private profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile.jpg#" + new Date().getTime();;
-   
+
     constructor(private profileService: ProfileService, private _titleService: Title) { }
 
     // on-init, get profile information
@@ -54,7 +53,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
                 this.isDataAvailable=true;
         });
     }
-    
+
     getPrectangeFilledString(): String{
         return this.precentageFilled.toString();
     }
@@ -77,8 +76,4 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile.jpg";
     }
 
-    // on-destroy
-    ngOnDestroy() {
-
-    }
 }

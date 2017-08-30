@@ -13,7 +13,7 @@ import {Messages} from "../../util/messages";
     providers: [EventService,MessageService],
     directives: [ToasterContainerComponent]
 })
-export class UserCreatedEventsComponent implements OnInit {
+export class UserCreatedEventsComponent {
     constructor(private eventService: EventService,
                 private router: Router,
                 private toasterService: ToasterService,
@@ -28,10 +28,6 @@ export class UserCreatedEventsComponent implements OnInit {
     private acceptMessage: string = '';
 
     private declineMessage: string = '';
-
-
-    ngOnInit() {
-    }
 
     /**
      * Checks if userId is within event accepted users list

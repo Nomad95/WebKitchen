@@ -21,19 +21,11 @@
 				</i>
 				<span class="nav-text">Powiadomienia</span>
 			</a></li>
-
-			<li *ngIf="loginService.isLogged()" class="has-subnav"><a [routerLink]="['/calendar']"> <i
-					class="fa fa-calendar fa-2x fa-sidebar"></i> <span class="nav-text">
-						Kalendarz </span>
-			</a></li>
 			<li *ngIf="loginService.isLogged()" class="has-subnav"><a [routerLink]="['/events']"> <i
 					class="fa fa-cutlery fa-2x fa-sidebar"></i> <span class="nav-text">
 						Wydarzenia </span>
 			</a></li>
-			<li *ngIf="loginService.isLogged()" class="has-subnav"><a [routerLink]="['/user']"> <i
-					class="fa fa-list fa-2x fa-sidebar"></i> <span class="nav-text"> User
-						Test </span>
-			</a></li>
+
 			<li *ngIf="sharedService.getIsAdmin();" class="has-subnav"><a [routerLink]="['/admin']">
                                 <i class="fa fa-user-secret fa-2x fa-sidebar"></i> <span class="nav-text">Panel Admina </span></a>
                        </li>

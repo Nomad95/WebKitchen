@@ -1,6 +1,3 @@
-/**
- * New typescript file
- */
 import { Injectable, Inject } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -28,4 +25,3 @@ export class UserService {
             .map((res:Response) => res.json());
     }
 }
- 

@@ -1,8 +1,5 @@
-/**
- * New typescript file
- */
-import { Injectable, Inject } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
 import { Router } from "@angular/router";
 import 'rxjs/add/operator/map';
 import 'app/rxjs-operators';
@@ -116,12 +113,12 @@ export class MyProfileService {
 
     /**
      * @param userProfileChangePasswordDTO - new password and UserAccount id
-     * 
+     *
      */
     changePassword(userProfileChangePasswordDTO):Observable<any>{
         var currentToKey = JSON.parse(TokenUtils.getStoredToken());
         let token = currentToKey && currentToKey.token;
- 
+
         //create appropriate
         this.headers = new Headers({
             'accept': 'application/json',
@@ -166,7 +163,7 @@ export class MyProfileService {
             .map(res => res.json())
             .catch(this.handleError);
     }
-    
+
 
     getLoggedUsernameFromToken(){
         var currentToKey = JSON.parse(TokenUtils.getStoredToken());

@@ -8,8 +8,7 @@ import { PreferedCuisineService } from './preferedCuisine.service';
 import { CuisinesService } from '../../cuisines/cuisines.service';
 import {Cuisine} from '../model/cuisine.model';
 import {UserProfile} from '../model/userProfile.model';
-import { TAB_COMPONENTS  } from '../../tabs/Tabset';
-import { DialogComponent, DialogService } from 'ng2-bootstrap-modal';
+import { DialogService } from 'ng2-bootstrap-modal';
 import { AlertComponent } from './username-changed-alert.component';
 import {CountriesLocalName} from "../../util/countries/countriesLocalName";
 
@@ -215,7 +214,7 @@ export class MyProfileComponent implements OnInit {
     }
 
     isUsernameChanged(){
-        return (this.username !== this.userProfile.userAccountDTO.username); 
+        return (this.username !== this.userProfile.userAccountDTO.username);
     }
 
     showUsernameChangedAlert() {

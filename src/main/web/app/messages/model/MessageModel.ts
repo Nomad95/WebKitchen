@@ -13,5 +13,4 @@ export class MessageModel{
         this.messageContents = message;
     }
 
-    //TODO: getters n setters n more fields?
 }

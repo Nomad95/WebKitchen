@@ -1,5 +1,5 @@
-import {Component, OnChanges, OnInit, SimpleChange, SimpleChanges} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Component, OnInit} from "@angular/core";
+import {ActivatedRoute} from "@angular/router";
 import {MessageService} from "../message.service";
 
 @Component({
@@ -11,7 +11,7 @@ export class MessageBoxComponent implements OnInit {
     private sub:any
     private indexFirstMsgOnSite;
 
-    constructor(private route: ActivatedRoute,private router: Router, private messageService: MessageService) {
+    constructor(private route: ActivatedRoute) {
     }
 
     ngOnInit() {

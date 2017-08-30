@@ -1,6 +1,5 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
-import {LoginService} from "./login.service";
+import {Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 /**
  * shows a message when the user which want to log in is banned
@@ -9,7 +8,7 @@ import {LoginService} from "./login.service";
     selector: 'login-banned-user',
     templateUrl: 'app/login/login-banned-user.component.html'
 })
-export class LoginBanned implements OnInit, OnDestroy{
+export class LoginBanned implements OnInit{
 
     private sub: any;
     private dateHelper: any;
@@ -19,7 +18,7 @@ export class LoginBanned implements OnInit, OnDestroy{
         timeEndOfBan: ''
     };
 
-    constructor(private route: ActivatedRoute,private router:Router, private loginService: LoginService) {
+    constructor(private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
@@ -30,6 +29,4 @@ export class LoginBanned implements OnInit, OnDestroy{
         });
     }
 
-    ngOnDestroy(): void {
-    }
 }

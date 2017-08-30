@@ -1,19 +1,16 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-//import { LoginService } from './profile.service';
+import {Component} from '@angular/core';
 import {AdminPanelUEService} from './adminPanelUE.service';
 
 
-import {emptyCompilationResult} from "gulp-typescript/release/reporter";
 import {LoginService} from "../login/login.service";
 import {SharedService} from "../shared.service";
-import {Response} from "@angular/http";
 
 @Component({
     selector: 'adminPanelUE',
     templateUrl: 'app/adminPanelUE/adminPanelUE.component.html',
     providers: [AdminPanelUEService]
 })
-export class AdminPanelUEComponent implements OnInit, OnDestroy {
+export class AdminPanelUEComponent{
     constructor(private adminPanelUEService: AdminPanelUEService, private loginService: LoginService, private sharedService: SharedService) {
     }
 
@@ -63,10 +60,6 @@ export class AdminPanelUEComponent implements OnInit, OnDestroy {
     }
 
     private name;
-
-    ngOnInit() {
-
-    }
 
     delay(ms: number) {
         return new Promise(resolve => setTimeout(resolve, ms));
@@ -169,11 +162,5 @@ export class AdminPanelUEComponent implements OnInit, OnDestroy {
         }
         else
             this.hideTableEvent = true;
-    }
-
-
-    // on-destroy
-    ngOnDestroy() {
-
     }
 }

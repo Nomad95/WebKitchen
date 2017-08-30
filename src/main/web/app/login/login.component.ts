@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
-import {SharedService} from "../shared.service"; //<==== this one
-import {StompService} from "../websocket/stomp.service"; //<==== this one
+import {SharedService} from "../shared.service";
+import {StompService} from "../websocket/stomp.service";
 import {ToasterContainerComponent} from 'angular2-toaster';
 import {ToastConfigurerFactory} from "../util/toast/toast-configurer.factory";
 
@@ -19,7 +19,7 @@ export class LoginComponent {
         private sharedService: SharedService,
         private stompService: StompService) {}
 
-    nazwa;//?
+    nazwa;
 
     private toasterConfig = ToastConfigurerFactory.basicToastConfiguration();
 
@@ -38,7 +38,7 @@ export class LoginComponent {
     private statusBan : String;
     private role :String;
     private isAccountEnabled = true;
-    
+
     //user selects if he wants to be allways logged
     private shouldBeRemembered: boolean;
 

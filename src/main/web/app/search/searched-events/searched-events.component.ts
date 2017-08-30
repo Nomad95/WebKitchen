@@ -1,8 +1,8 @@
-import {Component, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
-import {ToasterContainerComponent, ToasterService} from 'angular2-toaster';
+import {Component, OnInit} from '@angular/core';
+import {ToasterContainerComponent} from 'angular2-toaster';
 import {SearchService} from "../search.service";
 import {DetailedEvent} from "../../events/model/detailedEvent";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {PageEvents} from "../pageEvents";
 import {SharedService} from "../../shared.service";
 @Component({
@@ -11,7 +11,7 @@ import {SharedService} from "../../shared.service";
     providers: [SearchService],
     directives: [ToasterContainerComponent]
 })
-export class SearchedEventsComponent implements OnInit, OnDestroy{
+export class SearchedEventsComponent implements OnInit{
 
     private pageWithEvents: PageEvents;
     private events: Array<DetailedEvent> = [];
@@ -98,7 +98,6 @@ export class SearchedEventsComponent implements OnInit, OnDestroy{
             if(!(this.titleFromRouter == null || this.titleFromRouter == "")){
                 this.criteria.title = this.titleFromRouter;
                 this.searchEventByTitle(this.criteria, numberOfPage);
-                console.log("Działa !!!");
             }
 
         });
@@ -147,11 +146,6 @@ export class SearchedEventsComponent implements OnInit, OnDestroy{
             else
                 this.searchEventByCriteria(this.criteria, this.currentPage);
         }
-    }
-
-
-    ngOnDestroy(): void {
-
     }
 
 }
