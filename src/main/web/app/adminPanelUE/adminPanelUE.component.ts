@@ -24,7 +24,7 @@ export class AdminPanelUEComponent{
     private searchingEventDelete = false;
     private userHasBeenBanned = false;
     private userAccountToSearch = {
-        username: ''
+        nick: ''
     }
     private eventToSearch = {
         title: ''
@@ -66,10 +66,10 @@ export class AdminPanelUEComponent{
     }
 
     getSearchUser(): void {
-        this.name = this.userAccountToSearch.username;
+        this.name = this.userAccountToSearch.nick;
 
         this.adminPanelUEService
-            .getUserAccountByName(this.userAccountToSearch.username)
+            .getUserAccountByName(this.userAccountToSearch.nick)
             .subscribe(result => {
                 this.userAccount.id = result.id;
                 this.userAccount.username = result.username;

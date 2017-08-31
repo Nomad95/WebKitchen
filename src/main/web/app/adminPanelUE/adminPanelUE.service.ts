@@ -36,7 +36,7 @@ export class AdminPanelUEService {
     }
 
     getUserAccountByName(data): Observable<any> {
-        this.url = '/api/user/account/' + data;
+        this.url = '/api/user/account/nick/' + data;
         return this.http.get(this.url, {headers: this.headers})
             .map(res => res.json())
             .catch(this.handleError);

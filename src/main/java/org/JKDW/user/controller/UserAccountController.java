@@ -286,4 +286,16 @@ public class UserAccountController {
 		else return new ResponseEntity<>(false,HttpStatus.OK);
 	}
 
+	/**
+	 *
+	 * @param name - nick of user account
+	 * @return	user specified by name
+	 */
+	@RequestMapping(value="/account/nick/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserAccount> getUserAccountByNick(@PathVariable("name") String name ){
+		UserAccount userAccount = userAccountService.getUserAccountByNick(name);
+		return new ResponseEntity<>(userAccount,HttpStatus.OK);
+	}
+
+
 }
