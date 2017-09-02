@@ -66,6 +66,7 @@ import {PolishDatePipe} from "./util/pipes/polish.date.pipe";
 import {ShorterTimePipe} from "./util/pipes/shorter.time.pipe";
 
 import {AuthGuard} from './app.auth-guard.service';
+import {CarouselModule} from "ng2-bootstrap/ng2-bootstrap";
 @NgModule({
     declarations: [AppComponent,
         HomeComponent,
@@ -134,6 +135,7 @@ import {AuthGuard} from './app.auth-guard.service';
         AlertModule.forRoot(),
         DatepickerModule.forRoot(),
         BootstrapModalModule,
+        CarouselModule.forRoot(),
         routing],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [

@@ -597,4 +597,10 @@ public class EventServiceImpl implements EventService {
         });
         return new PageImpl<EventGeneralDTO>(eventGeneralDTOS, pageable, totalElements);
     }
+
+    @Override
+    public List<Event> getTop10EventOrderedByDesc() {
+        List<Event> events = eventRepository.findEventToMainPage();
+        return events;
+    }
 }

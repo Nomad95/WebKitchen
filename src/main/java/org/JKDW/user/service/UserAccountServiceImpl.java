@@ -348,6 +348,11 @@ public class UserAccountServiceImpl implements UserAccountService {
     public UserAccount getUserAccountByUsername(String username) {
         return userAccountRepository.findByUsername(username);
     }
+
+    @Override
+    public UserAccount getUserAccountByNick(String nick) {
+        return userAccountRepository.findByNick(nick);
+    }
 }
 
 
