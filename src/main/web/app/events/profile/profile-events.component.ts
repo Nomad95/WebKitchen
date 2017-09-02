@@ -22,6 +22,8 @@ export class ProfileEventsComponent implements OnInit {
     private userEvents: any[] = [];
     //events that ended and can be rated
     private endedEvents: any[] = [];
+    //user created events that has ended
+    private endedUserEvents: any[] = [];
     //user events in which he participates
     private userParticipatedEvents: any[] = [];
     //can user create event? -> is profile filled?
@@ -52,8 +54,13 @@ export class ProfileEventsComponent implements OnInit {
             .subscribe( data => {
                 this.userId = data;
                 this.eventService.getUserEventsAndParticipants(data).subscribe( events => {
-                    this.userEvents = events;
-                    console.log(events);
+                    for (let event of events){
+                        if(event.hasEnded){
+                            this.endedUserEvents.push(event);
+                        } else {
+                            this.userEvents.push(event);
+                        }
+                    }
                 });
             });
     }

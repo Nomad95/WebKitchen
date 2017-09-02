@@ -7,6 +7,8 @@ import org.JKDW.user.model.rating.RatingOfTheHost;
 import org.JKDW.user.repository.RatingOfTheHostRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -29,5 +31,13 @@ public class RatingOfTheHostServiceImpl implements RatingOfTheHostService{
     public RatingOfTheHost getRatingById(Long ratingId) {
         log.info("find rating with id: {}",ratingId);
         return ratingOfTheHostRepository.findOne(ratingId);
+    }
+
+    @Override
+    public List<RatingOfTheHost> findByEventId(Long eventId) {
+        log.info("find bt event id with id: {}",eventId);
+        List<RatingOfTheHost> ratings = ratingOfTheHostRepository.findByEventId(eventId);
+        log.info("found ratings: {}",ratings);
+        return ratings;
     }
 }

@@ -1,0 +1,43 @@
+<div class="well-kitchen">
+    <div class="row">
+        <div class="col-md-12" align="center">
+            <div>
+                <h4 >{{rating.author.nickname}} Ocenił:</h4>
+                <br/>
+                <rating [(ngModel)]="rating.rating" [max]="6"
+                        [readonly]="true" stateOn="fa fa-star fa-2x fa-rating"
+                        stateOff="fa fa-star-o fa-2x fa-rating" name="ratingStatic" id="ratingStatic"></rating>
+                <br />
+            </div>
+            <div class="col-md-12" *ngFor="let comment of rating.comments">
+                <div class="row">
+                    <div class="col-md-12 text-left">
+                        <strong >{{comment.user.nickname}}</strong>
+                        <span class="pull-right">{{comment.dateCreated | date:'d MMM y HH:mm' | polishDate}}</span>
+                        <br/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-left">{{comment.text}}</div>
+                </div>
+                <hr />
+            </div>
+            <div class="col-md-12">
+                <form #addRatingForm="ngForm" (submit)="addComment()" novalidate>
+                    <div class="form-group">
+
+                        <label for="comment">Dodaj komentarz</label>
+                        <textarea class="form-control non-resizable"
+                                  rows="5" id="comment" name="comment"
+                                  [(ngModel)]="commentToAdd"></textarea>
+
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-kitchen-primary">Dodaj</button>
+                    </div>
+                </form >
+            </div>
+        </div>
+    </div>
+
+</div>

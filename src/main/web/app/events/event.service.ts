@@ -126,6 +126,15 @@ export class EventService {
             .catch(err => this.handleError(err));
     }
 
+    getRatingsForEvent(eventId: number){
+        this.instantiateToken();
+        let headers = this.createHeadersWithContentAndToken(this.token);
+
+        return this.http.get('api/rating/event/'+eventId,{headers: headers})
+            .map( res => res.json())
+            .catch( err => this.handleError(err));
+    }
+
     addRating(rating: EventRating){
         this.instantiateToken();
         let headers = this.createHeadersWithContentAndToken(this.token);

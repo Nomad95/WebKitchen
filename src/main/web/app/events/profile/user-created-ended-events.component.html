@@ -1,0 +1,43 @@
+<toaster-container [toasterconfig]="toasterConfig"></toaster-container>
+<div class="well-kitchen">
+    <div class="row">
+        <div class="col-md-12" >
+
+            <div class="table-responsive">
+                <table class="table" *ngIf="events.length > 0" >
+                    <thead >
+                    <th class="text-center">Tytuł</th>
+                    <th class="text-center">Nazwa posiłku</th>
+                    <th class="text-center">Rodzaj wydarzenia</th>
+                    <th class="text-center">Data</th>
+                    <th class="text-center">Zobacz Szczegóły</th>
+                    <th class="text-center"></th>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let event of events"
+                        class="text-center" >
+                        <ng-container *ngIf="event.ownerId != userId">
+                            <td style="word-wrap: break-word;">{{event.title}}</td>
+                            <td style="word-wrap: break-word;">{{event.dish_name}}</td>
+                            <td>{{convertToEventKind(event.type)}}</td>
+                            <td>{{event.date | date | polishDate}}</td>
+                            <td>
+                                <button class="btn btn-kitchen-default"
+                                        (click)="goToEventDetails(event.id)">
+                                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn btn-kitchen-default"
+                                        (click)="goToRatingSite(event.id)">
+                                    Oceny
+                                </button>
+                            </td>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+            <h3 *ngIf="!events.length > 0">Brak skończonych wydarzeń</h3>
+        </div>
+    </div>
+</div>

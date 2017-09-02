@@ -56,7 +56,10 @@ import {EventRatingComponent} from "./events/ratings/event-rating.component";
 import {MainSearchComponent} from "./search/main-search/main-search.component";
 import {SearchedEventsComponent} from "./search/searched-events/searched-events.component";
 import {AdvancedSearchComponent} from "./search/advanced-search/advanced-search.component";
+import {UserCreatedEndedEventsComponent} from "./events/profile/user-created-ended-events.component";
 import {LoginBanned} from "./login/login-banned-user.component";
+import {SmallEventRatingComponent} from "./events/ratings/small-event-rating.component";
+import {OwnerEventRatingComponent} from "./events/ratings/owner-event-rating-site.component";
 
 import {LoginService} from "./login/login.service";
 import {SharedService} from "./shared.service";
@@ -98,8 +101,11 @@ import {CarouselModule} from "ng2-bootstrap/ng2-bootstrap";
         EventDetailsComponent,
         RegistrationSuccess,
         LoginSuccess,
+        UserCreatedEndedEventsComponent,
         LoginBanned,
         AlertComponent,
+        OwnerEventRatingComponent,
+        SmallEventRatingComponent,
         AdminComponent,
         AdminPanelUEComponent,
         PolishDatePipe,

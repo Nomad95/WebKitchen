@@ -14,9 +14,6 @@ import {LoginSuccess} from './login/login-success.component';
 import {EventCreateComponent} from './events/create/event-create.component';
 import {ProfileEventsComponent} from "./events/profile/profile-events.component";
 import {ConfirmRegistrationComponent} from "./registration/confirmation/confirm.registration.component";
-
-import {AuthGuard} from './app.auth-guard.service';
-import {LoginService} from './login/login.service';
 import {AdminComponent} from "./admin/admin.component";
 import {AdminPanelUEComponent} from "./adminPanelUE/adminPanelUE.component";
 import {LoginBanned} from "./login/login-banned-user.component";
@@ -28,6 +25,10 @@ import {NotificationComponent} from "./notifications/notification.component";
 import {SupportComponent} from "./support/support.component";
 import {EventRatingComponent} from "./events/ratings/event-rating.component";
 import {SearchedEventsComponent} from "./search/searched-events/searched-events.component";
+import {OwnerEventRatingComponent} from "./events/ratings/owner-event-rating-site.component";
+
+import {AuthGuard} from './app.auth-guard.service';
+import {LoginService} from './login/login.service';
 
 /* TODO: Układać to ładnie i po kolei*/
 const appRoutes: Routes = [
@@ -47,6 +48,7 @@ const appRoutes: Routes = [
     {path: 'events/:id', component: EventDetailsComponent, canActivate: [AuthGuard]},
     {path: 'events/create/new', component: EventCreateComponent, canActivate: [AuthGuard]},
     {path: 'events/rating/:id', component: EventRatingComponent, canActivate: [AuthGuard]},
+    {path: 'events/rating/owners/:id', component: OwnerEventRatingComponent, canActivate: [AuthGuard]},
     {path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
     {path: "admin/panelUE", component: AdminPanelUEComponent, canActivate: [AuthGuard]},
     {path: "messagebox", component: MessageBoxComponent, canActivate: [AuthGuard]},

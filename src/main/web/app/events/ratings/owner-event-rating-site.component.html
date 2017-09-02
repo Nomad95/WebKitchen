@@ -1,0 +1,19 @@
+<toaster-container [toasterconfig]="toasterConfig"></toaster-container>
+<div class="container-fluid">
+    <div class="container">
+        <div class="row" *ngIf="ratings?.length > 0">
+            <div class="col-md-12">
+                <h3 class="text-left">Oceny wydarzenia: {{event.title}}</h3>
+            </div>
+            <div class="col-md-12" *ngFor="let rating of ratings">
+                <small-event-rating [rating]="rating" [userId]="userId"></small-event-rating>
+            </div>
+        </div>
+        <div class="row" *ngIf="!ratings?.length > 0">
+            <div class="col-md-12">
+                <h2 class="text-left">Nikt nie ocenił tego wydarzenia</h2>
+            </div>
+
+        </div>
+    </div>
+</div>
