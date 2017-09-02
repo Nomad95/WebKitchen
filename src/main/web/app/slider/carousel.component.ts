@@ -14,7 +14,7 @@ import {Component} from "@angular/core";
 
   <ul class="slides">
 
-    <li *ngFor="#image of images">
+    <li *ngFor="let image of images">
       <h2>{{image.title}}</h2>
       <img src="{{image.url}}" alt="">
     </li>

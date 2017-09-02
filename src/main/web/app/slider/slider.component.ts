@@ -7,11 +7,12 @@ import {Component} from "@angular/core";
 //@Component decorator
 @Component({
     //tag
-    selector: 'my-app',
+    selector: 'my-app2',
     //template
     template: `
 	<div class="wrapper">
     <css-carousel></css-carousel>
+        Abcd
     </div>
   `,
     //css
@@ -22,7 +23,6 @@ import {Component} from "@angular/core";
     }
   `],
     //tell angular we are using the css-carousel tag in this component
-    directives: [CSSCarouselComponent]
 })
 //actual class
 export class SliderComponent { }

@@ -599,7 +599,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> getTop4EventOrderedByDesc() {
+    public List<Event> getTop10EventOrderedByDesc() {
         List<Event> events = eventRepository.findEventToMainPage();
         return events;
     }

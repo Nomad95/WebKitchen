@@ -36,6 +36,6 @@ public interface EventRepository extends JpaRepository<Event, Long>,
                                             @Param("dateNull") Date dateNull,
                                             Pageable pageable);
 
-    @Query(value = "select * from event e order by e.date desc limit 2 ", nativeQuery = true)
+    @Query(value = "select * from event e order by e.date desc limit 10 ", nativeQuery = true)
     List<Event> findEventToMainPage();
 }
