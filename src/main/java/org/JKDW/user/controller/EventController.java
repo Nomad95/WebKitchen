@@ -300,4 +300,11 @@ public class EventController {
         return new ResponseEntity<>(new Boolean("false"), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/top4",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Event>> findTop4Events() {
+        List<Event> events = eventService.getTop4EventOrderedByDesc();
+        return new ResponseEntity<>(events, HttpStatus.OK);
+    }
 }
