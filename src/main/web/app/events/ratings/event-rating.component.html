@@ -44,8 +44,13 @@
                             </div>
                             <div class="col-md-12" *ngFor="let comment of rating.comments">
                                 <div class="row">
-                                    <div class="col-md-6 text-left"><strong>{{comment.user.nickname}}</strong></div>
-                                    <div class="col-md-6 text-right"><strong>{{comment.dateCreated | date:'d MMM y HH:mm' | polishDate}}</strong></div>
+                                    <div class="col-md-12 text-left">
+                                        <strong >{{comment.user.nickname}}</strong>
+                                        <span class="pull-right">{{comment.dateCreated | date:'d MMM y HH:mm' | polishDate}}</span>
+                                        <br/>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-md-12 text-left">{{comment.text}}</div>
                                 </div>
                                 <hr />
