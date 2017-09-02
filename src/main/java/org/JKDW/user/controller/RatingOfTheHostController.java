@@ -12,6 +12,7 @@ import org.JKDW.user.model.rating.converter.RatingOfTheHostDtoToEntityConverter;
 import org.JKDW.user.service.RatingOfTheHostService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
 @RestController
@@ -26,7 +27,7 @@ public class RatingOfTheHostController {
 
     @PostMapping(value = "/create")
     @ResponseBody
-    public RatingOfTheHostDTO createRating(@RequestBody RatingOfTheHostDTO ratingOfTheHostDTO) {
+    public RatingOfTheHostDTO createRating(@Valid @RequestBody RatingOfTheHostDTO ratingOfTheHostDTO) {
         RatingOfTheHost ratingOfTheHost = ratingOfTheHostService
                 .createRatingOfTheHost(converter.convertDtoToEntity(ratingOfTheHostDTO));
         return converter.convertEntityToDto(ratingOfTheHost);
@@ -47,7 +48,7 @@ public class RatingOfTheHostController {
 
     @PostMapping(value = "/comment/{ratingId}")
     @ResponseBody
-    public RatingOfTheHostDTO addComment(@PathVariable Long ratingId, @RequestBody RatingCommentDTO ratingCommentDTO){
+    public RatingOfTheHostDTO addComment(@PathVariable Long ratingId,@Valid @RequestBody RatingCommentDTO ratingCommentDTO){
         RatingOfTheHost rating = ratingOfTheHostService.getRatingById(ratingId);
         rating.getComments().add(commentConverter.convertDtoToEntity(ratingCommentDTO));
         RatingOfTheHost ratingOfTheHost = ratingOfTheHostService.createRatingOfTheHost(rating);

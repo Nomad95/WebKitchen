@@ -73,9 +73,9 @@ VALUES
 
 INSERT INTO user_details(id, birth_date, city, description, flat_number, interests, name, phone_number, photo, post_code, profile_completion, sex, street, street_number, surname, user_account_id)
 VALUES
-(999999999995,	'1995-05-17','Krasnystaw',null,20,'Informatyka','Łukasz',725150126,	null,'22-300',8,'m','Piekarskiego',	20,	'Borkowski',999999999995),
-(999999999996,	'1992-12-12','Lublin',null,12,'Rolnictwo','Izabela',12313123,null,'44-555',	8,'k','Rzecka',	23,	'Łęcka',999999999996),
-(999999999997,	'1985-11-11','Opole',null,44,'Kolarstws o, Filmy','Tomasz',997997997,null,'99-777',8,'m','Chycha',100,'Terka',999999999997),
-(999999999998,	'1985-11-11','Opole',null,44,'Kolarstws o, Filmy','Tomasz',997997997,null,'99-777',8,'m','Chycha',100,'Terka',999999999998),
-(999999999999,	'1985-11-11','Opole',null,44,'Kolarstws o, Filmy','Tomasz',997997997,null,'99-777',8,'m','Chycha',100,'Terka',999999999999)
+(999999999995,	'1995-05-17','Krasnystaw',null,20,'Informatyka','Łukasz',725150126,	null,'22-300',8,'m','Piekarskiego',	20,	'Borkowski',99999999995),
+(999999999996,	'1992-12-12','Lublin',null,12,'Rolnictwo','Izabela',12313123,null,'44-555',	8,'k','Rzecka',	23,	'Łęcka',99999999996),
+(999999999997,	'1985-11-11','Opole',null,44,'Kolarstws o, Filmy','Tomasz',997997997,null,'99-777',8,'m','Chycha',100,'Terka',99999999997),
+(999999999998,	'1985-11-11','Opole',null,44,'Kolarstws o, Filmy','Tomasz',997997997,null,'99-777',8,'m','Chycha',100,'Terka',99999999998),
+(999999999999,	'1985-11-11','Opole',null,44,'Kolarstws o, Filmy','Tomasz',997997997,null,'99-777',8,'m','Chycha',100,'Terka',99999999999)
 

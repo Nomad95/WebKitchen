@@ -7,6 +7,7 @@ import org.JKDW.user.model.rating.RatingOfTheHost;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Entity
 @Data
@@ -27,4 +28,11 @@ public class RatingComment {
     @NotNull
     @Size(max = 5000)
     private String text;
+
+    private Date dateCreated;
+
+    @PrePersist
+    protected void onCreate() {
+        dateCreated = new Date();
+    }
 }

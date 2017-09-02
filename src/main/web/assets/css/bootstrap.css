@@ -6489,6 +6489,17 @@ button.list-group-item-danger.active:focus {
 	color: #ffd700 !important;
 }
 
+.btn-kitchen-neat{
+	border-left: #FF6600 solid 1px;
+	border-radius: 0px;
+	background-color: transparent;
+}
+
+.btn-kitchen-neat:hover{
+	background-color: #ff6300;
+	opacity: 0.2;
+}
+
 /* koniec elementow */
 
 .well {

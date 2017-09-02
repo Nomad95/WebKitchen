@@ -1,32 +1,32 @@
-<div class="row">
+<div class="container">
     <advanced-search></advanced-search>
-</div>
-<div class="row">
-    <div *ngFor="let event of events">
-        <div class="col-md-6 col-sm-12">
-            <event-detail [event]="event">Ładowanie...</event-detail>
+    <div class="row">
+        <div *ngFor="let event of events">
+            <div class="col-md-6 col-sm-12">
+                <event-detail [event]="event">Ładowanie...</event-detail>
+            </div>
         </div>
-    </div>l
 
-</div>
-<div class="row">
-    <div class="col-md-12 text-center">
-        <ul class="pagination">
-            <li>
-                <a class="btn" aria-label="Poprzednia" (click)="getPreviousPage()">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <ng-container *ngFor="let page of numbersOfPage">
-                <li [ngClass]="{'active': page==currentPage}">
-                    <a class="btn" (click)="getNewPages(page)">{{page+1}}</a>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <ul class="pagination">
+                <li>
+                    <a class="btn" aria-label="Poprzednia" (click)="getPreviousPage()">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
                 </li>
-            </ng-container>
-            <li>
-                <a class="btn" aria-label="Nastepna" (click)="getNextPage()">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
+                <ng-container *ngFor="let page of numbersOfPage">
+                    <li [ngClass]="{'active': page==currentPage}">
+                        <a class="btn" (click)="getNewPages(page)">{{page+1}}</a>
+                    </li>
+                </ng-container>
+                <li>
+                    <a class="btn" aria-label="Nastepna" (click)="getNextPage()">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>

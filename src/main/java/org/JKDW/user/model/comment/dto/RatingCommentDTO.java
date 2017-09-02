@@ -8,6 +8,7 @@ import org.JKDW.user.model.rating.DTO.UserMinimalDTO;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -26,11 +27,14 @@ public class RatingCommentDTO {
     @NotNull
     private Long ratingId;
 
+    private Date dateCreated;
+
     public static RatingCommentDTO fromRatingComment(RatingComment comment){
         return new RatingCommentDTO(
                 comment.getId(),
                 UserMinimalDTO.fromUserAccount(comment.getUser()),
                 comment.getText(),
-                comment.getRating().getId());
+                comment.getRating().getId(),
+                comment.getDateCreated());
     }
 }

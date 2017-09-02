@@ -37,7 +37,6 @@
                         <th class="text-center">Użytkownik</th>
                         <th class="text-center">Nick</th>
                         <th class="text-center">Uzupełniony</th>
-                        <th class="text-center">Zweryfikowany</th>
                         <th class="text-center">Zobacz profil</th>
                         <th class="text-center">Akceptuj</th>
                         <th class="text-center">Odrzuć</th>
@@ -48,12 +47,8 @@
                             <td>{{user.username}}</td>
                             <td>{{user.nick}}</td>
                             <td>
-                                <i class="fa fa-check" aria-hidden="true" *ngIf="event.isFilled"></i>
-                                <i class="fa fa-times" aria-hidden="true" *ngIf="!event.isFilled"></i>
-                            </td>
-                            <td>
-                                <i class="fa fa-check" aria-hidden="true" *ngIf="event.isVerified"></i>
-                                <i class="fa fa-times" aria-hidden="true" *ngIf="!event.isVerified"></i>
+                                <i class="fa fa-check" aria-hidden="true" *ngIf="user.filled"></i>
+                                <i class="fa fa-times" aria-hidden="true" *ngIf="!user.filled"></i>
                             </td>
                             <td >
                                 <button class="btn-kitchen-black-transp btn-block" (click)="goToProfile(user.username)">
