@@ -20,7 +20,7 @@ import java.util.Map;
     private final String AUDIENCE_MOBILE = "mobile";
     private final String AUDIENCE_TABLET = "tablet";
 
-    private String secret = "sssshhhh!";
+    private String secret = "dasdnj12313123j1n2312bk!!bhb@s";
 
     private Long expiration = 604800L;
 
