@@ -55,5 +55,5 @@ public interface EventService {
 
     Page<EventGeneralDTO> getEventsMatchingToAllExpressions(SearchCriteriaEvents search, Pageable pageable);
 
-    List<Event> getTop10EventOrderedByDesc();
+    List<EventGeneralDTO> getTop10EventOrderedByDesc();
 }

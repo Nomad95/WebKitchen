@@ -6,13 +6,16 @@
             <img src="/img/logo_big.png" class="img-responsive" alt="Responsive image">
         </div>-->
             <advanced-search>Loading...</advanced-search>
-        <carousel [interval]="6000">
-            <slide *ngFor="let event of topEvents">
-                <div style="width: 50%; margin-left: 25%; margin-top: 3%;">
-                    <event-detail [event]="event">Ładowanie...</event-detail>
-                </div>
-            </slide>
-        </carousel>
+        <div class="main-page-carousel">
+            <carousel [interval]="6000">
+                <slide *ngFor="let event of topEvents">
+                    <div class = "main-page-events">
+                        <event-detail [event]="event">Ładowanie...</event-detail>
+                    </div>
+                </slide>
+            </carousel>
+        </div>
+
     </div>
 </div>
 

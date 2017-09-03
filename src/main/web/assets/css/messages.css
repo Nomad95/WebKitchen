@@ -261,3 +261,16 @@
 }
 
 /******** ADVANCED SEARCH END *****/
+
+/******* CAROUSEL **********/
+.main-page-carousel .carousel-control.left, .main-page-carousel .carousel-control.right {
+    background-image: none
+}
+
+.main-page-events{
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 3%;
+}
+
+/******* CAROUSEL END ******/

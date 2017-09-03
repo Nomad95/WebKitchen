@@ -9,8 +9,7 @@ import java.util.List;
 
 public interface RatingOfTheHostRepository extends JpaRepository<RatingOfTheHost,Long>{
 
-    //TODO: czy host jest potrzebny tutaj?
-    @Query("select n from RatingOfTheHost n where n.event.id = :eId and n.author.id = :aId and n.host.id = :hId")
+    @Query("select n from RatingOfTheHost n where  n.event.id = :eId and n.author.id = :aId and n.host.id = :hId")
     RatingOfTheHost findRatingForUserAndEvent(
             @Param("eId") Long eventId,
             @Param("aId") Long authorId,

@@ -57,7 +57,7 @@ public class EventController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE,
             params = { "page", "size" })
-    public ResponseEntity<List<EventGeneralDTO>> getEventsDetails(
+    public ResponseEntity<List<EventGeneralDTO>> gretEventsDetails(
             @PathParam("page") int page,
             @PathParam("size") int size) {
         List<EventGeneralDTO> events = eventService.getAllEventsGeneral(page,size);
@@ -303,8 +303,8 @@ public class EventController {
     @RequestMapping(value = "/top10",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Event>> findTop10Events() {
-        List<Event> events = eventService.getTop10EventOrderedByDesc();
+    public ResponseEntity<List<EventGeneralDTO>> findTop10Events() {
+        List<EventGeneralDTO> events = eventService.getTop10EventOrderedByDesc();
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
 }

@@ -599,8 +599,25 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> getTop10EventOrderedByDesc() {
+    public List<EventGeneralDTO> getTop10EventOrderedByDesc() {
         List<Event> events = eventRepository.findEventToMainPage();
-        return events;
+        List<EventGeneralDTO> eventGeneralDTOS = events.stream()
+                .map(event ->{
+                    UserAccount foundUserAccount = userAccountRepository.findOne(event.getOwnerId());
+                    return new EventGeneralDTO( event.getId(),
+                            event.getType(),
+                            event.getTitle(),
+                            event.getTime(),
+                            event.getDate(),
+                            event.getDish_kind(),
+                            event.getDish_name(),
+                            event.getPeople_quantity(),
+                            event.getPeople_remaining(),
+                            foundUserAccount.getId().intValue(),
+                            foundUserAccount.getUsername(),
+                            foundUserAccount.getNick(),
+                            event.getAcceptedIds().stream().mapToLong(l -> l).toArray());
+                }).collect(Collectors.toList());
+        return eventGeneralDTOS;
     }
 }
