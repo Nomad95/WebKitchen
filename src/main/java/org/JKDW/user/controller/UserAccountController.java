@@ -3,6 +3,7 @@ package org.JKDW.user.controller;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.JKDW.mail.event.OnRegistrationCompleteEvent;
+import org.JKDW.security.AppConstant;
 import org.JKDW.security.TokenUtils;
 import org.JKDW.user.model.DTO.StringRequestBody;
 import org.JKDW.user.model.DTO.UserAccountCreateDTO;
@@ -78,7 +79,7 @@ public class UserAccountController {
 	 * we use @valid annotation to validate passed object
 	 */
 	@RequestMapping(value="/create",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserAccount> createUserAccount(@RequestBody @Valid UserAccountCreateDTO userAccount, WebRequest request) {
+	public ResponseEntity<UserAccount> createUserAccount(@RequestBody @Valid UserAccountCreateDTO userAccount, HttpServletRequest request) {
 
 		UserAccount createdUserAccount = userAccountService.createUserAccount(userAccount);
 		//create details and link it with userAccount
@@ -89,7 +90,7 @@ public class UserAccountController {
 
 		//publish event to create email validation token
 		try {
-			String appUrl = request.getContextPath();
+			String appUrl = request.getHeader(AppConstant.appUrl);
 			eventPublisher.publishEvent(new OnRegistrationCompleteEvent
 					(createdUserAccount, request.getLocale(), appUrl));
 		} catch (Exception me) {

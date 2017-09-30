@@ -19,7 +19,9 @@ export class RegistrationService{
 
 	private headers = new Headers({
           'accept': 'application/json',
-          'content-type' : 'application/json'});
+          'content-type' : 'application/json',
+	      'App-Url': window.location.origin
+	});
 
 	/**
 	  * This methods returns an Observable class

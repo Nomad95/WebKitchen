@@ -42,7 +42,7 @@ export class UtilMethods {
             'Uczestnictwo w Twoim wydarzeniu',
             'Użytkownik '+ userNick + ' wyraził chęć uczestnictwa w wydarzeniu: ' + eventTitle +
             ' Zaakceptuj lub odrzuć jego prośbę' +
-            '\n http://localhost:8080/#/profile/myprofile/events');//TODO: CHANGE THIS AFTER DEPLOYMENT
+            '\n' + window.location + '#/profile/myprofile/events');//TODO: CHANGE THIS AFTER DEPLOYMENT
     }
 
 }

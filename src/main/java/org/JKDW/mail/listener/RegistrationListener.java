@@ -21,6 +21,8 @@ public class RegistrationListener implements
     @Autowired
     private JavaMailSender mailSender;
 
+    private String hostAddress = null;
+
     @Override
     public void onApplicationEvent(OnRegistrationCompleteEvent event) {
         this.confirmRegistration(event);
@@ -44,7 +46,7 @@ public class RegistrationListener implements
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);
         email.setSubject(subject);
-        email.setText(message + "\n" + "http://localhost:8080" + confirmationUrl);
+        email.setText(message + "\n" + confirmationUrl);
         mailSender.send(email);
     }
 
@@ -54,5 +56,9 @@ public class RegistrationListener implements
     private String makeTemplateMessage(){
         return "Dziękujemy za rejestrację w serwisie Kuchnia po sąsiedzku!\n" +
                 "Aby aktywować konto, prosimy o kliknięcie w poniższy link.\n\n";
+    }
+
+    public void setHostAddress(String hostAddress) {
+        this.hostAddress = hostAddress;
     }
 }
