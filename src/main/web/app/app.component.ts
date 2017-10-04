@@ -112,7 +112,7 @@ export class AppComponent implements OnInit {
     getMyNickAndConnectWithStomp():void{
         this.loginService.getMyNick().subscribe(result =>{
             this.sharedService.setMyNick(result.nick);
-            this.stompService.connect('ws://localhost:8080/stomp', this.sharedService.getMyNick());
+            this.stompService.connect('ws://wkitchen.eu-central-1.elasticbeanstalk.com/stomp', this.sharedService.getMyNick());
         }, err => {}
         );
     }

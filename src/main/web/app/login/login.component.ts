@@ -13,11 +13,11 @@ import {ToastConfigurerFactory} from "../util/toast/toast-configurer.factory";
 })
 export class LoginComponent {
 
-    constructor(
-        private loginService: LoginService,
-        private router: Router,
-        private sharedService: SharedService,
-        private stompService: StompService) {}
+    constructor(private loginService: LoginService,
+                private router: Router,
+                private sharedService: SharedService,
+                private stompService: StompService) {
+    }
 
     nazwa;
 
@@ -30,23 +30,23 @@ export class LoginComponent {
 
     //username and password
     credentials = {
-      username: '',
-      password: ''
+        username: '',
+        password: ''
     };
 
     errorEncountered = false;
-    private statusBan : String;
-    private role :String;
+    private statusBan: String;
+    private role: String;
     private isAccountEnabled = true;
 
     //user selects if he wants to be allways logged
     private shouldBeRemembered: boolean;
 
     private countUnreadMessages = {
-        count:''
+        count: ''
     };
     private countUnreadNotifications = {
-        count:''
+        count: ''
     };
 
     /**
@@ -57,12 +57,12 @@ export class LoginComponent {
      * then if login has been positive we check role of user and
      * is not an banned account
      */
-    logins(credentials):void {
+    logins(credentials): void {
         //check if account is enabled
         this.loginService.checkIfUserIsEnabled(credentials.username).subscribe(data => {
-            if(data === true){
+            if (data === true) {
                 this.loginService
-                    .getToken(credentials,this.shouldBeRemembered)
+                    .getToken(credentials, this.shouldBeRemembered)
                     .subscribe(result => {
                         if (result === true) {
                             this.credentials = {
@@ -107,7 +107,7 @@ export class LoginComponent {
     }
 
 
-    checkIsUserAnAdmin():void {
+    checkIsUserAnAdmin(): void {
         this.loginService.checkIsUserAnAdmin().subscribe(result => {
             this.role = result.role;
             if (this.role == "user") {
@@ -120,7 +120,7 @@ export class LoginComponent {
         });
     }
 
-    getInfoAboutMyBan():void {
+    getInfoAboutMyBan(): void {
         this.loginService.getInfoAboutMyBan().subscribe(
             result => {
                 this.myBan = result;
@@ -130,35 +130,39 @@ export class LoginComponent {
                 }]);
 
             },
-            err => {}
+            err => {
+            }
         );
     }
 
-    getMyNickAndConnectWithStomp():void{
-        this.loginService.getMyNick().subscribe(result =>{
+    getMyNickAndConnectWithStomp(): void {
+        this.loginService.getMyNick().subscribe(result => {
                 this.sharedService.setMyNick(result.nick);
-                this.stompService.connect('ws://localhost:8080/stomp', this.sharedService.getMyNick());
-            }, err => {}
+                this.stompService.connect('ws://wkitchen.eu-central-1.elasticbeanstalk.com/stomp', this.sharedService.getMyNick());
+            }, err => {
+            }
         );
     }
 
-    countMyUnreadMessages():void{
+    countMyUnreadMessages(): void {
         this.loginService.countMyUnreadMessages().subscribe(
             result => {
                 this.countUnreadMessages = result;
                 this.sharedService.setNumberOfUnreadMessages(Number(this.countUnreadMessages.count));
             },
-            err => {}
+            err => {
+            }
         );
     }
 
-    countMyUnreadNotifications():void{
+    countMyUnreadNotifications(): void {
         this.loginService.countMyUnreadNotifications().subscribe(
             result => {
                 this.countUnreadNotifications = result;
                 this.sharedService.setNumberOfUnreadNotifications(Number(this.countUnreadNotifications.count));
             },
             err => {
-        );
+
+            });
     }
 }

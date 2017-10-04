@@ -25,7 +25,7 @@ public class FileUploadController {
     /**
      * we get project directory and add path to static\img path
      */
-    private static String UPLOADED_FOLDER = System.getProperty("user.dir") + "/build/generated-web-resources/static/img/";
+    private static String UPLOADED_FOLDER = "img";
 
     private boolean isDishPhoto = true;
     /**
@@ -123,7 +123,7 @@ public class FileUploadController {
         //try to write a file
         data = data.replaceFirst("^data:image/[^;]*;base64,?","");
         Base64.Decoder decoder = Base64.getDecoder();
-        saveUploadedPhoto(decoder.decode(data), nick+"/profilePhoto/");
+        saveUploadedPhoto(decoder.decode(data), "/"+ nick+"/profilePhoto/");
 
 
         return new ResponseEntity<>("Successfully uploaded - profile photo", HttpStatus.OK);
@@ -135,6 +135,8 @@ public class FileUploadController {
         File directory = new File(UPLOADED_FOLDER + additionalPath);
         File dir = new File(UPLOADED_FOLDER);
         dir.setReadable(true);
+        dir.setWritable(true);
+        dir.setExecutable(true);
         if (!directory.exists()) {
             directory.mkdirs();
             // If you require it to make the entire directory path including parents,
@@ -171,7 +173,7 @@ public class FileUploadController {
 
     @RequestMapping(value = "/isProfilePhotoExists/{nick}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> checkIfProfilePhotoExists(@PathVariable("nick")String nick) {
-        Path path = Paths.get(UPLOADED_FOLDER + nick+"/profilePhoto");
+        Path path = Paths.get(UPLOADED_FOLDER + "/"+nick+"/profilePhoto");
         return new ResponseEntity<>(fileExist(path.toString()),HttpStatus.OK);
     }
 

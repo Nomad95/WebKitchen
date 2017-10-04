@@ -124,7 +124,7 @@ export class MyProfileComponent implements OnInit {
     }
 
     setUserProfilePhoto(){
-        this.profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile1.jpg#" + new Date().getTime();;
+        this.profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile1.jpg?" + new Date().getTime();;
     }
 
     setDefaultProfilePhoto(){
@@ -338,7 +338,7 @@ export class MyProfileComponent implements OnInit {
     }
 
     public myProfilePhotoChanged(date: boolean):void {
-        if(date) this.profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile1.jpg#" + new Date().getTime();
+        if(date) this.profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile1.jpg?" + new Date().getTime();
     }
 
     //logs out and redirects to '/login'

@@ -41,7 +41,7 @@ public class UserAccountController {
 	/**
 	 * we get project directory and add path to static\img path
 	 */
-	private static String UPLOADED_FOLDER = System.getProperty("user.dir") + "\\build\\generated-web-resources\\static\\img\\";
+	private static String UPLOADED_FOLDER = "img";
 
 	private final @NonNull ApplicationEventPublisher eventPublisher;
 	private final @NonNull UserAccountService userAccountService;
@@ -85,7 +85,7 @@ public class UserAccountController {
 		UserDetails userDetails = new UserDetails();
 		userDetails.setUserAccount(createdUserAccount);
 		userDetailsService.createUserDetails(userDetails);
-		prepareUserDirectories(createdUserAccount.getNick()+"\\profilePhoto\\");
+		prepareUserDirectories("/"+createdUserAccount.getNick()+"/profilePhoto/");
 
 		//publish event to create email validation token
 		try {
@@ -224,13 +224,15 @@ public class UserAccountController {
 		File userDirectory = new File(UPLOADED_FOLDER + additionalPath);
 		File mainDirectory = new File(UPLOADED_FOLDER);
 		mainDirectory.setReadable(true);
+		mainDirectory.setWritable(true);
+		mainDirectory.setExecutable(true);
 		if (!userDirectory.exists()) {
 			userDirectory.mkdirs();
 			// If you require it to make the entire directory path including parents,
 			// use directory.mkdirs(); here instead.
 		}
 
-		copyDefaultProfilePhoto(Paths.get(UPLOADED_FOLDER + "profile.jpg"),Paths.get(UPLOADED_FOLDER + additionalPath + "profile.jpg"));
+		copyDefaultProfilePhoto(Paths.get("/tmp/eb_extracted_jar/WEB-INF/classes/static/img/profile.jpg"),Paths.get(UPLOADED_FOLDER + additionalPath + "profile.jpg"));
 	}
 	void copyDefaultProfilePhoto(Path sourcePath, Path targetPath){
 		try {

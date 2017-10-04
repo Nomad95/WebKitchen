@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit{
     private userProfile:UserProfile = new UserProfile();
 
     private profilePhotoLoaded = false;
-    private profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile.jpg#" + new Date().getTime();;
+    private profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile.jpg?" + new Date().getTime();
 
     constructor(private profileService: ProfileService, private _titleService: Title) { }
 
@@ -69,7 +69,7 @@ export class ProfileComponent implements OnInit{
     }
 
     setUserProfilePhoto(){
-        this.profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile1.jpg";
+        this.profilePhotoUrl = "/img/"+this.userProfile.userAccountDTO.nick+"/profilePhoto/profile1.jpg?" + new Date().getTime();
     }
 
     setDefaultProfilePhoto(){
